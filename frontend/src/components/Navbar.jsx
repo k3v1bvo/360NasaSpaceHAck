@@ -10,7 +10,10 @@ export default function Navbar({ activeTab, setActiveTab, offlineMode, setOfflin
   ];
 
   return (
-    <header className="flex h-16 w-full items-center justify-between border-b border-neutral-800 bg-neutral-950/90 px-4 backdrop-blur-md">
+    <header 
+      className="flex h-16 w-full items-center justify-between border-b border-neutral-800 bg-neutral-950/90 px-4 backdrop-blur-md"
+      style={{ height: '64px', minHeight: '64px', display: 'flex', alignItems: 'center' }}
+    >
       {/* Logos & Titulo */}
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-700 via-indigo-600 to-cyan-500 font-black text-white shadow-lg">

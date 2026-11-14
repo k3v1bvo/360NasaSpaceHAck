@@ -4,8 +4,20 @@ import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
 
 const COCHABAMBA_CENTER = [-17.3895, -66.1568];
+const GAMC_WMS_ENDPOINT = 'https://serviciosgamc.cochabamba.bo/api/gs/wms';
+const GAMC_PROJECT_03_KEY = '8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32';
 
-export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZED', reportsData, selectedPoint }) {
+export default function MapViewer({ 
+  activeTab, 
+  focosData, 
+  sensorMode = 'HARMONIZED', 
+  reportsData, 
+  selectedPoint,
+  offlineMode = false,
+  wmsCota = true,
+  wmsPeriurbanos = true,
+  wmsDistritos = false
+}) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const layersGroupRef = useRef(null);
@@ -15,13 +27,6 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
       let L;
       try {
         L = await import('leaflet');
-        if (!document.getElementById('leaflet-css')) {
-          const link = document.createElement('link');
-          link.id = 'leaflet-css';
-          link.rel = 'stylesheet';
-          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-          document.head.appendChild(link);
-        }
       } catch (e) {
         console.warn('Leaflet fallback...');
       }
@@ -37,13 +42,14 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
 
       // CartoDB Dark Matter tiles (estilo espacial oscuro)
       L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO &copy; NASA Earthdata &copy; GAMC',
+        attribution: '&copy; OpenStreetMap &copy; CARTO &copy; NASA Earthdata &copy; GAMC Cochabamba',
         maxZoom: 19,
       }).addTo(map);
 
       mapInstanceRef.current = map;
       layersGroupRef.current = L.layerGroup().addTo(map);
       renderLayers(L, map);
+
       setTimeout(() => {
         map.invalidateSize();
       }, 250);
@@ -69,12 +75,67 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
 
     layersGroupRef.current.clearLayers();
 
-    // ==========================================
-    // CAPA 1: FOCOS DE CALOR Y POLÍGONO TUNARI (Kevin)
-    // ==========================================
+    // =========================================================================
+    // CAPA 1: FOCOS DE CALOR (Kevin) + SERVICIOS WMS OFICIALES DE LA ALCALDÍA
+    // =========================================================================
     if (activeTab === 'incendios') {
-      // 1. Polígono del Parque Nacional Tunari (Cota 2750)
-      if (tunariPolygonData?.features?.[0]) {
+      
+      // A. Servicios WMS Oficiales de la Alcaldía de Cochabamba (Proyecto 03)
+      if (!offlineMode) {
+        // 1. Capa WMS Oficial GAMC: Cota 2750 (Límite P.N. Tunari)
+        if (wmsCota) {
+          try {
+            L.tileLayer.wms(GAMC_WMS_ENDPOINT, {
+              key: GAMC_PROJECT_03_KEY,
+              service_id: '297cefa4-0832-42bb-a98e-2cbea989fd9d',
+              layers: '',
+              format: 'image/png',
+              transparent: true,
+              version: '1.1.1',
+              maxZoom: 19
+            }).addTo(layersGroupRef.current);
+          } catch (e) {
+            console.warn('WMS Cota 2750 error:', e);
+          }
+        }
+
+        // 2. Capa WMS Oficial GAMC: Periurbanos (Zonas habitadas de interfaz)
+        if (wmsPeriurbanos) {
+          try {
+            L.tileLayer.wms(GAMC_WMS_ENDPOINT, {
+              key: GAMC_PROJECT_03_KEY,
+              service_id: 'c52066a1-32fd-4925-81e0-c2dcb8f4238f',
+              layers: '',
+              format: 'image/png',
+              transparent: true,
+              version: '1.1.1',
+              maxZoom: 19
+            }).addTo(layersGroupRef.current);
+          } catch (e) {
+            console.warn('WMS Periurbanos error:', e);
+          }
+        }
+
+        // 3. Capa WMS Oficial GAMC: Límite Distritos
+        if (wmsDistritos) {
+          try {
+            L.tileLayer.wms(GAMC_WMS_ENDPOINT, {
+              key: GAMC_PROJECT_03_KEY,
+              service_id: '7eb13092-bf0e-493b-aae6-03c43eedda2c',
+              layers: '',
+              format: 'image/png',
+              transparent: true,
+              version: '1.1.1',
+              maxZoom: 19
+            }).addTo(layersGroupRef.current);
+          } catch (e) {
+            console.warn('WMS Distritos error:', e);
+          }
+        }
+      }
+
+      // Respaldo Local: Polígono Parque Nacional Tunari (Modo Offline o complemento)
+      if (offlineMode && tunariPolygonData?.features?.[0]) {
         const polyCoords = tunariPolygonData.features[0].geometry.coordinates[0].map(
           ([lng, lat]) => [lat, lng]
         );
@@ -89,14 +150,13 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
           <div style="color: #111; font-family: sans-serif; font-size: 12px;">
             <strong style="color: #059669;">🌲 Parque Nacional Tunari (PNT)</strong><br/>
             <strong>Cota límite:</strong> 2750 msnm<br/>
-            <strong>Superficie:</strong> ~300,000 ha protegidas<br/>
-            <span style="color: #666;">Zona de recarga de acuíferos y pulmón de Cochabamba</span>
+            <strong>Área:</strong> ~300,000 ha protegidas
           </div>
         `);
         polygon.addTo(layersGroupRef.current);
       }
 
-      // 2. Marcadores según el modo de sensor seleccionado en el módulo de Kevin
+      // B. Marcadores Satelitales de Fuego de la NASA (MODIS, VIIRS o Armonizado)
       focosData?.forEach((foco) => {
         const [lng, lat] = foco.geometry.coordinates;
         const p = foco.properties;
@@ -104,17 +164,16 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
         let radius, fillColor, color, popupTitle;
 
         if (sensorMode === 'MODIS') {
-          radius = 16; // Píxel grande de 1 km
+          radius = 16;
           fillColor = '#f59e0b';
           color = '#ffffff';
           popupTitle = '🛰️ Sensor MODIS MCD14DL (1 km)';
         } else if (sensorMode === 'VIIRS') {
-          radius = 7; // Píxel fino de 375 m
+          radius = 7;
           fillColor = '#06b6d4';
           color = '#ffffff';
           popupTitle = '🛰️ Sensor VIIRS VNP14 (375 m)';
         } else {
-          // MODO ARMONIZADO (Kevin)
           const frp = p.frp_total_mw || 35;
           radius = frp > 60 ? 13 : frp > 30 ? 9 : 7;
           fillColor = frp > 60 ? '#dc2626' : frp > 30 ? '#ea580c' : '#f59e0b';
@@ -139,7 +198,7 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
             <strong>Potencia (FRP):</strong> ${p.frp_total_mw || p.frp || 35} MW<br/>
             ${sensorMode === 'HARMONIZED' ? `<strong>Puntos fusionados:</strong> ${p.puntos_crudos_fusionados || 2}<br/>` : `<strong>Satélite:</strong> ${p.satellite || 'NASA'}<br/>`}
             <span style="color: ${p.en_parque_tunari ? '#059669' : '#6b7280'}; font-weight: bold;">
-              ${p.en_parque_tunari ? '⚠️ Dentro del P.N. Tunari' : '🏡 Interfaz urbana'}
+              ${p.en_parque_tunari ? '🌲 Dentro del P.N. Tunari' : '🏡 Interfaz urbana'}
             </span>
           </div>
         `);
@@ -172,7 +231,6 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
             <strong>Temperatura LST (NASA):</strong> ${p.lst_temperatura_c} °C<br/>
             <strong>Índice Vegetación NDVI:</strong> ${p.ndvi_vegetacion}<br/>
             <strong>Isla de Calor:</strong> ${p.nivel_isla_calor}<br/>
-            <strong>Población:</strong> ~${p.poblacion_estimada.toLocaleString()} hab.<br/>
             <span style="color: #b91c1c; font-weight: bold;">${p.contraste_zona_sur_c}</span>
           </div>
         `);
@@ -204,7 +262,6 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
             <strong style="color: ${color};">🌊 ${p.torrentera_zona}</strong><br/>
             <strong>Evento Crítico:</strong> ${p.tipo_evento}<br/>
             <strong>Riesgo Evaluado:</strong> ${p.nivel_riesgo}<br/>
-            <strong>Umbral SENAMHI:</strong> &gt; ${p.senamhi_umbral_lluvia_mm} mm en 24h<br/>
             <span style="color: #4b5563; font-size: 11px;">${p.fuente_oficial}</span>
           </div>
         `);
@@ -228,8 +285,7 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
           <strong style="color: #ea580c;">📢 Alerta Ciudadana Activa</strong><br/>
           <strong>Zona:</strong> ${rep.zona}<br/>
           <strong>Tipo:</strong> ${rep.tipo}<br/>
-          <strong>Hora:</strong> ${rep.fecha}<br/>
-          <span style="color: #666;">Reportado por vecino con geolocalización GPS</span>
+          <strong>Hora:</strong> ${rep.fecha}
         </div>
       `);
       pin.addTo(layersGroupRef.current);
@@ -240,9 +296,9 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
     if (mapInstanceRef.current) {
       renderLayers(null, mapInstanceRef.current);
     }
-  }, [activeTab, focosData, sensorMode, reportsData]);
+  }, [activeTab, focosData, sensorMode, reportsData, offlineMode, wmsCota, wmsPeriurbanos, wmsDistritos]);
 
-  // Centrar en punto seleccionado al hacer clic desde el panel
+  // Centrar en punto seleccionado
   useEffect(() => {
     if (selectedPoint && mapInstanceRef.current) {
       const coords = selectedPoint.geometry.type === 'Polygon'
@@ -254,22 +310,32 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
   }, [selectedPoint]);
 
   return (
-    <div className="relative h-full w-full bg-neutral-950 overflow-hidden min-h-0">
-      <div ref={mapContainerRef} className="absolute inset-0 h-full w-full z-0" />
+    <div 
+      className="relative h-full w-full bg-[#080b18] overflow-hidden min-h-0"
+      style={{ position: 'relative', height: '100%', width: '100%', minHeight: 0 }}
+    >
+      <div 
+        ref={mapContainerRef} 
+        className="absolute inset-0 h-full w-full z-0" 
+        style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, height: '100%', width: '100%' }}
+      />
       
-      {/* Leyenda Flotante Dinámica según el Modo de Sensor de Kevin */}
-      <div className="absolute bottom-4 left-4 z-[400] rounded-xl border border-neutral-800 bg-neutral-950/90 p-3 text-xs text-white backdrop-blur-md shadow-2xl">
-        <span className="font-bold text-[10px] text-neutral-400 uppercase tracking-wider">
-          {activeTab === 'incendios' && (
-            sensorMode === 'HARMONIZED' ? 'MODO: DUAL ARMONIZADO (KEVIN)' :
-            sensorMode === 'MODIS' ? 'MODO: SENSOR MODIS (1 KM)' : 'MODO: SENSOR VIIRS (375 M)'
-          )}
-          {activeTab === 'microclimas' && 'LEYENDA: TEMPERATURA LST GAMC'}
-          {activeTab === 'torrenteras' && 'LEYENDA: 60 PUNTOS GROUND-TRUTH'}
-          {activeTab === 'agrotech' && 'LEYENDA: VALLE COCHABAMBA'}
-        </span>
+      {/* Leyenda Flotante Dinámica */}
+      <div className="absolute bottom-4 left-4 z-[400] rounded-2xl border border-white/10 bg-[#0f172a]/90 p-3.5 text-xs text-white backdrop-blur-xl shadow-2xl max-w-xs">
+        <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
+          <span className="font-bold text-[10px] text-cyan-400 uppercase tracking-wider">
+            {activeTab === 'incendios' && 'NASA FIRMS + GAMC WMS'}
+            {activeTab === 'microclimas' && 'NASA LST + GAMC DISTRITOS'}
+            {activeTab === 'torrenteras' && 'GAMC GROUND-TRUTH'}
+            {activeTab === 'agrotech' && 'VALLE COCHABAMBA'}
+          </span>
+          <span className="flex items-center gap-1 text-[9px] text-emerald-400 font-mono">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+            WMS GAMC Activo
+          </span>
+        </div>
 
-        <div className="mt-2 space-y-1.5 text-[11px]">
+        <div className="space-y-1.5 text-[11px]">
           {activeTab === 'incendios' && (
             <>
               {sensorMode === 'HARMONIZED' && (
@@ -286,7 +352,7 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
               )}
               {sensorMode === 'MODIS' && (
                 <div className="flex items-center gap-2">
-                  <span className="h-4 w-4 rounded-full bg-amber-500/80 border border-white"></span>
+                  <span className="h-3.5 w-3.5 rounded-full bg-amber-500 border border-white"></span>
                   <span>Footprint MODIS (1,000 m píxel)</span>
                 </div>
               )}
@@ -296,9 +362,13 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
                   <span>Detección VIIRS (375 m I-band)</span>
                 </div>
               )}
+              <div className="flex items-center gap-2 pt-1 border-t border-white/5">
+                <span className="h-3 w-3 rounded border border-emerald-400 bg-emerald-900/60"></span>
+                <span>WMS Oficial: Cota 2750 (GAMC)</span>
+              </div>
               <div className="flex items-center gap-2">
-                <span className="h-3.5 w-3.5 rounded border border-dashed border-emerald-400 bg-emerald-900/40"></span>
-                <span>Polígono P.N. Tunari (Cota 2750)</span>
+                <span className="h-3 w-3 rounded border border-purple-400 bg-purple-900/60"></span>
+                <span>WMS Oficial: Periurbanos (GAMC)</span>
               </div>
             </>
           )}
@@ -306,33 +376,20 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
           {activeTab === 'microclimas' && (
             <>
               <div className="flex items-center gap-2">
-                <span className="h-3.5 w-3.5 rounded bg-red-500/70 border border-red-400"></span>
-                <span>Isla Térmica Crítica (&gt;35 °C - D5 Av. 6 de Agosto)</span>
+                <span className="h-3 w-3 rounded bg-red-500"></span>
+                <span>Isla Térmica Crítica (D5 Av. 6 de Agosto)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="h-3.5 w-3.5 rounded bg-emerald-500/70 border border-emerald-400"></span>
-                <span>Zona Fresca con Arbolado (&lt;26 °C - Faldas Tunari)</span>
+                <span className="h-3 w-3 rounded bg-emerald-500"></span>
+                <span>Zona Fresca con Arbolado (Faldas Tunari)</span>
               </div>
             </>
           )}
 
           {activeTab === 'torrenteras' && (
-            <>
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-red-500 animate-ping"></span>
-                <span>Riesgo Extremo (Taquiña / Aluvión)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-blue-500"></span>
-                <span>Punto Histórico GAMC</span>
-              </div>
-            </>
-          )}
-
-          {activeTab === 'agrotech' && (
             <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-emerald-500"></span>
-              <span>Recomendación Rotación de Cultivo</span>
+              <span className="h-3 w-3 rounded-full bg-red-500 animate-ping"></span>
+              <span>Punto de Riesgo Extremo GAMC (60 pts)</span>
             </div>
           )}
         </div>
