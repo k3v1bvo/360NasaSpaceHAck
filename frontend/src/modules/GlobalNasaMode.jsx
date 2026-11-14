@@ -236,8 +236,8 @@ export default function GlobalNasaMode({
           {/* Selector de Hotspots Globales */}
           <div className="space-y-1.5">
             <span className="text-xs font-bold text-neutral-300 flex items-center justify-between">
-              <span>Selecciona un Punto Crítico Planetario:</span>
-              <span className="text-[10px] text-cyan-400 font-mono">7 Puntos Validados</span>
+              <span>Selecciona un Punto Crítico (Global & Bolivia):</span>
+              <span className="text-[10px] text-cyan-400 font-mono">{globalHotspots.length} Puntos Validados</span>
             </span>
             <div className="grid grid-cols-1 gap-1 text-xs">
               {globalHotspots.map((spot) => (

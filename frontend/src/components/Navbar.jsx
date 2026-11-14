@@ -4,9 +4,9 @@ import { Globe, Radio, BellRing, Satellite } from 'lucide-react';
 export default function Navbar({ activeTab, setActiveTab, offlineMode, setOfflineMode, onOpenReport }) {
   const tabs = [
     { id: 'global_nasa', label: '🌍 Explorador Global', short: '🌍 Global' },
-    { id: 'microclimas', label: '📍 Piloto Cochabamba', short: '📍 Cocha IA' },
+    { id: 'microclimas', label: '📍 Piloto Cochabamba (14 Distritos)', short: '📍 Cocha (14 Dist.)' },
     { id: 'incendios', label: '🔥 Incendios Tunari', short: '🔥 Incendios' },
-    { id: 'torrenteras', label: '🌊 Torrenteras GAMC', short: '🌊 Torrenteras' },
+    { id: 'torrenteras', label: '🌊 Torrenteras GAMC (60 Puntos)', short: '🌊 Torrenteras (60p)' },
     { id: 'agrotech', label: '🌾 Agrotech SMAP', short: '🌾 Agrotech' },
   ];
 

@@ -120,6 +120,11 @@ export default function MapViewer({
         }
       });
 
+      // Listener para downscaling dinámico al cambiar nivel de zoom
+      map.on('zoomend', () => {
+        renderLayers(L, map);
+      });
+
       mapInstanceRef.current = map;
       layersGroupRef.current = L.layerGroup().addTo(map);
       renderLayers(L, map);
@@ -189,28 +194,35 @@ export default function MapViewer({
     layersGroupRef.current.clearLayers();
 
     // =========================================================================
-    // CAPA 1: GLOBAL NASA DETECTIVE (7 Puntos Críticos Planetarios + Target)
+    // CAPA 1: GLOBAL NASA DETECTIVE (Red Planetaria + Centinelas de Bolivia)
     // =========================================================================
     if (activeTab === 'global_nasa') {
       globalHotspots.forEach((spot) => {
         const isPilot = spot.is_pilot;
-        const color = isPilot ? '#c084fc' :
+        const color = isPilot ? (
+                        spot.id === 'cocha_sur' ? '#ef4444' :
+                        spot.id === 'tunari_cota' ? '#10b981' :
+                        spot.id === 'alalay' ? '#06b6d4' : '#c084fc'
+                      ) :
+                      spot.id === 'chiquitania' ? '#f97316' :
+                      spot.id === 'chacaltaya' ? '#38bdf8' :
+                      spot.id === 'uyuni' ? '#cbd5e1' :
                       spot.id === 'artico' ? '#38bdf8' :
                       spot.id === 'sahel' ? '#fbbf24' :
                       spot.id === 'gran_barrera' ? '#34d399' : '#f87171';
 
         const marker = L.circleMarker([spot.lat, spot.lon], {
-          radius: isPilot ? 14 : 11,
+          radius: isPilot ? 13 : spot.country === 'Bolivia' ? 10 : 9,
           fillColor: color,
           color: '#ffffff',
-          weight: isPilot ? 3 : 2,
+          weight: isPilot ? 2.5 : 1.5,
           opacity: 1,
-          fillOpacity: 0.85,
+          fillOpacity: 0.88,
         });
 
         marker.bindPopup(`
           <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 250px; line-height: 1.45;">
-            <div style="background: ${color}; color: ${isPilot || spot.id === 'sahel' ? '#000' : '#fff'}; padding: 6px 10px; border-radius: 6px 6px 0 0; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
+            <div style="background: ${color}; color: ${isPilot || spot.id === 'sahel' || spot.id === 'uyuni' ? '#000' : '#fff'}; padding: 6px 10px; border-radius: 6px 6px 0 0; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
               <span>🛰️ ${spot.name}</span>
               <span style="font-size: 9px; background: rgba(0,0,0,0.25); color: #fff; padding: 1px 6px; border-radius: 4px;">${spot.country}</span>
             </div>
@@ -220,10 +232,10 @@ export default function MapViewer({
               <strong>Temperatura Superficie (LST):</strong> ${spot.lst_superficie_c} °C<br/>
               <strong>Significancia Estadística:</strong> <span style="color: #047857; font-weight: bold;">p = ${spot.p_value} (&lt; 0.05 ✓)</span><br/>
               <span style="font-size: 11px; color: #64748b;">Z-Score Mann-Kendall: ${spot.z_score_mann_kendall}</span>
-              ${isPilot ? `
+              ${(isPilot || spot.country === 'Bolivia') ? `
                 <div style="margin-top: 8px; padding-top: 6px; border-top: 1px dashed #cbd5e1; text-align: center;">
-                  <button id="btn-zoom-pilot" style="background: #7c3aed; color: white; border: none; padding: 5px 12px; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; width: 100%;">
-                    🔍 Ver Caso Piloto Regional (14 Distritos) ↗
+                  <button id="btn-zoom-pilot" style="background: #7c3aed; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; width: 100%;">
+                    🔍 Ver Caso Piloto Regional (14 Distritos + Red MÓNICA) ↗
                   </button>
                 </div>
               ` : ''}
@@ -248,6 +260,36 @@ export default function MapViewer({
 
         marker.addTo(layersGroupRef.current);
       });
+
+      // Downscaling visual automático: Si el usuario hace zoom en Cochabamba (zoom >= 9), muestra polígonos distritales y estaciones
+      if (map.getZoom() >= 9) {
+        distritosData?.features?.forEach((dist) => {
+          const p = dist.properties;
+          const polyCoords = dist.geometry.coordinates[0].map(([lng, lat]) => [lat, lng]);
+          const lstVal = p.lst_nasa_promedio_c || p.lst_temperatura_c || 28.0;
+          const polyColor = lstVal > 35 ? '#ef4444' : lstVal > 30 ? '#f59e0b' : '#3b82f6';
+          const polygon = L.polygon(polyCoords, {
+            color: polyColor,
+            weight: 1,
+            fillColor: polyColor,
+            fillOpacity: 0.15,
+          });
+          polygon.bindPopup(`<strong>📍 ${p.nombre}</strong><br/>LST NASA: ${lstVal} °C<br/>NDVI: ${p.ndvi_promedio || '0.25'}`);
+          polygon.addTo(layersGroupRef.current);
+        });
+
+        monicaData?.estaciones_fisicas?.forEach((est) => {
+          const m = L.circleMarker([est.lat, est.lon], {
+            radius: 8,
+            fillColor: '#06b6d4',
+            color: '#fff',
+            weight: 2,
+            fillOpacity: 0.95
+          });
+          m.bindPopup(`<strong>🏛️ Red MÓNICA (GAMC): ${est.nombre}</strong><br/>Temp. Real: ${est.temp_aire_t2m_c} °C<br/>PM2.5: ${est.pm25_ug_m3} µg/m³`);
+          m.addTo(layersGroupRef.current);
+        });
+      }
 
       // Target seleccionado o clic custom
       if (selectedPoint) {
