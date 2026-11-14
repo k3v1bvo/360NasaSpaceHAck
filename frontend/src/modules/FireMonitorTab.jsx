@@ -41,11 +41,10 @@ export default function FireMonitorTab({ onSelectFoco }) {
         </div>
         <button
           onClick={() => setShowMetrics(!showMetrics)}
-          className={`rounded-lg border px-2.5 py-1 text-xs font-semibold flex items-center gap-1.5 transition ${
-            showMetrics
-              ? 'border-red-500 bg-red-950 text-red-300'
-              : 'border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white'
-          }`}
+          className={`rounded-lg border px-2.5 py-1 text-xs font-semibold flex items-center gap-1.5 transition ${showMetrics
+            ? 'border-red-500 bg-red-950 text-red-300'
+            : 'border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white'
+            }`}
         >
           <BarChart2 className="h-3.5 w-3.5" />
           <span>{showMetrics ? 'Ver Lista' : 'Análisis Épocas'}</span>
@@ -148,11 +147,10 @@ export default function FireMonitorTab({ onSelectFoco }) {
                   >
                     <div className="flex items-center justify-between text-xs font-bold">
                       <span className="text-neutral-100">{p.zona}</span>
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
-                        p.nivel_alerta === 'Critico' ? 'bg-red-950 text-red-400 border border-red-800/80 animate-pulse' :
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${p.nivel_alerta === 'Critico' ? 'bg-red-950 text-red-400 border border-red-800/80 animate-pulse' :
                         p.nivel_alerta === 'Alto' ? 'bg-amber-950 text-amber-400 border border-amber-800/60' :
-                        'bg-neutral-800 text-neutral-300'
-                      }`}>
+                          'bg-neutral-800 text-neutral-300'
+                        }`}>
                         {p.nivel_alerta} • {p.frp_total_mw} MW
                       </span>
                     </div>

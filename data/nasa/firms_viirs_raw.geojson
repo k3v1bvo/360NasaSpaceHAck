@@ -1,0 +1,306 @@
+{
+  "type": "FeatureCollection",
+  "name": "NASA_FIRMS_VIIRS_Raw_375m",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.165,
+          -17.316
+        ]
+      },
+      "properties": {
+        "id": "RAW-02",
+        "sensor": "VIIRS",
+        "satellite": "Suomi-NPP",
+        "fecha": "2020-09-15",
+        "frp": 38.0,
+        "resolucion_m": 375,
+        "zona": "Tirani / Ladera",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.17,
+          -17.32
+        ]
+      },
+      "properties": {
+        "id": "RAW-03",
+        "sensor": "VIIRS",
+        "satellite": "NOAA-20",
+        "fecha": "2020-09-15",
+        "frp": 52.4,
+        "resolucion_m": 375,
+        "zona": "Tirani / Quebrada",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.212,
+          -17.323
+        ]
+      },
+      "properties": {
+        "id": "RAW-05",
+        "sensor": "VIIRS",
+        "satellite": "Suomi-NPP",
+        "fecha": "2021-08-22",
+        "frp": 65.1,
+        "resolucion_m": 375,
+        "zona": "Tiquipaya / Parque Tunari",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.218,
+          -17.327
+        ]
+      },
+      "properties": {
+        "id": "RAW-06",
+        "sensor": "VIIRS",
+        "satellite": "NOAA-20",
+        "fecha": "2021-08-22",
+        "frp": 42.0,
+        "resolucion_m": 375,
+        "zona": "Tiquipaya / Interfaz urbana",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.14,
+          -17.306
+        ]
+      },
+      "properties": {
+        "id": "RAW-08",
+        "sensor": "VIIRS",
+        "satellite": "Suomi-NPP",
+        "fecha": "2022-10-04",
+        "frp": 85.3,
+        "resolucion_m": 375,
+        "zona": "Andrada Alta",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.145,
+          -17.31
+        ]
+      },
+      "properties": {
+        "id": "RAW-09",
+        "sensor": "VIIRS",
+        "satellite": "NOAA-20",
+        "fecha": "2022-10-04",
+        "frp": 92.1,
+        "resolucion_m": 375,
+        "zona": "Andrada / Quebrada seca",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.039,
+          -17.343
+        ]
+      },
+      "properties": {
+        "id": "RAW-11",
+        "sensor": "VIIRS",
+        "satellite": "Suomi-NPP",
+        "fecha": "2023-08-18",
+        "frp": 55.4,
+        "resolucion_m": 375,
+        "zona": "Sacaba / Ladera boscosa",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.312,
+          -17.3
+        ]
+      },
+      "properties": {
+        "id": "RAW-13",
+        "sensor": "VIIRS",
+        "satellite": "Suomi-NPP",
+        "fecha": "2023-09-28",
+        "frp": 71.8,
+        "resolucion_m": 375,
+        "zona": "Liriuni / Cuenca alta",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.185,
+          -17.312
+        ]
+      },
+      "properties": {
+        "id": "RAW-14",
+        "sensor": "VIIRS",
+        "satellite": "NOAA-20",
+        "fecha": "2024-07-29",
+        "frp": 28.5,
+        "resolucion_m": 375,
+        "zona": "Taqui\u00f1a / Colector norte",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.152,
+          -17.328
+        ]
+      },
+      "properties": {
+        "id": "RAW-16",
+        "sensor": "VIIRS",
+        "satellite": "Suomi-NPP",
+        "fecha": "2024-08-14",
+        "frp": 64.0,
+        "resolucion_m": 375,
+        "zona": "Cerro San Pedro / Ladera",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.251,
+          -17.302
+        ]
+      },
+      "properties": {
+        "id": "RAW-18",
+        "sensor": "VIIRS",
+        "satellite": "NOAA-20",
+        "fecha": "2024-09-19",
+        "frp": 88.0,
+        "resolucion_m": 375,
+        "zona": "Chocaya alta",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.165,
+          -17.435
+        ]
+      },
+      "properties": {
+        "id": "RAW-19",
+        "sensor": "VIIRS",
+        "satellite": "Suomi-NPP",
+        "fecha": "2024-08-10",
+        "frp": 15.2,
+        "resolucion_m": 375,
+        "zona": "Zona Sur (Av. Petrolera)",
+        "en_parque_tunari": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.28,
+          -17.412
+        ]
+      },
+      "properties": {
+        "id": "RAW-20",
+        "sensor": "VIIRS",
+        "satellite": "NOAA-20",
+        "fecha": "2024-08-12",
+        "frp": 12.8,
+        "resolucion_m": 375,
+        "zona": "Vinto / Agr\u00edcola",
+        "en_parque_tunari": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.169,
+          -17.317
+        ]
+      },
+      "properties": {
+        "id": "RAW-22",
+        "sensor": "VIIRS",
+        "satellite": "Suomi-NPP",
+        "fecha": "2025-08-25",
+        "frp": 74.2,
+        "resolucion_m": 375,
+        "zona": "Taqui\u00f1a / Ladera boscosa",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.175,
+          -17.321
+        ]
+      },
+      "properties": {
+        "id": "RAW-23",
+        "sensor": "VIIRS",
+        "satellite": "NOAA-21",
+        "fecha": "2025-08-25",
+        "frp": 51.0,
+        "resolucion_m": 375,
+        "zona": "Taqui\u00f1a / Quebrada",
+        "en_parque_tunari": true
+      }
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
 
 const COCHABAMBA_CENTER = [-17.3895, -66.1568];
 
-export default function MapViewer({ activeTab, focosData, reportsData, selectedPoint }) {
+export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZED', reportsData, selectedPoint }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const layersGroupRef = useRef(null);
@@ -70,7 +70,7 @@ export default function MapViewer({ activeTab, focosData, reportsData, selectedP
     // CAPA 1: FOCOS DE CALOR Y POLÍGONO TUNARI (Kevin)
     // ==========================================
     if (activeTab === 'incendios') {
-      // Polígono Parque Nacional Tunari (Cota 2750)
+      // 1. Polígono del Parque Nacional Tunari (Cota 2750)
       if (tunariPolygonData?.features?.[0]) {
         const polyCoords = tunariPolygonData.features[0].geometry.coordinates[0].map(
           ([lng, lat]) => [lat, lng]
@@ -86,42 +86,57 @@ export default function MapViewer({ activeTab, focosData, reportsData, selectedP
           <div style="color: #111; font-family: sans-serif; font-size: 12px;">
             <strong style="color: #059669;">🌲 Parque Nacional Tunari (PNT)</strong><br/>
             <strong>Cota límite:</strong> 2750 msnm<br/>
-            <strong>Área:</strong> ~300,000 ha protegidas<br/>
-            <span style="color: #666;">Zona de recarga de acuíferos y pulmón verde</span>
+            <strong>Superficie:</strong> ~300,000 ha protegidas<br/>
+            <span style="color: #666;">Zona de recarga de acuíferos y pulmón de Cochabamba</span>
           </div>
         `);
         polygon.addTo(layersGroupRef.current);
       }
 
-      // Marcadores de Fuego Armonizados (NASA FIRMS)
+      // 2. Marcadores según el modo de sensor seleccionado en el módulo de Kevin
       focosData?.forEach((foco) => {
         const [lng, lat] = foco.geometry.coordinates;
-        const frp = foco.properties.frp_total_mw || 30;
-        const sensor = foco.properties.sensor_armonizado || 'VIIRS';
-        const nivel = foco.properties.nivel_alerta || 'Alto';
+        const p = foco.properties;
 
-        const radius = nivel === 'Critico' ? 12 : nivel === 'Alto' ? 9 : 7;
-        const fillColor = nivel === 'Critico' ? '#dc2626' : nivel === 'Alto' ? '#ea580c' : '#eab308';
+        let radius, fillColor, color, popupTitle;
+
+        if (sensorMode === 'MODIS') {
+          radius = 16; // Píxel grande de 1 km
+          fillColor = '#f59e0b';
+          color = '#ffffff';
+          popupTitle = '🛰️ Sensor MODIS MCD14DL (1 km)';
+        } else if (sensorMode === 'VIIRS') {
+          radius = 7; // Píxel fino de 375 m
+          fillColor = '#06b6d4';
+          color = '#ffffff';
+          popupTitle = '🛰️ Sensor VIIRS VNP14 (375 m)';
+        } else {
+          // MODO ARMONIZADO (Kevin)
+          const frp = p.frp_total_mw || 35;
+          radius = frp > 60 ? 13 : frp > 30 ? 9 : 7;
+          fillColor = frp > 60 ? '#dc2626' : frp > 30 ? '#ea580c' : '#f59e0b';
+          color = '#ffffff';
+          popupTitle = '🔥 Foco Armonizado (Algoritmo de Kevin)';
+        }
 
         const circle = L.circleMarker([lat, lng], {
           radius,
           fillColor,
-          color: '#ffffff',
+          color,
           weight: 1.5,
           opacity: 0.95,
           fillOpacity: 0.85,
         });
 
         circle.bindPopup(`
-          <div style="color: #111; font-family: sans-serif; font-size: 12px; min-width: 180px;">
-            <strong style="color: #dc2626;">🔥 Foco de Calor Armonizado</strong><br/>
-            <strong>Zona:</strong> ${foco.properties.zona}<br/>
-            <strong>Sensor:</strong> ${sensor}<br/>
-            <strong>FRP (Potencia):</strong> ${frp} MW<br/>
-            <strong>Nivel:</strong> ${nivel}<br/>
-            <strong>Fecha:</strong> ${foco.properties.fecha}<br/>
-            <span style="color: ${foco.properties.en_parque_tunari ? '#059669' : '#6b7280'}; font-weight: bold;">
-              ${foco.properties.en_parque_tunari ? '🌲 Dentro del P.N. Tunari' : '🏡 Interfaz urbana'}
+          <div style="color: #111; font-family: sans-serif; font-size: 12px; min-width: 190px;">
+            <strong style="color: ${fillColor};">${popupTitle}</strong><br/>
+            <strong>Zona:</strong> ${p.zona}<br/>
+            <strong>Fecha:</strong> ${p.fecha}<br/>
+            <strong>Potencia (FRP):</strong> ${p.frp_total_mw || p.frp || 35} MW<br/>
+            ${sensorMode === 'HARMONIZED' ? `<strong>Puntos fusionados:</strong> ${p.puntos_crudos_fusionados || 2}<br/>` : `<strong>Satélite:</strong> ${p.satellite || 'NASA'}<br/>`}
+            <span style="color: ${p.en_parque_tunari ? '#059669' : '#6b7280'}; font-weight: bold;">
+              ${p.en_parque_tunari ? '⚠️ Dentro del P.N. Tunari' : '🏡 Interfaz urbana'}
             </span>
           </div>
         `);
@@ -222,7 +237,7 @@ export default function MapViewer({ activeTab, focosData, reportsData, selectedP
     if (mapInstanceRef.current) {
       renderLayers(null, mapInstanceRef.current);
     }
-  }, [activeTab, focosData, reportsData]);
+  }, [activeTab, focosData, sensorMode, reportsData]);
 
   // Centrar en punto seleccionado al hacer clic desde el panel
   useEffect(() => {
@@ -239,10 +254,13 @@ export default function MapViewer({ activeTab, focosData, reportsData, selectedP
     <div className="relative h-full w-full bg-neutral-950 overflow-hidden">
       <div ref={mapContainerRef} className="h-full w-full z-0" />
       
-      {/* Leyenda Flotante Dinámica según el Reto Activo */}
+      {/* Leyenda Flotante Dinámica según el Modo de Sensor de Kevin */}
       <div className="absolute bottom-4 left-4 z-[400] rounded-xl border border-neutral-800 bg-neutral-950/90 p-3 text-xs text-white backdrop-blur-md shadow-2xl">
         <span className="font-bold text-[10px] text-neutral-400 uppercase tracking-wider">
-          {activeTab === 'incendios' && 'LEYENDA: NASA FIRMS + TUNARI'}
+          {activeTab === 'incendios' && (
+            sensorMode === 'HARMONIZED' ? 'MODO: DUAL ARMONIZADO (KEVIN)' :
+            sensorMode === 'MODIS' ? 'MODO: SENSOR MODIS (1 KM)' : 'MODO: SENSOR VIIRS (375 M)'
+          )}
           {activeTab === 'microclimas' && 'LEYENDA: TEMPERATURA LST GAMC'}
           {activeTab === 'torrenteras' && 'LEYENDA: 60 PUNTOS GROUND-TRUTH'}
           {activeTab === 'agrotech' && 'LEYENDA: VALLE COCHABAMBA'}
@@ -251,14 +269,30 @@ export default function MapViewer({ activeTab, focosData, reportsData, selectedP
         <div className="mt-2 space-y-1.5 text-[11px]">
           {activeTab === 'incendios' && (
             <>
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-red-500 animate-pulse"></span>
-                <span>Foco de Fuego Armonizado (&gt;50 MW)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-amber-500"></span>
-                <span>Foco Moderado (Quema en valle)</span>
-              </div>
+              {sensorMode === 'HARMONIZED' && (
+                <>
+                  <div className="flex items-center gap-2">
+                    <span className="h-3 w-3 rounded-full bg-red-500 animate-pulse"></span>
+                    <span>Incendio Armonizado (&gt;50 MW)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-3 w-3 rounded-full bg-amber-500"></span>
+                    <span>Foco Moderado en Valle (&lt;35 MW)</span>
+                  </div>
+                </>
+              )}
+              {sensorMode === 'MODIS' && (
+                <div className="flex items-center gap-2">
+                  <span className="h-4 w-4 rounded-full bg-amber-500/80 border border-white"></span>
+                  <span>Footprint MODIS (1,000 m píxel)</span>
+                </div>
+              )}
+              {sensorMode === 'VIIRS' && (
+                <div className="flex items-center gap-2">
+                  <span className="h-2.5 w-2.5 rounded-full bg-cyan-400 border border-white"></span>
+                  <span>Detección VIIRS (375 m I-band)</span>
+                </div>
+              )}
               <div className="flex items-center gap-2">
                 <span className="h-3.5 w-3.5 rounded border border-dashed border-emerald-400 bg-emerald-900/40"></span>
                 <span>Polígono P.N. Tunari (Cota 2750)</span>
@@ -271,10 +305,6 @@ export default function MapViewer({ activeTab, focosData, reportsData, selectedP
               <div className="flex items-center gap-2">
                 <span className="h-3.5 w-3.5 rounded bg-red-500/70 border border-red-400"></span>
                 <span>Isla Térmica Crítica (&gt;35 °C - D5 Av. 6 de Agosto)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-3.5 w-3.5 rounded bg-amber-500/70 border border-amber-400"></span>
-                <span>Zona Urbana Media (30 - 35 °C - Centro D10)</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="h-3.5 w-3.5 rounded bg-emerald-500/70 border border-emerald-400"></span>
@@ -290,27 +320,17 @@ export default function MapViewer({ activeTab, focosData, reportsData, selectedP
                 <span>Riesgo Extremo (Taquiña / Aluvión)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-amber-500"></span>
-                <span>Riesgo Alto (Colector comprometido)</span>
-              </div>
-              <div className="flex items-center gap-2">
                 <span className="h-3 w-3 rounded-full bg-blue-500"></span>
-                <span>Punto de Monitoreo Pluvial GAMC</span>
+                <span>Punto Histórico GAMC</span>
               </div>
             </>
           )}
 
           {activeTab === 'agrotech' && (
-            <>
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-emerald-500"></span>
-                <span>Valle Central y Bajo (Rotación Maíz/Haba)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-orange-500"></span>
-                <span>Alerta Vecinal Georreferenciada</span>
-              </div>
-            </>
+            <div className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-emerald-500"></span>
+              <span>Recomendación Rotación de Cultivo</span>
+            </div>
           )}
         </div>
       </div>

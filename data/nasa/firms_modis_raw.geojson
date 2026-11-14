@@ -1,0 +1,166 @@
+{
+  "type": "FeatureCollection",
+  "name": "NASA_FIRMS_MODIS_Raw_1km",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.168,
+          -17.318
+        ]
+      },
+      "properties": {
+        "id": "RAW-01",
+        "sensor": "MODIS",
+        "satellite": "Terra",
+        "fecha": "2020-09-15",
+        "frp": 45.2,
+        "resolucion_m": 1000,
+        "zona": "Tirani / Cota 2750",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.215,
+          -17.325
+        ]
+      },
+      "properties": {
+        "id": "RAW-04",
+        "sensor": "MODIS",
+        "satellite": "Aqua",
+        "fecha": "2021-08-22",
+        "frp": 78.5,
+        "resolucion_m": 1000,
+        "zona": "Tiquipaya Norte",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.142,
+          -17.308
+        ]
+      },
+      "properties": {
+        "id": "RAW-07",
+        "sensor": "MODIS",
+        "satellite": "Terra",
+        "fecha": "2022-10-04",
+        "frp": 110.0,
+        "resolucion_m": 1000,
+        "zona": "Andrada / Tunari Este",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.042,
+          -17.345
+        ]
+      },
+      "properties": {
+        "id": "RAW-10",
+        "sensor": "MODIS",
+        "satellite": "Aqua",
+        "fecha": "2023-08-18",
+        "frp": 62.0,
+        "resolucion_m": 1000,
+        "zona": "Sacaba / Parque Tunari Este",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.315,
+          -17.302
+        ]
+      },
+      "properties": {
+        "id": "RAW-12",
+        "sensor": "MODIS",
+        "satellite": "Terra",
+        "fecha": "2023-09-28",
+        "frp": 94.0,
+        "resolucion_m": 1000,
+        "zona": "Liriuni / Tunari Oeste",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.155,
+          -17.33
+        ]
+      },
+      "properties": {
+        "id": "RAW-15",
+        "sensor": "MODIS",
+        "satellite": "Terra",
+        "fecha": "2024-08-14",
+        "frp": 82.0,
+        "resolucion_m": 1000,
+        "zona": "Cerro San Pedro / Tunari",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.255,
+          -17.305
+        ]
+      },
+      "properties": {
+        "id": "RAW-17",
+        "sensor": "MODIS",
+        "satellite": "Aqua",
+        "fecha": "2024-09-19",
+        "frp": 105.0,
+        "resolucion_m": 1000,
+        "zona": "Chocaya / El Paso",
+        "en_parque_tunari": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.172,
+          -17.319
+        ]
+      },
+      "properties": {
+        "id": "RAW-21",
+        "sensor": "MODIS",
+        "satellite": "Terra",
+        "fecha": "2025-08-25",
+        "frp": 68.0,
+        "resolucion_m": 1000,
+        "zona": "Taqui\u00f1a / Conato",
+        "en_parque_tunari": true
+      }
+    }
+  ]
+}
