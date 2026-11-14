@@ -238,31 +238,40 @@ export default function MapViewer({
     // CAPA 2: MICROCLIMAS & RED MÓNICA IA (Trend Detective)
     // ==========================================
     if (activeTab === 'microclimas') {
-      // 1. Polígonos de Distritos con Gradiente Térmico LST
+      // 1. Polígonos de Distritos con Gradiente Térmico LST y Métricas GAMC
       distritosData?.features?.forEach((dist) => {
         const p = dist.properties;
         const polyCoords = dist.geometry.coordinates[0].map(([lng, lat]) => [lat, lng]);
 
-        const color = p.lst_temperatura_c > 35 ? '#ef4444' :
-                      p.lst_temperatura_c > 30 ? '#f59e0b' :
-                      p.lst_temperatura_c > 26 ? '#3b82f6' : '#10b981';
+        const lstVal = p.lst_nasa_promedio_c || p.lst_temperatura_c || 28.0;
+        const color = lstVal > 35 ? '#ef4444' :
+                      lstVal > 30 ? '#f59e0b' :
+                      lstVal > 26 ? '#3b82f6' : '#10b981';
 
         const polygon = L.polygon(polyCoords, {
           color,
           weight: 1.5,
           fillColor: color,
-          fillOpacity: 0.25,
+          fillOpacity: 0.30,
         });
 
         polygon.bindPopup(`
-          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 210px; line-height: 1.4;">
-            <div style="font-weight: bold; font-size: 13px; color: ${color}; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 4px;">
-              📍 ${p.nombre}
+          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 230px; line-height: 1.45;">
+            <div style="font-weight: bold; font-size: 13px; color: ${color}; border-bottom: 2px solid ${color}; padding-bottom: 4px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">
+              <span>📍 ${p.nombre}</span>
+              ${p.nivel_alerta ? `<span style="font-size: 10px; background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 4px;">${p.nivel_alerta}</span>` : ''}
             </div>
-            <strong>Temperatura LST (NASA):</strong> <span style="font-weight: bold; color: ${color};">${p.lst_temperatura_c} °C</span><br/>
-            <strong>Índice Vegetación NDVI:</strong> ${p.ndvi_vegetacion}<br/>
-            <strong>Diagnóstico Isla de Calor:</strong> ${p.nivel_isla_calor}<br/>
-            <span style="color: #b91c1c; font-size: 11px; font-weight: bold;">${p.contraste_zona_sur_c}</span>
+            <strong>Temperatura LST (NASA):</strong> <span style="font-weight: bold; color: ${color};">${lstVal} °C</span><br/>
+            ${p.temp_aire_pred_c ? `<strong>Temp. Aire Estimada:</strong> ${p.temp_aire_pred_c} °C<br/>` : ''}
+            ${p.pet_pred_c ? `<strong>Confort Térmico Humano (PET):</strong> <span style="font-weight: bold; color: ${p.pet_pred_c > 35 ? '#b91c1c' : '#047857'};">${p.pet_pred_c} °C</span><br/>` : ''}
+            <strong>Índice Vegetación NDVI:</strong> ${p.ndvi_promedio || p.ndvi_vegetacion || '0.25'}<br/>
+            ${p.riesgo_termico_hvr ? `<strong>Índice Riesgo HVR:</strong> <span style="font-weight: bold;">${p.riesgo_termico_hvr}</span><br/>` : ''}
+            ${p.poblacion_total ? `<strong>Población Expuesta:</strong> ${Number(p.poblacion_total).toLocaleString()} hab. (${p.densidad_hab_km2 || ''} hab/km²)<br/>` : ''}
+            ${p.estrategia_recomendada ? `
+              <div style="margin-top: 5px; padding: 4px; background: #f8fafc; border-left: 3px solid ${color}; font-size: 11px;">
+                <strong>Estrategia GAMC:</strong> ${p.estrategia_recomendada}
+              </div>
+            ` : ''}
           </div>
         `);
         polygon.addTo(layersGroupRef.current);

@@ -22,24 +22,33 @@ import monicaData from '../data/monica_virtual_sensors.json';
 import { GAMC_CONFIG, NASA_CONFIG } from '../config/servicesConfig';
 
 export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) {
-  const [activeSubTab, setActiveSubTab] = useState('sensors'); // 'sensors' | 'divergence' | 'simulator' | 'impact_fire'
+  const [activeSubTab, setActiveSubTab] = useState('sensors'); // 'sensors' | 'divergence' | 'simulator' | 'impact_fire' | 'apis'
   const [selectedSensorId, setSelectedSensorId] = useState('MONICA-01');
 
-  // Sliders del Simulador Ciudadano
+  // Sliders del Simulador Predictivo GAMC + NASA
   const [reforestBonus, setReforestBonus] = useState(25); // %
   const [fireReduction, setFireReduction] = useState(50); // %
+  const [albedoTechos, setAlbedoTechos] = useState(0.15); // 0.0 a 0.5
+  const [recuperarAlalay, setRecuperarAlalay] = useState(true);
+  const [olaCalor, setOlaCalor] = useState(false);
+
+  // Detección de la Paradoja del Penalizador de Albedo (SciML)
+  const albedoPenaltyActive = albedoTechos >= 0.30 && reforestBonus < 15;
 
   const fisicas = monicaData?.estaciones_fisicas || [];
   const virtuales = monicaData?.sensores_virtuales_ia || [];
   const allSensors = [...fisicas, ...virtuales];
   const selectedSensor = allSensors.find(s => s.id === selectedSensorId) || fisicas[0];
 
-  // Cálculos dinámicos del simulador
-  const tempReduction = (reforestBonus * 0.08 + fireReduction * 0.03).toFixed(1);
-  const pm25Reduction = (reforestBonus * 0.35 + fireReduction * 0.28).toFixed(1);
+  // Cálculos dinámicos del simulador de confort
+  const alalayBonus = recuperarAlalay ? 1.8 : 0.0;
+  const heatWavePenalty = olaCalor ? 3.5 : 0.0;
+  const tempReduction = Math.max(0.0, Number((reforestBonus * 0.08 + fireReduction * 0.03 + (albedoTechos * 3.5) + (alalayBonus * 0.4) - heatWavePenalty).toFixed(1)));
+  const pm25Reduction = Math.max(0.0, Number((reforestBonus * 0.35 + fireReduction * 0.28).toFixed(1)));
+  const petReduction = Math.max(0.0, Number((reforestBonus * 0.12 - (albedoPenaltyActive ? -1.5 : albedoTechos * 1.8) + (alalayBonus * 0.5)).toFixed(1)));
 
   return (
-    <div className="space-y-4 p-4 text-white">
+    <div className="space-y-3.5 p-4 text-white">
       {/* 1. Header del Módulo de Microclimas */}
       <div className="flex items-center justify-between border-b border-blue-900/50 pb-3">
         <div className="flex items-center gap-2.5">
@@ -58,6 +67,29 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
             <p className="text-[11px] text-neutral-400">
               Sensado Virtual • 2 Estaciones Físicas + 13 Sensores IA
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* 1.5. Contraste Territorial Oficial GAMC (Cota 2750 Tunari vs Asfalto Zona Sur) */}
+      <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-r from-emerald-950/40 via-neutral-900/60 to-red-950/40 p-3 text-xs">
+        <div className="flex justify-between items-center mb-1">
+          <span className="font-bold text-[10px] text-neutral-300 uppercase tracking-wider flex items-center gap-1">
+            <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+            Contraste Territorial Oficial GAMC
+          </span>
+          <span className="text-[10px] bg-red-950 text-red-400 border border-red-800/60 px-1.5 py-0.5 rounded font-mono font-bold">
+            Brecha: +17.4 °C
+          </span>
+        </div>
+        <div className="grid grid-cols-2 gap-2 text-[11px] pt-1 border-t border-neutral-800">
+          <div>
+            <span className="text-emerald-400 font-semibold block text-[10px]">🌲 Tunari D13 (Cota &gt; 2750m):</span>
+            <span className="text-white font-bold text-xs">20.4 °C LST • PET 21.8 °C</span>
+          </div>
+          <div>
+            <span className="text-red-400 font-semibold block text-[10px]">🏙️ Zona Sur D9 (Asfalto):</span>
+            <span className="text-white font-bold text-xs">37.8 °C LST • PET 39.5 °C</span>
           </div>
         </div>
       </div>
@@ -275,19 +307,19 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
           <div className="border-b border-neutral-800 pb-2">
             <h3 className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
               <Sliders className="h-4 w-4" />
-              Simulador Predictivo de Mitigación (IA)
+              Simulador Predictivo de Mitigación (IA & SciML)
             </h3>
             <p className="text-[11px] text-neutral-400 mt-1">
-              ¿Qué pasa en Cochabamba si reforestamos la Cota 2750 y reducimos quemas periurbanas?
+              Modela reforestación en Cota 2750, reducción de quemas, techos reflectantes y recarga de la Laguna Alalay.
             </p>
           </div>
 
           {/* Slider 1: Reforestación */}
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             <div className="flex justify-between text-xs">
               <span className="text-neutral-300 flex items-center gap-1">
                 <TreePine className="h-3.5 w-3.5 text-emerald-400" />
-                Reforestación con Kewiñas/Molle en Cota 2750:
+                Reforestación Cota 2750 (Kewiña / Molle):
               </span>
               <span className="font-bold text-emerald-400 font-mono">+{reforestBonus}%</span>
             </div>
@@ -302,11 +334,11 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
           </div>
 
           {/* Slider 2: Reducción de Quemas */}
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             <div className="flex justify-between text-xs">
               <span className="text-neutral-300 flex items-center gap-1">
                 <Flame className="h-3.5 w-3.5 text-amber-400" />
-                Reducción de Quemas / Chaqueos Periurbanos:
+                Reducción de Quemas / Cada Foco Tunari:
               </span>
               <span className="font-bold text-amber-400 font-mono">-{fireReduction}%</span>
             </div>
@@ -320,17 +352,87 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
             />
           </div>
 
-          {/* Resultados Proyectados por la IA */}
-          <div className="grid grid-cols-2 gap-2 text-xs pt-1">
-            <div className="rounded-lg bg-neutral-900 p-2.5 border border-neutral-800">
-              <span className="text-[10px] text-neutral-400 block">Enfriamiento LST:</span>
-              <span className="text-lg font-black text-emerald-400 font-mono">-{tempReduction} °C</span>
-              <span className="text-[9px] text-neutral-500 block">Sobre isla de calor</span>
+          {/* Slider 3: Techos Reflectantes / Albedo */}
+          <div className="space-y-1">
+            <div className="flex justify-between text-xs">
+              <span className="text-neutral-300 flex items-center gap-1">
+                <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+                Recubrimiento Reflectante en Techos (Albedo):
+              </span>
+              <span className="font-bold text-cyan-400 font-mono">{(albedoTechos * 100).toFixed(0)}%</span>
             </div>
-            <div className="rounded-lg bg-neutral-900 p-2.5 border border-neutral-800">
-              <span className="text-[10px] text-neutral-400 block">Reducción PM2.5:</span>
-              <span className="text-lg font-black text-cyan-400 font-mono">-{pm25Reduction} µg/m³</span>
-              <span className="text-[9px] text-neutral-500 block">Aire más respirable</span>
+            <input
+              type="range"
+              min="0"
+              max="0.5"
+              step="0.05"
+              value={albedoTechos}
+              onChange={(e) => setAlbedoTechos(Number(e.target.value))}
+              className="w-full accent-cyan-500 h-1.5 bg-neutral-800 rounded-lg cursor-pointer"
+            />
+          </div>
+
+          {/* Toggles: Laguna Alalay & Ola de Calor */}
+          <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
+            <button
+              onClick={() => setRecuperarAlalay(!recuperarAlalay)}
+              className={`p-2 rounded-lg border text-left transition ${
+                recuperarAlalay
+                  ? 'border-blue-500/60 bg-blue-950/40 text-blue-300'
+                  : 'border-neutral-800 bg-neutral-900 text-neutral-400'
+              }`}
+            >
+              <div className="font-bold flex items-center gap-1 text-[11px]">
+                <span>🌊 Recarga Laguna Alalay</span>
+              </div>
+              <span className="text-[10px] text-neutral-400 block mt-0.5">
+                {recuperarAlalay ? 'Activo (-1.8 °C en D6-D8)' : 'Inactivo (Seca)'}
+              </span>
+            </button>
+
+            <button
+              onClick={() => setOlaCalor(!olaCalor)}
+              className={`p-2 rounded-lg border text-left transition ${
+                olaCalor
+                  ? 'border-red-500/60 bg-red-950/40 text-red-300'
+                  : 'border-neutral-800 bg-neutral-900 text-neutral-400'
+              }`}
+            >
+              <div className="font-bold flex items-center gap-1 text-[11px]">
+                <span>🔥 Simular Ola de Calor</span>
+              </div>
+              <span className="text-[10px] text-neutral-400 block mt-0.5">
+                {olaCalor ? 'Activo (+3.5 °C en todo el valle)' : 'Condición Normal'}
+              </span>
+            </button>
+          </div>
+
+          {/* Alerta de Paradoja de Albedo */}
+          {albedoPenaltyActive && (
+            <div className="rounded-lg bg-amber-950/40 border border-amber-800/80 p-2 text-xs text-amber-200 flex items-start gap-2">
+              <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-amber-300 block text-[11px]">⚠️ Paradoja del Penalizador de Albedo Detectada:</strong>
+                <span className="text-[10px] text-amber-300/90 leading-tight block">
+                  Aumentar albedo en techos sin sombra arbórea (&lt;15%) rebota la radiación al peatón, elevando el PET a más de 39 °C. Reforesta al menos +15% para proteger a los peatones.
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Resultados Proyectados por la IA */}
+          <div className="grid grid-cols-3 gap-2 text-xs pt-1">
+            <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800 text-center">
+              <span className="text-[9px] text-neutral-400 block">Enfriamiento LST</span>
+              <span className="text-base font-black text-emerald-400 font-mono">-{tempReduction} °C</span>
+            </div>
+            <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800 text-center">
+              <span className="text-[9px] text-neutral-400 block">Reducción PM2.5</span>
+              <span className="text-base font-black text-cyan-400 font-mono">-{pm25Reduction} µg</span>
+            </div>
+            <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800 text-center">
+              <span className="text-[9px] text-neutral-400 block">Confort PET</span>
+              <span className="text-base font-black text-purple-400 font-mono">-{petReduction} °C</span>
             </div>
           </div>
         </div>
