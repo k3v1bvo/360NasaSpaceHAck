@@ -142,3 +142,29 @@ Ten estos datos en la cabeza o anotados en una ficha para responder cualquier pr
 | **Brecha Térmica Territorial** | **$+17.4\ ^\circ\text{C}$** | Tunari D13 ($20.4\ ^\circ\text{C}$) vs Zona Sur D9 ($37.8\ ^\circ\text{C}$). |
 | **Efecto Laguna Alalay** | **$-1.8\ ^\circ\text{C}$** | Amortiguación microclimática por espejo de agua en Distrito 6. |
 | **Frecuencia de Inferencia** | **0.05 segundos** | Datos pre-calculados en JSON estáticos con arquitectura Offline-First. |
+
+---
+
+# 🛡️ PREGUNTAS TRAMPA DEL JURADO (RESPUESTAS BLINDADAS)
+
+### ❓ Pregunta 1: *"¿Por qué incluyeron incendios y focos de calor si el reto de la NASA pedía detectar tendencias climáticas terrestres (Trend Detective)?"*
+* **🎯 Respuesta Imbatible (El Estudio de Ablación):**
+  > *"Excelente pregunta. Para evitar cualquier sesgo, realizamos un **Estudio de Ablación con dos modelos independientes**:*
+  > 
+  > * **1. Modelo Base (Puro NASA • Sin Incendios):** Entrenado estrictamente con las variables climáticas del reto (`LST`, `NDVI`, `Altitud`). Cumple al 100% la consigna oficial con un **$R^2 = 0.914$**, $\text{RMSE} = 0.68\ ^\circ\text{C}$ y $\text{MAE} = 0.51\ ^\circ\text{C}$. Con este modelo base ya ganamos el reto demostrando las tendencias distritales.*
+  > * **2. Modelo Aumentado (+ Incendios y Aerosoles Tunari):** Como innovación de nuestro equipo para Cochabamba, sumamos los focos MODIS/VIIRS y aerosoles (AOD). Al hacerlo, el **$R^2$ sube a 0.946** y el error cuadrático se reduce en un **39% ($\text{RMSE} = 0.55\ ^\circ\text{C}$)**.*
+  > 
+  > *¿Por qué mejora tanto? Porque en el valle de Cochabamba existe el fenómeno físico de **inversión térmica**: el humo de los incendios del Tunari queda atrapado en el fondo del valle como una tapa de olla, reteniendo la radiación infrarroja y disparando la temperatura en los distritos densos del sur. El Modelo 1 cumple el reto de la NASA; el Modelo 2 resuelve la realidad física de Cochabamba."*
+
+---
+
+### ❓ Pregunta 2: *"¿Por qué se enfocan en Cochabamba si es un reto internacional de la NASA?"*
+* **🎯 Respuesta Imbatible:**
+  > *"La NASA produce terabytes de datos satelitales globales, pero el mayor desafío de la ciencia espacial hoy es el **Ground Truthing** y el **Downscaling**: cómo llevar datos orbitales de baja resolución a decisiones a nivel de calle.*  
+  > *Cochabamba es nuestro laboratorio piloto porque contamos con las 2 estaciones físicas de la Red MÓNICA para calibrar y validar científicamente el modelo. Pero nuestra plataforma cuenta con el **Explorador Planetario (NASA Global)**, lo que significa que este mismo algoritmo de sensado virtual es escalable a cualquier ciudad del mundo que tenga escasez de estaciones terrestres."*
+
+---
+
+### ❓ Pregunta 3: *"¿Por qué no usan una red neuronal profunda o un LLM para la predicción?"*
+* **🎯 Respuesta Imbatible:**
+  > *"Porque en datos tabulares y series temporales físicas, **XGBoost (Gradient Boosted Decision Trees)** supera consistentemente a las redes neuronales según los benchmarks de la literatura científica (Grinsztajn et al., NeurIPS). Además, XGBoost ofrece explicabilidad directa mediante valores SHAP para que los técnicos de la Alcaldía sepan exactamente qué porcentaje de la temperatura se debe a la falta de vegetación (NDVI) o a la radiación solar (LST), algo que una red neuronal 'caja negra' no permite."*
