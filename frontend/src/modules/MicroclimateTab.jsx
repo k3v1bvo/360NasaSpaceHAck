@@ -3,7 +3,7 @@ import { SunMedium, Trees, Layers, TrendingUp, AlertTriangle, ShieldCheck, Wind,
 import distritosGeoJson from '../../../data/gamc/distritos_cochabamba.geojson';
 
 /**
- * MICROCLIMATETAB.JSX — GEO-COCHABAMBA 360
+ * MICROCLIMATETAB.JSX — NASA TREND DETECTIVE
  * Reto NASA: "Be An Earth System Trend Detective! - Microclimas Urbanos con IA"
  * Reto Local: GAMC Cochabamba (Resiliencia Microclimática & Islas de Calor)
  * Rama de Git: feature/modulo-microclimas

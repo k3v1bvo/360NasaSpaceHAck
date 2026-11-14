@@ -45,8 +45,8 @@ def health_check():
     return HealthResponse(
         status="ONLINE",
         version="1.0.0",
-        proyecto="GEO-COCHABAMBA 360 - Microclimas Urbanos & Tendencias",
-        equipo="GEO-COCHABAMBA 360 (NASA Space Apps 2026)",
+        proyecto="NASA TREND DETECTIVE - Microclimas Urbanos & Tendencias",
+        equipo="Stevens (NASA Space Apps 2026)",
         sede="FEXCO - Cochabamba, Bolivia",
         gpu_disponible=gpu_ok,
         modelos_cargados={

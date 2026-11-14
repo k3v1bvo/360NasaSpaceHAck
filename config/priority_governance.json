@@ -1,6 +1,6 @@
 {
   "governance_hierarchy": {
-    "description": "5-level parameter governance hierarchy for GEO-COCHABAMBA 360 microclimates. Higher priority levels override lower ones.",
+    "description": "5-level parameter governance hierarchy for NASA TREND DETECTIVE microclimates. Higher priority levels override lower ones.",
     "levels": [
       {
         "priority": 1,

@@ -3,29 +3,30 @@ import Navbar from './components/Navbar';
 import MetricsStrip from './components/MetricsStrip';
 import MapViewer from './components/MapViewer';
 
-// Módulo Estrella del Reto Ganador: Be An Earth System Trend Detective! (GAMC 01/05 + NASA)
-import MicroclimateAITab from './modules/MicroclimateAITab';
-
-// Módulo Internacional NASA en Inglés (Evaluación Global de Tendencias Térmicas)
+// Módulo 1: Explorador Planetario de la NASA (Reto Oficial: Be An Earth System Trend Detective!)
 import GlobalNasaMode from './modules/GlobalNasaMode';
 
-// Módulo Principal de Kevin (Incendios Tunari - Motor Físico de AOD y Calor)
+// Módulo 2: Caso Piloto Regional Cochabamba (14 Distritos, Red MÓNICA e IA Virtual)
+import MicroclimateAITab from './modules/MicroclimateAITab';
+
+// Módulo 3: Causa Física Térmica (Incendios Tunari, NASA FIRMS y Plumas AOD)
 import FireMonitorTab from './modules/FireMonitorTab';
 
 import CitizenReportModal from './modules/CitizenReportModal';
 
-// Datos satelitales armonizados y crudos de Kevin
+// Datos satelitales armonizados y crudos
 import focosHarmonized from '../../data/nasa/firms_tunari_harmonized.geojson';
 import focosModisRaw from '../../data/nasa/firms_modis_raw.geojson';
 import focosViirsRaw from '../../data/nasa/firms_viirs_raw.geojson';
 import monicaData from './data/monica_virtual_sensors.json';
 
 export default function App() {
-  // Pestaña activa por defecto: Microclimas IA (Trend Detective)
-  const [activeTab, setActiveTab] = useState('microclimas');
-  const [offlineMode, setOfflineMode] = useState(false); // Online por defecto para consumir WMS GAMC
+  // Pestaña activa por defecto: Explorador Global Planetario de la NASA
+  const [activeTab, setActiveTab] = useState('global_nasa');
+  const [offlineMode, setOfflineMode] = useState(false); // Online por defecto para consumir NASA POWER & WMS
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState(null);
+  const [selectedGlobalSpot, setSelectedGlobalSpot] = useState(null);
   const [sensorMode, setSensorMode] = useState('HARMONIZED'); // 'HARMONIZED' | 'MODIS' | 'VIIRS'
 
   // Estados de las Capas WMS Oficiales del GAMC
@@ -56,7 +57,7 @@ export default function App() {
       className="flex h-screen w-screen flex-col overflow-hidden bg-[#090a0f] font-sans text-neutral-100"
       style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column' }}
     >
-      {/* 1. Barra Superior con navegación */}
+      {/* 1. Barra Superior con Navegación Oficial NASA TREND DETECTIVE */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -65,25 +66,34 @@ export default function App() {
         onOpenReport={() => setIsReportModalOpen(true)}
       />
 
-      {/* 2. Barra Científica de Métricas IA Obligatorias (R², RMSE, MAE, p-value) */}
+      {/* 2. Barra Científica de Métricas IA Obligatorias (R²=0.9457, RMSE=0.55°C, p < 0.05) */}
       <MetricsStrip metrics={monicaData?.metricas_modelo_ia} />
 
-      {/* 3. Cuerpo Principal: Mapa + Panel Lateral */}
+      {/* 3. Cuerpo Principal: Mapa Planetario/Regional + Panel Lateral */}
       <div 
         className="relative flex flex-1 overflow-hidden min-h-0"
         style={{ flex: 1, display: 'flex', minHeight: 0, position: 'relative' }}
       >
-        {/* Mapa Central Interactivo */}
+        {/* Mapa Central Interactivo con Controles Planetarios y Regionales */}
         <main 
           className="relative flex-1 h-full min-h-0"
           style={{ flex: 1, height: '100%', minHeight: 0, position: 'relative' }}
         >
           <MapViewer
             activeTab={activeTab}
+            setActiveTab={setActiveTab}
             focosData={currentFocosData}
             sensorMode={sensorMode}
             reportsData={reports}
             selectedPoint={selectedPoint}
+            setSelectedPoint={setSelectedPoint}
+            onSelectGlobalLocation={(spot) => {
+              setSelectedPoint({ lat: spot.lat, lon: spot.lon, ...spot });
+              setSelectedGlobalSpot(spot);
+            }}
+            onMapClick={({ lat, lon }) => {
+              setSelectedPoint({ lat, lon });
+            }}
             offlineMode={offlineMode}
             wmsCota={wmsCota}
             wmsPeriurbanos={wmsPeriurbanos}
@@ -98,6 +108,15 @@ export default function App() {
           className="w-full max-w-sm md:max-w-md border-l border-neutral-800/80 bg-[#0d1017]/95 overflow-y-auto backdrop-blur-xl shadow-2xl z-10"
           style={{ width: '420px', minWidth: '360px', height: '100%', overflowY: 'auto' }}
         >
+          {activeTab === 'global_nasa' && (
+            <GlobalNasaMode
+              onFocusGlobalCoords={(coords) => setSelectedPoint({ lat: coords[0], lon: coords[1] })}
+              onSwitchToPilot={() => setActiveTab('microclimas')}
+              selectedLocation={selectedGlobalSpot}
+              setSelectedLocation={setSelectedGlobalSpot}
+            />
+          )}
+
           {activeTab === 'microclimas' && (
             <MicroclimateAITab
               onSelectPoint={(point) => setSelectedPoint(point)}
@@ -121,12 +140,6 @@ export default function App() {
               gibsDate={gibsDate}
               setGibsDate={setGibsDate}
               offlineMode={offlineMode}
-            />
-          )}
-
-          {activeTab === 'global_nasa' && (
-            <GlobalNasaMode
-              onFocusGlobalCoords={(coords) => setSelectedPoint({ lat: coords[0], lon: coords[1] })}
             />
           )}
         </aside>
