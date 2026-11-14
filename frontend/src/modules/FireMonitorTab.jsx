@@ -575,18 +575,33 @@ export default function FireMonitorTab({
             </p>
           </div>
 
-          <div className="space-y-1.5 text-xs">
-            {metricsData?.distribucion_mensual?.map((item) => (
-              <div key={item.mes} className="flex items-center justify-between py-1 border-b border-neutral-900 text-[11px]">
-                <span className={item.es_periodo_critico ? 'font-bold text-red-300' : 'text-neutral-400'}>
-                  {item.mes} {item.es_periodo_critico && '⚠️'}
-                </span>
-                <div className="flex items-center gap-3">
-                  <span className="text-neutral-400">{item.focos_registrados} eventos</span>
-                  <span className="font-mono text-neutral-200">{item.frp_acumulado_mw} MW</span>
+          <div className="space-y-2.5 text-xs">
+            {metricsData?.distribucion_mensual?.map((item) => {
+              const maxFRP = 550;
+              const percent = Math.min(100, Math.max(8, Math.round((item.frp_acumulado_mw / maxFRP) * 100)));
+              return (
+                <div key={item.mes} className="space-y-1">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className={item.es_periodo_critico ? 'font-bold text-red-400 flex items-center gap-1' : 'text-neutral-400'}>
+                      {item.mes} {item.es_periodo_critico && <span className="text-[10px] text-red-400 font-bold bg-red-950 px-1 py-0.2 rounded border border-red-900">CRÍTICO</span>}
+                    </span>
+                    <span className="font-mono text-neutral-300">
+                      {item.focos_registrados} focos • <strong className="text-amber-400">{item.frp_acumulado_mw} MW</strong>
+                    </span>
+                  </div>
+                  <div className="h-2 w-full bg-neutral-900 rounded-full overflow-hidden border border-neutral-800">
+                    <div 
+                      className={`h-full rounded-full transition-all duration-500 ${
+                        item.es_periodo_critico 
+                          ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-red-600 shadow-sm' 
+                          : 'bg-neutral-700'
+                      }`}
+                      style={{ width: `${percent}%` }}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="rounded-lg bg-neutral-900 border border-neutral-800 p-2.5 text-[11px] text-neutral-300">
