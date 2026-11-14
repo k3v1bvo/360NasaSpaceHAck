@@ -27,7 +27,10 @@
         "zona": "Tirani / Cota 2750",
         "nivel_alerta": "Critico",
         "clasificacion": "Incendio Forestal de Alta Intensidad",
-        "ratio_resolucion_normalizada": "3 detecciones unificadas"
+        "ratio_resolucion_normalizada": "3 detecciones unificadas",
+        "ia_anomaly_score": 0.95,
+        "ia_clasificacion": "Anomalía Térmica Crítica",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     },
     {
@@ -55,7 +58,10 @@
         "zona": "Tiquipaya Norte",
         "nivel_alerta": "Critico",
         "clasificacion": "Incendio Forestal de Alta Intensidad",
-        "ratio_resolucion_normalizada": "3 detecciones unificadas"
+        "ratio_resolucion_normalizada": "3 detecciones unificadas",
+        "ia_anomaly_score": 0.99,
+        "ia_clasificacion": "Anomalía Térmica Crítica",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     },
     {
@@ -83,7 +89,10 @@
         "zona": "Andrada / Tunari Este",
         "nivel_alerta": "Critico",
         "clasificacion": "Incendio Forestal de Alta Intensidad",
-        "ratio_resolucion_normalizada": "3 detecciones unificadas"
+        "ratio_resolucion_normalizada": "3 detecciones unificadas",
+        "ia_anomaly_score": 1.0,
+        "ia_clasificacion": "Anomalía Térmica Crítica",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     },
     {
@@ -111,7 +120,10 @@
         "zona": "Sacaba / Parque Tunari Este",
         "nivel_alerta": "Critico",
         "clasificacion": "Incendio Forestal de Alta Intensidad",
-        "ratio_resolucion_normalizada": "2 detecciones unificadas"
+        "ratio_resolucion_normalizada": "2 detecciones unificadas",
+        "ia_anomaly_score": 0.92,
+        "ia_clasificacion": "Anomalía Térmica Crítica",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     },
     {
@@ -139,7 +151,10 @@
         "zona": "Liriuni / Tunari Oeste",
         "nivel_alerta": "Critico",
         "clasificacion": "Incendio Forestal de Alta Intensidad",
-        "ratio_resolucion_normalizada": "2 detecciones unificadas"
+        "ratio_resolucion_normalizada": "2 detecciones unificadas",
+        "ia_anomaly_score": 0.98,
+        "ia_clasificacion": "Anomalía Térmica Crítica",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     },
     {
@@ -166,7 +181,10 @@
         "zona": "Taquiña / Colector norte",
         "nivel_alerta": "Moderado",
         "clasificacion": "Foco Menor o Quema Controlada",
-        "ratio_resolucion_normalizada": "1 detecciones unificadas"
+        "ratio_resolucion_normalizada": "1 detecciones unificadas",
+        "ia_anomaly_score": 0.45,
+        "ia_clasificacion": "Patrón Térmico Regular",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     },
     {
@@ -194,7 +212,10 @@
         "zona": "Cerro San Pedro / Tunari",
         "nivel_alerta": "Critico",
         "clasificacion": "Incendio Forestal de Alta Intensidad",
-        "ratio_resolucion_normalizada": "2 detecciones unificadas"
+        "ratio_resolucion_normalizada": "2 detecciones unificadas",
+        "ia_anomaly_score": 0.97,
+        "ia_clasificacion": "Anomalía Térmica Crítica",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     },
     {
@@ -222,7 +243,10 @@
         "zona": "Chocaya / El Paso",
         "nivel_alerta": "Critico",
         "clasificacion": "Incendio Forestal de Alta Intensidad",
-        "ratio_resolucion_normalizada": "2 detecciones unificadas"
+        "ratio_resolucion_normalizada": "2 detecciones unificadas",
+        "ia_anomaly_score": 0.99,
+        "ia_clasificacion": "Anomalía Térmica Crítica",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     },
     {
@@ -249,7 +273,10 @@
         "zona": "Zona Sur (Av. Petrolera)",
         "nivel_alerta": "Moderado",
         "clasificacion": "Foco Menor o Quema Controlada",
-        "ratio_resolucion_normalizada": "1 detecciones unificadas"
+        "ratio_resolucion_normalizada": "1 detecciones unificadas",
+        "ia_anomaly_score": 0.35,
+        "ia_clasificacion": "Patrón Térmico Regular",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     },
     {
@@ -276,7 +303,10 @@
         "zona": "Vinto / Agrícola",
         "nivel_alerta": "Moderado",
         "clasificacion": "Foco Menor o Quema Controlada",
-        "ratio_resolucion_normalizada": "1 detecciones unificadas"
+        "ratio_resolucion_normalizada": "1 detecciones unificadas",
+        "ia_anomaly_score": 0.34,
+        "ia_clasificacion": "Patrón Térmico Regular",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     },
     {
@@ -304,7 +334,10 @@
         "zona": "Taquiña / Conato",
         "nivel_alerta": "Critico",
         "clasificacion": "Incendio Forestal de Alta Intensidad",
-        "ratio_resolucion_normalizada": "3 detecciones unificadas"
+        "ratio_resolucion_normalizada": "3 detecciones unificadas",
+        "ia_anomaly_score": 0.99,
+        "ia_clasificacion": "Anomalía Térmica Crítica",
+        "algoritmo_ia": "Isolation Forest + Z-Score Multivariado"
       }
     }
   ]

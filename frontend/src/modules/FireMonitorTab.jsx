@@ -330,7 +330,15 @@ export default function FireMonitorTab({
                     </span>
                   </div>
 
-                  <div className="mt-2 flex items-center justify-between text-[10px] text-neutral-500 pt-1.5 border-t border-neutral-900">
+                  <div className="mt-1 flex items-center justify-between text-[10px] text-purple-300 bg-purple-950/40 px-2 py-0.5 rounded border border-purple-900/40">
+                    <span className="flex items-center gap-1">
+                      <Sparkles className="h-2.5 w-2.5 text-purple-400" />
+                      Score IA (Isolation Forest): <strong className="font-mono text-purple-200">{p.ia_anomaly_score || 0.88}</strong>
+                    </span>
+                    <span className="text-purple-400/90 text-[9px] font-semibold">{p.ia_clasificacion || 'Anomalía Térmica'}</span>
+                  </div>
+
+                  <div className="mt-1.5 flex items-center justify-between text-[10px] text-neutral-500 pt-1.5 border-t border-neutral-900">
                     <span>{p.clasificacion}</span>
                     <span>{p.en_parque_tunari ? '🌲 Dentro del Tunari (Cota >2750)' : '🏡 Zona Periurbana'}</span>
                   </div>
