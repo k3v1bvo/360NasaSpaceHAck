@@ -1,36 +1,70 @@
-# 🚀 GUÍA OFICIAL PARA EL EQUIPO — NASA SPACE APPS COCHABAMBA 2026
-**Proyecto Unificado:** *GEO-COCHABAMBA 360: Plataforma de Resiliencia Territorial y Alerta Temprana*  
+# 🚀 GUÍA Y PLAN MAESTRO — NASA SPACE APPS COCHABAMBA 2026
+**Proyecto:** *GEO-COCHABAMBA 360: Plataforma de Resiliencia Territorial y Alerta Temprana*  
 **Sede:** Feria Exposición de Cochabamba (FEXCO) • Cochabamba, Bolivia  
-**Líder de Proyecto / Integrador:** Kevin  
+**Repositorio Oficial en GitHub:** [https://github.com/k3v1bvo/360NasaSpaceHAck.git](https://github.com/k3v1bvo/360NasaSpaceHAck.git)  
+**Líder Técnico & Coordinador:** Kevin (`k3v1bvo`)  
 
 ---
 
 > [!IMPORTANT]
-> ### 📌 REGLA DE ORO DEL EQUIPO
-> **Cada integrante desarrolla un módulo/reto independiente** con sus fuentes de datos (NASA + GAMC).  
-> **Para que la unión final sea automática y sin dolores de cabeza**, todos usamos **el mismo stack tecnológico, la misma estructura de carpetas y el mismo formato de datos (GeoJSON estándar)**.  
-> Nadie instala librerías raras ni cambia la estructura sin consultar a Kevin.
+> ### 📌 REGLA DE ORO DEL EQUIPO: UNIÓN DE PROYECTOS SIN CONFLICTOS
+> **Cada integrante es responsable de 1 módulo específico** que responde a un reto oficial de la NASA y a un reto local del GAMC.  
+> Las ramas en GitHub **ya están creadas y subidas**. Cada compañero trabaja en su rama y en su archivo asignado. Al finalizar, Kevin une todo en `main` para la presentación en la FEXCO.
 
 ---
 
-## 1. Stack Tecnológico Fijo y Obligatorio (Para Todos)
+## 1. Ramas de Git Oficiales en GitHub
 
-Para asegurar que los 4 módulos se ensamblen en un solo dashboard sin errores de compatibilidad:
+El repositorio ya tiene las 4 ramas listas para que cada uno trabaje en paralelo:
 
-| Componente | Tecnología Fija | Versión / Detalle |
-| :--- | :--- | :--- |
-| **Entorno de ejecución** | **Node.js** | v18.x o v20.x LTS |
-| **Frontend Base** | **React + Vite** | JavaScript / JSX rápido y modular |
-| **Estilos & UI** | **Tailwind CSS** | Clases utilitarias estándar, diseño oscuro moderno tipo NASA |
-| **Iconografía** | **Lucide React** | `lucide-react` para iconos limpios (fuego, agua, clima, alertas) |
-| **Motor de Mapas** | **Leaflet / React-Leaflet** | Ultra liviano, compatible con todos los navegadores, sin costos ni tokens |
-| **Backend & Procesamiento**| **Python 3.10+ / FastAPI** | Para procesar shapefiles, GeoTIFFs y consumir APIs de NASA |
-| **Formato de Intercambio** | **GeoJSON (RFC 7946)** | Coordenadas obligatorias: `[longitud, latitud]` en sistema WGS84 (EPSG:4326) |
-| **Coordenadas de Cochabamba**| **Bounding Box Oficial** | Latitud: `-17.50` a `-17.25` / Longitud: `-66.35` a `-66.05` |
+| Integrante | Rol / Módulo Asignado | Rama en GitHub | Archivo Principal a Editar |
+| :--- | :--- | :--- | :--- |
+| **Kevin** | **Líder & Focos de Calor / Tunari** | `feature/kevin-incendios-tunari` | `src/modules/FireMonitorTab.jsx` |
+| **Integrante 2** | **Microclimas & Islas de Calor** | `feature/modulo-microclimas` | `src/modules/MicroclimateTab.jsx` |
+| **Integrante 3** | **Torrenteras, DEM & Inundaciones** | `feature/modulo-torrenteras` | `src/modules/FloodRiskTab.jsx` |
+| **Integrante 4** | **Agrotech, Alerta Vecinal & Pitch** | `feature/modulo-agrotech-reportes` | `src/modules/AgroAdvisorTab.jsx` + `CitizenReportModal.jsx` |
+| **Producción** | **Rama Final para el Jurado** | `main` | Integración general (Solo Kevin) |
 
 ---
 
-## 2. Asignación de Retos por Integrante (Qué debe hacer cada uno)
+## 2. Instrucciones de Inicio Rápido para los 4 Integrantes
+
+### Paso 1: Clonar el Repositorio
+Abre tu terminal (o Git Bash) y corre:
+```bash
+git clone https://github.com/k3v1bvo/360NasaSpaceHAck.git
+cd 360NasaSpaceHAck
+```
+
+### Paso 2: Cambiarte a TU rama asignada
+* **Si eres Kevin:**
+  ```bash
+  git checkout feature/kevin-incendios-tunari
+  ```
+* **Si eres Integrante 2 (Microclimas):**
+  ```bash
+  git checkout feature/modulo-microclimas
+  ```
+* **Si eres Integrante 3 (Torrenteras):**
+  ```bash
+  git checkout feature/modulo-torrenteras
+  ```
+* **Si eres Integrante 4 (Agrotech / Pitch):**
+  ```bash
+  git checkout feature/modulo-agrotech-reportes
+  ```
+
+### Paso 3: Probar el proyecto en local
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Abre en tu navegador `http://localhost:5173` y verás el mapa de Cochabamba interactivo con las 4 pestañas listas.
+
+---
+
+## 3. Plan Detallado por Integrante (Qué debe hacer cada uno)
 
 ```
                             ┌──────────────────────────────────────────────┐
@@ -50,186 +84,132 @@ Para asegurar que los 4 módulos se ensamblen en un solo dashboard sin errores d
 
 ---
 
-### 👤 INTEGRANTE 1: KEVIN (Líder Técnico & Módulo Focos de Calor / Incendios Tunari)
-* **Desafío NASA Vinculado:** *Harmonization of MODIS and VIIRS Hot Spots*
-* **Desafío Local GAMC:** *Monitoreo de Focos de Calor e Incendios Forestales (Tunari)*
-* **Rama de Git:** `feature/modulo-incendios`
+### 👤 INTEGRANTE 1: KEVIN (Líder Técnico & Focos de Calor Tunari)
+* **Desafíos:** NASA *Harmonization of MODIS and VIIRS Hot Spots* + GAMC *Incendios Tunari*.
+* **Rama:** `feature/kevin-incendios-tunari`
+* **Archivos que le corresponden:**
+  * `frontend/src/modules/FireMonitorTab.jsx`
+  * `data/nasa/firms_focos_tunari.geojson`
 
 #### 🎯 Tus Tareas Concretas:
-1. **Infraestructura Base:** Crear el repositorio en GitHub, inicializar React con Tailwind y configurar el componente de mapa principal (`MapViewer.jsx`) centrado en Cochabamba (`[-17.3895, -66.1568]`).
-2. **Consumo de NASA FIRMS:** 
-   - Conectar con la API de NASA FIRMS (MODIS y VIIRS) usando el bounding box de Cochabamba / Parque Tunari.
-   - Guardar una copia histórica en `data/nasa/firms_tunari_historico.json` (por seguridad si se corta internet).
-3. **Armonización de Sensores:** 
-   - Filtrar y unificar los puntos de MODIS (1km) y VIIRS (375m).
-   - Clasificar los focos por severidad (FRP / Fire Radiative Power: Bajo, Medio, Crítico).
-4. **Entregable en Frontend:** Crear el componente `src/modules/FireMonitorTab.jsx` con:
-   - Capa de círculos de calor sobre el Parque Tunari.
-   - Filtro por fecha (últimas 24h, 48h, históricos).
-   - Tarjeta con estadísticas: Total de focos detectados, zona crítica actual.
-5. **Integración:** Revisar y aprobar los Pull Requests de los otros 3 compañeros.
+1. **Consumo de NASA FIRMS API:**
+   - Obtener el API Key gratuita en [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/api/).
+   - Bounding Box oficial de Cochabamba y Parque Tunari: `[-66.35, -17.50, -66.05, -17.25]`.
+   - Guardar una copia histórica en `data/nasa/focos_tunari_ejemplo.geojson` como respaldo por si falla el internet en la FEXCO.
+2. **Armonización de Sensores (El núcleo del reto NASA):**
+   - Comparar puntos de **MODIS** (resolución 1 km) vs **VIIRS** (resolución 375 m).
+   - Eliminar detecciones duplicadas en la misma ventana de tiempo/espacio.
+   - Clasificar según **FRP (Fire Radiative Power)**:
+     * *Bajo:* < 20 MW (humo leve o quema controlada).
+     * *Medio:* 20 - 50 MW (foco en propagación).
+     * *Crítico:* > 50 MW (incendio forestal activo en cota alta del Tunari).
+3. **Frontend:**
+   - Terminar de afinar `FireMonitorTab.jsx` con filtros por fecha (últimas 24h, 48h, semana crítica).
+   - Añadir estadísticas de hectáreas potenciales afectadas.
+4. **Coordinación:**
+   - Guiar a tus compañeros, resolver dudas de Git y aprobar los Pull Requests a `main`.
 
 ---
 
 ### 👤 INTEGRANTE 2: Especialista en Microclimas Urbanos & Visor Satelital
-* **Desafío NASA Vinculado:** *Be An Earth System Trend Detective!*
-* **Desafío Local GAMC:** *Microclimas Urbanos con IA + Visualizador de Datos Satelitales*
-* **Rama de Git:** `feature/modulo-microclimas`
+* **Desafíos:** NASA *Be An Earth System Trend Detective!* + GAMC *Microclimas Urbanos con IA*.
+* **Rama:** `feature/modulo-microclimas`
+* **Archivos que le corresponden:**
+  * `frontend/src/modules/MicroclimateTab.jsx`
+  * `data/gamc/distritos_cochabamba.geojson`
 
 #### 🎯 Tus Tareas Concretas:
-1. **Datos del GAMC (Distritos):** Cargar los shapefiles municipales de los distritos de Cochabamba (Distritos 1 al 14) y convertirlos a `distritos_cochabamba.geojson`.
-2. **Datos NASA Earthdata:** 
-   - Obtener series de **LST (Land Surface Temperature)** = Temperatura del suelo.
-   - Obtener series de **NDVI** = Índice de Cobertura Vegetal.
-3. **Análisis de Disparidades Socioambientales (El contraste que pide la Alcaldía):**
-   - Calcular el promedio de temperatura y cobertura vegetal por distrito.
-   - Contrastar distritos con alta impermeabilización/asfalto (ej. Av. 6 de Agosto / Circunvalación) frente a zonas con alta cobertura verde (faldas del Tunari, Parque Metropolitano, Laguna Alalay).
-4. **Entregable en Frontend:** Crear el componente `src/modules/MicroclimateTab.jsx` con:
-   - Capa de polígonos de los distritos coloreados en degradé térmico (rojo = isla de calor, verde = zona templada/arbolada).
-   - Al hacer clic en un distrito, abrir un popup o panel lateral con sus datos: Nombre del distrito, temperatura promedio, % cobertura vegetal.
-   - Gráfico de barras o líneas simple (con `recharts`) mostrando la comparación entre distritos.
+1. **Datos Municipales (GAMC):**
+   - Conseguir o cargar los límites de los **Distritos Municipales 1 al 14 de Cochabamba** en formato GeoJSON en `data/gamc/distritos_cochabamba.geojson`.
+2. **Datos Satelitales (NASA Earthdata):**
+   - Series de **LST (Land Surface Temperature)** = Temperatura superficial de suelo (MODIS/VIIRS).
+   - Series de **NDVI** = Índice de Cobertura Vegetal.
+3. **El Análisis de Contraste que exige la Alcaldía:**
+   - Contrastar zonas con asfalto/cemento masivo (ej. Av. 6 de Agosto / Circunvalación / Zona Sur) con zonas verdes (faldas del Parque Tunari / Laguna Alalay / Parque Metropolitano).
+   - Demostrar cómo la falta de árboles aumenta la temperatura hasta en **+10 °C o +12 °C** en la zona sur (efecto "Isla de Calor").
+4. **Frontend:**
+   - En `MicroclimateTab.jsx`, crear la lista o selector de distritos donde al hacer clic en un distrito se muestren sus métricas (temperatura media, % vegetación, diagnóstico).
+   - Añadir un gráfico de barras comparativo (con `recharts` o barras simples de Tailwind).
 
 ---
 
-### 👤 INTEGRANTE 3: Especialista en Riesgos, Inundaciones & Torrenteras
-* **Desafío NASA Vinculado:** *Dancing with the SARs*
-* **Desafío Local GAMC:** *Prevención de Riesgos, Inundaciones y Deslizamientos en Torrenteras*
-* **Rama de Git:** `feature/modulo-torrenteras`
+### 👤 INTEGRANTE 3: Especialista en Torrenteras, Inundaciones & DEM
+* **Desafíos:** NASA *Dancing with the SARs* + GAMC *Prevención en Torrenteras y Colectores*.
+* **Rama:** `feature/modulo-torrenteras`
+* **Archivos que le corresponden:**
+  * `frontend/src/modules/FloodRiskTab.jsx`
+  * `data/gamc/60_puntos_inundacion.geojson`
+  * `data/gamc/colectores_torrenteras.geojson`
 
 #### 🎯 Tus Tareas Concretas:
-1. **Ground-Truth del GAMC (60 Puntos Históricos):**
-   - Cargar los **60 puntos históricos de eventos de inundación/deslizamiento** provistos por el GAMC en un archivo `60_puntos_inundacion.geojson`.
-2. **Datos de Elevación y Torrenteras:**
-   - Ubicar las torrenteras principales que bajan del Tunari (Taquiña, Pintumayu, Logruste, etc.) y la red de colectores pluviales del municipio.
-   - Incorporar la pendiente/relieve (datos NASA DEM / SRTM) para identificar zonas bajas donde se acumula el agua.
-3. **Modelo de Vulnerabilidad:**
-   - Crear un algoritmo sencillo de categorización de riesgo:
-     * **Riesgo Alto:** Baja pendiente + Proximidad a torrentera desbordada + Histórico de anegamiento.
-     * **Riesgo Medio:** Zona de colector con capacidad comprometida.
-4. **Entregable en Frontend:** Crear el componente `src/modules/FloodRiskTab.jsx` con:
-   - Capa de marcadores de los 60 puntos históricos con icono de advertencia.
-   - Capa de líneas/trazados de las principales torrenteras y red de colectores.
-   - Filtro de severidad: Ver zonas de riesgo extremo durante lluvias intensas (cruzado con telemetría de lluvia SENAMHI).
+1. **Los 60 Puntos Históricos de la Alcaldía (Ground-Truth):**
+   - Cargar los **60 puntos históricos de inundación/deslizamiento** entregados por el GAMC en `data/gamc/60_puntos_inundacion.geojson`.
+   - Estos puntos son la prueba de que el modelo está validado contra la realidad de Cochabamba.
+2. **Datos de Relieve y Torrenteras:**
+   - Trazar las torrenteras clave que bajan de la cordillera (Taquiña, Pintumayu, Logruste, etc.) y la red de colectores pluviales.
+   - Cruzar con la pendiente (NASA SRTM/DEM): el agua escurre veloz en la ladera alta y se embalsa/anega en las zonas planas de la ciudad.
+3. **Algoritmo de Riesgo:**
+   - Clasificar los puntos:
+     * *Riesgo Extremo:* Torrentera activa + historial de mazamorra + colector tapado.
+     * *Riesgo Alto:* Depresión topográfica + lluvia SENAMHI > 40 mm.
+     * *Riesgo Moderado:* Zona con pendiente suave y drenaje secundario.
+4. **Frontend:**
+   - En `FloodRiskTab.jsx`, permitir filtrar por nivel de riesgo (Extremo, Alto, Medio).
+   - Mostrar ficha técnica de cada torrentera al seleccionarla.
 
 ---
 
 ### 👤 INTEGRANTE 4: Especialista Agrotech, Alerta Ciudadana & Pitch FEXCO
-* **Desafío NASA Vinculado:** *Field Shift: Adapting Farms with NASA Data*
-* **Desafío Local GAMC:** *Rotación de Cultivos Resilientes y Gestión Hídrica Local*
-* **Rama de Git:** `feature/modulo-agrotech`
+* **Desafíos:** NASA *Field Shift: Adapting Farms* + GAMC *Rotación de Cultivos & Ciudadanía*.
+* **Rama:** `feature/modulo-agrotech-reportes`
+* **Archivos que le corresponden:**
+  * `frontend/src/modules/AgroAdvisorTab.jsx`
+  * `frontend/src/modules/CitizenReportModal.jsx`
+  * `DOCUMENTACION_DATOS.md` y Presentación de Diapositivas
 
 #### 🎯 Tus Tareas Concretas:
-1. **Herramienta de Recomendación Agrícola (Valle Central/Bajo):**
-   - Crear un calculador/asistente donde un agricultor seleccione su tipo de suelo y disponibilidad de agua.
-   - Cruzar con datos de humedad de suelo de la NASA (SMAP) o evapotranspiración para sugerir cultivos tradicionales resilientes (maíz, haba, hortalizas) que optimicen el ahorro de agua.
-2. **Módulo Extra "Alerta Ciudadana en Tiempo Real" (Valor Agregado):**
-   - Crear un modal flotante: *"Reportar Emergencia Vecinal"* con campos sencillos:
-     * Tipo: Incendio / Torrentera tapada / Anegamiento de calle.
-     * Ubicación: Tomar ubicación GPS del navegador o marcar un punto en el mapa.
-     * Descripción y foto de referencia.
-   - Al guardar, el reporte aparece inmediatamente como un pin interactivo en el mapa.
-3. **Liderar los Entregables de Comunicación (Clave para ganar la FEXCO):**
-   - **Documentación Técnica:** Listar formalmente las fuentes de datos NASA (FIRMS, Earthdata, DEM, SMAP) y GAMC (Shapefiles, 60 puntos, Colectores).
-   - **Video Pitch (2 a 3 minutos):** Redactar el guion, coordinar la grabación de la pantalla del prototipo y subirlo a YouTube/Drive.
-   - **Diapositivas:** Preparar las 6 diapositivas de impacto para defender ante el jurado en el stand de la FEXCO.
+1. **Asistente de Rotación de Cultivos (Agrotech):**
+   - Diseñar la herramienta interactiva en `AgroAdvisorTab.jsx` donde el agricultor elige su zona (Valle Bajo, Central, Ladera) y tipo de suelo.
+   - Cruzar con datos de humedad de suelo de la NASA (SMAP) para recomendar rotaciones óptimas de bajo consumo hídrico (ej. maíz -> tarwi/haba para fijar nitrógeno y ahorrar 30% de agua).
+2. **Módulo "Alerta Ciudadana Vecinal" (Impacto Visual WOW):**
+   - Afinar el modal `CitizenReportModal.jsx`: formulario flotante para que cualquier vecino o brigadista reporte humo en el Tunari o torrentera tapada, capturando su ubicación GPS.
+   - Al enviar el reporte, se crea un pin de alerta en el mapa en tiempo real.
+3. **Liderar los Entregables Clave de Evaluación:**
+   - **Documentación Técnica:** Citar todas las fuentes NASA (FIRMS, Earthdata, DEM, SMAP) y GAMC (Shapefiles, 60 puntos, SENAMHI).
+   - **Video Pitch (2 a 3 minutos):** Redactar el guion de 150 segundos y grabar el video demostrando el software funcionando.
+   - **Diapositivas:** Preparar las 6 diapositivas para defender el proyecto ante los jueces en el stand de la FEXCO.
 
 ---
 
-## 3. Contrato de Datos: Formato Estándar para Todos
+## 4. Protocolo de Integración en Git (Para no pisarse código)
 
-Para que los módulos de los 4 integrantes se puedan montar sobre el mismo mapa sin tocar el código de los demás, **todos los datos deben ser GeoJSON válidos**:
+Cuando termines tu parte o quieras que Kevin revise tus avances:
 
-```json
-{
-  "type": "FeatureCollection",
-  "name": "Capa_Ejemplo",
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-66.1568, -17.3895]
-      },
-      "properties": {
-        "modulo": "incendios | microclimas | torrenteras | agrotech",
-        "titulo": "Nombre del Punto / Distrito / Torrentera",
-        "nivel_alerta": "Bajo | Medio | Alto | Critico",
-        "valor_metrica": "38.5 °C / 120 mm / FRP 45",
-        "fuente": "NASA FIRMS / GAMC Catastro",
-        "detalles": "Texto descriptivo que se muestra en el popup al hacer clic"
-      }
-    }
-  ]
-}
-```
-
----
-
-## 4. Estructura de Carpetas del Proyecto
-
-```text
-nasa-spaceapps-cochabamba/
-├── README.md                           <-- Instrucciones de instalación
-├── PLAN_DESARROLLO_TEAM.md             <-- Esta guía
-├── data/                               <-- Carpeta donde se guardan los GeoJSON locales
-│   ├── gamc/
-│   │   ├── distritos_cochabamba.geojson     (Integrante 2)
-│   │   ├── 60_puntos_inundacion.geojson     (Integrante 3)
-│   │   └── colectores_torrenteras.geojson   (Integrante 3)
-│   └── nasa/
-│       ├── firms_focos_tunari.geojson       (Kevin)
-│       └── lst_ndvi_distritos.json          (Integrante 2)
-└── frontend/                           <-- Aplicación React + Vite
-    ├── package.json
-    ├── src/
-    │   ├── App.jsx                     <-- Dashboard maestro con tabs de navegación
-    │   ├── components/
-    │   │   ├── MapViewer.jsx           <-- Mapa central compartido
-    │   │   ├── Navbar.jsx              <-- Barra superior con logos NASA + GAMC
-    │   │   └── LayerControl.jsx        <-- Switch para encender/apagar capas
-    │   └── modules/
-    │       ├── FireMonitorTab.jsx      <-- Módulo 1 (Kevin)
-    │       ├── MicroclimateTab.jsx     <-- Módulo 2 (Integrante 2)
-    │       ├── FloodRiskTab.jsx        <-- Módulo 3 (Integrante 3)
-    │       ├── AgroAdvisorTab.jsx      <-- Módulo 4 (Integrante 4)
-    │       └── CitizenReportModal.jsx  <-- Módulo 4 (Integrante 4)
-```
-
----
-
-## 5. Protocolo de Trabajo en Git (Para no pisarse código)
-
-1. **Paso 1:** Kevin crea el repo en GitHub con la base funcionando y lo comparte con los 3 integrantes.
-2. **Paso 2:** Cada compañero clona el repo:
+1. **Guarda tus cambios y haz commit:**
    ```bash
-   git clone <url-del-repositorio>
-   cd nasa-spaceapps-cochabamba/frontend
-   npm install
+   git add .
+   git commit -m "feat(modulo): avance de mi funcionalidad"
    ```
-3. **Paso 3:** Cada uno crea su rama antes de escribir una sola línea de código:
-   - Integrante 2: `git checkout -b feature/modulo-microclimas`
-   - Integrante 3: `git checkout -b feature/modulo-torrenteras`
-   - Integrante 4: `git checkout -b feature/modulo-agrotech`
-4. **Paso 4:** Cada quien solo toca su archivo dentro de `src/modules/` y sus datos en `data/`. **¡Nadie modifica `MapViewer.jsx` ni `App.jsx` directamente!**
-5. **Paso 5:** Hacen commit, push a su rama y crean un Pull Request (PR) en GitHub para que Kevin lo revise e integre en `main`.
+2. **Sube tus cambios a TU rama:**
+   * Kevin: `git push origin feature/kevin-incendios-tunari`
+   * Int. 2: `git push origin feature/modulo-microclimas`
+   * Int. 3: `git push origin feature/modulo-torrenteras`
+   * Int. 4: `git push origin feature/modulo-agrotech-reportes`
+3. **Crear Pull Request en GitHub:**
+   - Entra a [https://github.com/k3v1bvo/360NasaSpaceHAck](https://github.com/k3v1bvo/360NasaSpaceHAck)
+   - Verás un botón verde: **"Compare & pull request"**.
+   - Selecciona como destino la rama `main` y pide a Kevin que lo revise.
+4. **Kevin hace el Merge:**
+   - Kevin revisa que el código no rompa nada y aprueba el merge a `main`.
 
 ---
 
-## 6. Los 5 Entregables Oficiales que Califica el Jurado
+## 5. Checklist de los 5 Entregables Oficiales de la Hackathon
 
-| # | Entregable Exigido | Responsable | Criterio de Éxito |
+| # | Entregable Oficial | Estado | Quién lo lidera |
 | :---: | :--- | :---: | :--- |
-| **1** | **Repositorio Abierto en GitHub** | Kevin | Código ordenado con README claro de cómo instalarlo. |
-| **2** | **Prototipo Funcional Demostrable** | Todo el equipo | Web fluida con mapa interactivo y capas activables en vivo. |
-| **3** | **Documentación Técnica de Datos** | Integrante 4 + Kevin | Tabla con enlaces a Earthdata, FIRMS, DEM, Shapefiles GAMC y SENAMHI. |
-| **4** | **Video Pitch de 2 a 3 minutos** | Integrante 4 | Video grabado con buena voz explicando el problema de Cocha, la solución y la demo. |
-| **5** | **Presentación Final FEXCO** | Todo el equipo | Diapositivas listas para proyectar ante los jueces en la feria. |
-
----
-
-## 7. Consejos Clave para Ganar en la FEXCO
-
-> [!TIP]
-> 1. **Modo Offline Activado:** El internet en la FEXCO suele saturarse o fallar cuando hay mucha gente conectada. Guarden todos los datos procesados en la carpeta `data/` para que la web funcione perfectamente sin conexión a internet durante la demostración al jurado.
-> 2. **Impacto Local:** Recuerden siempre mencionar nombres reales de Cochabamba: el *Parque Nacional Tunari*, la *Torrentera Taquiña*, la *Laguna Alalay*, la *Av. 6 de Agosto* y los distritos de la zona sur. El jurado de la Alcaldía ama ver soluciones aplicadas a su realidad.
-> 3. **Botón de Reporte Vecinal:** El módulo de reporte ciudadano con GPS es el gancho visual que demuestra que el proyecto no se queda en ciencia teórica, sino que sirve a los cochabambinos en el día a día.
+| **1** | **Repositorio GitHub Público** con instrucciones | ✅ Creado | Kevin |
+| **2** | **Prototipo Funcional Demostrable** (Web con mapa y capas) | 🔄 En progreso | Todo el equipo |
+| **3** | **Documentación Técnica de Fuentes de Datos** | ⏳ Pendiente | Integrante 4 + Kevin |
+| **4** | **Video Pitch de 2 a 3 minutos** (YouTube / Drive público) | ⏳ Pendiente | Integrante 4 |
+| **5** | **Presentación Final para el Jurado en la FEXCO** | ⏳ Pendiente | Todo el equipo |
