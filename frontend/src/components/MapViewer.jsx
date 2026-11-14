@@ -495,9 +495,8 @@ export default function MapViewer({
         <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
           <span className="font-bold text-[10px] text-cyan-400 uppercase tracking-wider">
             {activeTab === 'incendios' && 'NASA FIRMS + GAMC WMS'}
-            {activeTab === 'microclimas' && 'NASA LST + GAMC DISTRITOS'}
-            {activeTab === 'torrenteras' && 'GAMC GROUND-TRUTH'}
-            {activeTab === 'agrotech' && 'VALLE COCHABAMBA'}
+            {activeTab === 'microclimas' && 'NASA LST & SCI-ML • DISTRITOS'}
+            {activeTab === 'global_nasa' && 'LIVE NASA POWER GLOBAL STREAM'}
           </span>
           <span className="flex items-center gap-1 text-[9px] text-emerald-400 font-mono">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping"></span>
@@ -574,13 +573,6 @@ export default function MapViewer({
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full bg-blue-500 animate-pulse border border-white"></span>
               <span>🛰️ Live NASA POWER Satellite Stream</span>
-            </div>
-          )}
-
-          {activeTab === 'torrenteras' && (
-            <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-red-500 animate-ping"></span>
-              <span>Punto de Riesgo Extremo GAMC (60 pts)</span>
             </div>
           )}
         </div>

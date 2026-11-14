@@ -12,9 +12,6 @@ import GlobalNasaMode from './modules/GlobalNasaMode';
 // Módulo Principal de Kevin (Incendios Tunari - Motor Físico de AOD y Calor)
 import FireMonitorTab from './modules/FireMonitorTab';
 
-// Módulos de apoyo de los compañeros
-import FloodRiskTab from './modules/FloodRiskTab';
-import AgroAdvisorTab from './modules/AgroAdvisorTab';
 import CitizenReportModal from './modules/CitizenReportModal';
 
 // Datos satelitales armonizados y crudos de Kevin
@@ -130,18 +127,6 @@ export default function App() {
           {activeTab === 'global_nasa' && (
             <GlobalNasaMode
               onFocusGlobalCoords={(coords) => setSelectedPoint({ lat: coords[0], lon: coords[1] })}
-            />
-          )}
-
-          {activeTab === 'torrenteras' && (
-            <FloodRiskTab
-              onSelectPunto={(pt) => setSelectedPoint(pt)}
-            />
-          )}
-
-          {activeTab === 'agrotech' && (
-            <AgroAdvisorTab
-              onOpenReportModal={() => setIsReportModalOpen(true)}
             />
           )}
         </aside>

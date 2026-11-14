@@ -3,11 +3,9 @@ import { Globe, Radio, BellRing, Shield } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, offlineMode, setOfflineMode, onOpenReport }) {
   const tabs = [
-    { id: 'microclimas', label: '🌡️ Microclimas & MÓNICA IA', badge: 'GAMC 01/05' },
-    { id: 'incendios', label: '🔥 Incendios Tunari (Kevin)', badge: 'GAMC 03' },
-    { id: 'global_nasa', label: '🌍 Global NASA Mode', badge: 'English' },
-    { id: 'torrenteras', label: '🌊 Cuencas & Riesgo', badge: 'GAMC 02' },
-    { id: 'agrotech', label: '🌱 Agrotech', badge: 'GAMC 04' },
+    { id: 'microclimas', label: '🌡️ Detective de Tendencias IA', badge: 'GAMC 01/05 & NASA' },
+    { id: 'incendios', label: '🔥 Incendios Tunari (Kevin)', badge: 'Motor AOD & GAMC 03' },
+    { id: 'global_nasa', label: '🌍 Global NASA Mode', badge: 'English Stream' },
   ];
 
   return (
