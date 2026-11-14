@@ -90,24 +90,32 @@ export default function MapViewer({
 
       const satGroup = L.layerGroup([satTiles, satLabels]);
 
-      // 2. Base Callejero Voyager (CartoDB) - 100% vector nítido a todo zoom
-      const streetsLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO',
-        subdomains: 'abcd',
+      // 2. Base Callejero OpenStreetMap (100% público, libre, sin API key ni marcas)
+      const streetsLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
         maxZoom: 19,
       });
 
-      // 3. Base Dark Matter (CartoDB) - Estilo centro de control espacial
-      const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO',
-        subdomains: 'abcd',
+      // 3. Base Oscura Esri Dark Gray Canvas (Público de Esri, sin API key ni marcas)
+      const darkBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; Esri &copy; OpenStreetMap',
+        maxNativeZoom: 16,
         maxZoom: 19,
       });
+
+      const darkLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '',
+        maxNativeZoom: 16,
+        maxZoom: 19,
+        opacity: 0.85,
+      });
+
+      const darkGroup = L.layerGroup([darkBase, darkLabels]);
 
       baseLayersRef.current = {
         satellite: satGroup,
         streets: streetsLayer,
-        dark: darkLayer,
+        dark: darkGroup,
       };
 
       // Iniciar con la capa satelital activa
