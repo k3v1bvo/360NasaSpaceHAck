@@ -621,7 +621,7 @@ export default function MapViewer({
           <span className="font-bold text-[10px] text-cyan-400 uppercase tracking-wider">
             {activeTab === 'global_nasa' && 'PLANETARY EARTH DETECTIVE'}
             {activeTab === 'microclimas' && 'PILOTO COCHABAMBA • 14 DISTRITOS'}
-            {activeTab === 'incendios' && 'NASA FIRMS & GAMC PROYECTO 03'}
+            {activeTab === 'incendios' && 'DETECCIÓN TÉRMICA & HUMO TUNARI'}
           </span>
           <span className="flex items-center gap-1 text-[9px] text-emerald-400 font-mono">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping"></span>
@@ -703,7 +703,7 @@ export default function MapViewer({
               )}
               <div className="flex items-center gap-2 pt-1 border-t border-white/5">
                 <span className="h-3 w-3 rounded border border-emerald-400 bg-emerald-900/60"></span>
-                <span>WMS Oficial: Cota 2750 (GAMC)</span>
+                <span>Cota 2750 Tunari (Límite PNT)</span>
               </div>
             </>
           )}

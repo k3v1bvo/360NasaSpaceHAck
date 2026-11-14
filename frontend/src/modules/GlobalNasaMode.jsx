@@ -8,7 +8,6 @@ import {
   Wind, 
   Flame, 
   CheckCircle2, 
-  ExternalLink,
   Sparkles,
   RefreshCw,
   AlertCircle,
@@ -19,8 +18,6 @@ import {
   ShieldCheck,
   BarChart3,
   Layers,
-  Database,
-  HelpCircle,
   FileText
 } from 'lucide-react';
 import globalHotspots from '../data/global_trend_hotspots.json';
@@ -31,7 +28,7 @@ export default function GlobalNasaMode({
   selectedLocation,
   setSelectedLocation
 }) {
-  const [activeSubTab, setActiveSubTab] = useState('anomalies'); // 'anomalies' | 'live_stream' | 'nasa_tools' | 'methodology'
+  const [activeSubTab, setActiveSubTab] = useState('anomalies'); // 'anomalies' | 'live_stream' | 'methodology'
   const [currentHotspotId, setCurrentHotspotId] = useState(selectedLocation?.id || 'cochabamba');
 
   // Coordenadas manuales / live stream
@@ -187,18 +184,6 @@ export default function GlobalNasaMode({
         </button>
 
         <button
-          onClick={() => setActiveSubTab('nasa_tools')}
-          className={`flex-1 rounded-lg py-1.5 px-2 font-semibold transition flex items-center justify-center gap-1 ${
-            activeSubTab === 'nasa_tools'
-              ? 'bg-blue-600 text-white shadow'
-              : 'text-neutral-400 hover:text-white'
-          }`}
-        >
-          <Database className="h-3.5 w-3.5" />
-          <span>Portales NASA</span>
-        </button>
-
-        <button
           onClick={() => setActiveSubTab('methodology')}
           className={`flex-1 rounded-lg py-1.5 px-2 font-semibold transition flex items-center justify-center gap-1 ${
             activeSubTab === 'methodology'
@@ -207,7 +192,7 @@ export default function GlobalNasaMode({
           }`}
         >
           <FileText className="h-3.5 w-3.5" />
-          <span>Método</span>
+          <span>Método Científico</span>
         </button>
       </div>
 
@@ -521,92 +506,7 @@ export default function GlobalNasaMode({
       )}
 
       {/* ==================================================================== */}
-      {/* SUB-TAB 3: PORTALES Y RECURSOS OFICIALES DE LA NASA                   */}
-      {/* ==================================================================== */}
-      {activeSubTab === 'nasa_tools' && (
-        <div className="space-y-2.5 text-xs">
-          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-3 space-y-1">
-            <span className="font-bold text-cyan-300 block text-[11px]">
-              🛰️ Herramientas Oficiales del Reto Space Apps 2026
-            </span>
-            <p className="text-[10px] text-neutral-400">
-              Enlaces y portales de datos provistos oficialmente por la NASA y agencias espaciales asociadas para validar tendencias del sistema terrestre:
-            </p>
-          </div>
-
-          {/* Lista de Portales de la NASA */}
-          <div className="space-y-2">
-            {[
-              {
-                title: 'NASA Giovanni (GSFC)',
-                desc: 'Generación directa de series temporales satelitales (MODIS LST Day/Night, GPM Precipitation).',
-                url: 'https://giovanni.gsfc.nasa.gov/',
-                tag: 'Análisis Temporal'
-              },
-              {
-                title: 'NASA AppEEARS (Earthdata Cloud)',
-                desc: 'Extracción de muestras listas para análisis (Analysis-Ready Data) sobre polígonos GeoJSON de distritos.',
-                url: 'https://appeears.earthdatacloud.nasa.gov/',
-                tag: 'Extracción GeoJSON'
-              },
-              {
-                title: 'NASA Hydrology Time Series (GES DISC)',
-                desc: 'Series de tiempo hidrológicas, humedad del suelo y balance hídrico en cuencas de montaña.',
-                url: 'https://disc.gsfc.nasa.gov/information/tools?title=Hydrology%20Time%20Series',
-                tag: 'Hidrología'
-              },
-              {
-                title: 'NOAA Climate Data Online (CDO)',
-                desc: 'Mediciones meteorológicas terrestres globales (Estación WMO 85223 Aeropuerto Wilstermann).',
-                url: 'https://www.ncei.noaa.gov/cdo-web/',
-                tag: 'Ground Truth NOAA'
-              },
-              {
-                title: 'NASA Earthdata Search',
-                desc: 'Acceso a colecciones satelitales MOD11A2, MOD13Q1, ECOSTRESS (70m) y NASADEM.',
-                url: 'https://search.earthdata.nasa.gov/',
-                tag: 'Catálogo Maestro'
-              },
-              {
-                title: 'KNMI Climate Explorer',
-                desc: 'Exploración y modelado de datos de reanálisis ERA5 y MERRA-2 para correlación climática.',
-                url: 'https://climexp.knmi.nl/',
-                tag: 'Agencia Aliada KNMI'
-              },
-              {
-                title: 'Agencia Espacial Canadiense (CSA) — Radarsat & SWOT',
-                desc: 'Satélites Radar SAR para penetración de nubosidad y altimetría de cuerpos de agua superficial.',
-                url: 'https://donnees-data.asc-csa.gc.ca/en/dataset/rcm',
-                tag: 'Radar SAR'
-              }
-            ].map((tool, idx) => (
-              <a
-                key={idx}
-                href={tool.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block rounded-xl border border-neutral-800 bg-neutral-900/70 p-2.5 transition hover:border-cyan-500 hover:bg-neutral-900 group"
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-bold text-white group-hover:text-cyan-300 flex items-center gap-1">
-                    {tool.title}
-                    <ExternalLink className="h-3 w-3 text-neutral-500 group-hover:text-cyan-400" />
-                  </span>
-                  <span className="rounded bg-neutral-800 px-1.5 py-0.5 text-[9px] font-mono text-neutral-300">
-                    {tool.tag}
-                  </span>
-                </div>
-                <p className="text-[10px] text-neutral-400 leading-snug">
-                  {tool.desc}
-                </p>
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ==================================================================== */}
-      {/* SUB-TAB 4: METODOLOGÍA CIENTÍFICA & ESTADÍSTICA (p < 0.05)           */}
+      {/* SUB-TAB 3: METODOLOGÍA CIENTÍFICA & ESTADÍSTICA (p < 0.05)           */}
       {/* ==================================================================== */}
       {activeSubTab === 'methodology' && (
         <div className="space-y-3 text-xs">

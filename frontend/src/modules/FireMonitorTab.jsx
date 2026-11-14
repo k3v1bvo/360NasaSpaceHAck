@@ -13,11 +13,9 @@ import {
   Clock, 
   CheckCircle2,
   Sliders,
-  Radio,
-  Copy,
-  ExternalLink,
   Sparkles,
-  Eye
+  Eye,
+  Calendar
 } from 'lucide-react';
 import harmonizedData from '../../../data/nasa/firms_tunari_harmonized.geojson';
 import metricsData from '../../../data/nasa/metricas_anomalias_tunari.json';
@@ -40,17 +38,11 @@ export default function FireMonitorTab({
 }) {
   const [filterSeverity, setFilterSeverity] = useState('ALL');
   const [filterZone, setFilterZone] = useState('ALL');
-  const [activeSubTab, setActiveSubTab] = useState('list'); // 'list' | 'firms_api' | 'wms' | 'simulation' | 'pitch'
-  
-  // API Key NASA FIRMS
-  const [firmsApiKey, setFirmsApiKey] = useState('c0cha_tun4ri_hack2026_demo');
-  const [apiSyncStatus, setApiSyncStatus] = useState('Sincronizado');
+  const [activeSubTab, setActiveSubTab] = useState('list'); // 'list' | 'simulation' | 'layers' | 'metrics'
 
   // Parámetros de simulación de viento
   const [windSpeed, setWindSpeed] = useState(25); // km/h
   const [windDirection, setWindDirection] = useState('SUR');
-
-  const [copiedPitch, setCopiedPitch] = useState(false);
 
   const features = harmonizedData?.features || [];
 
@@ -70,28 +62,20 @@ export default function FireMonitorTab({
   const spreadRate = (windSpeed * 0.08).toFixed(1); // km/h aprox
   const timeToCota = (2.2 / (spreadRate > 0 ? spreadRate : 0.5) * 60).toFixed(0); // minutos a interfaz
 
-  // Función para descargar GeoJSON de Kevin
+  // Descarga de GeoJSON armonizado
   const handleDownloadGeoJSON = () => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(harmonizedData, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `kevin_nasa_gamc_tunari_harmonized_${new Date().toISOString().slice(0, 10)}.geojson`);
+    downloadAnchor.setAttribute("download", `nasa_firms_tunari_harmonized_${new Date().toISOString().slice(0, 10)}.geojson`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
   };
 
-  const pitchText = `"Usamos los servicios geoespaciales oficiales del GAMC (Cota 2750 y Periurbanos) combinados con la armonización en tiempo real de los sensores MODIS y VIIRS de la NASA vía FIRMS API para detectar chaqueos ilegales y proteger el Parque Tunari antes de que el fuego baje a la ciudad."`;
-
-  const handleCopyPitch = () => {
-    navigator.clipboard.writeText(pitchText);
-    setCopiedPitch(true);
-    setTimeout(() => setCopiedPitch(false), 2500);
-  };
-
   return (
-    <div className="space-y-3.5 p-4 text-white">
-      {/* 1. Header del Módulo de Kevin */}
+    <div className="space-y-3.5 p-4 text-white font-sans">
+      {/* 1. Header del Módulo de Incendios */}
       <div className="flex items-center justify-between border-b border-red-900/40 pb-3">
         <div className="flex items-center gap-2.5">
           <div className="rounded-xl bg-gradient-to-tr from-red-600 to-amber-600 p-2 text-white shadow-lg shadow-red-900/30">
@@ -100,154 +84,123 @@ export default function FireMonitorTab({
           <div>
             <div className="flex items-center gap-1.5">
               <h2 className="text-base font-black tracking-wide text-red-400">
-                INCENDIOS & TUNARI
+                INCENDIOS TUNARI
               </h2>
-              <span className="rounded bg-red-950 px-1.5 py-0.5 text-[9px] font-bold text-red-300 border border-red-800/80">
-                KEVIN
+              <span className="rounded bg-red-950 px-1.5 py-0.5 text-[9px] font-bold text-red-300 border border-red-800">
+                CAUSA TÉRMICA
               </span>
             </div>
             <p className="text-[11px] text-neutral-400">
-              NASA FIRMS • Armonización MODIS & VIIRS + GAMC WMS
+              Monitoreo Satelital de Fuego & Plumas de Aerosoles AOD
             </p>
           </div>
         </div>
 
         <button
           onClick={handleDownloadGeoJSON}
-          className="rounded-lg border border-neutral-800 bg-neutral-900 p-1.5 text-neutral-300 hover:text-white hover:border-neutral-700 transition"
-          title="Descargar GeoJSON Oficial para Bomberos y GAMC"
+          className="flex items-center gap-1 rounded-lg border border-neutral-800 bg-neutral-900 px-2 py-1 text-[11px] font-medium text-neutral-300 hover:border-neutral-700 hover:text-white transition"
+          title="Descargar dataset armonizado GeoJSON"
         >
-          <Download className="h-4 w-4" />
+          <Download className="h-3 w-3 text-red-400" />
+          <span className="hidden sm:inline">Exportar</span>
         </button>
       </div>
 
-      {/* 2. Banner de Pitch para el Jurado FEXCO */}
-      <div className="rounded-xl border border-red-900/50 bg-gradient-to-r from-red-950/60 via-neutral-950 to-amber-950/30 p-2.5 text-xs">
-        <div className="flex items-center justify-between mb-1">
-          <span className="font-bold text-amber-400 flex items-center gap-1 text-[11px]">
-            <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-            Pitch Oficial FEXCO & Jurado
+      {/* 2. Banner de Causalidad Física con la Isla de Calor */}
+      <div className="rounded-xl border border-red-800/60 bg-gradient-to-r from-red-950/50 via-neutral-900/80 to-amber-950/40 p-3 text-xs space-y-1">
+        <div className="flex items-center justify-between text-red-300 font-bold">
+          <span className="flex items-center gap-1.5 text-[11px]">
+            <AlertTriangle className="h-3.5 w-3.5 text-amber-400" />
+            Nexo Físico: Fuego $\rightarrow$ Aerosoles $\rightarrow$ Calor
           </span>
-          <button
-            onClick={handleCopyPitch}
-            className="flex items-center gap-1 text-[10px] text-neutral-400 hover:text-white transition bg-neutral-900/80 px-2 py-0.5 rounded border border-neutral-800"
-          >
-            {copiedPitch ? <CheckCircle2 className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
-            <span>{copiedPitch ? '¡Copiado!' : 'Copiar'}</span>
-          </button>
+          <span className="text-[10px] text-neutral-400 font-mono">Inversión Térmica</span>
         </div>
-        <p className="text-[11px] text-neutral-300 italic leading-snug">
-          {pitchText}
+        <p className="text-[11px] text-neutral-300 leading-snug">
+          Los incendios en la serranía del Tunari inyectan humo y partículas (<strong className="text-amber-300">AOD &gt; 0.6</strong>) que quedan atrapadas por la topografía del valle, multiplicando la retención térmica urbana.
         </p>
       </div>
 
-      {/* 3. Selector de Modo de Sensor Satelital (Eje Central de la Solución) */}
-      <div className="rounded-xl border border-neutral-800 bg-neutral-950/90 p-2.5 space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-300 flex items-center gap-1.5">
+      {/* 3. Selector de Modo Satelital */}
+      <div className="rounded-xl border border-neutral-800 bg-neutral-900/80 p-2 text-xs">
+        <div className="flex items-center justify-between mb-1.5 px-1">
+          <span className="font-bold text-[11px] text-neutral-300 flex items-center gap-1">
             <Satellite className="h-3.5 w-3.5 text-cyan-400" />
-            Sensor Satelital en Mapa
+            Modo Satelital:
           </span>
-          <span className="text-[10px] text-cyan-400 font-mono">
-            {sensorMode === 'HARMONIZED' && 'Dual 1.2 km'}
-            {sensorMode === 'MODIS' && '1 km píxel'}
-            {sensorMode === 'VIIRS' && '375 m píxel'}
+          <span className="text-[10px] text-neutral-400 font-mono">
+            {sensorMode === 'HARMONIZED' && 'Fusión MODIS + VIIRS'}
+            {sensorMode === 'MODIS' && 'MODIS Terra/Aqua (1 km)'}
+            {sensorMode === 'VIIRS' && 'VIIRS S-NPP (375 m)'}
           </span>
         </div>
-
-        <div className="grid grid-cols-3 gap-1.5 bg-neutral-900 p-1 rounded-lg border border-neutral-800">
+        <div className="grid grid-cols-3 gap-1 text-[11px]">
           <button
             onClick={() => onSensorModeChange && onSensorModeChange('HARMONIZED')}
-            className={`rounded-md py-1.5 text-[11px] font-bold transition ${
+            className={`py-1.5 px-2 rounded-lg font-bold transition text-center ${
               sensorMode === 'HARMONIZED'
-                ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow'
-                : 'text-neutral-400 hover:text-white'
+                ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow-md'
+                : 'bg-neutral-950/60 text-neutral-400 hover:text-white'
             }`}
           >
-            🔥 Armonizado
+            Armonizado
           </button>
           <button
             onClick={() => onSensorModeChange && onSensorModeChange('MODIS')}
-            className={`rounded-md py-1.5 text-[11px] font-bold transition ${
+            className={`py-1.5 px-2 rounded-lg font-bold transition text-center ${
               sensorMode === 'MODIS'
-                ? 'bg-amber-600 text-white shadow'
-                : 'text-neutral-400 hover:text-white'
+                ? 'bg-amber-600 text-white shadow-md'
+                : 'bg-neutral-950/60 text-neutral-400 hover:text-white'
             }`}
           >
-            MODIS (1 km)
+            MODIS (1km)
           </button>
           <button
             onClick={() => onSensorModeChange && onSensorModeChange('VIIRS')}
-            className={`rounded-md py-1.5 text-[11px] font-bold transition ${
+            className={`py-1.5 px-2 rounded-lg font-bold transition text-center ${
               sensorMode === 'VIIRS'
-                ? 'bg-cyan-600 text-white shadow'
-                : 'text-neutral-400 hover:text-white'
+                ? 'bg-cyan-600 text-white shadow-md'
+                : 'bg-neutral-950/60 text-neutral-400 hover:text-white'
             }`}
           >
-            VIIRS (375 m)
+            VIIRS (375m)
           </button>
         </div>
-        <p className="text-[10px] text-neutral-400 leading-tight">
-          {sensorMode === 'HARMONIZED' && '✓ Fusión espacio-temporal: Puntos a <500m o 1.2km en la misma ventana horaria se agrupan en un solo foco con FRP acumulado.'}
-          {sensorMode === 'MODIS' && 'Serie histórica continua de 24 años (MCD14DL). Huella grande de 1,000 metros.'}
-          {sensorMode === 'VIIRS' && 'Alta resolución (375m I-band). Detecta quemas pequeñas pero infla el conteo de focos en quebradas.'}
-        </p>
       </div>
 
-      {/* 4. Tarjetas de Métricas Clave */}
-      <div className="grid grid-cols-3 gap-2">
+      {/* 4. Tarjetas Resumen de Métricas */}
+      <div className="grid grid-cols-3 gap-2 text-center">
         <div className="rounded-xl border border-neutral-800 bg-neutral-900/90 p-2.5">
-          <span className="text-[10px] text-neutral-400 uppercase tracking-wider">Eventos</span>
+          <span className="text-[10px] text-neutral-400 uppercase tracking-wider block">Focos</span>
           <p className="text-xl font-black text-red-500">{filteredFeatures.length}</p>
           <span className="text-[9px] text-neutral-500">Detectados</span>
         </div>
         <div className="rounded-xl border border-neutral-800 bg-neutral-900/90 p-2.5">
-          <span className="text-[10px] text-neutral-400 uppercase tracking-wider">P.N. Tunari</span>
+          <span className="text-[10px] text-neutral-400 uppercase tracking-wider block">P.N. Tunari</span>
           <p className="text-xl font-black text-amber-400">{tunariCount}</p>
           <span className="text-[9px] text-amber-500/80">En cota protegida</span>
         </div>
         <div className="rounded-xl border border-neutral-800 bg-neutral-900/90 p-2.5">
-          <span className="text-[10px] text-neutral-400 uppercase tracking-wider">FRP Total</span>
+          <span className="text-[10px] text-neutral-400 uppercase tracking-wider block">FRP Total</span>
           <p className="text-xl font-black text-orange-400">{Math.round(totalFRP)}</p>
           <span className="text-[9px] text-neutral-500">Megawatts (MW)</span>
         </div>
       </div>
 
-      {/* 5. Sub-Navegación de Herramientas de Kevin */}
+      {/* 5. Sub-Navegación Limpia y Enfocada en Producto */}
       <div className="flex items-center gap-1 border-b border-neutral-800 pb-2 text-[11px]">
         <button
           onClick={() => setActiveSubTab('list')}
-          className={`flex-1 py-1.5 px-1.5 rounded-lg font-bold text-center transition ${
+          className={`flex-1 py-1.5 px-2 rounded-lg font-bold text-center transition ${
             activeSubTab === 'list'
               ? 'bg-neutral-800 text-white shadow'
               : 'text-neutral-400 hover:text-neutral-200'
           }`}
         >
-          Focos
-        </button>
-        <button
-          onClick={() => setActiveSubTab('firms_api')}
-          className={`flex-1 py-1.5 px-1.5 rounded-lg font-bold text-center transition ${
-            activeSubTab === 'firms_api'
-              ? 'bg-neutral-800 text-cyan-300 shadow'
-              : 'text-neutral-400 hover:text-neutral-200'
-          }`}
-        >
-          NASA FIRMS
-        </button>
-        <button
-          onClick={() => setActiveSubTab('wms')}
-          className={`flex-1 py-1.5 px-1.5 rounded-lg font-bold text-center transition ${
-            activeSubTab === 'wms'
-              ? 'bg-neutral-800 text-emerald-300 shadow'
-              : 'text-neutral-400 hover:text-neutral-200'
-          }`}
-        >
-          WMS GAMC
+          Focos Activos
         </button>
         <button
           onClick={() => setActiveSubTab('simulation')}
-          className={`flex-1 py-1.5 px-1.5 rounded-lg font-bold text-center transition ${
+          className={`flex-1 py-1.5 px-2 rounded-lg font-bold text-center transition ${
             activeSubTab === 'simulation'
               ? 'bg-neutral-800 text-red-300 shadow'
               : 'text-neutral-400 hover:text-neutral-200'
@@ -256,14 +209,24 @@ export default function FireMonitorTab({
           Viento
         </button>
         <button
+          onClick={() => setActiveSubTab('layers')}
+          className={`flex-1 py-1.5 px-2 rounded-lg font-bold text-center transition ${
+            activeSubTab === 'layers'
+              ? 'bg-neutral-800 text-emerald-300 shadow'
+              : 'text-neutral-400 hover:text-neutral-200'
+          }`}
+        >
+          Capas Territoriales
+        </button>
+        <button
           onClick={() => setActiveSubTab('metrics')}
-          className={`flex-1 py-1.5 px-1.5 rounded-lg font-bold text-center transition ${
+          className={`flex-1 py-1.5 px-2 rounded-lg font-bold text-center transition ${
             activeSubTab === 'metrics'
               ? 'bg-neutral-800 text-amber-300 shadow'
               : 'text-neutral-400 hover:text-neutral-200'
           }`}
         >
-          Épocas
+          Épocas Críticas
         </button>
       </div>
 
@@ -349,217 +312,7 @@ export default function FireMonitorTab({
         </div>
       )}
 
-      {/* 5B. SUB-TAB 2: CONECTOR NASA FIRMS API & GIBS */}
-      {activeSubTab === 'firms_api' && (
-        <div className="space-y-3 rounded-xl border border-neutral-800 bg-neutral-950 p-3.5">
-          <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
-            <h3 className="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
-              <Satellite className="h-4 w-4" />
-              NASA FIRMS API & GIBS Worldview
-            </h3>
-            <span className="rounded bg-cyan-950 px-1.5 py-0.5 text-[9px] font-mono text-cyan-300 border border-cyan-800">
-              NASA EOSDIS
-            </span>
-          </div>
-
-          {/* Configuración API Key FIRMS */}
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-neutral-300 font-semibold">NASA MAP_KEY:</span>
-              <a
-                href="https://firms.modaps.eosdis.nasa.gov/api/map_key/"
-                target="_blank"
-                rel="noreferrer"
-                className="text-[10px] text-cyan-400 flex items-center gap-1 hover:underline"
-              >
-                Obtener Key gratis <ExternalLink className="h-2.5 w-2.5" />
-              </a>
-            </div>
-            <div className="flex gap-1.5">
-              <input
-                type="text"
-                value={firmsApiKey}
-                onChange={(e) => setFirmsApiKey(e.target.value)}
-                className="flex-1 rounded-lg border border-neutral-800 bg-neutral-900 px-2.5 py-1.5 text-[11px] font-mono text-neutral-200 outline-none focus:border-cyan-500"
-                placeholder="Ingresa tu NASA Map Key"
-              />
-              <button
-                onClick={() => setApiSyncStatus('Actualizado en Vivo')}
-                className="rounded-lg bg-cyan-600 px-2.5 py-1.5 text-xs font-bold text-white hover:bg-cyan-500 transition shadow"
-              >
-                Sincronizar
-              </button>
-            </div>
-            <span className="text-[10px] text-emerald-400 font-mono block">
-              ● Estado: {apiSyncStatus} (BBOX: -66.35, -17.55, -65.95, -17.20)
-            </span>
-          </div>
-
-          {/* Toggle Capa Ráster NASA GIBS */}
-          <div className="rounded-lg border border-neutral-800 bg-neutral-900 p-2.5 space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={nasaGibs}
-                  onChange={(e) => setNasaGibs && setNasaGibs(e.target.checked)}
-                  id="gibsToggle"
-                  className="rounded accent-cyan-500 cursor-pointer"
-                />
-                <label htmlFor="gibsToggle" className="cursor-pointer">
-                  <span className="text-xs font-bold text-neutral-200 block">
-                    Capa Ráster NASA GIBS Worldview
-                  </span>
-                  <span className="text-[10px] text-neutral-400">
-                    Reflectancia Satelital & Humo (MODIS Terra)
-                  </span>
-                </label>
-              </div>
-              <span className={`h-2.5 w-2.5 rounded-full ${nasaGibs ? 'bg-cyan-400 animate-pulse' : 'bg-neutral-600'}`}></span>
-            </div>
-
-            {nasaGibs && (
-              <div className="pt-2 border-t border-neutral-800 flex items-center justify-between text-xs">
-                <span className="text-neutral-400 text-[11px]">Fecha Ráster:</span>
-                <input
-                  type="date"
-                  value={gibsDate}
-                  onChange={(e) => setGibsDate && setGibsDate(e.target.value)}
-                  className="rounded bg-neutral-950 px-2 py-1 text-[11px] font-mono text-cyan-300 border border-neutral-800 outline-none"
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Endpoints Oficiales de Consulta */}
-          <div className="rounded-lg bg-neutral-900 p-2 text-[10px] font-mono text-neutral-400 space-y-1 border border-neutral-800">
-            <div className="text-neutral-300 font-bold">Endpoints NASA FIRMS configurados:</div>
-            <div className="truncate text-cyan-400">
-              VIIRS 375m: /api/area/csv/{firmsApiKey ? firmsApiKey.slice(0, 8) + '...' : 'KEY'}/VIIRS_SNPP_NRT/-66.35,-17.55,-65.95,-17.20/10
-            </div>
-            <div className="truncate text-amber-400">
-              MODIS 1km: /api/area/csv/{firmsApiKey ? firmsApiKey.slice(0, 8) + '...' : 'KEY'}/MODIS_NRT/-66.35,-17.55,-65.95,-17.20/10
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 5C. SUB-TAB 3: GESTIÓN DE CAPAS WMS DE LA ALCALDÍA (GAMC) */}
-      {activeSubTab === 'wms' && (
-        <div className="space-y-3 rounded-xl border border-neutral-800 bg-neutral-950 p-3.5">
-          <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
-            <h3 className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-              <Layers className="h-4 w-4" />
-              Servicios WMS GAMC (Proyecto 03)
-            </h3>
-            <span className="rounded bg-emerald-950 px-1.5 py-0.5 text-[9px] font-mono text-emerald-400 border border-emerald-800">
-              API KEY OK
-            </span>
-          </div>
-
-          <div className="space-y-2.5 text-xs">
-            {/* Capa 1: Cota 2750 */}
-            <label className="flex items-center justify-between p-2 rounded-lg border border-neutral-800 bg-neutral-900 cursor-pointer hover:border-emerald-500/50 transition">
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={wmsCota}
-                  onChange={(e) => setWmsCota && setWmsCota(e.target.checked)}
-                  className="rounded accent-emerald-500"
-                />
-                <div>
-                  <span className="font-bold text-neutral-200 block">1. Cota 2750 (Límite PNT)</span>
-                  <span className="text-[10px] text-neutral-400">UUID: 297cefa4-0832-42bb-a98e-2cbea989fd9d</span>
-                </div>
-              </div>
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-            </label>
-
-            {/* Capa 2: Periurbanos */}
-            <label className="flex items-center justify-between p-2 rounded-lg border border-neutral-800 bg-neutral-900 cursor-pointer hover:border-purple-500/50 transition">
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={wmsPeriurbanos}
-                  onChange={(e) => setWmsPeriurbanos && setWmsPeriurbanos(e.target.checked)}
-                  className="rounded accent-purple-500"
-                />
-                <div>
-                  <span className="font-bold text-neutral-200 block">2. Periurbanos (Interfase Urbana)</span>
-                  <span className="text-[10px] text-neutral-400">UUID: c52066a1-32fd-4925-81e0-c2dcb8f4238f</span>
-                </div>
-              </div>
-              <span className="h-2.5 w-2.5 rounded-full bg-purple-500"></span>
-            </label>
-
-            {/* Capa 3: Límite Distritos */}
-            <label className="flex items-center justify-between p-2 rounded-lg border border-neutral-800 bg-neutral-900 cursor-pointer hover:border-blue-500/50 transition">
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={wmsDistritos}
-                  onChange={(e) => setWmsDistritos && setWmsDistritos(e.target.checked)}
-                  className="rounded accent-blue-500"
-                />
-                <div>
-                  <span className="font-bold text-neutral-200 block">3. Límite Distritos GAMC</span>
-                  <span className="text-[10px] text-neutral-400">UUID: 7eb13092-bf0e-493b-aae6-03c43eedda2c</span>
-                </div>
-              </div>
-              <span className="h-2.5 w-2.5 rounded-full bg-blue-500"></span>
-            </label>
-          </div>
-
-          {/* Panel de Leyendas Oficiales GetLegendGraphic */}
-          <div className="rounded-lg border border-neutral-800 bg-neutral-900 p-2.5 space-y-2">
-            <span className="text-[11px] font-bold text-neutral-300 block">
-              Leyendas Oficiales (GetLegendGraphic 1.0.0):
-            </span>
-            <div className="space-y-2 text-[10px]">
-              {wmsCota && (
-                <div className="rounded border border-neutral-800 bg-neutral-950 p-2 space-y-1">
-                  <div className="flex items-center justify-between text-emerald-400 font-semibold">
-                    <span>Leyenda: Cota 2750 (P.N. Tunari)</span>
-                    <span className="text-[9px] text-neutral-500 font-mono">Categorizado</span>
-                  </div>
-                  <img
-                    src="https://serviciosgamc.cochabamba.bo/api/gs/wms?key=8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32&service_id=297cefa4-0832-42bb-a98e-2cbea989fd9d&REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png"
-                    alt="Leyenda Oficial Cota 2750 GAMC"
-                    className="max-h-24 rounded border border-neutral-800 bg-white/5 p-1"
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                  />
-                </div>
-              )}
-
-              {wmsPeriurbanos && (
-                <div className="rounded border border-neutral-800 bg-neutral-950 p-2 space-y-1">
-                  <div className="flex items-center justify-between text-purple-400 font-semibold">
-                    <span>Leyenda: Periurbanos (Interfase Urbana)</span>
-                    <span className="text-[9px] text-neutral-500 font-mono">Categorizado</span>
-                  </div>
-                  <img
-                    src="https://serviciosgamc.cochabamba.bo/api/gs/wms?key=8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32&service_id=c52066a1-32fd-4925-81e0-c2dcb8f4238f&REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png"
-                    alt="Leyenda Oficial Periurbanos GAMC"
-                    className="max-h-24 rounded border border-neutral-800 bg-white/5 p-1"
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="rounded-lg bg-neutral-900 p-2 text-[10px] text-neutral-400 font-mono space-y-0.5 border border-neutral-800">
-            <div><strong>Proxy GAMC:</strong> recursosgamc.cochabamba.bo/proxy</div>
-            <div><strong>Servicio:</strong> serviciosgamc.cochabamba.bo/api/gs/wms</div>
-            <div className="truncate"><strong>Key Proy 03:</strong> 8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32</div>
-            <div className="text-neutral-500 pt-1">
-              BBOX GAMC: [-66.2807, -17.5311] a [-66.0695, -17.2573]
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 5D. SUB-TAB 4: SIMULADOR DE PROPAGACIÓN POR VIENTO */}
+      {/* 5B. SUB-TAB 2: SIMULADOR DE PROPAGACIÓN POR VIENTO */}
       {activeSubTab === 'simulation' && (
         <div className="space-y-3 rounded-xl border border-neutral-800 bg-neutral-950 p-3.5">
           <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
@@ -604,14 +357,121 @@ export default function FireMonitorTab({
           <div className="rounded-lg bg-red-950/40 border border-red-900/50 p-2.5 text-[11px] text-red-200">
             <p className="font-semibold flex items-center gap-1 text-red-300 mb-1">
               <AlertTriangle className="h-3.5 w-3.5" />
-              Recomendación para Brigadas SAR-Bolivia / GAMC:
+              Recomendación Operativa:
             </p>
-            Viento canalizado por torrenteras (Taquiña/Pintumayu). Con ráfagas &gt;25 km/h, priorizar cortafuegos en la franja periurbana antes de las 14:00.
+            Viento canalizado por cañadones y torrenteras. Con ráfagas &gt; 25 km/h, priorizar líneas de defensa en la franja periurbana antes de las horas de máxima insolación.
           </div>
         </div>
       )}
 
-      {/* 5E. SUB-TAB 5: ANÁLISIS DE ÉPOCAS CRÍTICAS */}
+      {/* 5C. SUB-TAB 3: CONTROL DE CAPAS TERRITORIALES & SATÉLITE */}
+      {activeSubTab === 'layers' && (
+        <div className="space-y-3 rounded-xl border border-neutral-800 bg-neutral-950 p-3.5 text-xs">
+          <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
+            <h3 className="font-bold text-emerald-400 flex items-center gap-1.5 text-xs">
+              <Layers className="h-4 w-4" />
+              Capas Territoriales & Satelitales
+            </h3>
+            <span className="rounded bg-emerald-950 px-1.5 py-0.5 text-[9px] font-mono text-emerald-400 border border-emerald-800">
+              INTERACTIVO
+            </span>
+          </div>
+
+          <div className="space-y-2">
+            {/* Capa 1: Cota 2750 Tunari */}
+            <label className="flex items-center justify-between p-2.5 rounded-xl border border-neutral-800 bg-neutral-900 cursor-pointer hover:border-emerald-500/50 transition">
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={wmsCota}
+                  onChange={(e) => setWmsCota && setWmsCota(e.target.checked)}
+                  className="rounded accent-emerald-500 h-4 w-4"
+                />
+                <div>
+                  <span className="font-bold text-neutral-200 block text-xs">🌲 Cota 2750 Parque Tunari</span>
+                  <span className="text-[10px] text-neutral-400">Límite biofísico de protección ambiental</span>
+                </div>
+              </div>
+              <span className={`h-2.5 w-2.5 rounded-full ${wmsCota ? 'bg-emerald-400' : 'bg-neutral-600'}`}></span>
+            </label>
+
+            {/* Capa 2: Zonas Periurbanas */}
+            <label className="flex items-center justify-between p-2.5 rounded-xl border border-neutral-800 bg-neutral-900 cursor-pointer hover:border-purple-500/50 transition">
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={wmsPeriurbanos}
+                  onChange={(e) => setWmsPeriurbanos && setWmsPeriurbanos(e.target.checked)}
+                  className="rounded accent-purple-500 h-4 w-4"
+                />
+                <div>
+                  <span className="font-bold text-neutral-200 block text-xs">🏡 Zonas Periurbanas</span>
+                  <span className="text-[10px] text-neutral-400">Áreas de interfaz habitada con alto riesgo de quemas</span>
+                </div>
+              </div>
+              <span className={`h-2.5 w-2.5 rounded-full ${wmsPeriurbanos ? 'bg-purple-400' : 'bg-neutral-600'}`}></span>
+            </label>
+
+            {/* Capa 3: Límites Distritales */}
+            <label className="flex items-center justify-between p-2.5 rounded-xl border border-neutral-800 bg-neutral-900 cursor-pointer hover:border-blue-500/50 transition">
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={wmsDistritos}
+                  onChange={(e) => setWmsDistritos && setWmsDistritos(e.target.checked)}
+                  className="rounded accent-blue-500 h-4 w-4"
+                />
+                <div>
+                  <span className="font-bold text-neutral-200 block text-xs">🏛️ Límites Distritales</span>
+                  <span className="text-[10px] text-neutral-400">14 polígonos distritales del municipio</span>
+                </div>
+              </div>
+              <span className={`h-2.5 w-2.5 rounded-full ${wmsDistritos ? 'bg-blue-400' : 'bg-neutral-600'}`}></span>
+            </label>
+
+            {/* Capa 4: Capa Satelital de Humo NASA GIBS Worldview */}
+            <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-2.5 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={nasaGibs}
+                    onChange={(e) => setNasaGibs && setNasaGibs(e.target.checked)}
+                    id="gibsToggleClean"
+                    className="rounded accent-cyan-500 h-4 w-4 cursor-pointer"
+                  />
+                  <label htmlFor="gibsToggleClean" className="cursor-pointer">
+                    <span className="text-xs font-bold text-neutral-200 block">
+                      🛰️ Capa Satelital de Humo (NASA GIBS)
+                    </span>
+                    <span className="text-[10px] text-neutral-400">
+                      Reflectancia real y penachos de humo sobre el valle
+                    </span>
+                  </label>
+                </div>
+                <span className={`h-2.5 w-2.5 rounded-full ${nasaGibs ? 'bg-cyan-400 animate-pulse' : 'bg-neutral-600'}`}></span>
+              </div>
+
+              {nasaGibs && (
+                <div className="pt-2 border-t border-neutral-800 flex items-center justify-between text-xs">
+                  <span className="text-neutral-400 text-[11px] flex items-center gap-1">
+                    <Calendar className="h-3 w-3 text-cyan-400" />
+                    Fecha de Observación:
+                  </span>
+                  <input
+                    type="date"
+                    value={gibsDate}
+                    onChange={(e) => setGibsDate && setGibsDate(e.target.value)}
+                    className="rounded bg-neutral-950 px-2 py-1 text-[11px] font-mono text-cyan-300 border border-neutral-800 outline-none"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5D. SUB-TAB 4: ANÁLISIS DE ÉPOCAS CRÍTICAS */}
       {activeSubTab === 'metrics' && (
         <div className="space-y-3 rounded-xl border border-neutral-800 bg-neutral-950 p-3.5">
           <div className="border-b border-neutral-800 pb-2">
@@ -654,19 +514,19 @@ export default function FireMonitorTab({
           </div>
 
           <div className="rounded-lg bg-neutral-900 border border-neutral-800 p-2.5 text-[11px] text-neutral-300">
-            <strong>Hallazgo de Armonización:</strong> {metricsData?.hallazgo_armonizacion}
+            <strong>Patrón Térmico Anual:</strong> La concentración de incendios en el estiaje genera el salto térmico que activa la isla de calor urbana en los meses de transición primaveral.
           </div>
         </div>
       )}
 
-      {/* 6. Nota Científica & Créditos de Kevin */}
+      {/* 6. Nota Científica & Algoritmo de Armonización */}
       <div className="rounded-xl border border-neutral-800/80 bg-neutral-950/60 p-3 text-[11px] text-neutral-400 space-y-1">
         <div className="flex items-center gap-1.5 text-neutral-200 font-semibold">
           <ShieldCheck className="h-4 w-4 text-emerald-400" />
-          <span>Metodología de Armonización de Kevin:</span>
+          <span>Algoritmo de Armonización Espaciotemporal:</span>
         </div>
         <p className="leading-snug">
-          Fusiona la resolución fina de VIIRS (375 m) con la serie histórica de MODIS (1 km) usando agrupamiento espaciotemporal a 1.2 km y normalización de potencia FRP. Cumple 100% con los retos de la NASA y del GAMC Cochabamba.
+          Fusiona la resolución fina de VIIRS (375 m) con la serie histórica de MODIS (1 km) aplicando clustering a 1.2 km y normalización de potencia radiativa (FRP).
         </p>
       </div>
     </div>

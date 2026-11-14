@@ -23,7 +23,7 @@ export default function MetricsStrip({ metrics }) {
         <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
         <span className="font-bold text-neutral-200 flex items-center gap-1.5">
           <Cpu className="h-3.5 w-3.5 text-blue-400" />
-          Sensado Virtual IA • Red MÓNICA GAMC + NASA POWER API
+          Sensado Virtual IA • Red MÓNICA + Satélites NASA
         </span>
         <span className="hidden sm:inline rounded bg-blue-950/80 px-2 py-0.5 text-[10px] font-mono text-blue-300 border border-blue-800/60">
           XGBoost 3.2.0 • 2,497 Días NASA

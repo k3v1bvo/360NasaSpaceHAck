@@ -3,9 +3,9 @@ import { Globe, Radio, BellRing, Sparkles, Satellite } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, offlineMode, setOfflineMode, onOpenReport }) {
   const tabs = [
-    { id: 'global_nasa', label: '🌍 Explorador Global Planetario', badge: 'NASA POWER API' },
-    { id: 'microclimas', label: '📍 Caso Piloto: Cochabamba & Tunari', badge: 'GAMC 01/05 & Red MÓNICA' },
-    { id: 'incendios', label: '🔥 Causa Térmica: Incendios Tunari', badge: 'NASA FIRMS & GAMC 03' },
+    { id: 'global_nasa', label: '🌍 Explorador Global', badge: 'Planetary' },
+    { id: 'microclimas', label: '📍 Piloto Cochabamba', badge: 'Microclimas' },
+    { id: 'incendios', label: '🔥 Incendios Tunari', badge: 'Fuego & Humo' },
   ];
 
   return (
