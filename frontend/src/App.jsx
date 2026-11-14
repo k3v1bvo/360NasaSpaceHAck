@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
+import MetricsStrip from './components/MetricsStrip';
 import MapViewer from './components/MapViewer';
 
-// Módulo Principal de Kevin
+// Módulo Estrella del Reto Ganador: Be An Earth System Trend Detective! (GAMC 01/05 + NASA)
+import MicroclimateAITab from './modules/MicroclimateAITab';
+
+// Módulo Internacional NASA en Inglés (Evaluación Global de Tendencias Térmicas)
+import GlobalNasaMode from './modules/GlobalNasaMode';
+
+// Módulo Principal de Kevin (Incendios Tunari - Motor Físico de AOD y Calor)
 import FireMonitorTab from './modules/FireMonitorTab';
 
 // Módulos de apoyo de los compañeros
-import MicroclimateTab from './modules/MicroclimateTab';
 import FloodRiskTab from './modules/FloodRiskTab';
 import AgroAdvisorTab from './modules/AgroAdvisorTab';
 import CitizenReportModal from './modules/CitizenReportModal';
@@ -17,7 +23,8 @@ import focosModisRaw from '../../data/nasa/firms_modis_raw.geojson';
 import focosViirsRaw from '../../data/nasa/firms_viirs_raw.geojson';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('incendios');
+  // Pestaña activa por defecto: Microclimas IA (Trend Detective)
+  const [activeTab, setActiveTab] = useState('microclimas');
   const [offlineMode, setOfflineMode] = useState(false); // Online por defecto para consumir WMS GAMC
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState(null);
@@ -60,7 +67,10 @@ export default function App() {
         onOpenReport={() => setIsReportModalOpen(true)}
       />
 
-      {/* 2. Cuerpo Principal: Mapa + Panel Lateral de Kevin */}
+      {/* 2. Barra Científica de Métricas IA Obligatorias (R², RMSE, MAE, p-value) */}
+      <MetricsStrip />
+
+      {/* 3. Cuerpo Principal: Mapa + Panel Lateral */}
       <div 
         className="relative flex flex-1 overflow-hidden min-h-0"
         style={{ flex: 1, display: 'flex', minHeight: 0, position: 'relative' }}
@@ -90,6 +100,13 @@ export default function App() {
           className="w-full max-w-sm md:max-w-md border-l border-neutral-800/80 bg-[#0d1017]/95 overflow-y-auto backdrop-blur-xl shadow-2xl z-10"
           style={{ width: '420px', minWidth: '360px', height: '100%', overflowY: 'auto' }}
         >
+          {activeTab === 'microclimas' && (
+            <MicroclimateAITab
+              onSelectPoint={(point) => setSelectedPoint(point)}
+              onNavigateToFires={() => setActiveTab('incendios')}
+            />
+          )}
+
           {activeTab === 'incendios' && (
             <FireMonitorTab
               onSelectFoco={(foco) => setSelectedPoint(foco)}
@@ -109,9 +126,9 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'microclimas' && (
-            <MicroclimateTab
-              onSelectDistrito={(dist) => setSelectedPoint(dist)}
+          {activeTab === 'global_nasa' && (
+            <GlobalNasaMode
+              onFocusGlobalCoords={(coords) => setSelectedPoint({ lat: coords[0], lon: coords[1] })}
             />
           )}
 

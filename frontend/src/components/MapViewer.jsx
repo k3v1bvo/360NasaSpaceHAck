@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import tunariPolygonData from '../../../data/gamc/parque_nacional_tunari.geojson';
 import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
+import monicaData from '../data/monica_virtual_sensors.json';
 
 const COCHABAMBA_CENTER = [-17.3895, -66.1568];
 const GAMC_WMS_ENDPOINT = 'https://serviciosgamc.cochabamba.bo/api/gs/wms';
@@ -233,9 +234,10 @@ export default function MapViewer({
     }
 
     // ==========================================
-    // CAPA 2: MICROCLIMAS & DISTRITOS GAMC (Integrante 2)
+    // CAPA 2: MICROCLIMAS & RED MÓNICA IA (Trend Detective)
     // ==========================================
     if (activeTab === 'microclimas') {
+      // 1. Polígonos de Distritos con Gradiente Térmico LST
       distritosData?.features?.forEach((dist) => {
         const p = dist.properties;
         const polyCoords = dist.geometry.coordinates[0].map(([lng, lat]) => [lat, lng]);
@@ -246,22 +248,119 @@ export default function MapViewer({
 
         const polygon = L.polygon(polyCoords, {
           color,
-          weight: 2,
+          weight: 1.5,
           fillColor: color,
-          fillOpacity: 0.4,
+          fillOpacity: 0.25,
         });
 
         polygon.bindPopup(`
-          <div style="color: #111; font-family: sans-serif; font-size: 12px; min-width: 200px;">
-            <strong style="color: ${color};">🌡️ ${p.nombre}</strong><br/>
-            <strong>Temperatura LST (NASA):</strong> ${p.lst_temperatura_c} °C<br/>
+          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 210px; line-height: 1.4;">
+            <div style="font-weight: bold; font-size: 13px; color: ${color}; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 4px;">
+              📍 ${p.nombre}
+            </div>
+            <strong>Temperatura LST (NASA):</strong> <span style="font-weight: bold; color: ${color};">${p.lst_temperatura_c} °C</span><br/>
             <strong>Índice Vegetación NDVI:</strong> ${p.ndvi_vegetacion}<br/>
-            <strong>Isla de Calor:</strong> ${p.nivel_isla_calor}<br/>
-            <span style="color: #b91c1c; font-weight: bold;">${p.contraste_zona_sur_c}</span>
+            <strong>Diagnóstico Isla de Calor:</strong> ${p.nivel_isla_calor}<br/>
+            <span style="color: #b91c1c; font-size: 11px; font-weight: bold;">${p.contraste_zona_sur_c}</span>
           </div>
         `);
         polygon.addTo(layersGroupRef.current);
       });
+
+      // 2. Las 2 Estaciones Físicas de la Red MÓNICA (GAMC - Ground Truth)
+      monicaData?.estaciones_fisicas?.forEach((est) => {
+        const marker = L.circleMarker([est.lat, est.lon], {
+          radius: 12,
+          fillColor: '#06b6d4',
+          color: '#ffffff',
+          weight: 3,
+          opacity: 1,
+          fillOpacity: 0.9,
+        });
+
+        marker.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 230px; line-height: 1.45;">
+            <div style="background: #0284c7; color: white; padding: 5px 8px; border-radius: 4px 4px 0 0; font-weight: bold; display: flex; align-items: center; justify-content: space-between;">
+              <span>🏛️ Red MÓNICA (GAMC)</span>
+              <span style="font-size: 9px; background: rgba(255,255,255,0.3); padding: 1px 5px; border-radius: 3px; letter-spacing: 0.5px;">ESTACIÓN FÍSICA</span>
+            </div>
+            <div style="padding: 7px 9px; border: 1px solid #0284c7; border-top: none; border-radius: 0 0 4px 4px; background: white;">
+              <strong style="color: #0369a1; font-size: 13px;">${est.nombre}</strong><br/>
+              <span style="color: #64748b; font-size: 11px;">${est.distrito} • Elevación: ${est.elevacion_m} msnm</span>
+              <hr style="margin: 5px 0; border: 0; border-top: 1px solid #e2e8f0;"/>
+              <strong>Temp. Aire Real (T2M):</strong> <span style="color: #b91c1c; font-weight: bold;">${est.temp_aire_t2m_c} °C</span><br/>
+              <strong>Superficie LST (NASA):</strong> ${est.lst_nasa_c} °C<br/>
+              <strong>Material Particulado PM2.5:</strong> <span style="font-weight: bold; color: ${est.pm25_ug_m3 > 35 ? '#dc2626' : '#059669'};">${est.pm25_ug_m3} µg/m³</span><br/>
+              <strong>Índice Vegetal (NDVI):</strong> ${est.ndvi_vegetacion} | <strong>AOD:</strong> ${est.aod_aerosoles}<br/>
+              <div style="margin-top: 5px; padding: 4px; background: #ecfeff; border-left: 3px solid #06b6d4; font-size: 11px;">
+                <strong>Estado:</strong> ${est.estado_calidad_aire}
+              </div>
+            </div>
+          </div>
+        `);
+        marker.addTo(layersGroupRef.current);
+      });
+
+      // 3. Los 13 Sensores Virtuales IA (XGBoost + ElasticNet)
+      monicaData?.sensores_virtuales_ia?.forEach((sens) => {
+        const isHot = sens.lst_nasa_c > 34;
+        const marker = L.circleMarker([sens.lat, sens.lon], {
+          radius: 9,
+          fillColor: isHot ? '#a855f7' : '#8b5cf6',
+          color: '#ffffff',
+          weight: 2,
+          opacity: 0.95,
+          fillOpacity: 0.85,
+        });
+
+        marker.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 230px; line-height: 1.45;">
+            <div style="background: #7c3aed; color: white; padding: 5px 8px; border-radius: 4px 4px 0 0; font-weight: bold; display: flex; align-items: center; justify-content: space-between;">
+              <span>🤖 Sensor Virtual IA</span>
+              <span style="font-size: 9px; background: rgba(255,255,255,0.3); padding: 1px 5px; border-radius: 3px;">XGBoost (R²=0.91)</span>
+            </div>
+            <div style="padding: 7px 9px; border: 1px solid #7c3aed; border-top: none; border-radius: 0 0 4px 4px; background: white;">
+              <strong style="color: #6d28d9; font-size: 13px;">${sens.nombre}</strong><br/>
+              <span style="color: #64748b; font-size: 11px;">${sens.distrito} • Elevación: ${sens.elevacion_m} msnm</span>
+              <hr style="margin: 5px 0; border: 0; border-top: 1px solid #e2e8f0;"/>
+              <strong>Temp. Estimada (T2M):</strong> <span style="color: #b91c1c; font-weight: bold;">${sens.temp_aire_t2m_c} °C</span><br/>
+              <strong>Temperatura LST (NASA):</strong> ${sens.lst_nasa_c} °C<br/>
+              <strong>PM2.5 Estimado:</strong> <span style="font-weight: bold; color: ${sens.pm25_ug_m3 > 35 ? '#dc2626' : '#059669'};">${sens.pm25_ug_m3} µg/m³</span><br/>
+              <strong>Confianza del Modelo:</strong> <span style="color: #16a34a; font-weight: bold;">${sens.confianza_prediccion_ia}</span><br/>
+              <div style="margin-top: 5px; padding: 4px; background: #faf5ff; border-left: 3px solid #7c3aed; font-size: 11px;">
+                <strong>Diagnóstico:</strong> ${sens.alerta_isla_calor}
+              </div>
+            </div>
+          </div>
+        `);
+        marker.addTo(layersGroupRef.current);
+      });
+    }
+
+    // ==========================================
+    // CAPA 3: GLOBAL NASA MODE (Evaluación Internacional)
+    // ==========================================
+    if (activeTab === 'global_nasa' && selectedPoint) {
+      const lat = selectedPoint.lat || selectedPoint.geometry?.coordinates?.[1];
+      const lng = selectedPoint.lon || selectedPoint.lng || selectedPoint.geometry?.coordinates?.[0];
+      if (lat && lng) {
+        const targetMarker = L.circleMarker([lat, lng], {
+          radius: 14,
+          fillColor: '#3b82f6',
+          color: '#ffffff',
+          weight: 3,
+          opacity: 1,
+          fillOpacity: 0.8,
+        });
+        targetMarker.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 200px;">
+            <strong style="color: #2563eb;">🛰️ NASA POWER Stream Target</strong><br/>
+            <strong>Coordinates:</strong> ${lat.toFixed(4)}, ${lng.toFixed(4)}<br/>
+            <span style="color: #16a34a; font-size: 11px;">Direct Geospatial Satellite Query</span>
+          </div>
+        `);
+        targetMarker.addTo(layersGroupRef.current);
+      }
     }
 
     // ==========================================
@@ -327,13 +426,25 @@ export default function MapViewer({
   // Centrar en punto seleccionado
   useEffect(() => {
     if (selectedPoint && mapInstanceRef.current) {
-      const coords = selectedPoint.geometry.type === 'Polygon'
-        ? selectedPoint.geometry.coordinates[0][0]
-        : selectedPoint.geometry.coordinates;
-      const [lng, lat] = coords;
-      mapInstanceRef.current.setView([lat, lng], 14, { animate: true });
+      let lat, lng;
+      if (selectedPoint.lat !== undefined && selectedPoint.lon !== undefined) {
+        lat = selectedPoint.lat;
+        lng = selectedPoint.lon;
+      } else if (selectedPoint.lat !== undefined && selectedPoint.lng !== undefined) {
+        lat = selectedPoint.lat;
+        lng = selectedPoint.lng;
+      } else if (selectedPoint.geometry) {
+        const coords = selectedPoint.geometry.type === 'Polygon'
+          ? selectedPoint.geometry.coordinates[0][0]
+          : selectedPoint.geometry.coordinates;
+        [lng, lat] = coords;
+      }
+      if (lat !== undefined && lng !== undefined) {
+        const zoom = (activeTab === 'global_nasa' && (Math.abs(lat) > 20 || Math.abs(lng) > 70)) ? 8 : 14;
+        mapInstanceRef.current.setView([lat, lng], zoom, { animate: true });
+      }
     }
-  }, [selectedPoint]);
+  }, [selectedPoint, activeTab]);
 
   return (
     <div 
@@ -408,14 +519,29 @@ export default function MapViewer({
           {activeTab === 'microclimas' && (
             <>
               <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded bg-red-500"></span>
-                <span>Isla Térmica Crítica (D5 Av. 6 de Agosto)</span>
+                <span className="h-3 w-3 rounded-full bg-cyan-400 border border-white"></span>
+                <span>🏛️ Red MÓNICA Física (2 estaciones)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded bg-emerald-500"></span>
-                <span>Zona Fresca con Arbolado (Faldas Tunari)</span>
+                <span className="h-2.5 w-2.5 rounded-full bg-purple-500 border border-white"></span>
+                <span>🤖 Sensor Virtual IA XGBoost (13 dist.)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded bg-red-500/80"></span>
+                <span>Isla de Calor Urbana (&gt;35°C LST)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded bg-emerald-500/80"></span>
+                <span>Bioclima Tunari (&lt;26°C LST)</span>
               </div>
             </>
+          )}
+
+          {activeTab === 'global_nasa' && (
+            <div className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-blue-500 animate-pulse border border-white"></span>
+              <span>🛰️ Live NASA POWER Satellite Stream</span>
+            </div>
           )}
 
           {activeTab === 'torrenteras' && (
