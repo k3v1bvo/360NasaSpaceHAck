@@ -18,3 +18,8 @@ ENV/
 # OS artifacts
 .DS_Store
 Thumbs.db
+
+# Node & Vite build outputs
+node_modules/
+dist/
+.vite/
