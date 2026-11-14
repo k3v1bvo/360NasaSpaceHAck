@@ -1,0 +1,1152 @@
+{
+  "type": "FeatureCollection",
+  "name": "GAMC_60_Puntos_Historicos_Inundacion_GroundTruth",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.175,
+          -17.34
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-001",
+        "torrentera_zona": "Torrentera Taquiña - Puente Cota 2750",
+        "tipo_evento": "Aluvión y Mazamorra",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.172,
+          -17.338
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-002",
+        "torrentera_zona": "Torrentera Taquiña - Puente Cota 2750 (Sector 2)",
+        "tipo_evento": "Aluvión y Mazamorra",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.177,
+          -17.343
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-003",
+        "torrentera_zona": "Torrentera Taquiña - Puente Cota 2750 (Sector 3)",
+        "tipo_evento": "Aluvión y Mazamorra",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.171,
+          -17.342
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-004",
+        "torrentera_zona": "Torrentera Taquiña - Puente Cota 2750 (Sector 4)",
+        "tipo_evento": "Aluvión y Mazamorra",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.174,
+          -17.348
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-005",
+        "torrentera_zona": "Taquiña Media - Barrio Juventud",
+        "tipo_evento": "Desborde de Lodo",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.171,
+          -17.346
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-006",
+        "torrentera_zona": "Taquiña Media - Barrio Juventud (Sector 2)",
+        "tipo_evento": "Desborde de Lodo",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.176,
+          -17.351
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-007",
+        "torrentera_zona": "Taquiña Media - Barrio Juventud (Sector 3)",
+        "tipo_evento": "Desborde de Lodo",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.17,
+          -17.35
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-008",
+        "torrentera_zona": "Taquiña Media - Barrio Juventud (Sector 4)",
+        "tipo_evento": "Desborde de Lodo",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.172,
+          -17.358
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-009",
+        "torrentera_zona": "Taquiña Colector Av. Centenario",
+        "tipo_evento": "Colapso de Canal Pluvial",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.169,
+          -17.356
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-010",
+        "torrentera_zona": "Taquiña Colector Av. Centenario (Sector 2)",
+        "tipo_evento": "Colapso de Canal Pluvial",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.174,
+          -17.361
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-011",
+        "torrentera_zona": "Taquiña Colector Av. Centenario (Sector 3)",
+        "tipo_evento": "Colapso de Canal Pluvial",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.168,
+          -17.36
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-012",
+        "torrentera_zona": "Taquiña Colector Av. Centenario (Sector 4)",
+        "tipo_evento": "Colapso de Canal Pluvial",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.17,
+          -17.375
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-013",
+        "torrentera_zona": "Desembocadura Taquiña Río Rocha",
+        "tipo_evento": "Inundación por Reflujo",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.167,
+          -17.373
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-014",
+        "torrentera_zona": "Desembocadura Taquiña Río Rocha (Sector 2)",
+        "tipo_evento": "Inundación por Reflujo",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.172,
+          -17.378
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-015",
+        "torrentera_zona": "Desembocadura Taquiña Río Rocha (Sector 3)",
+        "tipo_evento": "Inundación por Reflujo",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.166,
+          -17.377
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-016",
+        "torrentera_zona": "Desembocadura Taquiña Río Rocha (Sector 4)",
+        "tipo_evento": "Inundación por Reflujo",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.162,
+          -17.342
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-017",
+        "torrentera_zona": "Pintumayu Alto - Cuenca Colectora",
+        "tipo_evento": "Arrastre de Sedimentos",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.159,
+          -17.34
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-018",
+        "torrentera_zona": "Pintumayu Alto - Cuenca Colectora (Sector 2)",
+        "tipo_evento": "Arrastre de Sedimentos",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.164,
+          -17.345
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-019",
+        "torrentera_zona": "Pintumayu Alto - Cuenca Colectora (Sector 3)",
+        "tipo_evento": "Arrastre de Sedimentos",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.158,
+          -17.344
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-020",
+        "torrentera_zona": "Pintumayu Alto - Cuenca Colectora (Sector 4)",
+        "tipo_evento": "Arrastre de Sedimentos",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.16,
+          -17.355
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-021",
+        "torrentera_zona": "Pintumayu - Cruce Circunvalación 2",
+        "tipo_evento": "Anegamiento de Calzada",
+        "nivel_riesgo": "Medio",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.157,
+          -17.353
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-022",
+        "torrentera_zona": "Pintumayu - Cruce Circunvalación 2 (Sector 2)",
+        "tipo_evento": "Anegamiento de Calzada",
+        "nivel_riesgo": "Medio",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.162,
+          -17.358
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-023",
+        "torrentera_zona": "Pintumayu - Cruce Circunvalación 2 (Sector 3)",
+        "tipo_evento": "Anegamiento de Calzada",
+        "nivel_riesgo": "Medio",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.156,
+          -17.357
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-024",
+        "torrentera_zona": "Pintumayu - Cruce Circunvalación 2 (Sector 4)",
+        "tipo_evento": "Anegamiento de Calzada",
+        "nivel_riesgo": "Medio",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.158,
+          -17.368
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-025",
+        "torrentera_zona": "Pintumayu - Barrio Temporal",
+        "tipo_evento": "Desborde Marginal",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.155,
+          -17.366
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-026",
+        "torrentera_zona": "Pintumayu - Barrio Temporal (Sector 2)",
+        "tipo_evento": "Desborde Marginal",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.16,
+          -17.371
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-027",
+        "torrentera_zona": "Pintumayu - Barrio Temporal (Sector 3)",
+        "tipo_evento": "Desborde Marginal",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.154,
+          -17.37
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-028",
+        "torrentera_zona": "Pintumayu - Barrio Temporal (Sector 4)",
+        "tipo_evento": "Desborde Marginal",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.185,
+          -17.345
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-029",
+        "torrentera_zona": "Logruste Alto - Faldas Tunari",
+        "tipo_evento": "Crecida Súbita",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.182,
+          -17.343
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-030",
+        "torrentera_zona": "Logruste Alto - Faldas Tunari (Sector 2)",
+        "tipo_evento": "Crecida Súbita",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.187,
+          -17.348
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-031",
+        "torrentera_zona": "Logruste Alto - Faldas Tunari (Sector 3)",
+        "tipo_evento": "Crecida Súbita",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.181,
+          -17.347
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-032",
+        "torrentera_zona": "Logruste Alto - Faldas Tunari (Sector 4)",
+        "tipo_evento": "Crecida Súbita",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.182,
+          -17.36
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-033",
+        "torrentera_zona": "Logruste - Canal Sarco Norte",
+        "tipo_evento": "Obstrucción por Basura y Escombros",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.179,
+          -17.358
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-034",
+        "torrentera_zona": "Logruste - Canal Sarco Norte (Sector 2)",
+        "tipo_evento": "Obstrucción por Basura y Escombros",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.184,
+          -17.363
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-035",
+        "torrentera_zona": "Logruste - Canal Sarco Norte (Sector 3)",
+        "tipo_evento": "Obstrucción por Basura y Escombros",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.178,
+          -17.362
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-036",
+        "torrentera_zona": "Logruste - Canal Sarco Norte (Sector 4)",
+        "tipo_evento": "Obstrucción por Basura y Escombros",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.178,
+          -17.372
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-037",
+        "torrentera_zona": "Av. América Oeste / Colector Sarco",
+        "tipo_evento": "Anegamiento Severo de Vía",
+        "nivel_riesgo": "Medio",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.175,
+          -17.37
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-038",
+        "torrentera_zona": "Av. América Oeste / Colector Sarco (Sector 2)",
+        "tipo_evento": "Anegamiento Severo de Vía",
+        "nivel_riesgo": "Medio",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.18,
+          -17.375
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-039",
+        "torrentera_zona": "Av. América Oeste / Colector Sarco (Sector 3)",
+        "tipo_evento": "Anegamiento Severo de Vía",
+        "nivel_riesgo": "Medio",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.174,
+          -17.374
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-040",
+        "torrentera_zona": "Av. América Oeste / Colector Sarco (Sector 4)",
+        "tipo_evento": "Anegamiento Severo de Vía",
+        "nivel_riesgo": "Medio",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.152,
+          -17.408
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-041",
+        "torrentera_zona": "Av. 6 de Agosto esquina Barrientos",
+        "tipo_evento": "Colapso Sumideros Pluviales",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.149,
+          -17.406
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-042",
+        "torrentera_zona": "Av. 6 de Agosto esquina Barrientos (Sector 2)",
+        "tipo_evento": "Colapso Sumideros Pluviales",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.154,
+          -17.411
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-043",
+        "torrentera_zona": "Av. 6 de Agosto esquina Barrientos (Sector 3)",
+        "tipo_evento": "Colapso Sumideros Pluviales",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.148,
+          -17.41
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-044",
+        "torrentera_zona": "Av. 6 de Agosto esquina Barrientos (Sector 4)",
+        "tipo_evento": "Colapso Sumideros Pluviales",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.155,
+          -17.412
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-045",
+        "torrentera_zona": "Av. 6 de Agosto y Panamericana",
+        "tipo_evento": "Anegamiento Urbano de 60 cm",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.152,
+          -17.41
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-046",
+        "torrentera_zona": "Av. 6 de Agosto y Panamericana (Sector 2)",
+        "tipo_evento": "Anegamiento Urbano de 60 cm",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.157,
+          -17.415
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-047",
+        "torrentera_zona": "Av. 6 de Agosto y Panamericana (Sector 3)",
+        "tipo_evento": "Anegamiento Urbano de 60 cm",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.151,
+          -17.414
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-048",
+        "torrentera_zona": "Av. 6 de Agosto y Panamericana (Sector 4)",
+        "tipo_evento": "Anegamiento Urbano de 60 cm",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.148,
+          -17.415
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-049",
+        "torrentera_zona": "Circunvalación Sur / Mercado Campesino",
+        "tipo_evento": "Inundación Pluvial Comercial",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.145,
+          -17.413
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-050",
+        "torrentera_zona": "Circunvalación Sur / Mercado Campesino (Sector 2)",
+        "tipo_evento": "Inundación Pluvial Comercial",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.15,
+          -17.418
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-051",
+        "torrentera_zona": "Circunvalación Sur / Mercado Campesino (Sector 3)",
+        "tipo_evento": "Inundación Pluvial Comercial",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.144,
+          -17.417
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-052",
+        "torrentera_zona": "Circunvalación Sur / Mercado Campesino (Sector 4)",
+        "tipo_evento": "Inundación Pluvial Comercial",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.16,
+          -17.432
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-053",
+        "torrentera_zona": "Puente Tamborada (Río Tamborada)",
+        "tipo_evento": "Desborde de Río Tamborada",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.157,
+          -17.43
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-054",
+        "torrentera_zona": "Puente Tamborada (Río Tamborada) (Sector 2)",
+        "tipo_evento": "Desborde de Río Tamborada",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.162,
+          -17.435
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-055",
+        "torrentera_zona": "Puente Tamborada (Río Tamborada) (Sector 3)",
+        "tipo_evento": "Desborde de Río Tamborada",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.156,
+          -17.434
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-056",
+        "torrentera_zona": "Puente Tamborada (Río Tamborada) (Sector 4)",
+        "tipo_evento": "Desborde de Río Tamborada",
+        "nivel_riesgo": "Extremo",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 35.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.18,
+          -17.42
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-057",
+        "torrentera_zona": "La Maica Central - Zanjas de Riego",
+        "tipo_evento": "Inundación de Parcelas Agrícolas",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.177,
+          -17.418
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-058",
+        "torrentera_zona": "La Maica Central - Zanjas de Riego (Sector 2)",
+        "tipo_evento": "Inundación de Parcelas Agrícolas",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.182,
+          -17.423
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-059",
+        "torrentera_zona": "La Maica Central - Zanjas de Riego (Sector 3)",
+        "tipo_evento": "Inundación de Parcelas Agrícolas",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.176,
+          -17.422
+        ]
+      },
+      "properties": {
+        "id": "GAMC-HIST-060",
+        "torrentera_zona": "La Maica Central - Zanjas de Riego (Sector 4)",
+        "tipo_evento": "Inundación de Parcelas Agrícolas",
+        "nivel_riesgo": "Alto",
+        "frecuencia_historica": "Recurrente cada 1-2 años",
+        "fuente_oficial": "GAMC Catastro & UGR (Unidad de Gestión de Riesgos)",
+        "senamhi_umbral_lluvia_mm": 50.0
+      }
+    }
+  ]
+}

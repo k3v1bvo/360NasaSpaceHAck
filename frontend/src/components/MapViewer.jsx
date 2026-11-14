@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import tunariPolygonData from '../../../data/gamc/parque_nacional_tunari.geojson';
+import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
+import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
 
-// Coordenadas centrales de Cochabamba, Bolivia
 const COCHABAMBA_CENTER = [-17.3895, -66.1568];
 
-export default function MapViewer({ activeTab, focosData, torrenterasData, reportsData, selectedPoint }) {
+export default function MapViewer({ activeTab, focosData, reportsData, selectedPoint }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const layersGroupRef = useRef(null);
@@ -36,13 +37,13 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
 
       // CartoDB Dark Matter tiles (estilo espacial oscuro)
       L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO &copy; NASA Earthdata',
+        attribution: '&copy; OpenStreetMap &copy; CARTO &copy; NASA Earthdata &copy; GAMC',
         maxZoom: 19,
       }).addTo(map);
 
       mapInstanceRef.current = map;
       layersGroupRef.current = L.layerGroup().addTo(map);
-      updateLayers(L, map);
+      renderLayers(L, map);
     };
 
     initLeaflet();
@@ -55,7 +56,7 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
     };
   }, []);
 
-  const updateLayers = async (L, map) => {
+  const renderLayers = async (L, map) => {
     if (!L) {
       try {
         L = await import('leaflet');
@@ -65,9 +66,11 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
 
     layersGroupRef.current.clearLayers();
 
-    // 1. CAPA DE FOCOS DE CALOR Y POLÍGONO TUNARI (Kevin)
-    if (activeTab === 'incendios' || activeTab === 'todos') {
-      // Dibujar polígono del Parque Tunari
+    // ==========================================
+    // CAPA 1: FOCOS DE CALOR Y POLÍGONO TUNARI (Kevin)
+    // ==========================================
+    if (activeTab === 'incendios') {
+      // Polígono Parque Nacional Tunari (Cota 2750)
       if (tunariPolygonData?.features?.[0]) {
         const polyCoords = tunariPolygonData.features[0].geometry.coordinates[0].map(
           ([lng, lat]) => [lat, lng]
@@ -83,18 +86,18 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
           <div style="color: #111; font-family: sans-serif; font-size: 12px;">
             <strong style="color: #059669;">🌲 Parque Nacional Tunari (PNT)</strong><br/>
             <strong>Cota límite:</strong> 2750 msnm<br/>
-            <strong>Superficie:</strong> ~300,000 ha<br/>
-            <span style="color: #666;">Área protegida de recarga hídrica</span>
+            <strong>Área:</strong> ~300,000 ha protegidas<br/>
+            <span style="color: #666;">Zona de recarga de acuíferos y pulmón verde</span>
           </div>
         `);
         polygon.addTo(layersGroupRef.current);
       }
 
-      // Dibujar focos de calor armonizados
+      // Marcadores de Fuego Armonizados (NASA FIRMS)
       focosData?.forEach((foco) => {
         const [lng, lat] = foco.geometry.coordinates;
-        const frp = foco.properties.frp_total_mw || foco.properties.frp_intensidad || 30;
-        const sensor = foco.properties.sensor_armonizado || foco.properties.sensor || 'VIIRS';
+        const frp = foco.properties.frp_total_mw || 30;
+        const sensor = foco.properties.sensor_armonizado || 'VIIRS';
         const nivel = foco.properties.nivel_alerta || 'Alto';
 
         const radius = nivel === 'Critico' ? 12 : nivel === 'Alto' ? 9 : 7;
@@ -118,7 +121,7 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
             <strong>Nivel:</strong> ${nivel}<br/>
             <strong>Fecha:</strong> ${foco.properties.fecha}<br/>
             <span style="color: ${foco.properties.en_parque_tunari ? '#059669' : '#6b7280'}; font-weight: bold;">
-              ${foco.properties.en_parque_tunari ? '⚠️ Dentro del P.N. Tunari' : '🏡 Interfaz urbana'}
+              ${foco.properties.en_parque_tunari ? '🌲 Dentro del P.N. Tunari' : '🏡 Interfaz urbana'}
             </span>
           </div>
         `);
@@ -126,48 +129,89 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
       });
     }
 
-    // 2. CAPA DE TORRENTERAS E INUNDACIONES (Integrante 3)
-    if (activeTab === 'torrenteras' || activeTab === 'todos') {
-      torrenterasData?.forEach((pt) => {
+    // ==========================================
+    // CAPA 2: MICROCLIMAS & DISTRITOS GAMC (Integrante 2)
+    // ==========================================
+    if (activeTab === 'microclimas') {
+      distritosData?.features?.forEach((dist) => {
+        const p = dist.properties;
+        const polyCoords = dist.geometry.coordinates[0].map(([lng, lat]) => [lat, lng]);
+
+        const color = p.lst_temperatura_c > 35 ? '#ef4444' :
+                      p.lst_temperatura_c > 30 ? '#f59e0b' :
+                      p.lst_temperatura_c > 26 ? '#3b82f6' : '#10b981';
+
+        const polygon = L.polygon(polyCoords, {
+          color,
+          weight: 2,
+          fillColor: color,
+          fillOpacity: 0.4,
+        });
+
+        polygon.bindPopup(`
+          <div style="color: #111; font-family: sans-serif; font-size: 12px; min-width: 200px;">
+            <strong style="color: ${color};">🌡️ ${p.nombre}</strong><br/>
+            <strong>Temperatura LST (NASA):</strong> ${p.lst_temperatura_c} °C<br/>
+            <strong>Índice Vegetación NDVI:</strong> ${p.ndvi_vegetacion}<br/>
+            <strong>Isla de Calor:</strong> ${p.nivel_isla_calor}<br/>
+            <strong>Población:</strong> ~${p.poblacion_estimada.toLocaleString()} hab.<br/>
+            <span style="color: #b91c1c; font-weight: bold;">${p.contraste_zona_sur_c}</span>
+          </div>
+        `);
+        polygon.addTo(layersGroupRef.current);
+      });
+    }
+
+    // ==========================================
+    // CAPA 3: TORRENTERAS & 60 PUNTOS GAMC (Integrante 3)
+    // ==========================================
+    if (activeTab === 'torrenteras') {
+      floodPointsData?.features?.forEach((pt) => {
         const [lng, lat] = pt.geometry.coordinates;
-        const color = pt.properties.nivel_riesgo === 'Extremo' ? '#ef4444' : '#3b82f6';
+        const p = pt.properties;
+        const color = p.nivel_riesgo === 'Extremo' ? '#ef4444' :
+                      p.nivel_riesgo === 'Alto' ? '#f59e0b' : '#3b82f6';
+
         const marker = L.circleMarker([lat, lng], {
-          radius: 8,
+          radius: p.nivel_riesgo === 'Extremo' ? 9 : 7,
           fillColor: color,
           color: '#ffffff',
           weight: 1.5,
-          opacity: 0.9,
-          fillOpacity: 0.75,
+          opacity: 0.95,
+          fillOpacity: 0.85,
         });
 
         marker.bindPopup(`
-          <div style="color: #111; font-family: sans-serif; font-size: 12px;">
-            <strong style="color: #2563eb;">🌊 Torrentera / Colector Crítico</strong><br/>
-            <strong>Nombre:</strong> ${pt.properties.torrentera}<br/>
-            <strong>Riesgo:</strong> ${pt.properties.nivel_riesgo}<br/>
-            <strong>Evento:</strong> ${pt.properties.tipo_evento}<br/>
-            <strong>Colector:</strong> ${pt.properties.estado_colector}
+          <div style="color: #111; font-family: sans-serif; font-size: 12px; min-width: 200px;">
+            <strong style="color: ${color};">🌊 ${p.torrentera_zona}</strong><br/>
+            <strong>Evento Crítico:</strong> ${p.tipo_evento}<br/>
+            <strong>Riesgo Evaluado:</strong> ${p.nivel_riesgo}<br/>
+            <strong>Umbral SENAMHI:</strong> &gt; ${p.senamhi_umbral_lluvia_mm} mm en 24h<br/>
+            <span style="color: #4b5563; font-size: 11px;">${p.fuente_oficial}</span>
           </div>
         `);
         marker.addTo(layersGroupRef.current);
       });
     }
 
-    // 3. CAPA DE ALERTAS VECINALES (Integrante 4)
+    // ==========================================
+    // ALERTAS VECINALES (Integrante 4)
+    // ==========================================
     reportsData?.forEach((rep) => {
       const pin = L.circleMarker(COCHABAMBA_CENTER, {
         radius: 12,
         fillColor: '#f97316',
         color: '#fbbf24',
-        weight: 2,
+        weight: 2.5,
         fillOpacity: 0.85,
       });
       pin.bindPopup(`
         <div style="color: #111; font-family: sans-serif; font-size: 12px;">
-          <strong style="color: #ea580c;">📢 Reporte Vecinal Activo</strong><br/>
+          <strong style="color: #ea580c;">📢 Alerta Ciudadana Activa</strong><br/>
           <strong>Zona:</strong> ${rep.zona}<br/>
           <strong>Tipo:</strong> ${rep.tipo}<br/>
-          <strong>Hora:</strong> ${rep.fecha}
+          <strong>Hora:</strong> ${rep.fecha}<br/>
+          <span style="color: #666;">Reportado por vecino con geolocalización GPS</span>
         </div>
       `);
       pin.addTo(layersGroupRef.current);
@@ -176,14 +220,17 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
 
   useEffect(() => {
     if (mapInstanceRef.current) {
-      updateLayers(null, mapInstanceRef.current);
+      renderLayers(null, mapInstanceRef.current);
     }
-  }, [activeTab, focosData, torrenterasData, reportsData]);
+  }, [activeTab, focosData, reportsData]);
 
-  // Centrar en punto seleccionado
+  // Centrar en punto seleccionado al hacer clic desde el panel
   useEffect(() => {
     if (selectedPoint && mapInstanceRef.current) {
-      const [lng, lat] = selectedPoint.geometry.coordinates;
+      const coords = selectedPoint.geometry.type === 'Polygon'
+        ? selectedPoint.geometry.coordinates[0][0]
+        : selectedPoint.geometry.coordinates;
+      const [lng, lat] = coords;
       mapInstanceRef.current.setView([lat, lng], 14, { animate: true });
     }
   }, [selectedPoint]);
@@ -192,22 +239,79 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
     <div className="relative h-full w-full bg-neutral-950 overflow-hidden">
       <div ref={mapContainerRef} className="h-full w-full z-0" />
       
-      {/* Leyenda Flotante en el Mapa */}
-      <div className="absolute bottom-4 left-4 z-[400] rounded-xl border border-neutral-800 bg-neutral-950/90 p-3 text-xs text-white backdrop-blur-md shadow-xl">
-        <span className="font-bold text-[11px] text-neutral-400">LEYENDA COCHABAMBA</span>
-        <div className="mt-1.5 space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-red-500 animate-pulse"></span>
-            <span>Foco de Calor (NASA FIRMS Armonizado)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="h-3.5 w-3.5 rounded border border-dashed border-emerald-400 bg-emerald-900/40"></span>
-            <span>Polígono P.N. Tunari (Cota 2750)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-blue-500"></span>
-            <span>Torrentera / Colector (GAMC 60 pts)</span>
-          </div>
+      {/* Leyenda Flotante Dinámica según el Reto Activo */}
+      <div className="absolute bottom-4 left-4 z-[400] rounded-xl border border-neutral-800 bg-neutral-950/90 p-3 text-xs text-white backdrop-blur-md shadow-2xl">
+        <span className="font-bold text-[10px] text-neutral-400 uppercase tracking-wider">
+          {activeTab === 'incendios' && 'LEYENDA: NASA FIRMS + TUNARI'}
+          {activeTab === 'microclimas' && 'LEYENDA: TEMPERATURA LST GAMC'}
+          {activeTab === 'torrenteras' && 'LEYENDA: 60 PUNTOS GROUND-TRUTH'}
+          {activeTab === 'agrotech' && 'LEYENDA: VALLE COCHABAMBA'}
+        </span>
+
+        <div className="mt-2 space-y-1.5 text-[11px]">
+          {activeTab === 'incendios' && (
+            <>
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-red-500 animate-pulse"></span>
+                <span>Foco de Fuego Armonizado (&gt;50 MW)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-amber-500"></span>
+                <span>Foco Moderado (Quema en valle)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-3.5 w-3.5 rounded border border-dashed border-emerald-400 bg-emerald-900/40"></span>
+                <span>Polígono P.N. Tunari (Cota 2750)</span>
+              </div>
+            </>
+          )}
+
+          {activeTab === 'microclimas' && (
+            <>
+              <div className="flex items-center gap-2">
+                <span className="h-3.5 w-3.5 rounded bg-red-500/70 border border-red-400"></span>
+                <span>Isla Térmica Crítica (&gt;35 °C - D5 Av. 6 de Agosto)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-3.5 w-3.5 rounded bg-amber-500/70 border border-amber-400"></span>
+                <span>Zona Urbana Media (30 - 35 °C - Centro D10)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-3.5 w-3.5 rounded bg-emerald-500/70 border border-emerald-400"></span>
+                <span>Zona Fresca con Arbolado (&lt;26 °C - Faldas Tunari)</span>
+              </div>
+            </>
+          )}
+
+          {activeTab === 'torrenteras' && (
+            <>
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-red-500 animate-ping"></span>
+                <span>Riesgo Extremo (Taquiña / Aluvión)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-amber-500"></span>
+                <span>Riesgo Alto (Colector comprometido)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-blue-500"></span>
+                <span>Punto de Monitoreo Pluvial GAMC</span>
+              </div>
+            </>
+          )}
+
+          {activeTab === 'agrotech' && (
+            <>
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-emerald-500"></span>
+                <span>Valle Central y Bajo (Rotación Maíz/Haba)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-orange-500"></span>
+                <span>Alerta Vecinal Georreferenciada</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

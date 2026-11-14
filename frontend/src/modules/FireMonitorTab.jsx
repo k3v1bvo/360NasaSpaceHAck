@@ -113,7 +113,7 @@ export default function FireMonitorTab({ onSelectFoco }) {
                 className="w-full rounded-lg border border-neutral-800 bg-neutral-900 p-2 text-[11px] text-neutral-200 outline-none focus:border-red-500"
               >
                 <option value="ALL">Todos los Niveles</option>
-                <option value="Critico">Solo Críticos (>50 MW)</option>
+                <option value="Critico">Solo Críticos (&gt;50 MW)</option>
                 <option value="Alto">Solo Nivel Alto</option>
                 <option value="Moderado">Solo Moderados</option>
               </select>

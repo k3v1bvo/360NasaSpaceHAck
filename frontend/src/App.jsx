@@ -9,9 +9,8 @@ import FloodRiskTab from './modules/FloodRiskTab';
 import AgroAdvisorTab from './modules/AgroAdvisorTab';
 import CitizenReportModal from './modules/CitizenReportModal';
 
-// Datos satelitales armonizados y datos GAMC
+// Datos satelitales armonizados de Kevin
 import focosHarmonized from '../../data/nasa/firms_tunari_harmonized.geojson';
-import torrenterasEjemplo from '../../data/gamc/puntos_torrenteras_ejemplo.geojson';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('incendios');
@@ -44,7 +43,6 @@ export default function App() {
           <MapViewer
             activeTab={activeTab}
             focosData={focosHarmonized.features}
-            torrenterasData={torrenterasEjemplo.features}
             reportsData={reports}
             selectedPoint={selectedPoint}
           />
@@ -59,12 +57,13 @@ export default function App() {
           )}
 
           {activeTab === 'microclimas' && (
-            <MicroclimateTab />
+            <MicroclimateTab
+              onSelectDistrito={(dist) => setSelectedPoint(dist)}
+            />
           )}
 
           {activeTab === 'torrenteras' && (
             <FloodRiskTab
-              torrenterasData={torrenterasEjemplo.features}
               onSelectPunto={(pt) => setSelectedPoint(pt)}
             />
           )}

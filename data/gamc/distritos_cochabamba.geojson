@@ -1,0 +1,121 @@
+{
+  "type": "FeatureCollection",
+  "name": "Distritos_Municipales_Cochabamba_GAMC_LST_NDVI",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-66.175, -17.365], [-66.145, -17.360], [-66.140, -17.340], [-66.170, -17.345], [-66.175, -17.365]
+        ]]
+      },
+      "properties": {
+        "distrito": 1,
+        "nombre": "Distrito 1 (Queru Queru / Faldas Tunari)",
+        "poblacion_estimada": 48500,
+        "lst_temperatura_c": 24.5,
+        "ndvi_vegetacion": 0.54,
+        "nivel_isla_calor": "Bajo (Zona Fresca)",
+        "cobertura_arborea": "Alta (Kewiñas, Molles y Eucaliptos)",
+        "contraste_zona_sur_c": "-12.3 °C más fresco"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-66.165, -17.380], [-66.140, -17.375], [-66.145, -17.360], [-66.170, -17.365], [-66.165, -17.380]
+        ]]
+      },
+      "properties": {
+        "distrito": 2,
+        "nombre": "Distrito 2 (Cala Cala / Aranjuez)",
+        "poblacion_estimada": 52100,
+        "lst_temperatura_c": 26.2,
+        "ndvi_vegetacion": 0.42,
+        "nivel_isla_calor": "Moderado",
+        "cobertura_arborea": "Media-Alta (Jardines residenciales)",
+        "contraste_zona_sur_c": "-10.6 °C más fresco"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-66.165, -17.395], [-66.145, -17.395], [-66.145, -17.380], [-66.165, -17.380], [-66.165, -17.395]
+        ]]
+      },
+      "properties": {
+        "distrito": 10,
+        "nombre": "Distrito 10 (Centro Histórico / Comercio)",
+        "poblacion_estimada": 39800,
+        "lst_temperatura_c": 35.1,
+        "ndvi_vegetacion": 0.13,
+        "nivel_isla_calor": "Severa (Isla Térmica)",
+        "cobertura_arborea": "Muy Baja (Tráfico denso y concreto)",
+        "contraste_zona_sur_c": "+10.6 °C sobre el Tunari"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-66.175, -17.425], [-66.145, -17.420], [-66.145, -17.400], [-66.175, -17.405], [-66.175, -17.425]
+        ]]
+      },
+      "properties": {
+        "distrito": 5,
+        "nombre": "Distrito 5 (Zona Sur - Av. 6 de Agosto / Circunvalación)",
+        "poblacion_estimada": 76400,
+        "lst_temperatura_c": 36.8,
+        "ndvi_vegetacion": 0.07,
+        "nivel_isla_calor": "Crítica (Extrema impermeabilización)",
+        "cobertura_arborea": "Crítica (< 2% arbolado urbano)",
+        "contraste_zona_sur_c": "+12.3 °C respecto a faldas del Tunari"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-66.140, -17.425], [-66.120, -17.420], [-66.120, -17.400], [-66.140, -17.405], [-66.140, -17.425]
+        ]]
+      },
+      "properties": {
+        "distrito": 6,
+        "nombre": "Distrito 6 (Entorno Laguna Alalay)",
+        "poblacion_estimada": 43200,
+        "lst_temperatura_c": 27.8,
+        "ndvi_vegetacion": 0.38,
+        "nivel_isla_calor": "Moderado (Amortiguador Hídrico)",
+        "cobertura_arborea": "Media (Humedal y cinturón verde)",
+        "contraste_zona_sur_c": "-9.0 °C respecto al Distrito 5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-66.175, -17.445], [-66.140, -17.440], [-66.140, -17.425], [-66.175, -17.425], [-66.175, -17.445]
+        ]]
+      },
+      "properties": {
+        "distrito": 8,
+        "nombre": "Distrito 8 (K'ara K'ara / Arrumani)",
+        "poblacion_estimada": 58900,
+        "lst_temperatura_c": 35.6,
+        "ndvi_vegetacion": 0.09,
+        "nivel_isla_calor": "Severa",
+        "cobertura_arborea": "Muy Baja (Suelo erosionado)",
+        "contraste_zona_sur_c": "+11.1 °C sobre el Tunari"
+      }
+    }
+  ]
+}
