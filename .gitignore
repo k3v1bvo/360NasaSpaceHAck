@@ -41,3 +41,8 @@ env/
 .vscode/
 *.swp
 *.swo
+
+# Personal study & presentation files (do not commit to git)
+MANUAL_MAESTRO_ESTUDIO_PITCH_STEVENS.md
+*ESTUDIO*.md
+*PERSONAL*.md
