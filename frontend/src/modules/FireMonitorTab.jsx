@@ -510,10 +510,51 @@ export default function FireMonitorTab({
             </label>
           </div>
 
+          {/* Panel de Leyendas Oficiales GetLegendGraphic */}
+          <div className="rounded-lg border border-neutral-800 bg-neutral-900 p-2.5 space-y-2">
+            <span className="text-[11px] font-bold text-neutral-300 block">
+              Leyendas Oficiales (GetLegendGraphic 1.0.0):
+            </span>
+            <div className="space-y-2 text-[10px]">
+              {wmsCota && (
+                <div className="rounded border border-neutral-800 bg-neutral-950 p-2 space-y-1">
+                  <div className="flex items-center justify-between text-emerald-400 font-semibold">
+                    <span>Leyenda: Cota 2750 (P.N. Tunari)</span>
+                    <span className="text-[9px] text-neutral-500 font-mono">Categorizado</span>
+                  </div>
+                  <img
+                    src="https://serviciosgamc.cochabamba.bo/api/gs/wms?key=8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32&service_id=297cefa4-0832-42bb-a98e-2cbea989fd9d&REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png"
+                    alt="Leyenda Oficial Cota 2750 GAMC"
+                    className="max-h-24 rounded border border-neutral-800 bg-white/5 p-1"
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                </div>
+              )}
+
+              {wmsPeriurbanos && (
+                <div className="rounded border border-neutral-800 bg-neutral-950 p-2 space-y-1">
+                  <div className="flex items-center justify-between text-purple-400 font-semibold">
+                    <span>Leyenda: Periurbanos (Interfase Urbana)</span>
+                    <span className="text-[9px] text-neutral-500 font-mono">Categorizado</span>
+                  </div>
+                  <img
+                    src="https://serviciosgamc.cochabamba.bo/api/gs/wms?key=8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32&service_id=c52066a1-32fd-4925-81e0-c2dcb8f4238f&REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png"
+                    alt="Leyenda Oficial Periurbanos GAMC"
+                    className="max-h-24 rounded border border-neutral-800 bg-white/5 p-1"
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
           <div className="rounded-lg bg-neutral-900 p-2 text-[10px] text-neutral-400 font-mono space-y-0.5 border border-neutral-800">
             <div><strong>Proxy GAMC:</strong> recursosgamc.cochabamba.bo/proxy</div>
             <div><strong>Servicio:</strong> serviciosgamc.cochabamba.bo/api/gs/wms</div>
             <div className="truncate"><strong>Key Proy 03:</strong> 8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32</div>
+            <div className="text-neutral-500 pt-1">
+              BBOX GAMC: [-66.2807, -17.5311] a [-66.0695, -17.2573]
+            </div>
           </div>
         </div>
       )}
