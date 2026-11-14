@@ -31,6 +31,13 @@ export default function App() {
   const [selectedGlobalSpot, setSelectedGlobalSpot] = useState(null);
   const [sensorMode, setSensorMode] = useState('HARMONIZED'); // 'HARMONIZED' | 'MODIS' | 'VIIRS'
 
+  // Cambio de pestaña limpio: resetea selecciones para evitar colisión de coordenadas entre mapas
+  const handleTabChange = (newTab) => {
+    setActiveTab(newTab);
+    setSelectedPoint(null);
+    setSelectedGlobalSpot(null);
+  };
+
   // Estados de las Capas WMS Oficiales del GAMC
   const [wmsCota, setWmsCota] = useState(true);
   const [wmsPeriurbanos, setWmsPeriurbanos] = useState(true);
@@ -62,7 +69,7 @@ export default function App() {
       {/* 1. Barra Superior con Navegación Oficial NASA TREND DETECTIVE */}
       <Navbar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={handleTabChange}
         offlineMode={offlineMode}
         setOfflineMode={setOfflineMode}
         onOpenReport={() => setIsReportModalOpen(true)}
@@ -72,24 +79,17 @@ export default function App() {
       <MetricsStrip metrics={monicaData?.metricas_modelo_ia} />
 
       {/* 3. Cuerpo Principal: Mapa Planetario/Regional + Panel Lateral */}
-      <div className="relative flex flex-1 overflow-hidden min-h-0 w-full">
+      <div className={`relative flex flex-1 overflow-hidden min-h-0 w-full mobile-view-${mobileView}`}>
         {/* Mapa Central Interactivo con Controles Planetarios y Regionales */}
-        <main 
-          className={`relative h-full min-h-0 transition-all duration-300 ${
-            mobileView === 'map' ? 'flex-1 w-full block' : 'hidden md:block md:flex-1'
-          }`}
-        >
+        <main className="desktop-layout-main relative h-full min-h-0">
           <MapViewer
             activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            setActiveTab={handleTabChange}
             focosData={currentFocosData}
             sensorMode={sensorMode}
             reportsData={reports}
             selectedPoint={selectedPoint}
-            setSelectedPoint={(p) => {
-              setSelectedPoint(p);
-              // Si el usuario toca un punto en el mapa en móvil, no ocultamos el mapa de golpe
-            }}
+            setSelectedPoint={(p) => setSelectedPoint(p)}
             onSelectGlobalLocation={(spot) => {
               setSelectedPoint({ lat: spot.lat, lon: spot.lon, ...spot });
               setSelectedGlobalSpot(spot);
@@ -107,13 +107,7 @@ export default function App() {
         </main>
 
         {/* Panel Lateral: Módulo correspondiente */}
-        <aside 
-          className={`border-l border-neutral-800/80 bg-[#0d1017]/95 overflow-y-auto backdrop-blur-xl shadow-2xl z-10 transition-all duration-300 ${
-            mobileView === 'panel' 
-              ? 'flex-1 w-full h-full block' 
-              : 'hidden md:block md:w-[400px] lg:w-[430px] md:shrink-0 h-full'
-          }`}
-        >
+        <aside className="desktop-layout-aside border-l border-neutral-800/80 bg-[#0d1017]/95 overflow-y-auto backdrop-blur-xl shadow-2xl z-10">
           {activeTab === 'global_nasa' && (
             <GlobalNasaMode
               onFocusGlobalCoords={(coords) => {
@@ -121,7 +115,7 @@ export default function App() {
                 setMobileView('map');
               }}
               onSwitchToPilot={() => {
-                setActiveTab('microclimas');
+                handleTabChange('microclimas');
                 setMobileView('map');
               }}
               selectedLocation={selectedGlobalSpot}
@@ -133,10 +127,9 @@ export default function App() {
             <MicroclimateAITab
               onSelectPoint={(point) => {
                 setSelectedPoint(point);
-                // Si el usuario quiere ver el punto en el mapa en móvil:
                 setMobileView('map');
               }}
-              onNavigateToFires={() => setActiveTab('incendios')}
+              onNavigateToFires={() => handleTabChange('incendios')}
             />
           )}
 
@@ -165,7 +158,7 @@ export default function App() {
       </div>
 
       {/* 4. Selector Flotante Móvil: Mapa vs Panel de Datos */}
-      <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-[1000] flex items-center rounded-full border border-blue-500/40 bg-neutral-950/95 p-1 shadow-2xl backdrop-blur-xl">
+      <div className="desktop-hide-toggle fixed bottom-4 left-1/2 -translate-x-1/2 z-[1000] flex items-center rounded-full border border-blue-500/40 bg-neutral-950/95 p-1 shadow-2xl backdrop-blur-xl">
         <button
           onClick={() => setMobileView('map')}
           className={`flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold transition-all ${

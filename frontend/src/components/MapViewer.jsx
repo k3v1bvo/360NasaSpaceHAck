@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Info, ChevronDown } from 'lucide-react';
+import { Info, ChevronDown, Crosshair } from 'lucide-react';
 import tunariPolygonData from '../../../data/gamc/parque_nacional_tunari.geojson';
 import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
@@ -34,6 +34,8 @@ export default function MapViewer({
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const layersGroupRef = useRef(null);
+  const baseLayersRef = useRef({});
+  const [baseMapType, setBaseMapType] = useState('satellite'); // 'satellite' | 'streets' | 'dark'
   const [isLegendOpen, setIsLegendOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
 
   // ResizeObserver para recalcular tamaño de Leaflet instantáneamente en responsive
@@ -48,7 +50,7 @@ export default function MapViewer({
     return () => observer.disconnect();
   }, []);
 
-  // Inicialización de Leaflet
+  // Inicialización de Leaflet con 3 capas base robustas (evita "Map data not yet available")
   useEffect(() => {
     const initLeaflet = async () => {
       let L;
@@ -72,18 +74,44 @@ export default function MapViewer({
         worldCopyJump: true
       });
 
-      // Base Satelital NASA (Esri World Imagery) - 100% libre sin API key
-      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '&copy; NASA Earthdata &copy; Esri &copy; GAMC Cochabamba',
+      // 1. Base Satelital NASA/Esri (con maxNativeZoom 18 para evitar error de teselas grises)
+      const satTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; NASA Earthdata &copy; Esri',
+        maxNativeZoom: 18,
         maxZoom: 19,
-      }).addTo(map);
+      });
 
-      // Etiquetas y límites urbanos claros sobre la imagen satelital
-      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+      const satLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
         attribution: '',
+        maxNativeZoom: 18,
         maxZoom: 19,
-        opacity: 0.75,
-      }).addTo(map);
+        opacity: 0.8,
+      });
+
+      const satGroup = L.layerGroup([satTiles, satLabels]);
+
+      // 2. Base Callejero Voyager (CartoDB) - 100% vector nítido a todo zoom
+      const streetsLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 19,
+      });
+
+      // 3. Base Dark Matter (CartoDB) - Estilo centro de control espacial
+      const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 19,
+      });
+
+      baseLayersRef.current = {
+        satellite: satGroup,
+        streets: streetsLayer,
+        dark: darkLayer,
+      };
+
+      // Iniciar con la capa satelital activa
+      satGroup.addTo(map);
 
       // Listener para clic en cualquier punto del mapa en modo global
       map.on('click', (e) => {
@@ -110,6 +138,27 @@ export default function MapViewer({
       }
     };
   }, []);
+
+  // Conmutador dinámico de capa base (Satélite / Callejero / Oscuro)
+  useEffect(() => {
+    if (!mapInstanceRef.current || !baseLayersRef.current.satellite) return;
+    const map = mapInstanceRef.current;
+
+    Object.values(baseLayersRef.current).forEach((layer) => {
+      if (map.hasLayer(layer)) {
+        map.removeLayer(layer);
+      }
+    });
+
+    const currentLayer = baseLayersRef.current[baseMapType];
+    if (currentLayer) {
+      currentLayer.addTo(map);
+      // Mantener la capa base detrás de los marcadores
+      if (currentLayer.bringToBack) {
+        currentLayer.bringToBack();
+      }
+    }
+  }, [baseMapType]);
 
   // Vuelo suave cuando cambia activeTab
   useEffect(() => {
@@ -529,36 +578,38 @@ export default function MapViewer({
     }
   }, [activeTab, focosData, sensorMode, reportsData, offlineMode, wmsCota, wmsPeriurbanos, wmsDistritos, nasaGibs, gibsDate]);
 
-  // Centrar en punto seleccionado
+  // Centrar en punto seleccionado SOLO si cambia selectedPoint
   useEffect(() => {
-    if (selectedPoint && mapInstanceRef.current) {
-      let lat, lng;
-      if (selectedPoint.lat !== undefined && selectedPoint.lon !== undefined) {
-        lat = selectedPoint.lat;
-        lng = selectedPoint.lon;
-      } else if (selectedPoint.lat !== undefined && selectedPoint.lng !== undefined) {
-        lat = selectedPoint.lat;
-        lng = selectedPoint.lng;
-      } else if (selectedPoint.geometry) {
-        const coords = selectedPoint.geometry.type === 'Polygon'
-          ? selectedPoint.geometry.coordinates[0][0]
-          : selectedPoint.geometry.coordinates;
-        [lng, lat] = coords;
-      }
-      if (lat !== undefined && lng !== undefined) {
-        const zoom = (activeTab === 'global_nasa') ? 6 : 14;
-        mapInstanceRef.current.flyTo([lat, lng], zoom, { duration: 1.5 });
-      }
-    }
-  }, [selectedPoint, activeTab]);
+    if (!selectedPoint || !mapInstanceRef.current) return;
 
-  // Botones de navegación rápida
-  const handleQuickFlight = (lat, lon, zoom, tab) => {
-    if (setActiveTab && tab) {
-      setActiveTab(tab);
+    let lat, lng;
+    if (selectedPoint.lat !== undefined && selectedPoint.lon !== undefined) {
+      lat = selectedPoint.lat;
+      lng = selectedPoint.lon;
+    } else if (selectedPoint.lat !== undefined && selectedPoint.lng !== undefined) {
+      lat = selectedPoint.lat;
+      lng = selectedPoint.lng;
+    } else if (selectedPoint.geometry) {
+      const coords = selectedPoint.geometry.type === 'Polygon'
+        ? selectedPoint.geometry.coordinates[0][0]
+        : selectedPoint.geometry.coordinates;
+      [lng, lat] = coords;
     }
-    if (mapInstanceRef.current) {
-      mapInstanceRef.current.flyTo([lat, lon], zoom, { duration: 1.6 });
+    if (lat !== undefined && lng !== undefined) {
+      const targetZoom = (activeTab === 'global_nasa') ? 5 : 13.5;
+      mapInstanceRef.current.flyTo([lat, lng], targetZoom, { duration: 1.4 });
+    }
+  }, [selectedPoint]);
+
+  // Función de recentrado inteligente según la pestaña activa
+  const handleRecenter = () => {
+    if (!mapInstanceRef.current) return;
+    if (activeTab === 'global_nasa') {
+      mapInstanceRef.current.flyTo(GLOBAL_CENTER, GLOBAL_ZOOM, { duration: 1.4 });
+    } else if (activeTab === 'microclimas') {
+      mapInstanceRef.current.flyTo(COCHABAMBA_CENTER, COCHABAMBA_ZOOM, { duration: 1.4 });
+    } else if (activeTab === 'incendios') {
+      mapInstanceRef.current.flyTo([-17.36, -66.16], 12.5, { duration: 1.4 });
     }
   };
 
@@ -573,60 +624,54 @@ export default function MapViewer({
         style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, height: '100%', width: '100%' }}
       />
       
-      {/* 1. Barra Flotante Superior: Navegación Planetaria Directa */}
-      <div className="absolute top-2 left-2 right-2 sm:top-4 sm:left-4 sm:right-auto z-[400] flex items-center gap-1 sm:gap-1.5 rounded-xl sm:rounded-2xl border border-white/10 bg-[#0f172a]/95 p-1 sm:p-1.5 text-[11px] sm:text-xs text-white backdrop-blur-xl shadow-2xl overflow-x-auto no-scrollbar">
+      {/* 1. Selector de Capas Base (Satélite / Callejero / Oscuro) y Recentrar */}
+      <div className="absolute top-3 left-3 z-[400] flex items-center gap-1 sm:gap-1.5 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1 text-xs text-white backdrop-blur-xl shadow-2xl">
         <button
-          onClick={() => handleQuickFlight(GLOBAL_CENTER[0], GLOBAL_CENTER[1], GLOBAL_ZOOM, 'global_nasa')}
-          className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl font-bold transition shrink-0 ${
-            activeTab === 'global_nasa'
+          onClick={() => setBaseMapType('satellite')}
+          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold transition ${
+            baseMapType === 'satellite'
               ? 'bg-blue-600 text-white shadow'
-              : 'text-neutral-300 hover:bg-neutral-800'
+              : 'text-neutral-400 hover:text-white'
           }`}
+          title="Vista Satelital NASA (Esri)"
         >
-          <span>🌍 <span className="hidden xs:inline">Planeta</span> Tierra</span>
+          <span>🛰️ Satélite</span>
         </button>
 
         <button
-          onClick={() => handleQuickFlight(COCHABAMBA_CENTER[0], COCHABAMBA_CENTER[1], COCHABAMBA_ZOOM, 'microclimas')}
-          className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl font-bold transition shrink-0 ${
-            activeTab === 'microclimas'
-              ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow'
-              : 'text-neutral-300 hover:bg-neutral-800'
+          onClick={() => setBaseMapType('streets')}
+          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold transition ${
+            baseMapType === 'streets'
+              ? 'bg-blue-600 text-white shadow'
+              : 'text-neutral-400 hover:text-white'
           }`}
+          title="Mapa Callejero y Topográfico (CartoDB Voyager)"
         >
-          <span>🇧🇴 Cochabamba</span>
+          <span>🗺️ Callejero</span>
         </button>
 
         <button
-          onClick={() => handleQuickFlight(-17.36, -66.16, 12.5, 'incendios')}
-          className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl font-bold transition shrink-0 ${
-            activeTab === 'incendios'
-              ? 'bg-red-600 text-white shadow'
-              : 'text-neutral-300 hover:bg-neutral-800'
+          onClick={() => setBaseMapType('dark')}
+          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold transition ${
+            baseMapType === 'dark'
+              ? 'bg-blue-600 text-white shadow'
+              : 'text-neutral-400 hover:text-white'
           }`}
+          title="Modo Oscuro Espacial (CartoDB Dark Matter)"
         >
-          <span>🔥 Tunari</span>
+          <span>🌙 Oscuro</span>
         </button>
 
-        {/* Píldoras de Salto Planetario Rápido */}
-        <div className="hidden xl:flex items-center gap-1 pl-2 border-l border-white/10 shrink-0">
-          <span className="text-[10px] text-neutral-400">Saltar a:</span>
-          {[
-            { label: 'Amazonia', lat: -15.5989, lon: -56.0949 },
-            { label: 'California', lat: 36.7783, lon: -119.4179 },
-            { label: 'Mediterráneo', lat: 37.9838, lon: 23.7275 },
-            { label: 'Sahel', lat: 14.5000, lon: 15.0000 },
-            { label: 'Ártico', lat: 78.2232, lon: 15.6267 }
-          ].map((h, i) => (
-            <button
-              key={i}
-              onClick={() => handleQuickFlight(h.lat, h.lon, 6, 'global_nasa')}
-              className="text-[10px] bg-neutral-800/80 hover:bg-neutral-700 px-2 py-1 rounded-lg text-neutral-300 transition"
-            >
-              {h.label}
-            </button>
-          ))}
-        </div>
+        <div className="h-4 w-px bg-white/10 mx-0.5" />
+
+        <button
+          onClick={handleRecenter}
+          className="flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold text-cyan-300 hover:text-white hover:bg-neutral-800 transition"
+          title="Recentrar Vista del Territorio"
+        >
+          <Crosshair className="h-3.5 w-3.5" />
+          <span className="hidden sm:inline">Recentrar</span>
+        </button>
       </div>
 
       {/* 2. Leyenda Flotante Dinámica (Colapsable en Móvil) */}

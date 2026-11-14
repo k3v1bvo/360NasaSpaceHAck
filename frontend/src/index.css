@@ -58,6 +58,55 @@ html, body, #root {
   background-color: #0b0d14 !important;
 }
 
+/* Responsive layout helpers garantizados */
+@media (min-width: 768px) {
+  .desktop-layout-main {
+    display: block !important;
+    flex: 1 1 0% !important;
+    height: 100% !important;
+    width: auto !important;
+  }
+  .desktop-layout-aside {
+    display: block !important;
+    width: 420px !important;
+    min-width: 380px !important;
+    max-width: 460px !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
+  }
+  .desktop-hide-toggle {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile-view-map .desktop-layout-main {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .mobile-view-map .desktop-layout-aside {
+    display: none !important;
+  }
+  .mobile-view-panel .desktop-layout-main {
+    display: none !important;
+  }
+  .mobile-view-panel .desktop-layout-aside {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* NASA Sleek Glow & Card Animations */
+.nasa-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nasa-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.15);
+}
+
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 5px;
