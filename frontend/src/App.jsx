@@ -28,6 +28,10 @@ export default function App() {
   const [wmsPeriurbanos, setWmsPeriurbanos] = useState(true);
   const [wmsDistritos, setWmsDistritos] = useState(false);
 
+  // Capa Satelital NASA GIBS Worldview (Reflectancia & Humo)
+  const [nasaGibs, setNasaGibs] = useState(false);
+  const [gibsDate, setGibsDate] = useState('2024-09-15');
+
   const [reports, setReports] = useState([
     { tipo: 'humo', zona: 'Cota 2750 Tunari (Taquiña)', desc: 'Columna de humo divisada', fecha: '10:15 AM' }
   ]);
@@ -76,6 +80,8 @@ export default function App() {
             wmsCota={wmsCota}
             wmsPeriurbanos={wmsPeriurbanos}
             wmsDistritos={wmsDistritos}
+            nasaGibs={nasaGibs}
+            gibsDate={gibsDate}
           />
         </main>
 
@@ -95,6 +101,10 @@ export default function App() {
               setWmsPeriurbanos={setWmsPeriurbanos}
               wmsDistritos={wmsDistritos}
               setWmsDistritos={setWmsDistritos}
+              nasaGibs={nasaGibs}
+              setNasaGibs={setNasaGibs}
+              gibsDate={gibsDate}
+              setGibsDate={setGibsDate}
               offlineMode={offlineMode}
             />
           )}

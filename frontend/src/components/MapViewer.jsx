@@ -16,7 +16,9 @@ export default function MapViewer({
   offlineMode = false,
   wmsCota = true,
   wmsPeriurbanos = true,
-  wmsDistritos = false
+  wmsDistritos = false,
+  nasaGibs = false,
+  gibsDate = '2024-09-15'
 }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
@@ -87,6 +89,22 @@ export default function MapViewer({
     // =========================================================================
     if (activeTab === 'incendios') {
       
+      // A0. Capa Satelital NASA GIBS Worldview (Reflectancia de Superficie y Humo)
+      if (nasaGibs) {
+        try {
+          L.tileLayer(
+            `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/${gibsDate}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg`,
+            {
+              attribution: '&copy; NASA EOSDIS GIBS / Worldview',
+              maxZoom: 9,
+              opacity: 0.85,
+            }
+          ).addTo(layersGroupRef.current);
+        } catch (e) {
+          console.warn('NASA GIBS Error:', e);
+        }
+      }
+
       // A. Servicios WMS Oficiales de la Alcaldía de Cochabamba (Proyecto 03)
       if (!offlineMode) {
         // 1. Capa WMS Oficial GAMC: Cota 2750 (Límite P.N. Tunari)
@@ -303,7 +321,7 @@ export default function MapViewer({
     if (mapInstanceRef.current) {
       renderLayers(null, mapInstanceRef.current);
     }
-  }, [activeTab, focosData, sensorMode, reportsData, offlineMode, wmsCota, wmsPeriurbanos, wmsDistritos]);
+  }, [activeTab, focosData, sensorMode, reportsData, offlineMode, wmsCota, wmsPeriurbanos, wmsDistritos, nasaGibs, gibsDate]);
 
   // Centrar en punto seleccionado
   useEffect(() => {
@@ -377,6 +395,12 @@ export default function MapViewer({
                 <span className="h-3 w-3 rounded border border-purple-400 bg-purple-900/60"></span>
                 <span>WMS Oficial: Periurbanos (GAMC)</span>
               </div>
+              {nasaGibs && (
+                <div className="flex items-center gap-2 pt-1 border-t border-white/5">
+                  <span className="h-3 w-3 rounded border border-cyan-400 bg-cyan-950/80"></span>
+                  <span className="text-cyan-300 font-semibold">NASA GIBS WMTS ({gibsDate})</span>
+                </div>
+              )}
             </>
           )}
 
