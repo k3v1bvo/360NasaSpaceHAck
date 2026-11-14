@@ -9,8 +9,8 @@ import FloodRiskTab from './modules/FloodRiskTab';
 import AgroAdvisorTab from './modules/AgroAdvisorTab';
 import CitizenReportModal from './modules/CitizenReportModal';
 
-// Datos de prueba locales (Modo Offline FEXCO)
-import focosEjemplo from '../../data/nasa/focos_tunari_ejemplo.geojson';
+// Datos satelitales armonizados y datos GAMC
+import focosHarmonized from '../../data/nasa/firms_tunari_harmonized.geojson';
 import torrenterasEjemplo from '../../data/gamc/puntos_torrenteras_ejemplo.geojson';
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [reports, setReports] = useState([
-    { tipo: 'humo', zona: 'Cota 2750 Tunari', desc: 'Humo divisado en ladera', fecha: '10:15 AM' }
+    { tipo: 'humo', zona: 'Cota 2750 Tunari (Taquiña)', desc: 'Columna de humo divisada', fecha: '10:15 AM' }
   ]);
 
   const handleAddReport = (nuevoReporte) => {
@@ -43,7 +43,7 @@ export default function App() {
         <main className="relative flex-1">
           <MapViewer
             activeTab={activeTab}
-            focosData={focosEjemplo.features}
+            focosData={focosHarmonized.features}
             torrenterasData={torrenterasEjemplo.features}
             reportsData={reports}
             selectedPoint={selectedPoint}
@@ -54,7 +54,6 @@ export default function App() {
         <aside className="w-full max-w-sm md:max-w-md border-l border-neutral-800 bg-neutral-950/95 overflow-y-auto backdrop-blur-md shadow-2xl z-10">
           {activeTab === 'incendios' && (
             <FireMonitorTab
-              focosData={focosEjemplo.features}
               onSelectFoco={(foco) => setSelectedPoint(foco)}
             />
           )}

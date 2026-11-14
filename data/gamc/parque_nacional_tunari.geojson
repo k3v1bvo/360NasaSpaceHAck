@@ -1,0 +1,59 @@
+{
+  "type": "FeatureCollection",
+  "name": "Parque_Nacional_Tunari_Delimitacion",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -66.45,
+              -17.2
+            ],
+            [
+              -66.3,
+              -17.15
+            ],
+            [
+              -66.05,
+              -17.18
+            ],
+            [
+              -65.85,
+              -17.25
+            ],
+            [
+              -65.95,
+              -17.36
+            ],
+            [
+              -66.12,
+              -17.34
+            ],
+            [
+              -66.22,
+              -17.33
+            ],
+            [
+              -66.35,
+              -17.35
+            ],
+            [
+              -66.45,
+              -17.2
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "nombre": "Parque Nacional Tunari (PNT)",
+        "categoria": "Área Protegida Nacional",
+        "cota_limite": "2750 msnm",
+        "amenaza_principal": "Incendios forestales de ladera y loteamientos urbanos",
+        "superficie_aprox_ha": 300000
+      }
+    }
+  ]
+}

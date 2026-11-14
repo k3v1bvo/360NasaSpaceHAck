@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import tunariPolygonData from '../../../data/gamc/parque_nacional_tunari.geojson';
 
 // Coordenadas centrales de Cochabamba, Bolivia
 const COCHABAMBA_CENTER = [-17.3895, -66.1568];
@@ -9,12 +10,10 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
   const layersGroupRef = useRef(null);
 
   useEffect(() => {
-    // Si Leaflet está disponible globalmente o se carga dinámicamente
     const initLeaflet = async () => {
       let L;
       try {
         L = await import('leaflet');
-        // Importar CSS si no está inyectado
         if (!document.getElementById('leaflet-css')) {
           const link = document.createElement('link');
           link.id = 'leaflet-css';
@@ -23,11 +22,11 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
           document.head.appendChild(link);
         }
       } catch (e) {
-        console.warn('Leaflet cargando fallback...');
+        console.warn('Leaflet fallback...');
       }
 
       if (!L || !mapContainerRef.current) return;
-      if (mapInstanceRef.current) return; // Ya inicializado
+      if (mapInstanceRef.current) return;
 
       const map = L.map(mapContainerRef.current, {
         center: COCHABAMBA_CENTER,
@@ -35,7 +34,7 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
         zoomControl: true,
       });
 
-      // CartoDB Dark Matter / OpenStreetMap tiles (estilo espacial oscuro)
+      // CartoDB Dark Matter tiles (estilo espacial oscuro)
       L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap &copy; CARTO &copy; NASA Earthdata',
         maxZoom: 19,
@@ -56,7 +55,6 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
     };
   }, []);
 
-  // Función para redibujar capas según el tab activo
   const updateLayers = async (L, map) => {
     if (!L) {
       try {
@@ -67,26 +65,61 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
 
     layersGroupRef.current.clearLayers();
 
-    // 1. CAPA DE FOCOS DE CALOR (Kevin - Tunari)
+    // 1. CAPA DE FOCOS DE CALOR Y POLÍGONO TUNARI (Kevin)
     if (activeTab === 'incendios' || activeTab === 'todos') {
+      // Dibujar polígono del Parque Tunari
+      if (tunariPolygonData?.features?.[0]) {
+        const polyCoords = tunariPolygonData.features[0].geometry.coordinates[0].map(
+          ([lng, lat]) => [lat, lng]
+        );
+        const polygon = L.polygon(polyCoords, {
+          color: '#10b981',
+          weight: 2,
+          dashArray: '5, 5',
+          fillColor: '#059669',
+          fillOpacity: 0.15,
+        });
+        polygon.bindPopup(`
+          <div style="color: #111; font-family: sans-serif; font-size: 12px;">
+            <strong style="color: #059669;">🌲 Parque Nacional Tunari (PNT)</strong><br/>
+            <strong>Cota límite:</strong> 2750 msnm<br/>
+            <strong>Superficie:</strong> ~300,000 ha<br/>
+            <span style="color: #666;">Área protegida de recarga hídrica</span>
+          </div>
+        `);
+        polygon.addTo(layersGroupRef.current);
+      }
+
+      // Dibujar focos de calor armonizados
       focosData?.forEach((foco) => {
         const [lng, lat] = foco.geometry.coordinates;
+        const frp = foco.properties.frp_total_mw || foco.properties.frp_intensidad || 30;
+        const sensor = foco.properties.sensor_armonizado || foco.properties.sensor || 'VIIRS';
+        const nivel = foco.properties.nivel_alerta || 'Alto';
+
+        const radius = nivel === 'Critico' ? 12 : nivel === 'Alto' ? 9 : 7;
+        const fillColor = nivel === 'Critico' ? '#dc2626' : nivel === 'Alto' ? '#ea580c' : '#eab308';
+
         const circle = L.circleMarker([lat, lng], {
-          radius: 10,
-          fillColor: '#ef4444',
+          radius,
+          fillColor,
           color: '#ffffff',
           weight: 1.5,
-          opacity: 0.9,
-          fillOpacity: 0.8,
+          opacity: 0.95,
+          fillOpacity: 0.85,
         });
 
         circle.bindPopup(`
-          <div style="color: #111; font-family: sans-serif; font-size: 12px;">
-            <strong style="color: #dc2626;">🔥 Foco de Calor Detectado</strong><br/>
+          <div style="color: #111; font-family: sans-serif; font-size: 12px; min-width: 180px;">
+            <strong style="color: #dc2626;">🔥 Foco de Calor Armonizado</strong><br/>
             <strong>Zona:</strong> ${foco.properties.zona}<br/>
-            <strong>Sensor:</strong> ${foco.properties.sensor}<br/>
-            <strong>FRP (Intensidad):</strong> ${foco.properties.frp_intensidad} MW<br/>
-            <strong>Fecha:</strong> ${foco.properties.fecha}
+            <strong>Sensor:</strong> ${sensor}<br/>
+            <strong>FRP (Potencia):</strong> ${frp} MW<br/>
+            <strong>Nivel:</strong> ${nivel}<br/>
+            <strong>Fecha:</strong> ${foco.properties.fecha}<br/>
+            <span style="color: ${foco.properties.en_parque_tunari ? '#059669' : '#6b7280'}; font-weight: bold;">
+              ${foco.properties.en_parque_tunari ? '⚠️ Dentro del P.N. Tunari' : '🏡 Interfaz urbana'}
+            </span>
           </div>
         `);
         circle.addTo(layersGroupRef.current);
@@ -165,15 +198,15 @@ export default function MapViewer({ activeTab, focosData, torrenterasData, repor
         <div className="mt-1.5 space-y-1">
           <div className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full bg-red-500 animate-pulse"></span>
-            <span>Foco de Calor Tunari (NASA FIRMS)</span>
+            <span>Foco de Calor (NASA FIRMS Armonizado)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-3.5 w-3.5 rounded border border-dashed border-emerald-400 bg-emerald-900/40"></span>
+            <span>Polígono P.N. Tunari (Cota 2750)</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full bg-blue-500"></span>
             <span>Torrentera / Colector (GAMC 60 pts)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-amber-500"></span>
-            <span>Isla de Calor Urbana (LST NASA)</span>
           </div>
         </div>
       </div>

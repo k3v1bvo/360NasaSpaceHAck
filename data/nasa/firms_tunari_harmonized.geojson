@@ -1,0 +1,269 @@
+{
+  "type": "FeatureCollection",
+  "name": "NASA_FIRMS_Harmonized_Cochabamba_Tunari",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.16793,
+          -17.31821
+        ]
+      },
+      "properties": {
+        "id": "COCHA-FIRE-001",
+        "fecha": "2020-09-15",
+        "sensor_armonizado": "DUAL (MODIS + VIIRS Armonizado)",
+        "sensores_detectores": [
+          "VIIRS",
+          "MODIS"
+        ],
+        "puntos_crudos_fusionados": 3,
+        "frp_total_mw": 135.6,
+        "en_parque_tunari": true,
+        "zona": "Tirani / Cota 2750",
+        "nivel_alerta": "Critico",
+        "clasificacion": "Incendio Forestal de Alta Intensidad",
+        "resolucion_equivalente_m": 375
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.21463,
+          -17.32475
+        ]
+      },
+      "properties": {
+        "id": "COCHA-FIRE-002",
+        "fecha": "2021-08-22",
+        "sensor_armonizado": "DUAL (MODIS + VIIRS Armonizado)",
+        "sensores_detectores": [
+          "VIIRS",
+          "MODIS"
+        ],
+        "puntos_crudos_fusionados": 3,
+        "frp_total_mw": 185.6,
+        "en_parque_tunari": true,
+        "zona": "Tiquipaya Norte",
+        "nivel_alerta": "Critico",
+        "clasificacion": "Incendio Forestal de Alta Intensidad",
+        "resolucion_equivalente_m": 375
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.14237,
+          -17.30805
+        ]
+      },
+      "properties": {
+        "id": "COCHA-FIRE-003",
+        "fecha": "2022-10-04",
+        "sensor_armonizado": "DUAL (MODIS + VIIRS Armonizado)",
+        "sensores_detectores": [
+          "VIIRS",
+          "MODIS"
+        ],
+        "puntos_crudos_fusionados": 3,
+        "frp_total_mw": 287.4,
+        "en_parque_tunari": true,
+        "zona": "Andrada / Tunari Este",
+        "nivel_alerta": "Critico",
+        "clasificacion": "Incendio Forestal de Alta Intensidad",
+        "resolucion_equivalente_m": 375
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.04058,
+          -17.34406
+        ]
+      },
+      "properties": {
+        "id": "COCHA-FIRE-004",
+        "fecha": "2023-08-18",
+        "sensor_armonizado": "DUAL (MODIS + VIIRS Armonizado)",
+        "sensores_detectores": [
+          "VIIRS",
+          "MODIS"
+        ],
+        "puntos_crudos_fusionados": 2,
+        "frp_total_mw": 117.4,
+        "en_parque_tunari": true,
+        "zona": "Sacaba / Parque Tunari Este",
+        "nivel_alerta": "Critico",
+        "clasificacion": "Incendio Forestal de Alta Intensidad",
+        "resolucion_equivalente_m": 375
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.3137,
+          -17.30113
+        ]
+      },
+      "properties": {
+        "id": "COCHA-FIRE-005",
+        "fecha": "2023-09-28",
+        "sensor_armonizado": "DUAL (MODIS + VIIRS Armonizado)",
+        "sensores_detectores": [
+          "VIIRS",
+          "MODIS"
+        ],
+        "puntos_crudos_fusionados": 2,
+        "frp_total_mw": 165.8,
+        "en_parque_tunari": true,
+        "zona": "Liriuni / Tunari Oeste",
+        "nivel_alerta": "Critico",
+        "clasificacion": "Incendio Forestal de Alta Intensidad",
+        "resolucion_equivalente_m": 375
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.185,
+          -17.312
+        ]
+      },
+      "properties": {
+        "id": "COCHA-FIRE-006",
+        "fecha": "2024-07-29",
+        "sensor_armonizado": "VIIRS",
+        "sensores_detectores": [
+          "VIIRS"
+        ],
+        "puntos_crudos_fusionados": 1,
+        "frp_total_mw": 28.5,
+        "en_parque_tunari": true,
+        "zona": "Taquiña / Colector norte",
+        "nivel_alerta": "Moderado",
+        "clasificacion": "Quema Controlada o Foco Menor",
+        "resolucion_equivalente_m": 375
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.15368,
+          -17.32912
+        ]
+      },
+      "properties": {
+        "id": "COCHA-FIRE-007",
+        "fecha": "2024-08-14",
+        "sensor_armonizado": "DUAL (MODIS + VIIRS Armonizado)",
+        "sensores_detectores": [
+          "VIIRS",
+          "MODIS"
+        ],
+        "puntos_crudos_fusionados": 2,
+        "frp_total_mw": 146.0,
+        "en_parque_tunari": true,
+        "zona": "Cerro San Pedro / Tunari",
+        "nivel_alerta": "Critico",
+        "clasificacion": "Incendio Forestal de Alta Intensidad",
+        "resolucion_equivalente_m": 375
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.25318,
+          -17.30363
+        ]
+      },
+      "properties": {
+        "id": "COCHA-FIRE-008",
+        "fecha": "2024-09-19",
+        "sensor_armonizado": "DUAL (MODIS + VIIRS Armonizado)",
+        "sensores_detectores": [
+          "VIIRS",
+          "MODIS"
+        ],
+        "puntos_crudos_fusionados": 2,
+        "frp_total_mw": 193.0,
+        "en_parque_tunari": true,
+        "zona": "Chocaya / El Paso",
+        "nivel_alerta": "Critico",
+        "clasificacion": "Incendio Forestal de Alta Intensidad",
+        "resolucion_equivalente_m": 375
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.165,
+          -17.435
+        ]
+      },
+      "properties": {
+        "id": "COCHA-FIRE-009",
+        "fecha": "2024-08-10",
+        "sensor_armonizado": "VIIRS",
+        "sensores_detectores": [
+          "VIIRS"
+        ],
+        "puntos_crudos_fusionados": 1,
+        "frp_total_mw": 15.2,
+        "en_parque_tunari": false,
+        "zona": "Zona Sur (Av. Petrolera - Quema rastrojo)",
+        "nivel_alerta": "Moderado",
+        "clasificacion": "Quema Controlada o Foco Menor",
+        "resolucion_equivalente_m": 375
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.28,
+          -17.412
+        ]
+      },
+      "properties": {
+        "id": "COCHA-FIRE-010",
+        "fecha": "2024-08-12",
+        "sensor_armonizado": "VIIRS",
+        "sensores_detectores": [
+          "VIIRS"
+        ],
+        "puntos_crudos_fusionados": 1,
+        "frp_total_mw": 12.8,
+        "en_parque_tunari": false,
+        "zona": "Vinto / Agrícola",
+        "nivel_alerta": "Moderado",
+        "clasificacion": "Quema Controlada o Foco Menor",
+        "resolucion_equivalente_m": 375
+      }
+    }
+  ]
+}

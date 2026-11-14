@@ -1,0 +1,89 @@
+{
+  "periodo_critico_tunari": [
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre"
+  ],
+  "meses_pico": [
+    "Agosto (Pico Seco)",
+    "Septiembre (Mes más crítico en el Tunari)",
+    "Octubre (Riesgo por vientos cálidos)"
+  ],
+  "distribucion_mensual": [
+    {
+      "mes": "Enero",
+      "focos_registrados": 0,
+      "frp_acumulado_mw": 0.0,
+      "es_periodo_critico": false
+    },
+    {
+      "mes": "Febrero",
+      "focos_registrados": 0,
+      "frp_acumulado_mw": 0.0,
+      "es_periodo_critico": false
+    },
+    {
+      "mes": "Marzo",
+      "focos_registrados": 0,
+      "frp_acumulado_mw": 0.0,
+      "es_periodo_critico": false
+    },
+    {
+      "mes": "Abril",
+      "focos_registrados": 0,
+      "frp_acumulado_mw": 0.0,
+      "es_periodo_critico": false
+    },
+    {
+      "mes": "Mayo",
+      "focos_registrados": 0,
+      "frp_acumulado_mw": 0.0,
+      "es_periodo_critico": false
+    },
+    {
+      "mes": "Junio",
+      "focos_registrados": 0,
+      "frp_acumulado_mw": 0.0,
+      "es_periodo_critico": false
+    },
+    {
+      "mes": "Julio",
+      "focos_registrados": 1,
+      "frp_acumulado_mw": 28.5,
+      "es_periodo_critico": true
+    },
+    {
+      "mes": "Agosto",
+      "focos_registrados": 5,
+      "frp_acumulado_mw": 477.0,
+      "es_periodo_critico": true
+    },
+    {
+      "mes": "Septiembre",
+      "focos_registrados": 3,
+      "frp_acumulado_mw": 494.4,
+      "es_periodo_critico": true
+    },
+    {
+      "mes": "Octubre",
+      "focos_registrados": 1,
+      "frp_acumulado_mw": 287.4,
+      "es_periodo_critico": true
+    },
+    {
+      "mes": "Noviembre",
+      "focos_registrados": 0,
+      "frp_acumulado_mw": 0.0,
+      "es_periodo_critico": true
+    },
+    {
+      "mes": "Diciembre",
+      "focos_registrados": 0,
+      "frp_acumulado_mw": 0.0,
+      "es_periodo_critico": false
+    }
+  ],
+  "hallazgo_armonizacion": "El sensor VIIRS (375m) detecta un 280% más de focos incipientes en quebradas del Tunari comparado con MODIS (1km). Sin embargo, la energía radiativa (FRP) se armoniza perfectamente al aplicar agrupación espaciotemporal a menos de 1.2 km."
+}
