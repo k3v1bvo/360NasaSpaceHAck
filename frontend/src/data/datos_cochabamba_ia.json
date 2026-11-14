@@ -1,0 +1,947 @@
+{
+  "proyecto": "Stevens - Be An Earth System Trend Detective! (GAMC + NASA)",
+  "algoritmo_ia": "XGBoost Regressor (Sensado Virtual) + Regresión OLS (Test p < 0.05)",
+  "metricas_modelo": {
+    "R2": 0.9457,
+    "RMSE_C": 0.5496,
+    "MAE_C": 0.4362,
+    "pesos_importancia": {
+      "LST_Satelital": 0.689,
+      "NDVI_Vegetacion": 0.186,
+      "AOD_Incendios_Tunari": 0.098,
+      "Altitud_Topografia": 0.027
+    }
+  },
+  "distritos": [
+    {
+      "id": 1,
+      "nombre": "Distrito 1 (Queru Queru / Aranjuez)",
+      "sensor": "Virtual IA",
+      "lat": -17.362,
+      "lon": -66.145,
+      "lst": 27.4,
+      "ndvi": 0.44,
+      "aod": 0.24,
+      "alt": 2650,
+      "zona": "Norte",
+      "temp_calle_predicha_c": 13.35,
+      "tendencia_decadal_c_anio": 0.081,
+      "p_value": 2.4e-05,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 12.72
+        },
+        {
+          "anio": 2017,
+          "temp": 12.73
+        },
+        {
+          "anio": 2018,
+          "temp": 12.67
+        },
+        {
+          "anio": 2019,
+          "temp": 12.84
+        },
+        {
+          "anio": 2020,
+          "temp": 12.94
+        },
+        {
+          "anio": 2021,
+          "temp": 12.93
+        },
+        {
+          "anio": 2022,
+          "temp": 13.16
+        },
+        {
+          "anio": 2023,
+          "temp": 13.02
+        },
+        {
+          "anio": 2024,
+          "temp": 13.46
+        },
+        {
+          "anio": 2025,
+          "temp": 13.39
+        },
+        {
+          "anio": 2026,
+          "temp": 13.39
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "Distrito 2 (Temporal / Cala Cala)",
+      "sensor": "Estación Física Red MÓNICA (Av. Circunvalación)",
+      "lat": -17.368,
+      "lon": -66.165,
+      "lst": 28.6,
+      "ndvi": 0.37,
+      "aod": 0.31,
+      "alt": 2610,
+      "zona": "Norte",
+      "temp_calle_predicha_c": 13.48,
+      "tendencia_decadal_c_anio": 0.062,
+      "p_value": 0.000459,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 13.12
+        },
+        {
+          "anio": 2017,
+          "temp": 12.81
+        },
+        {
+          "anio": 2018,
+          "temp": 13.0
+        },
+        {
+          "anio": 2019,
+          "temp": 13.02
+        },
+        {
+          "anio": 2020,
+          "temp": 13.16
+        },
+        {
+          "anio": 2021,
+          "temp": 13.31
+        },
+        {
+          "anio": 2022,
+          "temp": 13.27
+        },
+        {
+          "anio": 2023,
+          "temp": 13.4
+        },
+        {
+          "anio": 2024,
+          "temp": 13.28
+        },
+        {
+          "anio": 2025,
+          "temp": 13.39
+        },
+        {
+          "anio": 2026,
+          "temp": 13.68
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "Distrito 3 (Sarco / Hipódromo)",
+      "sensor": "Virtual IA",
+      "lat": -17.381,
+      "lon": -66.185,
+      "lst": 29.5,
+      "ndvi": 0.31,
+      "aod": 0.38,
+      "alt": 2580,
+      "zona": "Oeste",
+      "temp_calle_predicha_c": 14.93,
+      "tendencia_decadal_c_anio": 0.063,
+      "p_value": 0.00039,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 14.3
+        },
+        {
+          "anio": 2017,
+          "temp": 14.33
+        },
+        {
+          "anio": 2018,
+          "temp": 14.28
+        },
+        {
+          "anio": 2019,
+          "temp": 14.55
+        },
+        {
+          "anio": 2020,
+          "temp": 14.41
+        },
+        {
+          "anio": 2021,
+          "temp": 14.45
+        },
+        {
+          "anio": 2022,
+          "temp": 14.66
+        },
+        {
+          "anio": 2023,
+          "temp": 14.43
+        },
+        {
+          "anio": 2024,
+          "temp": 14.86
+        },
+        {
+          "anio": 2025,
+          "temp": 14.9
+        },
+        {
+          "anio": 2026,
+          "temp": 14.88
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "nombre": "Distrito 4 (La Chimba)",
+      "sensor": "Virtual IA",
+      "lat": -17.398,
+      "lon": -66.192,
+      "lst": 31.3,
+      "ndvi": 0.21,
+      "aod": 0.46,
+      "alt": 2565,
+      "zona": "Oeste",
+      "temp_calle_predicha_c": 16.05,
+      "tendencia_decadal_c_anio": 0.255,
+      "p_value": 0.0,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 13.52
+        },
+        {
+          "anio": 2017,
+          "temp": 13.79
+        },
+        {
+          "anio": 2018,
+          "temp": 13.96
+        },
+        {
+          "anio": 2019,
+          "temp": 14.32
+        },
+        {
+          "anio": 2020,
+          "temp": 14.52
+        },
+        {
+          "anio": 2021,
+          "temp": 14.81
+        },
+        {
+          "anio": 2022,
+          "temp": 15.03
+        },
+        {
+          "anio": 2023,
+          "temp": 15.26
+        },
+        {
+          "anio": 2024,
+          "temp": 15.58
+        },
+        {
+          "anio": 2025,
+          "temp": 15.9
+        },
+        {
+          "anio": 2026,
+          "temp": 15.99
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "nombre": "Distrito 5 (La Maica / Jaihuayco)",
+      "sensor": "Virtual IA",
+      "lat": -17.425,
+      "lon": -66.178,
+      "lst": 32.9,
+      "ndvi": 0.18,
+      "aod": 0.59,
+      "alt": 2550,
+      "zona": "Sur",
+      "temp_calle_predicha_c": 16.89,
+      "tendencia_decadal_c_anio": 0.24,
+      "p_value": 0.0,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 14.44
+        },
+        {
+          "anio": 2017,
+          "temp": 14.7
+        },
+        {
+          "anio": 2018,
+          "temp": 14.74
+        },
+        {
+          "anio": 2019,
+          "temp": 15.26
+        },
+        {
+          "anio": 2020,
+          "temp": 15.64
+        },
+        {
+          "anio": 2021,
+          "temp": 15.63
+        },
+        {
+          "anio": 2022,
+          "temp": 15.87
+        },
+        {
+          "anio": 2023,
+          "temp": 16.12
+        },
+        {
+          "anio": 2024,
+          "temp": 16.47
+        },
+        {
+          "anio": 2025,
+          "temp": 16.7
+        },
+        {
+          "anio": 2026,
+          "temp": 16.7
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "nombre": "Distrito 6 (Alalay Norte)",
+      "sensor": "Virtual IA",
+      "lat": -17.412,
+      "lon": -66.138,
+      "lst": 33.6,
+      "ndvi": 0.15,
+      "aod": 0.63,
+      "alt": 2570,
+      "zona": "Centro-Sur",
+      "temp_calle_predicha_c": 17.67,
+      "tendencia_decadal_c_anio": 0.253,
+      "p_value": 0.0,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 15.06
+        },
+        {
+          "anio": 2017,
+          "temp": 15.48
+        },
+        {
+          "anio": 2018,
+          "temp": 15.65
+        },
+        {
+          "anio": 2019,
+          "temp": 15.78
+        },
+        {
+          "anio": 2020,
+          "temp": 16.35
+        },
+        {
+          "anio": 2021,
+          "temp": 16.32
+        },
+        {
+          "anio": 2022,
+          "temp": 16.67
+        },
+        {
+          "anio": 2023,
+          "temp": 16.9
+        },
+        {
+          "anio": 2024,
+          "temp": 17.04
+        },
+        {
+          "anio": 2025,
+          "temp": 17.44
+        },
+        {
+          "anio": 2026,
+          "temp": 17.71
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "nombre": "Distrito 7 (Alalay Sur)",
+      "sensor": "Virtual IA",
+      "lat": -17.432,
+      "lon": -66.132,
+      "lst": 34.0,
+      "ndvi": 0.13,
+      "aod": 0.66,
+      "alt": 2575,
+      "zona": "Sur",
+      "temp_calle_predicha_c": 17.86,
+      "tendencia_decadal_c_anio": 0.266,
+      "p_value": 0.0,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 15.3
+        },
+        {
+          "anio": 2017,
+          "temp": 15.56
+        },
+        {
+          "anio": 2018,
+          "temp": 15.93
+        },
+        {
+          "anio": 2019,
+          "temp": 15.87
+        },
+        {
+          "anio": 2020,
+          "temp": 16.25
+        },
+        {
+          "anio": 2021,
+          "temp": 16.63
+        },
+        {
+          "anio": 2022,
+          "temp": 16.79
+        },
+        {
+          "anio": 2023,
+          "temp": 17.04
+        },
+        {
+          "anio": 2024,
+          "temp": 17.46
+        },
+        {
+          "anio": 2025,
+          "temp": 17.53
+        },
+        {
+          "anio": 2026,
+          "temp": 18.09
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "nombre": "Distrito 8 (Ushpa Ushpa)",
+      "sensor": "Virtual IA",
+      "lat": -17.445,
+      "lon": -66.115,
+      "lst": 34.4,
+      "ndvi": 0.11,
+      "aod": 0.71,
+      "alt": 2620,
+      "zona": "Sur",
+      "temp_calle_predicha_c": 17.41,
+      "tendencia_decadal_c_anio": 0.267,
+      "p_value": 0.0,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 14.7
+        },
+        {
+          "anio": 2017,
+          "temp": 14.89
+        },
+        {
+          "anio": 2018,
+          "temp": 15.51
+        },
+        {
+          "anio": 2019,
+          "temp": 15.54
+        },
+        {
+          "anio": 2020,
+          "temp": 15.79
+        },
+        {
+          "anio": 2021,
+          "temp": 16.27
+        },
+        {
+          "anio": 2022,
+          "temp": 16.35
+        },
+        {
+          "anio": 2023,
+          "temp": 16.77
+        },
+        {
+          "anio": 2024,
+          "temp": 16.83
+        },
+        {
+          "anio": 2025,
+          "temp": 17.2
+        },
+        {
+          "anio": 2026,
+          "temp": 17.34
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "nombre": "Distrito 9 (Itocta / Valle Hermoso)",
+      "sensor": "Virtual IA",
+      "lat": -17.465,
+      "lon": -66.155,
+      "lst": 33.2,
+      "ndvi": 0.25,
+      "aod": 0.54,
+      "alt": 2545,
+      "zona": "Sur-Agrícola",
+      "temp_calle_predicha_c": 16.13,
+      "tendencia_decadal_c_anio": 0.074,
+      "p_value": 0.000542,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 15.32
+        },
+        {
+          "anio": 2017,
+          "temp": 15.7
+        },
+        {
+          "anio": 2018,
+          "temp": 15.7
+        },
+        {
+          "anio": 2019,
+          "temp": 15.55
+        },
+        {
+          "anio": 2020,
+          "temp": 15.68
+        },
+        {
+          "anio": 2021,
+          "temp": 15.95
+        },
+        {
+          "anio": 2022,
+          "temp": 15.73
+        },
+        {
+          "anio": 2023,
+          "temp": 15.8
+        },
+        {
+          "anio": 2024,
+          "temp": 16.04
+        },
+        {
+          "anio": 2025,
+          "temp": 16.33
+        },
+        {
+          "anio": 2026,
+          "temp": 16.13
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "nombre": "Distrito 10 (Casco Viejo / La Cancha)",
+      "sensor": "Estación Física Red MÓNICA (Av. 6 de Agosto)",
+      "lat": -17.394,
+      "lon": -66.156,
+      "lst": 35.8,
+      "ndvi": 0.08,
+      "aod": 0.79,
+      "alt": 2558,
+      "zona": "Centro",
+      "temp_calle_predicha_c": 17.95,
+      "tendencia_decadal_c_anio": 0.245,
+      "p_value": 0.0,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 15.58
+        },
+        {
+          "anio": 2017,
+          "temp": 15.58
+        },
+        {
+          "anio": 2018,
+          "temp": 16.0
+        },
+        {
+          "anio": 2019,
+          "temp": 16.16
+        },
+        {
+          "anio": 2020,
+          "temp": 16.68
+        },
+        {
+          "anio": 2021,
+          "temp": 16.89
+        },
+        {
+          "anio": 2022,
+          "temp": 17.23
+        },
+        {
+          "anio": 2023,
+          "temp": 17.12
+        },
+        {
+          "anio": 2024,
+          "temp": 17.46
+        },
+        {
+          "anio": 2025,
+          "temp": 17.75
+        },
+        {
+          "anio": 2026,
+          "temp": 17.87
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "nombre": "Distrito 11 (Muyurina / Tupuraya)",
+      "sensor": "Virtual IA",
+      "lat": -17.382,
+      "lon": -66.135,
+      "lst": 29.7,
+      "ndvi": 0.34,
+      "aod": 0.34,
+      "alt": 2590,
+      "zona": "Centro-Este",
+      "temp_calle_predicha_c": 14.32,
+      "tendencia_decadal_c_anio": 0.069,
+      "p_value": 3.5e-05,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 13.64
+        },
+        {
+          "anio": 2017,
+          "temp": 13.8
+        },
+        {
+          "anio": 2018,
+          "temp": 13.7
+        },
+        {
+          "anio": 2019,
+          "temp": 13.75
+        },
+        {
+          "anio": 2020,
+          "temp": 13.81
+        },
+        {
+          "anio": 2021,
+          "temp": 13.81
+        },
+        {
+          "anio": 2022,
+          "temp": 14.15
+        },
+        {
+          "anio": 2023,
+          "temp": 14.03
+        },
+        {
+          "anio": 2024,
+          "temp": 14.09
+        },
+        {
+          "anio": 2025,
+          "temp": 14.32
+        },
+        {
+          "anio": 2026,
+          "temp": 14.32
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "nombre": "Distrito 12 (Cala Cala / Recoleta)",
+      "sensor": "Virtual IA",
+      "lat": -17.374,
+      "lon": -66.152,
+      "lst": 28.4,
+      "ndvi": 0.4,
+      "aod": 0.27,
+      "alt": 2605,
+      "zona": "Norte",
+      "temp_calle_predicha_c": 13.58,
+      "tendencia_decadal_c_anio": 0.076,
+      "p_value": 0.000107,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 12.82
+        },
+        {
+          "anio": 2017,
+          "temp": 13.05
+        },
+        {
+          "anio": 2018,
+          "temp": 12.96
+        },
+        {
+          "anio": 2019,
+          "temp": 12.83
+        },
+        {
+          "anio": 2020,
+          "temp": 13.32
+        },
+        {
+          "anio": 2021,
+          "temp": 13.14
+        },
+        {
+          "anio": 2022,
+          "temp": 13.22
+        },
+        {
+          "anio": 2023,
+          "temp": 13.29
+        },
+        {
+          "anio": 2024,
+          "temp": 13.45
+        },
+        {
+          "anio": 2025,
+          "temp": 13.48
+        },
+        {
+          "anio": 2026,
+          "temp": 13.7
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "nombre": "Distrito 13 (Parque Nacional Tunari)",
+      "sensor": "Virtual IA",
+      "lat": -17.315,
+      "lon": -66.16,
+      "lst": 21.2,
+      "ndvi": 0.59,
+      "aod": 0.88,
+      "alt": 3150,
+      "zona": "Serranía Tunari",
+      "temp_calle_predicha_c": 13.7,
+      "tendencia_decadal_c_anio": -0.03,
+      "p_value": 0.050373,
+      "cambio_significativo_p005": false,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 14.09
+        },
+        {
+          "anio": 2017,
+          "temp": 13.79
+        },
+        {
+          "anio": 2018,
+          "temp": 13.74
+        },
+        {
+          "anio": 2019,
+          "temp": 13.77
+        },
+        {
+          "anio": 2020,
+          "temp": 13.87
+        },
+        {
+          "anio": 2021,
+          "temp": 13.78
+        },
+        {
+          "anio": 2022,
+          "temp": 13.72
+        },
+        {
+          "anio": 2023,
+          "temp": 13.6
+        },
+        {
+          "anio": 2024,
+          "temp": 13.47
+        },
+        {
+          "anio": 2025,
+          "temp": 13.6
+        },
+        {
+          "anio": 2026,
+          "temp": 13.85
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "nombre": "Distrito 14 (Villa Sebastián Pagador)",
+      "sensor": "Virtual IA",
+      "lat": -17.44,
+      "lon": -66.125,
+      "lst": 34.6,
+      "ndvi": 0.11,
+      "aod": 0.69,
+      "alt": 2630,
+      "zona": "Sur",
+      "temp_calle_predicha_c": 17.4,
+      "tendencia_decadal_c_anio": 0.26,
+      "p_value": 0.0,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 14.95
+        },
+        {
+          "anio": 2017,
+          "temp": 15.13
+        },
+        {
+          "anio": 2018,
+          "temp": 15.49
+        },
+        {
+          "anio": 2019,
+          "temp": 15.5
+        },
+        {
+          "anio": 2020,
+          "temp": 15.91
+        },
+        {
+          "anio": 2021,
+          "temp": 15.94
+        },
+        {
+          "anio": 2022,
+          "temp": 16.44
+        },
+        {
+          "anio": 2023,
+          "temp": 16.68
+        },
+        {
+          "anio": 2024,
+          "temp": 16.93
+        },
+        {
+          "anio": 2025,
+          "temp": 17.29
+        },
+        {
+          "anio": 2026,
+          "temp": 17.49
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "nombre": "Distrito 15 (K'ara K'ara / Arrumani)",
+      "sensor": "Virtual IA",
+      "lat": -17.475,
+      "lon": -66.135,
+      "lst": 34.9,
+      "ndvi": 0.1,
+      "aod": 0.75,
+      "alt": 2640,
+      "zona": "Sur",
+      "temp_calle_predicha_c": 17.46,
+      "tendencia_decadal_c_anio": 0.25,
+      "p_value": 0.0,
+      "cambio_significativo_p005": true,
+      "serie_historica_2016_2026": [
+        {
+          "anio": 2016,
+          "temp": 14.81
+        },
+        {
+          "anio": 2017,
+          "temp": 15.35
+        },
+        {
+          "anio": 2018,
+          "temp": 15.43
+        },
+        {
+          "anio": 2019,
+          "temp": 15.47
+        },
+        {
+          "anio": 2020,
+          "temp": 15.94
+        },
+        {
+          "anio": 2021,
+          "temp": 16.28
+        },
+        {
+          "anio": 2022,
+          "temp": 16.34
+        },
+        {
+          "anio": 2023,
+          "temp": 16.87
+        },
+        {
+          "anio": 2024,
+          "temp": 16.85
+        },
+        {
+          "anio": 2025,
+          "temp": 17.15
+        },
+        {
+          "anio": 2026,
+          "temp": 17.38
+        }
+      ]
+    }
+  ]
+}
