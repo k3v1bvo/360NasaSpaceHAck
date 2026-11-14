@@ -1,0 +1,46 @@
+{
+  "type": "FeatureCollection",
+  "name": "Focos_Calor_Tunari_Ejemplo",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-66.168, -17.315] },
+      "properties": {
+        "id": "FIRMS-001",
+        "sensor": "VIIRS",
+        "fecha": "2026-08-20 14:30",
+        "zona": "Parque Nacional Tunari (Cota 2850)",
+        "confianza": "alta",
+        "frp_intensidad": 62.4,
+        "riesgo": "Critico"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-66.210, -17.328] },
+      "properties": {
+        "id": "FIRMS-002",
+        "sensor": "MODIS",
+        "fecha": "2026-08-20 15:15",
+        "zona": "Límite Tiquipaya / Tunari",
+        "confianza": "media",
+        "frp_intensidad": 38.1,
+        "riesgo": "Moderado"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-66.135, -17.305] },
+      "properties": {
+        "id": "FIRMS-003",
+        "sensor": "VIIRS",
+        "fecha": "2026-08-21 02:40",
+        "zona": "Sapanani / Alto Cochabamba",
+        "confianza": "alta",
+        "frp_intensidad": 75.9,
+        "riesgo": "Critico"
+      }
+    }
+  ]
+}

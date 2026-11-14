@@ -1,0 +1,43 @@
+{
+  "type": "FeatureCollection",
+  "name": "Puntos_Historicos_Inundacion_Torrenteras",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-66.175, -17.362] },
+      "properties": {
+        "id": "GAMC-TORR-01",
+        "torrentera": "Torrentera Taquiña / Pintumayu",
+        "tipo_evento": "Desborde de lodo y mazamorra",
+        "frecuencia": "Alta",
+        "estado_colector": "Parcialmente obstruido",
+        "nivel_riesgo": "Extremo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-66.155, -17.408] },
+      "properties": {
+        "id": "GAMC-TORR-02",
+        "torrentera": "Zona Sur - Av. 6 de Agosto / Circunvalación",
+        "tipo_evento": "Anegamiento pluvial por colapso de sumideros",
+        "frecuencia": "Cada lluvia fuerte",
+        "estado_colector": "Insuficiente capacidad hidráulica",
+        "nivel_riesgo": "Alto"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-66.192, -17.375] },
+      "properties": {
+        "id": "GAMC-TORR-03",
+        "torrentera": "Torrentera Logruste / Sarco",
+        "tipo_evento": "Crecida súbita",
+        "frecuencia": "Media",
+        "estado_colector": "Mantenimiento requerido",
+        "nivel_riesgo": "Medio"
+      }
+    }
+  ]
+}
