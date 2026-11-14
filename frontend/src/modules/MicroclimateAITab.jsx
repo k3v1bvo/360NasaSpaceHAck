@@ -21,6 +21,7 @@ import monicaData from '../data/monica_virtual_sensors.json';
 export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) {
   const [activeSubTab, setActiveSubTab] = useState('sensors'); // 'sensors' | 'divergence' | 'simulator' | 'impact_fire'
   const [selectedSensorId, setSelectedSensorId] = useState('MONICA-01');
+  const [filterType, setFilterType] = useState('ALL'); // 'ALL' | 'FISICA' | 'VIRTUAL' | 'HOTSPOT'
 
   // Sliders del Simulador Predictivo GAMC + NASA
   const [reforestBonus, setReforestBonus] = useState(25); // %
@@ -34,8 +35,16 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
 
   const fisicas = monicaData?.estaciones_fisicas || [];
   const virtuales = monicaData?.sensores_virtuales_ia || [];
-  const allSensors = [...fisicas, ...virtuales];
+  const hotspots = monicaData?.micro_nodos_hotspots || [];
+  const allSensors = [...fisicas, ...virtuales, ...hotspots];
   const selectedSensor = allSensors.find(s => s.id === selectedSensorId) || fisicas[0];
+
+  const filteredSensors = allSensors.filter((s) => {
+    if (filterType === 'FISICA') return s.es_estacion_fisica;
+    if (filterType === 'VIRTUAL') return !s.es_estacion_fisica && s.id.startsWith('VIRTUAL');
+    if (filterType === 'HOTSPOT') return s.id.startsWith('SUB');
+    return true;
+  });
 
   // Cálculos dinámicos del simulador de confort
   const alalayBonus = recuperarAlalay ? 1.8 : 0.0;
@@ -207,13 +216,42 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
           </div>
 
           {/* Lista de Sensores */}
-          <div className="space-y-1.5">
-            <span className="text-xs font-bold text-neutral-300">
-              Seleccionar Punto de Monitoreo ({allSensors.length}):
-            </span>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs font-bold text-neutral-300">
+              <span>Red de Monitoreo ({filteredSensors.length} de {allSensors.length}):</span>
+              <span className="text-[10px] text-cyan-400 font-mono">GAMC + XGBoost</span>
+            </div>
+
+            {/* Filtros de Tipos de Nodos */}
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar pb-1 text-[10px]">
+              <button
+                onClick={() => setFilterType('ALL')}
+                className={`px-2 py-0.5 rounded-lg font-semibold transition ${filterType === 'ALL' ? 'bg-blue-600 text-white' : 'bg-neutral-900 text-neutral-400 border border-neutral-800'}`}
+              >
+                Todos ({allSensors.length})
+              </button>
+              <button
+                onClick={() => setFilterType('FISICA')}
+                className={`px-2 py-0.5 rounded-lg font-semibold transition ${filterType === 'FISICA' ? 'bg-cyan-600 text-white' : 'bg-neutral-900 text-neutral-400 border border-neutral-800'}`}
+              >
+                MÓNICA Físicas (2)
+              </button>
+              <button
+                onClick={() => setFilterType('VIRTUAL')}
+                className={`px-2 py-0.5 rounded-lg font-semibold transition ${filterType === 'VIRTUAL' ? 'bg-purple-600 text-white' : 'bg-neutral-900 text-neutral-400 border border-neutral-800'}`}
+              >
+                IA Distrital (13)
+              </button>
+              <button
+                onClick={() => setFilterType('HOTSPOT')}
+                className={`px-2 py-0.5 rounded-lg font-semibold transition ${filterType === 'HOTSPOT' ? 'bg-rose-600 text-white' : 'bg-neutral-900 text-neutral-400 border border-neutral-800'}`}
+              >
+                OTB Hotspots (5)
+              </button>
+            </div>
 
             <div className="max-h-64 space-y-1.5 overflow-y-auto pr-1">
-              {allSensors.map((s) => (
+              {filteredSensors.map((s) => (
                 <div
                   key={s.id}
                   onClick={() => {
@@ -222,20 +260,34 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
                   }}
                   className={`cursor-pointer rounded-xl border p-2.5 transition ${
                     selectedSensorId === s.id
-                      ? 'border-blue-500 bg-blue-950/40'
+                      ? 'border-blue-500 bg-blue-950/40 shadow-md'
                       : 'border-neutral-800 bg-neutral-950 hover:border-neutral-700 hover:bg-neutral-900'
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs font-bold">
-                    <span className="text-neutral-100 flex items-center gap-1.5">
-                      <span className={`h-2 w-2 rounded-full ${s.es_estacion_fisica ? 'bg-cyan-400' : 'bg-purple-400'}`}></span>
-                      {s.nombre}
+                    <span className="text-neutral-100 flex items-center gap-1.5 truncate mr-2">
+                      <span className={`h-2 w-2 rounded-full shrink-0 ${
+                        s.es_estacion_fisica ? 'bg-cyan-400' :
+                        s.tipo === 'ISLA_FRIA' ? 'bg-cyan-300' :
+                        s.tipo === 'ISLA_VERDE' ? 'bg-emerald-400' :
+                        s.tipo === 'HOTSPOT_URBANO' ? 'bg-rose-500' : 'bg-purple-400'
+                      }`}></span>
+                      <span className="truncate">{s.nombre}</span>
                     </span>
-                    <span className="font-mono text-red-400">{s.lst_nasa_c} °C</span>
+                    <span className="font-mono text-red-400 shrink-0">{s.lst_nasa_c} °C</span>
                   </div>
 
                   <div className="mt-1 flex items-center justify-between text-[10px] text-neutral-400">
-                    <span>{s.distrito}</span>
+                    <span className="flex items-center gap-1">
+                      <span>{s.distrito}</span>
+                      {s.es_estacion_fisica ? (
+                        <span className="bg-cyan-950 text-cyan-300 border border-cyan-800 text-[8px] px-1 rounded font-bold">GROUND TRUTH</span>
+                      ) : s.id.startsWith('SUB') ? (
+                        <span className="bg-rose-950 text-rose-300 border border-rose-800 text-[8px] px-1 rounded font-bold">OTB NODO</span>
+                      ) : (
+                        <span className="bg-purple-950 text-purple-300 border border-purple-800 text-[8px] px-1 rounded font-bold">IA XGBOOST</span>
+                      )}
+                    </span>
                     <span className="font-mono text-cyan-300">{s.pm25_ug_m3} µg/m³ PM2.5</span>
                   </div>
                 </div>

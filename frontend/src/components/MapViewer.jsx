@@ -451,6 +451,41 @@ export default function MapViewer({
         `);
         marker.addTo(layersGroupRef.current);
       });
+
+      // 4. Los Micro-Nodos Críticos OTB (La Cancha, Alalay, UMSS, Wilstermann, Refinería)
+      monicaData?.micro_nodos_hotspots?.forEach((node) => {
+        const isCold = node.tipo === 'ISLA_FRIA';
+        const isGreen = node.tipo === 'ISLA_VERDE';
+        const fillColor = isCold ? '#06b6d4' : isGreen ? '#10b981' : '#f43f5e';
+        const marker = L.circleMarker([node.lat, node.lon], {
+          radius: 8,
+          fillColor,
+          color: '#ffffff',
+          weight: 2,
+          opacity: 0.95,
+          fillOpacity: 0.9,
+        });
+
+        marker.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 230px; line-height: 1.45;">
+            <div style="background: ${fillColor}; color: white; padding: 5px 8px; border-radius: 4px 4px 0 0; font-weight: bold; display: flex; align-items: center; justify-content: space-between;">
+              <span>🎯 ${node.nombre}</span>
+              <span style="font-size: 9px; background: rgba(0,0,0,0.25); padding: 1px 5px; border-radius: 3px;">${node.tipo}</span>
+            </div>
+            <div style="padding: 7px 9px; border: 1px solid ${fillColor}; border-top: none; border-radius: 0 0 4px 4px; background: white;">
+              <strong>Zona / Distrito:</strong> ${node.distrito}<br/>
+              <strong>Temp. Estimada IA (T2M):</strong> <span style="color: #b91c1c; font-weight: bold;">${node.temp_aire_t2m_c} °C</span><br/>
+              <strong>Temperatura Superficie (LST):</strong> ${node.lst_nasa_c} °C<br/>
+              <strong>Tendencia Decadal:</strong> <span style="font-weight: bold; color: ${node.tendencia_decada?.includes('-') ? '#047857' : '#b91c1c'};">${node.tendencia_decada}</span><br/>
+              <strong>Vegetación NDVI:</strong> ${node.ndvi_vegetacion} | <strong>AOD:</strong> ${node.aod_aerosoles}<br/>
+              <div style="margin-top: 5px; padding: 4px; background: #f8fafc; border-left: 3px solid ${fillColor}; font-size: 11px;">
+                <strong>Diagnóstico:</strong> ${node.alerta_isla_calor}
+              </div>
+            </div>
+          </div>
+        `);
+        marker.addTo(layersGroupRef.current);
+      });
     }
 
     // =========================================================================
@@ -895,6 +930,10 @@ export default function MapViewer({
                   <div className="flex items-center gap-2">
                     <span className="h-2.5 w-2.5 rounded-full bg-purple-500 border border-white"></span>
                     <span>🤖 Sensor Virtual IA (13 dist.)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-rose-500 border border-white"></span>
+                    <span>🎯 Micro-Nodos OTB (La Cancha / Refinería)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="h-2.5 w-2.5 rounded bg-red-500/80"></span>
