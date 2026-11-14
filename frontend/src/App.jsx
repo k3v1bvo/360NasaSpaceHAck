@@ -21,6 +21,7 @@ import CitizenReportModal from './modules/CitizenReportModal';
 import focosHarmonized from '../../data/nasa/firms_tunari_harmonized.geojson';
 import focosModisRaw from '../../data/nasa/firms_modis_raw.geojson';
 import focosViirsRaw from '../../data/nasa/firms_viirs_raw.geojson';
+import monicaData from './data/monica_virtual_sensors.json';
 
 export default function App() {
   // Pestaña activa por defecto: Microclimas IA (Trend Detective)
@@ -68,7 +69,7 @@ export default function App() {
       />
 
       {/* 2. Barra Científica de Métricas IA Obligatorias (R², RMSE, MAE, p-value) */}
-      <MetricsStrip />
+      <MetricsStrip metrics={monicaData?.metricas_modelo_ia} />
 
       {/* 3. Cuerpo Principal: Mapa + Panel Lateral */}
       <div 
