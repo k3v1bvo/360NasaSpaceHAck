@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "geothermo-twin"
+version = "0.1.0"
+description = "GeoThermo-Twin AI: A geospatial digital twin for thermal and atmospheric simulation using Fourier Neural Operators"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+authors = [
+    {name = "GeoThermo-Twin Team"}
+]
+keywords = ["digital-twin", "geothermal", "neural-operator", "geospatial", "simulation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+
+dependencies = [
+    "torch>=2.2",
+    "geopandas>=0.14",
+    "rasterio>=1.3",
+    "shapely>=2.0",
+    "fastapi>=0.104",
+    "langgraph>=0.2",
+    "pydantic>=2.5",
+    "scipy>=1.11",
+    "xarray>=2023.10",
+    "earthaccess>=0.8",
+    "trimesh>=4.0",
+    "uvicorn>=0.24",
+    "httpx",
+    "aiofiles",
+    "python-dotenv",
+    "neuraloperator",
+    "psycopg2-binary",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "ruff",
+    "mypy",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

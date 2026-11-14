@@ -41,3 +41,9 @@ env/
 .vscode/
 *.swp
 *.swo
+
+# Agent skills and cache
+.agents/
+skills-lock.json
+frontend/.vite/
+frontend/dist/
