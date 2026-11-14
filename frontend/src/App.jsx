@@ -20,6 +20,7 @@ import FloodRiskTab from './modules/FloodRiskTab';
 import AgroAdvisorTab from './modules/AgroAdvisorTab';
 
 import CitizenReportModal from './modules/CitizenReportModal';
+import SystemWorkflowTour from './components/SystemWorkflowTour';
 
 // Datos satelitales armonizados y crudos
 import focosHarmonized from '../../data/nasa/firms_tunari_harmonized.geojson';
@@ -28,8 +29,9 @@ import focosViirsRaw from '../../data/nasa/firms_viirs_raw.geojson';
 import monicaData from './data/monica_virtual_sensors.json';
 
 export default function App() {
-  // Pestaña activa por defecto: Explorador Global Planetario de la NASA
-  const [activeTab, setActiveTab] = useState('global_nasa');
+  // Pestaña activa por defecto: Caso Piloto Regional Cochabamba (14 Distritos)
+  const [activeTab, setActiveTab] = useState('microclimas');
+  const [isTourOpen, setIsTourOpen] = useState(false);
   const [mobileView, setMobileView] = useState('map'); // 'map' | 'panel' para vista móvil responsive
   const [offlineMode, setOfflineMode] = useState(false); // Online por defecto para consumir NASA POWER & WMS
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -79,6 +81,8 @@ export default function App() {
         offlineMode={offlineMode}
         setOfflineMode={setOfflineMode}
         onOpenReport={() => setIsReportModalOpen(true)}
+        isTourOpen={isTourOpen}
+        setIsTourOpen={setIsTourOpen}
       />
 
       {/* 2. Barra Científica de Métricas IA Obligatorias (R²=0.9457, RMSE=0.55°C, p < 0.05) */}
@@ -216,6 +220,14 @@ export default function App() {
         isOpen={isReportModalOpen}
         onClose={() => setIsReportModalOpen(false)}
         onAddReport={handleAddReport}
+      />
+
+      {/* Guía Interactiva del Sistema / Flujo de Demostración */}
+      <SystemWorkflowTour
+        activeTab={activeTab}
+        onSelectTab={handleTabChange}
+        isOpen={isTourOpen}
+        onClose={() => setIsTourOpen(false)}
       />
     </div>
   );

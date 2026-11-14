@@ -1,13 +1,21 @@
 import React from 'react';
-import { Globe, Radio, BellRing, Satellite } from 'lucide-react';
+import { Globe, Radio, BellRing, Satellite, Compass } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, offlineMode, setOfflineMode, onOpenReport }) {
+export default function Navbar({ 
+  activeTab, 
+  setActiveTab, 
+  offlineMode, 
+  setOfflineMode, 
+  onOpenReport,
+  isTourOpen,
+  setIsTourOpen
+}) {
   const tabs = [
-    { id: 'global_nasa', label: '🌍 Explorador Global', short: '🌍 Global' },
-    { id: 'microclimas', label: '📍 Piloto Cochabamba (14 Distritos)', short: '📍 Cocha (14 Dist.)' },
-    { id: 'incendios', label: '🔥 Incendios Tunari', short: '🔥 Incendios' },
-    { id: 'torrenteras', label: '🌊 Torrenteras GAMC (60 Puntos)', short: '🌊 Torrenteras (60p)' },
-    { id: 'agrotech', label: '🌾 Agrotech SMAP', short: '🌾 Agrotech' },
+    { id: 'microclimas', label: '📍 1. Diagnóstico Cocha (14 Dist.)', short: '📍 1. Cocha' },
+    { id: 'incendios', label: '🔥 2. Incendios Tunari', short: '🔥 2. Incendios' },
+    { id: 'torrenteras', label: '🌊 3. Torrenteras (60p)', short: '🌊 3. Torrenteras' },
+    { id: 'agrotech', label: '🌾 4. Agrotech SMAP', short: '🌾 4. Agrotech' },
+    { id: 'global_nasa', label: '🌍 5. Reto Global NASA', short: '🌍 5. Global' },
   ];
 
   return (
@@ -37,7 +45,7 @@ export default function Navbar({ activeTab, setActiveTab, offlineMode, setOfflin
           </div>
         </div>
 
-        {/* Tabs Principales en Desktop (md+) */}
+        {/* Tabs Principales en Desktop (md+) con numeración de flujo */}
         <nav className="hidden md:flex items-center gap-1 rounded-xl border border-neutral-800 bg-neutral-900/90 p-1">
           {tabs.map((tab) => (
             <button
@@ -55,8 +63,23 @@ export default function Navbar({ activeTab, setActiveTab, offlineMode, setOfflin
           ))}
         </nav>
 
-        {/* Acciones Rápidas & Telemetría */}
+        {/* Acciones Rápidas & Guía del Sistema */}
         <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Botón Guía del Sistema / Presentación */}
+          <button
+            onClick={() => setIsTourOpen(!isTourOpen)}
+            className={`flex items-center gap-1 sm:gap-1.5 rounded-lg border px-2 sm:px-2.5 py-1 sm:py-1.5 text-xs font-bold transition shadow-sm ${
+              isTourOpen
+                ? 'border-cyan-500/80 bg-cyan-950/80 text-cyan-300 ring-1 ring-cyan-400/50'
+                : 'border-neutral-700 bg-neutral-900 text-neutral-300 hover:text-white hover:border-neutral-600'
+            }`}
+            title="Abrir u ocultar la Guía de Flujo del Sistema"
+          >
+            <Compass className={`h-3.5 w-3.5 ${isTourOpen ? 'animate-spin text-cyan-400' : 'text-cyan-400'}`} />
+            <span className="hidden sm:inline">Guía del Sistema</span>
+            <span className="sm:hidden">Guía</span>
+          </button>
+
           <button
             onClick={() => setOfflineMode(!offlineMode)}
             className={`flex items-center gap-1 sm:gap-1.5 rounded-lg border px-2 sm:px-2.5 py-1 text-xs font-medium transition ${
