@@ -50,9 +50,9 @@ export default function App() {
       />
 
       {/* 2. Cuerpo Principal: Mapa + Panel Lateral de Kevin */}
-      <div className="relative flex flex-1 overflow-hidden">
+      <div className="relative flex flex-1 overflow-hidden min-h-0">
         {/* Mapa Central Interactivo */}
-        <main className="relative flex-1">
+        <main className="relative flex-1 h-full min-h-0">
           <MapViewer
             activeTab={activeTab}
             focosData={currentFocosData}

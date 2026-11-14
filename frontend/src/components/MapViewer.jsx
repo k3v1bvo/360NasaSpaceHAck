@@ -44,6 +44,9 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
       mapInstanceRef.current = map;
       layersGroupRef.current = L.layerGroup().addTo(map);
       renderLayers(L, map);
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 250);
     };
 
     initLeaflet();
@@ -251,8 +254,8 @@ export default function MapViewer({ activeTab, focosData, sensorMode = 'HARMONIZ
   }, [selectedPoint]);
 
   return (
-    <div className="relative h-full w-full bg-neutral-950 overflow-hidden">
-      <div ref={mapContainerRef} className="h-full w-full z-0" />
+    <div className="relative h-full w-full bg-neutral-950 overflow-hidden min-h-0">
+      <div ref={mapContainerRef} className="absolute inset-0 h-full w-full z-0" />
       
       {/* Leyenda Flotante Dinámica según el Modo de Sensor de Kevin */}
       <div className="absolute bottom-4 left-4 z-[400] rounded-xl border border-neutral-800 bg-neutral-950/90 p-3 text-xs text-white backdrop-blur-md shadow-2xl">
