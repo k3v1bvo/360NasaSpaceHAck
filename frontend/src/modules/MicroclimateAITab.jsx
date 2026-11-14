@@ -13,9 +13,13 @@ import {
   Sliders, 
   Flame, 
   ArrowRight,
-  Info
+  Info,
+  Server,
+  ExternalLink,
+  Layers
 } from 'lucide-react';
 import monicaData from '../data/monica_virtual_sensors.json';
+import { GAMC_CONFIG, NASA_CONFIG } from '../config/servicesConfig';
 
 export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) {
   const [activeSubTab, setActiveSubTab] = useState('sensors'); // 'sensors' | 'divergence' | 'simulator' | 'impact_fire'
@@ -59,7 +63,7 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
       </div>
 
       {/* 2. Sub-Navegación del Módulo */}
-      <div className="flex items-center gap-1 border-b border-neutral-800 pb-2 text-[11px]">
+      <div className="flex items-center gap-1 border-b border-neutral-800 pb-2 text-[10px]">
         <button
           onClick={() => setActiveSubTab('sensors')}
           className={`flex-1 py-1.5 px-1 rounded-lg font-bold text-center transition ${
@@ -78,7 +82,7 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
               : 'text-neutral-400 hover:text-neutral-200'
           }`}
         >
-          Divergencia (p&lt;0.05)
+          Divergencia
         </button>
         <button
           onClick={() => setActiveSubTab('simulator')}
@@ -88,7 +92,7 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
               : 'text-neutral-400 hover:text-neutral-200'
           }`}
         >
-          Simulador IA
+          Simulador
         </button>
         <button
           onClick={() => setActiveSubTab('impact_fire')}
@@ -98,7 +102,17 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
               : 'text-neutral-400 hover:text-neutral-200'
           }`}
         >
-          Nexo Fuego→Clima
+          Nexo Fuego
+        </button>
+        <button
+          onClick={() => setActiveSubTab('apis')}
+          className={`flex-1 py-1.5 px-1 rounded-lg font-bold text-center transition ${
+            activeSubTab === 'apis'
+              ? 'bg-neutral-800 text-purple-300 shadow'
+              : 'text-neutral-400 hover:text-neutral-200'
+          }`}
+        >
+          APIs & Docs
         </button>
       </div>
 
@@ -360,6 +374,107 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
             <span>Ver Focos Activos en el Módulo de Incendios</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </button>
+        </div>
+      )}
+
+      {/* 3E. SUB-TAB 5: CATÁLOGO DE APIS Y DOCUMENTACIÓN (GAMC + NASA) */}
+      {activeSubTab === 'apis' && (
+        <div className="space-y-3 rounded-xl border border-neutral-800 bg-neutral-950 p-3.5 text-xs">
+          <div className="border-b border-neutral-800 pb-2">
+            <h3 className="font-bold text-purple-400 flex items-center gap-1.5">
+              <Server className="h-4 w-4" />
+              APIs Oficiales y Documentación Conectada
+            </h3>
+            <p className="text-[11px] text-neutral-400 mt-0.5">
+              Servicios WMS autorizados de la Alcaldía de Cochabamba y APIs de la NASA.
+            </p>
+          </div>
+
+          {/* 1. GAMC Cochabamba */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-neutral-300 font-bold">
+              <span className="flex items-center gap-1">
+                🏛️ GAMC Cochabamba (recursosgamc.cochabamba.bo)
+              </span>
+              <span className="text-[9px] bg-emerald-950 text-emerald-400 border border-emerald-800/60 px-1.5 py-0.5 rounded font-mono">
+                CONECTADO
+              </span>
+            </div>
+
+            <div className="space-y-1.5 text-[11px]">
+              <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800">
+                <div className="flex justify-between font-mono text-[10px] text-neutral-400">
+                  <span>PROYECTO 01 & 05</span>
+                  <span className="text-blue-400">WMS 1.1.1</span>
+                </div>
+                <strong className="text-neutral-200 block text-xs">Microclimas IA & Gestión Distrital</strong>
+                <span className="text-neutral-400 text-[10px]">7 servicios WMS · Calibración Red MÓNICA (2 estaciones)</span>
+              </div>
+
+              <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800">
+                <div className="flex justify-between font-mono text-[10px] text-neutral-400">
+                  <span>PROYECTO 03 (KEY: 8da30122...)</span>
+                  <span className="text-amber-400">3 CAPAS WMS</span>
+                </div>
+                <strong className="text-neutral-200 block text-xs">Monitoreo y Armonización de Incendios</strong>
+                <ul className="text-neutral-400 text-[10px] list-disc list-inside mt-1 space-y-0.5 font-mono">
+                  <li>Cota 2750 (P.N. Tunari): 297cefa4...</li>
+                  <li>Periurbanos (Riesgo Quemas): c52066a1...</li>
+                  <li>Limite Distritos (14 polígonos): 7eb13092...</li>
+                </ul>
+              </div>
+
+              <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800">
+                <div className="flex justify-between font-mono text-[10px] text-neutral-400">
+                  <span>PROYECTOS 02 & 04</span>
+                  <span className="text-cyan-400">9 SERVICIOS WMS</span>
+                </div>
+                <strong className="text-neutral-200 block text-xs">Cuencas & Torrenteras (02) + Agrotech (04)</strong>
+                <span className="text-neutral-400 text-[10px]">60 puntos críticos de inundación + Estrés hídrico</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. NASA Oficial */}
+          <div className="space-y-2 pt-2 border-t border-neutral-800">
+            <div className="flex items-center justify-between text-neutral-300 font-bold">
+              <span className="flex items-center gap-1">
+                🛰️ NASA Earth Science APIs
+              </span>
+              <span className="text-[9px] bg-blue-950 text-blue-400 border border-blue-800/60 px-1.5 py-0.5 rounded font-mono">
+                LIVE STREAM
+              </span>
+            </div>
+
+            <div className="space-y-1.5 text-[11px]">
+              <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800">
+                <div className="flex justify-between font-mono text-[10px] text-neutral-400">
+                  <span>NASA POWER API</span>
+                  <span className="text-emerald-400">DIRECT JSON</span>
+                </div>
+                <span className="text-neutral-300 block text-xs font-semibold">Series Temporales Diarias Globales</span>
+                <span className="text-neutral-400 text-[10px]">Variables: TS (Temp. Superficie), T2M (Temp. Aire), PRECTOTCORR, RH2M</span>
+              </div>
+
+              <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800">
+                <div className="flex justify-between font-mono text-[10px] text-neutral-400">
+                  <span>NASA FIRMS API</span>
+                  <span className="text-red-400">MODIS + VIIRS</span>
+                </div>
+                <span className="text-neutral-300 block text-xs font-semibold">Armonización Dual de Focos Térmicos</span>
+                <span className="text-neutral-400 text-[10px]">MODIS 1km (MCD14DL) + VIIRS 375m (VNP14IMGTDL) sobre Tunari</span>
+              </div>
+
+              <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800">
+                <div className="flex justify-between font-mono text-[10px] text-neutral-400">
+                  <span>NASA GIBS WMTS</span>
+                  <span className="text-cyan-400">TESELAS XYZ</span>
+                </div>
+                <span className="text-neutral-300 block text-xs font-semibold">Capas Ráster Satelitales en Vivo</span>
+                <span className="text-neutral-400 text-[10px]">TrueColor, LST Day, NDVI Vegetación a 8 días y AOD Aerosoles</span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
