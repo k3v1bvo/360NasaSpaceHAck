@@ -42,6 +42,15 @@ html, body, #root {
   background: #3b4055;
 }
 
+/* Hide scrollbar for clean mobile horizontal carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Leaflet Container fix */
 .leaflet-container {
   height: 100% !important;
@@ -63,4 +72,13 @@ html, body, #root {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #3b4055;
+}
+
+/* Hide scrollbar for clean mobile horizontal carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

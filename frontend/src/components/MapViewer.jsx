@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Info, ChevronDown } from 'lucide-react';
 import tunariPolygonData from '../../../data/gamc/parque_nacional_tunari.geojson';
 import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
@@ -33,6 +34,19 @@ export default function MapViewer({
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const layersGroupRef = useRef(null);
+  const [isLegendOpen, setIsLegendOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
+
+  // ResizeObserver para recalcular tamaño de Leaflet instantáneamente en responsive
+  useEffect(() => {
+    if (!mapContainerRef.current) return;
+    const observer = new ResizeObserver(() => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.invalidateSize();
+      }
+    });
+    observer.observe(mapContainerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   // Inicialización de Leaflet
   useEffect(() => {
@@ -560,42 +574,42 @@ export default function MapViewer({
       />
       
       {/* 1. Barra Flotante Superior: Navegación Planetaria Directa */}
-      <div className="absolute top-4 left-4 z-[400] flex flex-wrap items-center gap-1.5 rounded-2xl border border-white/10 bg-[#0f172a]/90 p-1.5 text-xs text-white backdrop-blur-xl shadow-2xl">
+      <div className="absolute top-2 left-2 right-2 sm:top-4 sm:left-4 sm:right-auto z-[400] flex items-center gap-1 sm:gap-1.5 rounded-xl sm:rounded-2xl border border-white/10 bg-[#0f172a]/95 p-1 sm:p-1.5 text-[11px] sm:text-xs text-white backdrop-blur-xl shadow-2xl overflow-x-auto no-scrollbar">
         <button
           onClick={() => handleQuickFlight(GLOBAL_CENTER[0], GLOBAL_CENTER[1], GLOBAL_ZOOM, 'global_nasa')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition ${
+          className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl font-bold transition shrink-0 ${
             activeTab === 'global_nasa'
               ? 'bg-blue-600 text-white shadow'
               : 'text-neutral-300 hover:bg-neutral-800'
           }`}
         >
-          <span>🌍 Planeta Tierra (Global)</span>
+          <span>🌍 <span className="hidden xs:inline">Planeta</span> Tierra</span>
         </button>
 
         <button
           onClick={() => handleQuickFlight(COCHABAMBA_CENTER[0], COCHABAMBA_CENTER[1], COCHABAMBA_ZOOM, 'microclimas')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition ${
+          className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl font-bold transition shrink-0 ${
             activeTab === 'microclimas'
               ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow'
               : 'text-neutral-300 hover:bg-neutral-800'
           }`}
         >
-          <span>🇧🇴 Caso Piloto Cochabamba</span>
+          <span>🇧🇴 Cochabamba</span>
         </button>
 
         <button
           onClick={() => handleQuickFlight(-17.36, -66.16, 12.5, 'incendios')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition ${
+          className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl font-bold transition shrink-0 ${
             activeTab === 'incendios'
               ? 'bg-red-600 text-white shadow'
               : 'text-neutral-300 hover:bg-neutral-800'
           }`}
         >
-          <span>🔥 Focos Tunari</span>
+          <span>🔥 Tunari</span>
         </button>
 
         {/* Píldoras de Salto Planetario Rápido */}
-        <div className="hidden xl:flex items-center gap-1 pl-2 border-l border-white/10">
+        <div className="hidden xl:flex items-center gap-1 pl-2 border-l border-white/10 shrink-0">
           <span className="text-[10px] text-neutral-400">Saltar a:</span>
           {[
             { label: 'Amazonia', lat: -15.5989, lon: -56.0949 },
@@ -615,99 +629,114 @@ export default function MapViewer({
         </div>
       </div>
 
-      {/* 2. Leyenda Flotante Dinámica */}
-      <div className="absolute bottom-4 left-4 z-[400] rounded-2xl border border-white/10 bg-[#0f172a]/90 p-3.5 text-xs text-white backdrop-blur-xl shadow-2xl max-w-xs">
-        <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
-          <span className="font-bold text-[10px] text-cyan-400 uppercase tracking-wider">
-            {activeTab === 'global_nasa' && 'PLANETARY EARTH DETECTIVE'}
-            {activeTab === 'microclimas' && 'PILOTO COCHABAMBA • 14 DISTRITOS'}
-            {activeTab === 'incendios' && 'DETECCIÓN TÉRMICA & HUMO TUNARI'}
-          </span>
-          <span className="flex items-center gap-1 text-[9px] text-emerald-400 font-mono">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-            NASA Telemetría Activa
-          </span>
-        </div>
+      {/* 2. Leyenda Flotante Dinámica (Colapsable en Móvil) */}
+      <div className="absolute bottom-16 sm:bottom-4 left-2 sm:left-4 z-[400] transition-all duration-200">
+        {!isLegendOpen ? (
+          <button
+            onClick={() => setIsLegendOpen(true)}
+            className="flex items-center gap-1.5 rounded-xl border border-white/15 bg-[#0f172a]/95 px-3 py-1.5 text-[11px] font-bold text-cyan-300 shadow-2xl backdrop-blur-xl hover:bg-neutral-800 transition"
+          >
+            <Info className="h-3.5 w-3.5" />
+            <span>Leyenda</span>
+          </button>
+        ) : (
+          <div className="rounded-2xl border border-white/10 bg-[#0f172a]/95 p-3 sm:p-3.5 text-xs text-white backdrop-blur-xl shadow-2xl max-w-[270px] sm:max-w-xs">
+            <div className="flex items-center justify-between border-b border-white/10 pb-1.5 mb-2">
+              <span className="font-bold text-[10px] text-cyan-400 uppercase tracking-wider truncate mr-2">
+                {activeTab === 'global_nasa' && 'EARTH DETECTIVE'}
+                {activeTab === 'microclimas' && 'PILOTO COCHABAMBA'}
+                {activeTab === 'incendios' && 'HUMO & CALOR TUNARI'}
+              </span>
+              <button
+                onClick={() => setIsLegendOpen(false)}
+                className="text-neutral-400 hover:text-white p-0.5 rounded transition"
+                title="Cerrar Leyenda"
+              >
+                <ChevronDown className="h-4 w-4" />
+              </button>
+            </div>
 
-        <div className="space-y-1.5 text-[11px]">
-          {activeTab === 'global_nasa' && (
-            <>
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-purple-400 border border-white animate-pulse"></span>
-                <span>Caso Piloto Stevens (Cochabamba)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-red-400 border border-white"></span>
-                <span>Puntos Críticos Térmicos / Fuego</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-cyan-300 border border-white"></span>
-                <span>Criosfera & Amplificación Polar</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 border border-white"></span>
-                <span>Océanos & Barrera Coralina</span>
-              </div>
-              <div className="pt-1 border-t border-white/10 text-[10px] text-cyan-300">
-                💡 Haz clic en cualquier lugar del globo para medir LST.
-              </div>
-            </>
-          )}
-
-          {activeTab === 'microclimas' && (
-            <>
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-cyan-400 border border-white"></span>
-                <span>🏛️ Red MÓNICA Física (2 estaciones)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-purple-500 border border-white"></span>
-                <span>🤖 Sensor Virtual IA XGBoost (13 dist.)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded bg-red-500/80"></span>
-                <span>Isla de Calor Urbana (&gt;35°C LST)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded border border-emerald-400"></span>
-                <span>Cota 2750 Tunari (Límite Biofísico)</span>
-              </div>
-            </>
-          )}
-
-          {activeTab === 'incendios' && (
-            <>
-              {sensorMode === 'HARMONIZED' && (
+            <div className="space-y-1.5 text-[10px] sm:text-[11px]">
+              {activeTab === 'global_nasa' && (
                 <>
                   <div className="flex items-center gap-2">
-                    <span className="h-3 w-3 rounded-full bg-red-500 animate-pulse"></span>
-                    <span>Incendio Armonizado (&gt;50 MW)</span>
+                    <span className="h-2.5 w-2.5 rounded-full bg-purple-400 border border-white animate-pulse"></span>
+                    <span>Caso Piloto Stevens (Cochabamba)</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="h-3 w-3 rounded-full bg-amber-500"></span>
-                    <span>Foco Moderado en Valle (&lt;35 MW)</span>
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-400 border border-white"></span>
+                    <span>Puntos Críticos Térmicos / Fuego</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-cyan-300 border border-white"></span>
+                    <span>Criosfera & Amplificación Polar</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 border border-white"></span>
+                    <span>Océanos & Barrera Coralina</span>
+                  </div>
+                  <div className="pt-1 border-t border-white/10 text-[9px] text-cyan-300">
+                    💡 Clic en cualquier lugar para medir LST.
                   </div>
                 </>
               )}
-              {sensorMode === 'MODIS' && (
-                <div className="flex items-center gap-2">
-                  <span className="h-3.5 w-3.5 rounded-full bg-amber-500 border border-white"></span>
-                  <span>Footprint MODIS (1,000 m píxel)</span>
-                </div>
+
+              {activeTab === 'microclimas' && (
+                <>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-cyan-400 border border-white"></span>
+                    <span>🏛️ Red MÓNICA Física (2 est.)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-purple-500 border border-white"></span>
+                    <span>🤖 Sensor Virtual IA (13 dist.)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded bg-red-500/80"></span>
+                    <span>Isla de Calor (&gt;35°C LST)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded border border-emerald-400"></span>
+                    <span>Cota 2750 Tunari (Límite PNT)</span>
+                  </div>
+                </>
               )}
-              {sensorMode === 'VIIRS' && (
-                <div className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-full bg-cyan-400 border border-white"></span>
-                  <span>Detección VIIRS (375 m I-band)</span>
-                </div>
+
+              {activeTab === 'incendios' && (
+                <>
+                  {sensorMode === 'HARMONIZED' && (
+                    <>
+                      <div className="flex items-center gap-2">
+                        <span className="h-2.5 w-2.5 rounded-full bg-red-500 animate-pulse"></span>
+                        <span>Incendio Armonizado (&gt;50 MW)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="h-2.5 w-2.5 rounded-full bg-amber-500"></span>
+                        <span>Foco Moderado en Valle (&lt;35 MW)</span>
+                      </div>
+                    </>
+                  )}
+                  {sensorMode === 'MODIS' && (
+                    <div className="flex items-center gap-2">
+                      <span className="h-3 w-3 rounded-full bg-amber-500 border border-white"></span>
+                      <span>Footprint MODIS (1 km)</span>
+                    </div>
+                  )}
+                  {sensorMode === 'VIIRS' && (
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-cyan-400 border border-white"></span>
+                      <span>Detección VIIRS (375 m)</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2 pt-1 border-t border-white/5">
+                    <span className="h-2.5 w-2.5 rounded border border-emerald-400 bg-emerald-900/60"></span>
+                    <span>Cota 2750 Tunari (Límite PNT)</span>
+                  </div>
+                </>
               )}
-              <div className="flex items-center gap-2 pt-1 border-t border-white/5">
-                <span className="h-3 w-3 rounded border border-emerald-400 bg-emerald-900/60"></span>
-                <span>Cota 2750 Tunari (Límite PNT)</span>
-              </div>
-            </>
-          )}
-        </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
