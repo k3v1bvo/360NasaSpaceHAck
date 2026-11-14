@@ -26,18 +26,8 @@ export default function MetricsStrip({ metrics }) {
           Sensado Virtual IA • Red MÓNICA GAMC + NASA POWER API
         </span>
         <span className="hidden sm:inline rounded bg-blue-950/80 px-2 py-0.5 text-[10px] font-mono text-blue-300 border border-blue-800/60">
-          XGBoost 3.2.0
+          XGBoost 3.2.0 • 2,497 Días NASA
         </span>
-        <a 
-          href="https://colab.research.google.com/" 
-          target="_blank" 
-          rel="noreferrer"
-          className="hidden md:flex items-center gap-1 rounded bg-purple-950/80 px-2 py-0.5 text-[10px] font-bold text-purple-300 border border-purple-800/60 hover:bg-purple-900 transition"
-          title="Ver Pipeline y Notebook de Entrenamiento en Google Colab"
-        >
-          <span>Colab Notebook</span>
-          <TrendingUp className="h-2.5 w-2.5" />
-        </a>
       </div>
 
       {/* Métricas Obligatorias del Jurado */}
