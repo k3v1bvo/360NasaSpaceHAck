@@ -1,0 +1,36 @@
+{
+  "model": {
+    "name": "Local-FNO",
+    "description": "Local Fourier Neural Operator for geothermal twin simulation"
+  },
+  "grid": {
+    "grid_size": [500, 500, 150],
+    "patch_size": [64, 64, 32],
+    "overlap_ratio": 0.2
+  },
+  "architecture": {
+    "n_modes": [16, 16, 8],
+    "hidden_channels": 64,
+    "n_layers": 4,
+    "activation": "gelu"
+  },
+  "channels": {
+    "input_channels": 8,
+    "input_variables": ["u", "v", "w", "theta", "sdf", "lst", "ndvi", "elevation"],
+    "output_channels": 4,
+    "output_variables": ["u", "v", "w", "theta"],
+    "sdf_channels": 1
+  },
+  "temporal": {
+    "prediction_dt_seconds": 60,
+    "autoregressive_steps": 2
+  },
+  "training": {
+    "batch_size": 4,
+    "learning_rate": 1e-3,
+    "weight_decay": 1e-4,
+    "max_epochs": 200,
+    "scheduler": "cosine",
+    "early_stopping_patience": 20
+  }
+}

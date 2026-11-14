@@ -1,0 +1,52 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -66.23,
+            -17.345
+          ],
+          [
+            -66.21,
+            -17.352
+          ],
+          [
+            -66.19,
+            -17.36
+          ],
+          [
+            -66.17,
+            -17.365
+          ],
+          [
+            -66.15,
+            -17.362
+          ],
+          [
+            -66.13,
+            -17.358
+          ],
+          [
+            -66.11,
+            -17.355
+          ],
+          [
+            -66.09,
+            -17.35
+          ]
+        ]
+      },
+      "properties": {
+        "nombre": "Límite Cota 2750 m s.n.m. - Parque Nacional Tunari",
+        "elevacion_msnm": 2750,
+        "descripcion": "Frontera biofísica y límite de urbanización del GAMC. Por encima rige régimen de protección forestal y brisas de ladera.",
+        "color": "#10b981",
+        "dash_array": "5, 5"
+      }
+    }
+  ]
+}

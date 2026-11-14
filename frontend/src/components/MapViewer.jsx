@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import tunariPolygonData from '../../../data/gamc/parque_nacional_tunari.geojson';
 import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
+import cota2750Data from '../../../data/gamc/cota_2750_tunari.geojson';
 import monicaData from '../data/monica_virtual_sensors.json';
 
 const COCHABAMBA_CENTER = [-17.3895, -66.1568];
@@ -266,6 +267,29 @@ export default function MapViewer({
         `);
         polygon.addTo(layersGroupRef.current);
       });
+
+      // 1.5. Línea Biofísica Oficial Cota 2750 m s.n.m. (Parque Nacional Tunari)
+      if (cota2750Data?.features?.[0]) {
+        const cotaCoords = cota2750Data.features[0].geometry.coordinates.map(([lng, lat]) => [lat, lng]);
+        const cotaLine = L.polyline(cotaCoords, {
+          color: '#10b981',
+          weight: 3.5,
+          dashArray: '8, 8',
+          opacity: 0.95,
+        });
+        cotaLine.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 220px; line-height: 1.4;">
+            <div style="background: #059669; color: white; padding: 4px 8px; border-radius: 4px 4px 0 0; font-weight: bold;">
+              🌲 Cota 2750 m s.n.m.
+            </div>
+            <div style="padding: 6px 8px; border: 1px solid #059669; border-top: none; border-radius: 0 0 4px 4px; background: white;">
+              <strong>Parque Nacional Tunari (PNT)</strong><br/>
+              <span style="color: #475569; font-size: 11px;">Frontera biofísica y límite de urbanización del GAMC. Reserva bioclimática de aire frío.</span>
+            </div>
+          </div>
+        `);
+        cotaLine.addTo(layersGroupRef.current);
+      }
 
       // 2. Las 2 Estaciones Físicas de la Red MÓNICA (GAMC - Ground Truth)
       monicaData?.estaciones_fisicas?.forEach((est) => {
