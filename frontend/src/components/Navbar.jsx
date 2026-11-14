@@ -4,8 +4,10 @@ import { Globe, Radio, BellRing, Satellite } from 'lucide-react';
 export default function Navbar({ activeTab, setActiveTab, offlineMode, setOfflineMode, onOpenReport }) {
   const tabs = [
     { id: 'global_nasa', label: '🌍 Explorador Global', short: '🌍 Global' },
-    { id: 'microclimas', label: '📍 Piloto Cochabamba', short: '📍 Cochabamba' },
+    { id: 'microclimas', label: '📍 Piloto Cochabamba', short: '📍 Cocha IA' },
     { id: 'incendios', label: '🔥 Incendios Tunari', short: '🔥 Incendios' },
+    { id: 'torrenteras', label: '🌊 Torrenteras GAMC', short: '🌊 Torrenteras' },
+    { id: 'agrotech', label: '🌾 Agrotech SMAP', short: '🌾 Agrotech' },
   ];
 
   return (
@@ -41,13 +43,14 @@ export default function Navbar({ activeTab, setActiveTab, offlineMode, setOfflin
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+              className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                   : 'text-neutral-400 hover:text-white'
               }`}
             >
-              {tab.label}
+              <span className="hidden xl:inline">{tab.label}</span>
+              <span className="xl:hidden">{tab.short}</span>
             </button>
           ))}
         </nav>

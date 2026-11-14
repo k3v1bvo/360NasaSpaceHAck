@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Waves, AlertOctagon, ShieldAlert, Filter, MapPin } from 'lucide-react';
+import { Waves, AlertOctagon, ShieldAlert, Filter, MapPin, BellRing, ArrowRight } from 'lucide-react';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
 
-export default function FloodRiskTab({ onSelectPunto }) {
+export default function FloodRiskTab({ onSelectPunto, selectedPoint, onOpenReportModal }) {
   const [filterRiesgo, setFilterRiesgo] = useState('ALL');
   const allPoints = floodPointsData?.features || [];
 
@@ -16,7 +16,7 @@ export default function FloodRiskTab({ onSelectPunto }) {
 
   return (
     <div className="space-y-4 p-4 text-white">
-      {/* Header del Reto 2.2 GAMC */}
+      {/* Header Oficial del Reto GAMC Torrenteras */}
       <div className="flex items-center justify-between border-b border-blue-900/50 pb-3">
         <div className="flex items-center gap-2">
           <div className="rounded-lg bg-blue-600/20 p-2 text-blue-500 shadow-inner">
@@ -32,7 +32,7 @@ export default function FloodRiskTab({ onSelectPunto }) {
           </div>
         </div>
         <span className="rounded-full bg-blue-500/20 px-2 py-0.5 text-[10px] font-bold text-blue-300">
-          Reto 2.2 GAMC
+          UGR Cochabamba
         </span>
       </div>
 
@@ -43,7 +43,7 @@ export default function FloodRiskTab({ onSelectPunto }) {
           <span>Validación Oficial Ground-Truth ({allPoints.length} Puntos)</span>
         </div>
         <p className="text-[11px] text-neutral-300 leading-snug">
-          Modelo espacial calibrado contra los <strong>60 puntos históricos de anegamiento y mazamorra</strong> registrados por el GAMC (Cuencas Taquiña, Pintumayu, Logruste, Tamborada y Zona Sur).
+          Modelo espacial calibrado contra los <strong>60 puntos históricos de anegamiento y aluvión</strong> registrados por el GAMC (Cuencas Taquiña, Pintumayu, Logruste, Tamborada y Colectores Zona Sur).
         </p>
       </div>
 
@@ -52,13 +52,24 @@ export default function FloodRiskTab({ onSelectPunto }) {
         <div className="rounded-xl border border-neutral-800 bg-neutral-900/90 p-2.5">
           <span className="text-[10px] text-neutral-400">Puntos de Riesgo Extremo</span>
           <p className="text-xl font-black text-red-500">{countExtremo}</p>
-          <span className="text-[9px] text-neutral-500">Mazamorra / Anegamiento</span>
+          <span className="text-[9px] text-neutral-500">Aluvión / Mazamorra</span>
         </div>
         <div className="rounded-xl border border-neutral-800 bg-neutral-900/90 p-2.5">
           <span className="text-[10px] text-neutral-400">Umbral Alerta SENAMHI</span>
           <p className="text-xl font-black text-blue-400">&gt; 35 mm</p>
           <span className="text-[9px] text-neutral-500">Precipitación 24 horas</span>
         </div>
+      </div>
+
+      {/* Dinámica Cuenca-Ciudad */}
+      <div className="rounded-xl border border-neutral-800 bg-neutral-900/70 p-3 text-[11px] text-neutral-300 space-y-1.5">
+        <div className="flex items-center justify-between font-bold text-cyan-400 text-xs">
+          <span>⚡ Tiempo de Concentración Hidrológica</span>
+          <span className="font-mono text-[10px] text-neutral-400">&lt; 45 min</span>
+        </div>
+        <p className="leading-snug text-neutral-400">
+          Las precipitaciones en la Cota 2750 del Tunari descienden por pendientes mayores al 35% arrastrando sedimentos directamente a las zonas urbanas de Tiquipaya, Taquiña y Av. Beijing.
+        </p>
       </div>
 
       {/* Filtro por Nivel de Riesgo */}
@@ -84,14 +95,21 @@ export default function FloodRiskTab({ onSelectPunto }) {
         <div className="max-h-72 space-y-2 overflow-y-auto pr-1">
           {filteredPoints.map((pt) => {
             const p = pt.properties;
+            const isSelected = selectedPoint?.id === p.id;
             return (
               <div
                 key={p.id}
                 onClick={() => onSelectPunto && onSelectPunto(pt)}
-                className="cursor-pointer rounded-xl border border-neutral-800 bg-neutral-950 p-2.5 transition hover:border-blue-500/60 hover:bg-neutral-900"
+                className={`cursor-pointer rounded-xl border p-2.5 transition ${
+                  isSelected 
+                    ? 'border-cyan-400 bg-cyan-950/40 shadow-lg shadow-cyan-950/50' 
+                    : 'border-neutral-800 bg-neutral-950 hover:border-blue-500/60 hover:bg-neutral-900'
+                }`}
               >
                 <div className="flex items-center justify-between text-xs font-bold">
-                  <span className="text-neutral-200">{p.torrentera_zona}</span>
+                  <span className={`${isSelected ? 'text-cyan-300 font-extrabold' : 'text-neutral-200'}`}>
+                    {p.torrentera_zona}
+                  </span>
                   <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
                     p.nivel_riesgo === 'Extremo' ? 'bg-red-950 text-red-400 border border-red-800' :
                     p.nivel_riesgo === 'Alto' ? 'bg-amber-950 text-amber-400 border border-amber-800' :
@@ -111,8 +129,19 @@ export default function FloodRiskTab({ onSelectPunto }) {
         </div>
       </div>
 
-      <div className="rounded-lg bg-neutral-900/40 p-2 text-center text-[10px] text-neutral-500">
-        Módulo desarrollado para: <strong className="text-neutral-300">Integrante 3</strong> (Reto NASA SAR + GAMC Torrenteras)
+      {/* Botón de Alerta Vecinal */}
+      {onOpenReportModal && (
+        <button
+          onClick={onOpenReportModal}
+          className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 py-2.5 text-xs font-bold text-white shadow-lg hover:opacity-90 transition"
+        >
+          <BellRing className="h-4 w-4" />
+          <span>¡Reportar Colapso de Torrentera o Inundación!</span>
+        </button>
+      )}
+
+      <div className="rounded-lg bg-neutral-900/60 border border-neutral-800/60 p-2.5 text-center text-[10px] text-neutral-400">
+        Plataforma calibrada con NASA SRTM DEM 30m y 60 Puntos Oficiales de la Unidad de Gestión de Riesgos (UGR) del GAMC.
       </div>
     </div>
   );

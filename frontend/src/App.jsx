@@ -13,6 +13,12 @@ import MicroclimateAITab from './modules/MicroclimateAITab';
 // Módulo 3: Causa Física Térmica (Incendios Tunari, NASA FIRMS y Plumas AOD)
 import FireMonitorTab from './modules/FireMonitorTab';
 
+// Módulo 4: Riesgo Hidrológico & Torrenteras (NASA SAR / DEM + 60 Puntos GAMC)
+import FloodRiskTab from './modules/FloodRiskTab';
+
+// Módulo 5: Asistente Agro-Climático Resiliente (NASA SMAP + Evapotranspiración Valles)
+import AgroAdvisorTab from './modules/AgroAdvisorTab';
+
 import CitizenReportModal from './modules/CitizenReportModal';
 
 // Datos satelitales armonizados y crudos
@@ -152,6 +158,28 @@ export default function App() {
               gibsDate={gibsDate}
               setGibsDate={setGibsDate}
               offlineMode={offlineMode}
+            />
+          )}
+
+          {activeTab === 'torrenteras' && (
+            <FloodRiskTab
+              selectedPoint={selectedPoint}
+              onSelectPunto={(point) => {
+                const [lng, lat] = point.geometry.coordinates;
+                setSelectedPoint({ lat, lon: lng, ...point.properties });
+                setMobileView('map');
+              }}
+              onOpenReportModal={() => setIsReportModalOpen(true)}
+            />
+          )}
+
+          {activeTab === 'agrotech' && (
+            <AgroAdvisorTab
+              onOpenReportModal={() => setIsReportModalOpen(true)}
+              onSelectParcela={(parcela) => {
+                setSelectedPoint({ lat: parcela.lat, lon: parcela.lon, ...parcela });
+                setMobileView('map');
+              }}
             />
           )}
         </aside>

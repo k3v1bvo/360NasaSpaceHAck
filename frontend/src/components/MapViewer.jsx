@@ -171,6 +171,10 @@ export default function MapViewer({
       map.flyTo(COCHABAMBA_CENTER, COCHABAMBA_ZOOM, { duration: 1.8 });
     } else if (activeTab === 'incendios') {
       map.flyTo([-17.36, -66.16], 12.5, { duration: 1.8 });
+    } else if (activeTab === 'torrenteras') {
+      map.flyTo([-17.375, -66.165], 12.5, { duration: 1.8 });
+    } else if (activeTab === 'agrotech') {
+      map.flyTo([-17.41, -66.24], 11.8, { duration: 1.8 });
     }
   }, [activeTab]);
 
@@ -551,6 +555,114 @@ export default function MapViewer({
       });
     }
 
+    // =========================================================================
+    // CAPA 4: TORRENTERAS & INUNDACIONES (60 Puntos GAMC + Cordillera Tunari)
+    // =========================================================================
+    if (activeTab === 'torrenteras') {
+      // 1. Polígono Tunari / Cota 2750 como contexto orográfico de escorrentía
+      if (tunariPolygonData?.features?.[0]) {
+        const polyCoords = tunariPolygonData.features[0].geometry.coordinates[0].map(
+          ([lng, lat]) => [lat, lng]
+        );
+        const polygon = L.polygon(polyCoords, {
+          color: '#3b82f6',
+          weight: 1.5,
+          dashArray: '4, 4',
+          fillColor: '#1d4ed8',
+          fillOpacity: 0.08,
+        });
+        polygon.bindPopup(`
+          <div style="color: #111; font-family: sans-serif; font-size: 12px;">
+            <strong style="color: #1d4ed8;">🏔️ Cuenca Alta Cordillera Tunari</strong><br/>
+            <strong>Origen de Escorrentía:</strong> Pendientes &gt; 35%<br/>
+            <strong>Riesgo:</strong> Descarga torrencial hacia la mancha urbana
+          </div>
+        `);
+        polygon.addTo(layersGroupRef.current);
+      }
+
+      // 2. 60 Puntos Históricos de Ground-Truth GAMC
+      floodPointsData?.features?.forEach((pt) => {
+        const [lng, lat] = pt.geometry.coordinates;
+        const p = pt.properties;
+        const isExtremo = p.nivel_riesgo === 'Extremo';
+        const isAlto = p.nivel_riesgo === 'Alto';
+        const fillColor = isExtremo ? '#ef4444' : isAlto ? '#f59e0b' : '#3b82f6';
+        const radius = isExtremo ? 9 : isAlto ? 7 : 6;
+
+        const circle = L.circleMarker([lat, lng], {
+          radius,
+          fillColor,
+          color: '#ffffff',
+          weight: 1.5,
+          opacity: 0.95,
+          fillOpacity: 0.85,
+        });
+
+        circle.bindPopup(`
+          <div style="color: #111; font-family: sans-serif; font-size: 12px; min-width: 200px;">
+            <strong style="color: ${fillColor}; font-size: 13px;">🌊 ${p.torrentera_zona}</strong><br/>
+            <strong>Nivel de Riesgo:</strong> <span style="color: ${fillColor}; font-weight: bold;">${p.nivel_riesgo}</span><br/>
+            <strong>Evento Histórico:</strong> ${p.tipo_evento}<br/>
+            <strong>Umbral SENAMHI:</strong> &gt; ${p.senamhi_umbral_lluvia_mm} mm en 24h<br/>
+            <strong>Frecuencia:</strong> ${p.frecuencia_historica}<br/>
+            <span style="font-size: 10px; color: #6b7280;">Validación Ground-Truth GAMC UGR</span>
+          </div>
+        `);
+
+        circle.on('click', () => {
+          if (setSelectedPoint) {
+            setSelectedPoint({ lat, lon: lng, ...p });
+          }
+        });
+
+        circle.addTo(layersGroupRef.current);
+      });
+    }
+
+    // =========================================================================
+    // CAPA 5: AGROTECH & SUELOS VALLE (NASA SMAP + Parcelas Demostrativas)
+    // =========================================================================
+    if (activeTab === 'agrotech') {
+      const AGRO_PINS = [
+        { id: 'valle_bajo', name: 'Valle Bajo (Quillacollo / Vinto)', lat: -17.40, lon: -66.28, tipo: 'franco', smap: 19, cultivo: 'Maíz / Alfa', rotacion: 'Tarwi / Haba' },
+        { id: 'valle_alto', name: 'Valle Alto (Cliza / Punata)', lat: -17.58, lon: -65.93, tipo: 'arenoso', smap: 14, cultivo: 'Trigo / Maíz Chuspillo', rotacion: 'Leguminosas de secano' },
+        { id: 'ladera_tunari', name: 'Ladera Tunari (Tiquipaya / Apote)', lat: -17.34, lon: -66.21, tipo: 'pedregoso', smap: 22, cultivo: 'Agroforestería / Floricultura', rotacion: 'Molle y Frutales' },
+        { id: 'valle_central', name: 'Valle Central (Colcapirhua)', lat: -17.39, lon: -66.23, tipo: 'franco', smap: 24, cultivo: 'Hortalizas periurbanas', rotacion: 'Abonos verdes' },
+        { id: 'valle_sacaba', name: 'Valle de Sacaba (Chimboco)', lat: -17.40, lon: -66.04, tipo: 'franco', smap: 26, cultivo: 'Tubérculos / Haba', rotacion: 'Cereales menores' }
+      ];
+
+      AGRO_PINS.forEach((agro) => {
+        const marker = L.circleMarker([agro.lat, agro.lon], {
+          radius: 9,
+          fillColor: '#10b981',
+          color: '#ffffff',
+          weight: 2,
+          opacity: 0.95,
+          fillOpacity: 0.85,
+        });
+
+        marker.bindPopup(`
+          <div style="color: #111; font-family: sans-serif; font-size: 12px; min-width: 200px;">
+            <strong style="color: #059669; font-size: 13px;">🌾 ${agro.name}</strong><br/>
+            <strong>Tipo de Suelo:</strong> ${agro.tipo}<br/>
+            <strong>Cultivo Actual:</strong> ${agro.cultivo}<br/>
+            <strong>Rotación Sugerida:</strong> ${agro.rotacion}<br/>
+            <strong>Humedad Suelo (NASA SMAP):</strong> <span style="color: #0284c7; font-weight: bold;">${agro.smap}%</span><br/>
+            <span style="font-size: 10px; color: #6b7280;">Monitoreo L-band Radiometer NASA SMAP</span>
+          </div>
+        `);
+
+        marker.on('click', () => {
+          if (setSelectedPoint) {
+            setSelectedPoint({ lat: agro.lat, lon: agro.lon, ...agro });
+          }
+        });
+
+        marker.addTo(layersGroupRef.current);
+      });
+    }
+
     // Alertas Ciudadanas
     reportsData?.forEach((rep) => {
       const pin = L.circleMarker(COCHABAMBA_CENTER, {
@@ -610,6 +722,10 @@ export default function MapViewer({
       mapInstanceRef.current.flyTo(COCHABAMBA_CENTER, COCHABAMBA_ZOOM, { duration: 1.4 });
     } else if (activeTab === 'incendios') {
       mapInstanceRef.current.flyTo([-17.36, -66.16], 12.5, { duration: 1.4 });
+    } else if (activeTab === 'torrenteras') {
+      mapInstanceRef.current.flyTo([-17.375, -66.165], 12.5, { duration: 1.4 });
+    } else if (activeTab === 'agrotech') {
+      mapInstanceRef.current.flyTo([-17.41, -66.24], 11.8, { duration: 1.4 });
     }
   };
 
@@ -691,6 +807,8 @@ export default function MapViewer({
                 {activeTab === 'global_nasa' && 'EARTH DETECTIVE'}
                 {activeTab === 'microclimas' && 'PILOTO COCHABAMBA'}
                 {activeTab === 'incendios' && 'HUMO & CALOR TUNARI'}
+                {activeTab === 'torrenteras' && 'TORRENTERAS GAMC'}
+                {activeTab === 'agrotech' && 'AGROTECH & SMAP'}
               </span>
               <button
                 onClick={() => setIsLegendOpen(false)}
@@ -776,6 +894,54 @@ export default function MapViewer({
                   <div className="flex items-center gap-2 pt-1 border-t border-white/5">
                     <span className="h-2.5 w-2.5 rounded border border-emerald-400 bg-emerald-900/60"></span>
                     <span>Cota 2750 Tunari (Límite PNT)</span>
+                  </div>
+                </>
+              )}
+
+              {activeTab === 'torrenteras' && (
+                <>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-500 border border-white animate-pulse"></span>
+                    <span>Riesgo Extremo (Taquiña / Aluvión)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-500 border border-white"></span>
+                    <span>Riesgo Alto (Desborde de Torrentera)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-blue-500 border border-white"></span>
+                    <span>Riesgo Medio (Anegamiento Calzada)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded border border-blue-400"></span>
+                    <span>Cuenca Alta Cordillera Tunari</span>
+                  </div>
+                  <div className="pt-1 border-t border-white/10 text-[9px] text-cyan-300">
+                    🌧️ Umbral Crítico SENAMHI: &gt; 35 mm/24h.
+                  </div>
+                </>
+              )}
+
+              {activeTab === 'agrotech' && (
+                <>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 border border-white"></span>
+                    <span>Parcela Monitoreada NASA SMAP</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded bg-emerald-600/80"></span>
+                    <span>Suelo Franco (Valle Bajo / Sacaba)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded bg-amber-600/80"></span>
+                    <span>Suelo Arenoso (Valle Alto / Cliza)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded bg-stone-600/80"></span>
+                    <span>Suelo Pedregoso (Laderas Tunari)</span>
+                  </div>
+                  <div className="pt-1 border-t border-white/10 text-[9px] text-emerald-300">
+                    🌱 Rotación Sugerida: Maíz + Tarwi / Haba.
                   </div>
                 </>
               )}
