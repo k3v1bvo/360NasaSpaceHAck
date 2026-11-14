@@ -87,6 +87,7 @@ export default function App() {
           {activeTab === 'incendios' && (
             <FireMonitorTab
               onSelectFoco={(foco) => setSelectedPoint(foco)}
+              sensorMode={sensorMode}
               onSensorModeChange={(mode) => setSensorMode(mode)}
               wmsCota={wmsCota}
               setWmsCota={setWmsCota}

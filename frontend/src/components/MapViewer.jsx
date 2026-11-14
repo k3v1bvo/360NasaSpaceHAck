@@ -40,10 +40,17 @@ export default function MapViewer({
         zoomControl: true,
       });
 
-      // CartoDB Dark Matter tiles (estilo espacial oscuro)
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO &copy; NASA Earthdata &copy; GAMC Cochabamba',
+      // Base Satelital NASA (Esri World Imagery) - 100% libre sin API key
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; NASA Earthdata &copy; Esri &copy; GAMC Cochabamba',
         maxZoom: 19,
+      }).addTo(map);
+
+      // Etiquetas y límites urbanos claros sobre la imagen satelital
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '',
+        maxZoom: 19,
+        opacity: 0.75,
       }).addTo(map);
 
       mapInstanceRef.current = map;
