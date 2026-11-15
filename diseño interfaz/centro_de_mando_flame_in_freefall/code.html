@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Flame in Freefall // NASA Microgravity Combustion Safety Console</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-error":"#690005","outline":"#87929a","surface-container-highest":"#31353f","on-tertiary-fixed-variant":"#653e00","on-error-container":"#ffdad6","on-surface-variant":"#bdc8d1","on-tertiary-fixed":"#2a1700","surface-variant":"#31353f","tertiary-fixed-dim":"#ffb95f","surface-dim":"#0f131d","surface-container":"#1c1f29","surface-container-lowest":"#0a0e17","surface-container-high":"#262a34","error-container":"#93000a","on-surface":"#dfe2f0","on-primary-fixed-variant":"#004c69","on-primary-fixed":"#001e2c","tertiary":"#ffc174","inverse-primary":"#00668a","secondary-container":"#00a572","surface-container-low":"#181b25","inverse-on-surface":"#2d303b","surface-bright":"#353944","outline-variant":"#3e484f","secondary":"#4edea3","on-secondary-fixed-variant":"#005236","secondary-fixed-dim":"#4edea3","on-secondary-fixed":"#002113","error":"#ffb4ab","background":"#0f131d","on-primary-container":"#004965","on-primary":"#00354a","tertiary-container":"#f59e0b","on-secondary-container":"#00311f","on-background":"#dfe2f0","secondary-fixed":"#6ffbbe","primary-fixed-dim":"#7bd0ff","primary":"#8ed5ff","primary-container":"#38bdf8","surface-tint":"#7bd0ff","tertiary-fixed":"#ffddb8","on-tertiary":"#472a00","primary-fixed":"#c4e7ff","inverse-surface":"#dfe2f0","on-tertiary-container":"#613b00","surface":"#0f131d","on-secondary":"#003824"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-lg":"1.25rem","space-xl":"2rem","gutter":"0.75rem","space-md":"0.75rem","space-sm":"0.5rem","gutter-desktop":"1rem","margin-desktop":"1.5rem","margin":"1rem","space-xs":"0.25rem"},"fontFamily":{"body-md":["Inter"],"headline-xl":["Space Grotesk"],"label-sm":["JetBrains Mono"],"label-caps":["JetBrains Mono"],"headline-lg":["Space Grotesk"],"body-lg":["Inter"],"body-sm":["Inter"],"telemetry-data-lg":["JetBrains Mono"],"headline-xl-mobile":["Space Grotesk"],"telemetry-data-md":["JetBrains Mono"],"headline-md":["Space Grotesk"]},"fontSize":{"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["10px",{"lineHeight":"12px","letterSpacing":"0.05em","fontWeight":"500"}],"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"telemetry-data-lg":["20px",{"lineHeight":"26px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-xl-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"telemetry-data-md":["14px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"500"}],"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary selection:text-on-primary min-h-screen flex flex-col justify-between"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-2xl"><div class="h-16 w-full px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xl">local_fire_department</span></div><div><div class="flex items-center gap-space-xs"><span class="font-headline-md text-headline-md tracking-wider text-on-surface">FLAME IN FREEFALL</span><span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-label-sm text-label-sm">v4.2-AVX</span></div><p class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">MICROGRAVITY COMBUSTION SAFETY CONSOLE // NASA-STD-6001B OVERRIDE</p></div></div><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-caps text-label-caps text-secondary">SYS ONLINE // ISS FLIGHT 72 EXPEDITION</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex flex-col items-end px-space-sm py-1 rounded bg-surface-container-low"><div class="flex items-center gap-space-xs font-telemetry-data-md text-telemetry-data-md text-primary"><span class="material-symbols-outlined text-sm">schedule</span><span>UTC 14:28:09.412</span></div><span class="font-label-sm text-label-sm text-on-surface-variant">MET +184:12:05:19</span></div><div class="relative hidden lg:block"><div class="flex items-center gap-space-xs px-space-sm py-1.5 rounded bg-surface-container text-on-surface font-label-caps text-label-caps cursor-pointer"><span class="material-symbols-outlined text-sm text-primary">air</span><span>ISS ECLSS NOMINAL (21.0% O2, 1.0 atm)</span><span class="material-symbols-outlined text-xs text-on-surface-variant">expand_more</span></div></div><div class="flex items-center gap-space-sm pl-space-sm bg-surface-container-low py-1 pr-2 rounded"><div class="flex flex-col items-end text-right hidden sm:block"><span class="font-label-caps text-label-caps text-on-surface">CDR. ALBRIGHT // SPECIALIST</span><span class="font-label-sm text-label-sm text-secondary flex items-center gap-1 justify-end"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>COMMS ACTIVE</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrADxPk30Uu2pC4TwGHKkuE_2VT6Chs-xPjyGjMCXNW4JVO1rc181ACKVAvNOOSGyHWfy19jQ0JvQCsw9okqWeSKeR7-x828v79i0jkMvVyGu-F1oNwurtd3Ij7dSM0G2UVtyzgb4XKpnA3UXhKDfHfTZ17LjLO4yunAdBy42XzmfMzvrJEyihpQMI4C7wdTsa5Jrz8HhkfM4iB4kVc9Na0pqI31N5f_sDVE_cDwTLuP4Q"/></div></div></div><div class="h-12 w-full px-gutter-desktop bg-surface-container-low/95 flex items-center justify-between"><nav class="flex items-center h-full gap-space-xs overflow-x-auto" data-active-classes="bg-surface-container-highest text-primary font-bold shadow-[inset_0_-2px_0_0_#38bdf8]"><a aria-current="page" class="flex items-center h-12 px-space-md transition-colors whitespace-nowrap bg-surface-container-highest text-primary font-bold shadow-[inset_0_-2px_0_0_#38bdf8]" data-path="centro-de-mando" href="#">01 CENTRO DE MANDO</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="simulador-de-flamas" href="#">02 SIMULADOR DE FLAMAS</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="predictor-ia-y-nfpa-750" href="#">03 PREDICTOR IA &amp; NFPA 750</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="asistente-ia-guia" href="#">04 ASISTENTE IA GUÍA</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="repositorio-nasa-psi" href="#">05 REPOSITORIO NASA PSI</a></nav><div class="hidden lg:flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label-caps text-label-caps text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span>DATA ENGINE: 12.4 TB SYNCED</span></div><button class="flex items-center gap-space-xs px-space-md py-1.5 rounded bg-tertiary-container text-on-tertiary font-label-caps text-label-caps hover:bg-tertiary transition-colors"><span>⚠️ SIMULACIÓN DE CONTINGENCIA</span></button></div></div></header><main class="w-full pt-28 pb-10 bg-surface flex-1"><div class="flex flex-col w-full px-margin md:px-margin-desktop space-y-space-xl py-space-lg text-on-surface">
+<!-- ==========================================
+       SECTION 1: HERO BANNER & AVIONICS FLIGHT DECK
+       ========================================== -->
+<section class="relative w-full rounded-xl bg-surface-container-lowest p-space-lg md:p-space-xl overflow-hidden shadow-2xl">
+<!-- Atmospheric subtle gradient accents & reticle marks -->
+<div class="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+<div class="absolute -left-20 -bottom-20 w-80 h-80 rounded-full bg-tertiary-container/10 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-space-xl">
+<!-- Title & Mission Context -->
+<div class="max-w-4xl space-y-space-sm">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="px-2.5 py-1 rounded bg-surface-container-high text-primary font-label-caps text-label-caps">
+            CONSOLE REF: F-FREEFALL-OPS
+          </span>
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-high text-secondary font-label-caps text-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
+            ISS FLIGHT 72 RECON
+          </span>
+<span class="px-2.5 py-1 rounded bg-surface-container text-outline font-label-sm text-label-sm">
+            NASA-STD-6001B OVERRIDE PROTOCOL
+          </span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+          Predicción y Control de Fuego Espacial
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed max-w-3xl">
+          Plataforma analítica basada en 24 investigaciones de combustión en microgravedad (~12 TB) en la ISS y naves Cygnus Saffire. Reemplaza las limitaciones críticas del estándar terrestre <span class="text-primary font-medium">NASA-STD-6001B</span> frente a la ausencia total de convección boyante en caída libre.
+        </p>
+<!-- Dynamic Realtime Status Strip -->
+<div class="flex flex-wrap items-center gap-y-2 gap-x-6 pt-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary">satellite_alt</span>
+<span>ISS CIR / MSG / SAFFIRE I-VI ONLINE</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-tertiary">air</span>
+<span>CABIN VENT: 1.2 cm/s (MESETA CRÍTICA)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-secondary">verified_user</span>
+<span>DEFENSE: NFPA 750 + F-500 ARMED</span>
+</div>
+</div>
+</div>
+<!-- Tactical Cockpit Button Deck (min-h: 52px, active:scale-98) -->
+<div class="flex flex-col sm:flex-row xl:flex-col gap-space-md shrink-0 w-full xl:w-80">
+<!-- Primary Action -->
+<button class="h-[52px] px-space-lg rounded bg-primary-container hover:bg-primary active:scale-[0.98] text-on-primary-container font-label-caps text-label-caps tracking-wider flex items-center justify-center gap-space-sm shadow-[0_0_24px_rgba(56,189,248,0.35)] transition-all cursor-pointer" id="btn-evaluar-ia">
+<span class="material-symbols-outlined text-lg">bolt</span>
+<span>[ ⚡ EVALUAR RIESGO CON IA ]</span>
+</button>
+<!-- Secondary Action -->
+<button class="h-[52px] px-space-lg rounded bg-surface-container-high hover:bg-surface-container-highest active:scale-[0.98] text-primary font-label-caps text-label-caps tracking-wider flex items-center justify-center gap-space-sm shadow-md transition-all cursor-pointer" id="btn-simulador">
+<span class="material-symbols-outlined text-lg text-primary">local_fire_department</span>
+<span>[ 🔥 SIMULADOR AERODINÁMICO ]</span>
+</button>
+<!-- Tertiary Snapshot Action -->
+<button class="h-[52px] px-space-lg rounded bg-surface-container-low hover:bg-surface-container active:scale-[0.98] text-on-surface font-label-caps text-label-caps tracking-wider flex items-center justify-between shadow-sm transition-all cursor-pointer" id="btn-snapshot">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-base text-outline">save</span>
+<span>[ 💾 SNAPSHOT ]</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline" id="snapshot-clock">14:28:09.4</span>
+</button>
+</div>
+</div>
+</section>
+<!-- ==========================================
+       SECTION 2: MISSION KPI CARDS (4x1 Grid)
+       ========================================== -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md w-full">
+<!-- Card 1 -->
+<div class="rounded bg-surface-container-low p-space-md flex flex-col justify-between shadow-sm hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between pb-space-sm">
+<span class="font-label-sm text-label-sm text-outline tracking-wider uppercase">INVESTIGACIONES INDEXADAS</span>
+<span class="material-symbols-outlined text-primary text-xl">database</span>
+</div>
+<div class="space-y-space-xs">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-on-surface">24</span>
+<span class="font-label-caps text-label-caps text-primary">Misiones</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">ISS CIR, MSG &amp; Cygnus Saffire I-VI</p>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>ARCHIVE COLD SYNC</span>
+<span class="text-secondary">100% COMPLETE</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="rounded bg-surface-container-low p-space-md flex flex-col justify-between shadow-sm hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between pb-space-sm">
+<span class="font-label-sm text-label-sm text-outline tracking-wider uppercase">VOLUMEN DE DATOS</span>
+<span class="material-symbols-outlined text-primary text-xl">hard_drive</span>
+</div>
+<div class="space-y-space-xs">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-on-surface">12.4</span>
+<span class="font-label-caps text-label-caps text-primary">TB</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">Telemetría de sensores, térmicos y video HD</p>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>BANDWIDTH PSI</span>
+<span class="text-primary">820 Mbps</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="rounded bg-surface-container-low p-space-md flex flex-col justify-between shadow-sm hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between pb-space-sm">
+<span class="font-label-sm text-label-sm text-tertiary tracking-wider uppercase">CAÍDA PROMEDIO DE LOI</span>
+<span class="material-symbols-outlined text-tertiary text-xl">warning</span>
+</div>
+<div class="space-y-space-xs">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-tertiary">-3.5</span>
+<span class="font-label-caps text-label-caps text-tertiary">pp (O2 Δ)</span>
+</div>
+<p class="font-label-sm text-label-sm text-tertiary font-semibold truncate">Mayor peligro de ignición en órbita</p>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-tertiary">
+<span>NASA-STD-6001B BIAS</span>
+<span class="font-bold">ALTAMENTE VULNERABLE</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="rounded bg-surface-container-low p-space-md flex flex-col justify-between shadow-sm hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between pb-space-sm">
+<span class="font-label-sm text-label-sm text-secondary tracking-wider uppercase">MODELOS PREDICTIVOS IA</span>
+<span class="material-symbols-outlined text-secondary text-xl">psychology</span>
+</div>
+<div class="space-y-space-xs">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-on-surface">3</span>
+<span class="font-label-caps text-label-caps text-secondary">Redes Activas</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-secondary font-label-caps text-label-caps">
+            R² = 0.961 // Precisión Certificada
+          </span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>LATENCIA INFERENCIA</span>
+<span class="text-secondary">&lt; 4.2 ms</span>
+</div>
+</div>
+</section>
+<!-- ==========================================
+       SECTION 3: PARADOJA DEL LOI (1-g vs 0-g)
+       ========================================== -->
+<section class="rounded-xl bg-surface-container-low p-space-lg md:p-space-xl shadow-lg space-y-space-lg">
+<!-- Header of Section -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div class="space-y-space-xs max-w-3xl">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded bg-tertiary animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-tertiary tracking-wider uppercase">
+            PARADOJA DE INFLAMABILIDAD: FALLA DE NASA-STD-6001B
+          </span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">
+          Discrepancia de Oxígeno Límite (LOI): Tierra 1-g vs Microgravedad 0-g
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          En Tierra, la gravedad genera corrientes boyantes ascendentes que enfrían la base del polímero combustible. En microgravedad, la ventilación forzada forzosa de la cabina espacial (<span class="text-on-surface font-semibold">0.4 a 5.0 cm/s</span>) anula este sumidero térmico por convección, permitiendo que materiales certificados como autoextinguibles en superficie terrestre ardan sostenidamente en la atmósfera presurizada de la ISS (21% O₂).
+        </p>
+</div>
+<!-- Quick Legend Box -->
+<div class="flex items-center gap-space-md p-space-sm bg-surface-container rounded shrink-0">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline">
+<span class="w-3 h-3 rounded bg-surface-container-highest"></span>
+<span>Tierra 1-g (NASA-STD-6001B)</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-tertiary">
+<span class="w-3 h-3 rounded bg-tertiary"></span>
+<span>Microgravedad 0-g (ISS Real)</span>
+</div>
+</div>
+</div>
+<!-- Comparative Material Cards Container -->
+<div class="space-y-space-sm">
+<!-- Material 1: PMMA -->
+<div class="p-space-md rounded bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-space-md">
+<span class="font-label-caps text-label-caps text-primary px-2 py-0.5 rounded bg-surface-container-lowest">01</span>
+<div>
+<span class="font-headline-md text-headline-md text-on-surface">PMMA (Plexiglas / Polimetilmetacrilato)</span>
+<p class="font-label-sm text-label-sm text-outline">Escotillas ópticas, visores de experimentos, ventanas de instrumentación</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-telemetry-data-md text-telemetry-data-md text-error">Δ -2.3 pp LOI</span>
+<span class="px-2.5 py-1 rounded bg-error-container text-on-error font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">error</span>
+              [ ⚠️ INFLAMABLE EN CABINA ]
+            </span>
+</div>
+</div>
+<!-- Dual Bar Visualizer -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center">
+<div class="md:col-span-10 space-y-2">
+<!-- 1-g bar -->
+<div class="flex items-center gap-space-sm">
+<span class="w-24 font-label-sm text-label-sm text-outline">1-g (Tierra):</span>
+<div class="flex-1 h-3 rounded bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-surface-container-highest transition-all duration-700" style="width: 58.3%;"></div>
+</div>
+<span class="w-16 text-right font-telemetry-data-md text-telemetry-data-md text-on-surface-variant">17.5%</span>
+</div>
+<!-- 0-g bar -->
+<div class="flex items-center gap-space-sm">
+<span class="w-24 font-label-sm text-label-sm text-tertiary">0-g (Órbita):</span>
+<div class="flex-1 h-3 rounded bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-tertiary transition-all duration-700" style="width: 50.6%;"></div>
+</div>
+<span class="w-16 text-right font-telemetry-data-md text-telemetry-data-md text-tertiary font-bold">15.2%</span>
+</div>
+</div>
+<div class="md:col-span-2 text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">LOI &lt; 21.0% Cabina</span>
+<span class="font-label-caps text-label-caps text-error font-semibold">FUEGO SOSTENIDO</span>
+</div>
+</div>
+</div>
+<!-- Material 2: ETFE -->
+<div class="p-space-md rounded bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-space-md">
+<span class="font-label-caps text-label-caps text-primary px-2 py-0.5 rounded bg-surface-container-lowest">02</span>
+<div>
+<span class="font-headline-md text-headline-md text-on-surface">ETFE (Etileno Tetrafluoroetileno)</span>
+<p class="font-label-sm text-label-sm text-outline">Aislamiento de arneses eléctricos y aviónica de potencia en ISS</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-telemetry-data-md text-telemetry-data-md text-secondary">Δ -7.0 pp LOI</span>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+              [ ✔️ SEGURO EN ISS ]
+            </span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center">
+<div class="md:col-span-10 space-y-2">
+<div class="flex items-center gap-space-sm">
+<span class="w-24 font-label-sm text-label-sm text-outline">1-g (Tierra):</span>
+<div class="flex-1 h-3 rounded bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-surface-container-highest transition-all duration-700" style="width: 100%;"></div>
+</div>
+<span class="w-16 text-right font-telemetry-data-md text-telemetry-data-md text-on-surface-variant">30.5%</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="w-24 font-label-sm text-label-sm text-secondary">0-g (Órbita):</span>
+<div class="flex-1 h-3 rounded bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-secondary transition-all duration-700" style="width: 77.0%;"></div>
+</div>
+<span class="w-16 text-right font-telemetry-data-md text-telemetry-data-md text-secondary font-bold">23.5%</span>
+</div>
+</div>
+<div class="md:col-span-2 text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">LOI &gt; 21.0% Cabina</span>
+<span class="font-label-caps text-label-caps text-secondary font-semibold">MARGEN SEGURO (+2.5%)</span>
+</div>
+</div>
+</div>
+<!-- Material 3: Nomex -->
+<div class="p-space-md rounded bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-space-md">
+<span class="font-label-caps text-label-caps text-primary px-2 py-0.5 rounded bg-surface-container-lowest">03</span>
+<div>
+<span class="font-headline-md text-headline-md text-on-surface">Nomex (Aramida Estructural Ignífuga)</span>
+<p class="font-label-sm text-label-sm text-outline">Revestimientos térmicos internos, trajes EMU y cubiertas de racks ISPR</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-telemetry-data-md text-telemetry-data-md text-secondary">Δ -6.5 pp LOI</span>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+              [ ✔️ SEGURO EN ISS ]
+            </span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center">
+<div class="md:col-span-10 space-y-2">
+<div class="flex items-center gap-space-sm">
+<span class="w-24 font-label-sm text-label-sm text-outline">1-g (Tierra):</span>
+<div class="flex-1 h-3 rounded bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-surface-container-highest transition-all duration-700" style="width: 95.0%;"></div>
+</div>
+<span class="w-16 text-right font-telemetry-data-md text-telemetry-data-md text-on-surface-variant">29.0%</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="w-24 font-label-sm text-label-sm text-secondary">0-g (Órbita):</span>
+<div class="flex-1 h-3 rounded bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-secondary transition-all duration-700" style="width: 73.7%;"></div>
+</div>
+<span class="w-16 text-right font-telemetry-data-md text-telemetry-data-md text-secondary font-bold">22.5%</span>
+</div>
+</div>
+<div class="md:col-span-2 text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">LOI &gt; 21.0% Cabina</span>
+<span class="font-label-caps text-label-caps text-secondary font-semibold">MARGEN SEGURO (+1.5%)</span>
+</div>
+</div>
+</div>
+<!-- Material 4: Saffire Fabric -->
+<div class="p-space-md rounded bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-space-md">
+<span class="font-label-caps text-label-caps text-primary px-2 py-0.5 rounded bg-surface-container-lowest">04</span>
+<div>
+<span class="font-headline-md text-headline-md text-on-surface">Algodón / Tejidos Textiles Saffire</span>
+<p class="font-label-sm text-label-sm text-outline">Ropa de tripulación, paños absorbentes de módulos Nauka y Columbus</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-telemetry-data-md text-telemetry-data-md text-error">Δ -4.7 pp LOI</span>
+<span class="px-2.5 py-1 rounded bg-error-container text-on-error font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">error</span>
+              [ ⚠️ INFLAMABLE EN CABINA ]
+            </span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center">
+<div class="md:col-span-10 space-y-2">
+<div class="flex items-center gap-space-sm">
+<span class="w-24 font-label-sm text-label-sm text-outline">1-g (Tierra):</span>
+<div class="flex-1 h-3 rounded bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-surface-container-highest transition-all duration-700" style="width: 70.4%;"></div>
+</div>
+<span class="w-16 text-right font-telemetry-data-md text-telemetry-data-md text-on-surface-variant">21.5%</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="w-24 font-label-sm text-label-sm text-tertiary">0-g (Órbita):</span>
+<div class="flex-1 h-3 rounded bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-tertiary transition-all duration-700" style="width: 55.0%;"></div>
+</div>
+<span class="w-16 text-right font-telemetry-data-md text-telemetry-data-md text-tertiary font-bold">16.8%</span>
+</div>
+</div>
+<div class="md:col-span-2 text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">LOI &lt; 21.0% Cabina</span>
+<span class="font-label-caps text-label-caps text-error font-semibold">IGNICIÓN RÁPIDA</span>
+</div>
+</div>
+</div>
+<!-- Material 5: LDPE -->
+<div class="p-space-md rounded bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-space-md">
+<span class="font-label-caps text-label-caps text-primary px-2 py-0.5 rounded bg-surface-container-lowest">05</span>
+<div>
+<span class="font-headline-md text-headline-md text-on-surface">Polietileno LDPE (Película Protectora)</span>
+<p class="font-label-sm text-label-sm text-outline">Empaquetado de raciones de comida y bolsas de desecho presurizadas</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-telemetry-data-md text-telemetry-data-md text-error">Δ -2.5 pp LOI</span>
+<span class="px-2.5 py-1 rounded bg-error-container text-on-error font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">error</span>
+              [ ⚠️ INFLAMABLE EN CABINA ]
+            </span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center">
+<div class="md:col-span-10 space-y-2">
+<div class="flex items-center gap-space-sm">
+<span class="w-24 font-label-sm text-label-sm text-outline">1-g (Tierra):</span>
+<div class="flex-1 h-3 rounded bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-surface-container-highest transition-all duration-700" style="width: 55.7%;"></div>
+</div>
+<span class="w-16 text-right font-telemetry-data-md text-telemetry-data-md text-on-surface-variant">17.0%</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="w-24 font-label-sm text-label-sm text-tertiary">0-g (Órbita):</span>
+<div class="flex-1 h-3 rounded bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-tertiary transition-all duration-700" style="width: 47.5%;"></div>
+</div>
+<span class="w-16 text-right font-telemetry-data-md text-telemetry-data-md text-tertiary font-bold">14.5%</span>
+</div>
+</div>
+<div class="md:col-span-2 text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">LOI &lt; 21.0% Cabina</span>
+<span class="font-label-caps text-label-caps text-error font-semibold">ALTA GENERACIÓN TÓXICA</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+       SECTION 4: TECNOLOGÍAS CLAVE DE SEGURIDAD (2 Cols)
+       ========================================== -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg w-full">
+<!-- Card 1: Brunswick Nanoparticle Detector -->
+<div class="rounded-xl bg-surface-container-low p-space-lg md:p-space-xl flex flex-col justify-between shadow-lg space-y-space-md">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-2xl">lens_blur</span>
+<span class="font-label-caps text-label-caps text-primary uppercase">SISTEMA SENSOR PRIMARIO</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-secondary font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> ACTIVO: CIR DECK
+          </span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">
+          Detector Brunswick de Aerosoles de Nano-partículas
+        </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Detección continua de partículas de pirólisis ultra-finas (<span class="text-on-surface font-semibold">10 a 100 nm</span>) hasta <span class="text-primary font-bold">15 minutos antes</span> de la manifestación de humo óptico visible o la activación de detectores fotoeléctricos estándar de cabina.
+        </p>
+<!-- Inline Visual: Early Detection Advantage Curve -->
+<div class="p-space-md rounded bg-surface-container-lowest space-y-space-sm">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>VENTANA CRÍTICA DE ALERTA TEMPRANA</span>
+<span class="text-primary font-semibold">+15 MINUTOS DE VENTAJA</span>
+</div>
+<!-- SVG Chart -->
+<div class="relative w-full h-32 flex items-center justify-center">
+<svg class="w-full h-full text-primary" fill="none" preserveaspectratio="none" viewbox="0 0 380 100">
+<!-- Grid lines -->
+<path d="M 0 25 L 380 25 M 0 50 L 380 50 M 0 75 L 380 75" stroke="currentColor" stroke-dasharray="2 4" stroke-opacity="0.1"></path>
+<!-- Brunswick Nanoparticle Curve (Blue, fast detection) -->
+<path d="M 10 90 Q 70 85, 120 40 T 220 12 L 370 10" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Standard Optical Sensor Curve (Grey/Amber, delayed) -->
+<path d="M 10 90 Q 180 90, 240 75 T 320 30 L 370 20" stroke="#f59e0b" stroke-dasharray="4 4" stroke-linecap="round" stroke-width="2"></path>
+<!-- Indicator Points -->
+<circle class="animate-ping" cx="120" cy="40" fill="currentColor" r="4"></circle>
+<circle cx="120" cy="40" fill="currentColor" r="4"></circle>
+<circle cx="280" cy="50" fill="#f59e0b" r="4"></circle>
+</svg>
+</div>
+<div class="grid grid-cols-2 gap-space-xs font-label-sm text-label-sm">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="w-2 h-2 rounded bg-primary"></span>
+<span>Brunswick (10–100 nm): T₀ + 2.4 min</span>
+</div>
+<div class="flex items-center gap-1.5 text-tertiary">
+<span class="w-2 h-2 rounded bg-tertiary"></span>
+<span>Fotoeléctrico ISS: T₀ + 17.8 min</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Specs Footer -->
+<div class="pt-space-sm grid grid-cols-3 gap-space-sm font-label-sm text-label-sm text-center">
+<div class="p-2 rounded bg-surface-container">
+<span class="text-outline block">Sensibilidad</span>
+<span class="font-telemetry-data-md text-telemetry-data-md text-on-surface">0.001 mg/m³</span>
+</div>
+<div class="p-2 rounded bg-surface-container">
+<span class="text-outline block">Tiempo Muestreo</span>
+<span class="font-telemetry-data-md text-telemetry-data-md text-on-surface">1.2 s</span>
+</div>
+<div class="p-2 rounded bg-surface-container">
+<span class="text-outline block">Rechazo Falsos</span>
+<span class="font-telemetry-data-md text-telemetry-data-md text-secondary">99.8%</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Extinction NFPA 750 + F-500 EA -->
+<div class="rounded-xl bg-surface-container-low p-space-lg md:p-space-xl flex flex-col justify-between shadow-lg space-y-space-md">
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-2xl">water_drop</span>
+<span class="font-label-caps text-label-caps text-secondary uppercase">SISTEMA DE MITIGACIÓN ACTIVA</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-secondary font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> LISTO // 35 BAR
+          </span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">
+          Extinción NFPA 750 + F-500 EA (Micro-Niebla)
+        </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Inyección de micro-gotas atomizadas de <span class="text-on-surface font-semibold">35 μm a 35 bar (507 psi)</span> combinadas con agente micelar encapsulante F-500 al 1%. Neutraliza radicales libres, colapsa el frente térmico sin choque mecánico y es <span class="text-secondary font-semibold">100% recuperable por los deshumidificadores ECLSS</span> de la estación.
+        </p>
+<!-- Technical Comparison Matrix -->
+<div class="p-space-md rounded bg-surface-container-lowest space-y-space-sm">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>RENDIMIENTO TERMODINÁMICO DE SUPRESIÓN</span>
+<span class="text-secondary font-bold">SOBREPRESIÓN CERO</span>
+</div>
+<div class="space-y-2">
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface-variant">Absorción de Calor Específica</span>
+<span class="font-telemetry-data-md text-telemetry-data-md text-secondary">2,591 kJ/kg</span>
+</div>
+<div class="h-2 rounded bg-surface-container overflow-hidden">
+<div class="h-full bg-secondary" style="width: 92%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface-variant">Factor de Expansión a Vapor Local</span>
+<span class="font-telemetry-data-md text-telemetry-data-md text-primary">1,700x</span>
+</div>
+<div class="h-2 rounded bg-surface-container overflow-hidden">
+<div class="h-full bg-primary" style="width: 85%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface-variant">Carga Tóxica / Residuo Químico en Cabina</span>
+<span class="font-telemetry-data-md text-telemetry-data-md text-secondary">0.00 ppm</span>
+</div>
+<div class="h-2 rounded bg-surface-container overflow-hidden">
+<div class="h-full bg-secondary" style="width: 4%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Footer for Safety System -->
+<div class="pt-space-sm flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-sm text-secondary">verified</span>
+<span>COMPATIBLE CON NORMAS ESA / JAXA / NASA</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-caps text-label-caps text-outline">ACTUADOR:</span>
+<span class="px-2 py-1 rounded bg-surface-container-high text-secondary font-label-caps text-label-caps">SOLENOIDE STANDBY</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+       SECTION 5: DETECCIÓN Y DIAGNÓSTICO EN TIEMPO REAL
+       ========================================== -->
+<section class="rounded-xl bg-surface-container-lowest p-space-lg shadow-xl space-y-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">radar</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Vectores de Telemetría Dinámica en Cabina</h4>
+<p class="font-label-sm text-label-sm text-outline">Monitoreo continuo de micro-flujos y gradientes de hollín esférico (Stefan Flow)</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline">
+<span>FREQ: 100 Hz</span>
+<span class="text-outline-variant">|</span>
+<span class="text-primary">ECLSS LINK SYNCED</span>
+</div>
+</div>
+<!-- 3-Column Micro-Sensor Readout Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Readout 1 -->
+<div class="p-space-md rounded bg-surface-container flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase block">Flujo de Ventilación Local (v_forced)</span>
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-primary">1.24 cm/s</span>
+<span class="font-label-sm text-label-sm text-secondary block mt-1">Óptimo para Difusión Radíal</span>
+</div>
+<div class="text-right">
+<span class="material-symbols-outlined text-primary text-3xl">air</span>
+</div>
+</div>
+<!-- Readout 2 -->
+<div class="p-space-md rounded bg-surface-container flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase block">Radio de Esfera de Llama (r_f)</span>
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-on-surface">8.42 mm</span>
+<span class="font-label-sm text-label-sm text-outline block mt-1">Equilibrio Térmico Termoforético</span>
+</div>
+<div class="text-right">
+<span class="material-symbols-outlined text-tertiary text-3xl">lens</span>
+</div>
+</div>
+<!-- Readout 3 -->
+<div class="p-space-md rounded bg-surface-container flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase block">Índice de Toxicidad CO / CO2</span>
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-secondary">0.012</span>
+<span class="font-label-sm text-label-sm text-secondary block mt-1">Margen Seguro por Debajo de Umbral</span>
+</div>
+<div class="text-right">
+<span class="material-symbols-outlined text-secondary text-3xl">shield</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Vanilla JS for Tactical Micro-interactions -->
+<script>
+  (function initDashboardInteractions() {
+    // Dynamic Clock updater for Snapshot action
+    function updateClock() {
+      const el = document.getElementById('snapshot-clock');
+      if (!el) return;
+      const now = new Date();
+      const h = String(now.getUTCHours()).padStart(2, '0');
+      const m = String(now.getUTCMinutes()).padStart(2, '0');
+      const s = String(now.getUTCSeconds()).padStart(2, '0');
+      const ms = String(Math.floor(now.getUTCMilliseconds() / 100));
+      el.textContent = `${h}:${m}:${s}.${ms}`;
+    }
+    setInterval(updateClock, 100);
+
+    // Snapshot Trigger Animation
+    const btnSnapshot = document.getElementById('btn-snapshot');
+    if (btnSnapshot) {
+      btnSnapshot.addEventListener('click', () => {
+        const originalText = btnSnapshot.innerHTML;
+        btnSnapshot.classList.add('bg-primary-container', 'text-on-primary-container');
+        btnSnapshot.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-base animate-spin">sync</span>
+            <span>TELEMETRÍA VOLCADA CON ÉXITO</span>
+          </div>
+          <span class="font-label-sm text-label-sm">HASH: #8FA2-OK</span>
+        `;
+        setTimeout(() => {
+          btnSnapshot.classList.remove('bg-primary-container', 'text-on-primary-container');
+          btnSnapshot.innerHTML = originalText;
+        }, 2200);
+      });
+    }
+
+    // AI Risk Evaluator Trigger
+    const btnEvaluar = document.getElementById('btn-evaluar-ia');
+    if (btnEvaluar) {
+      btnEvaluar.addEventListener('click', () => {
+        const linkElem = document.querySelector('nav a[data-path="predictor-ia-y-nfpa-750"]');
+        if (linkElem) {
+          linkElem.click();
+        } else {
+          btnEvaluar.classList.add('animate-pulse');
+          setTimeout(() => btnEvaluar.classList.remove('animate-pulse'), 1000);
+        }
+      });
+    }
+
+    // Aerodynamic Simulator Trigger
+    const btnSim = document.getElementById('btn-simulador');
+    if (btnSim) {
+      btnSim.addEventListener('click', () => {
+        const linkElem = document.querySelector('nav a[data-path="simulador-de-flamas"]');
+        if (linkElem) {
+          linkElem.click();
+        }
+      });
+    }
+  })();
+</script></main><footer class="fixed bottom-0 left-0 right-0 z-40 h-8 w-full bg-surface-container-lowest/95 backdrop-blur-xl flex items-center px-gutter-desktop"><div class="w-full flex items-center justify-between overflow-hidden whitespace-nowrap"><div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant animate-pulse"><span class="text-secondary font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>CORE: NOMINAL</span><span class="text-outline">|</span><span>DIFFUSION FLAME CORE: STABLE</span><span class="text-outline">|</span><span class="text-primary">HVAC PLENUM: 1.2 cm/s (MESETA CRÍTICA)</span><span class="text-outline">|</span><span>SOOT SHELL EQUILIBRIUM: v_Stefan + v_thermo = 0</span><span class="text-outline">|</span><span class="text-secondary">F-500 EA RESERVE: 100% (35 BAR)</span></div><div class="hidden md:flex items-center gap-space-sm font-label-sm text-label-sm text-outline"><span class="material-symbols-outlined text-xs">wifi_tethering</span><span>ORBIT 416 KM // VELOCITY 7.66 KM/S</span></div></div></footer></body></html>

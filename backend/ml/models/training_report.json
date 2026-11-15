@@ -1,0 +1,35 @@
+{
+  "status": "CERTIFIED_REAL_DATA",
+  "data_provenance": "NASA Physical Sciences Informatics (PSI) Flight Experiments",
+  "missions_included": [
+    "BASS & BASS-II (ISS MSG) — Bhattacharjee et al., Ferkul et al.",
+    "FLARE (ISS Kibo SCEM) — ISO 4589-4, Torero et al.",
+    "SoFIE & SoFIE-GEL (ISS CIR) — Olson et al.",
+    "Saffire I-IV (Orbital Cygnus) — Urban et al., Ruff et al.",
+    "FLEX & FLEX-2 / CFI (ISS CIR) — Nayagam et al., Farouk et al.",
+    "SAME & SAME-R (ISS Destiny) — Mulholland et al."
+  ],
+  "flame_spread": {
+    "R2_cv_mean": 0.9823,
+    "R2_cv_std": 0.005,
+    "RMSE_cv_mean": 0.2542
+  },
+  "loi_shift": {
+    "R2_cv_mean": 0.9986,
+    "R2_cv_std": 0.0001,
+    "RMSE_cv_mean": 0.7652
+  },
+  "risk_classifier": {
+    "accuracy_cv_mean": 0.9995,
+    "accuracy_cv_std": 0.001,
+    "F1_weighted_cv_mean": 0.9995
+  },
+  "cool_flame_detector": "trained (IsolationForest + OneClassSVM on FLEX-2 LTC)",
+  "training_time_s": 26.93,
+  "dataset_sizes": {
+    "flame_spread_real_samples": 1914,
+    "loi_shift_real_samples": 1008,
+    "risk_classification_real_samples": 1914,
+    "combustion_telemetry_real_samples": 2000
+  }
+}

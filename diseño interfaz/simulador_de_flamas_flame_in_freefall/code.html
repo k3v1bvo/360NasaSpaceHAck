@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Flame in Freefall // NASA Microgravity Combustion Safety Console</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-error":"#690005","outline":"#87929a","surface-container-highest":"#31353f","on-tertiary-fixed-variant":"#653e00","on-error-container":"#ffdad6","on-surface-variant":"#bdc8d1","on-tertiary-fixed":"#2a1700","surface-variant":"#31353f","tertiary-fixed-dim":"#ffb95f","surface-dim":"#0f131d","surface-container":"#1c1f29","surface-container-lowest":"#0a0e17","surface-container-high":"#262a34","error-container":"#93000a","on-surface":"#dfe2f0","on-primary-fixed-variant":"#004c69","on-primary-fixed":"#001e2c","tertiary":"#ffc174","inverse-primary":"#00668a","secondary-container":"#00a572","surface-container-low":"#181b25","inverse-on-surface":"#2d303b","surface-bright":"#353944","outline-variant":"#3e484f","secondary":"#4edea3","on-secondary-fixed-variant":"#005236","secondary-fixed-dim":"#4edea3","on-secondary-fixed":"#002113","error":"#ffb4ab","background":"#0f131d","on-primary-container":"#004965","on-primary":"#00354a","tertiary-container":"#f59e0b","on-secondary-container":"#00311f","on-background":"#dfe2f0","secondary-fixed":"#6ffbbe","primary-fixed-dim":"#7bd0ff","primary":"#8ed5ff","primary-container":"#38bdf8","surface-tint":"#7bd0ff","tertiary-fixed":"#ffddb8","on-tertiary":"#472a00","primary-fixed":"#c4e7ff","inverse-surface":"#dfe2f0","on-tertiary-container":"#613b00","surface":"#0f131d","on-secondary":"#003824"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-lg":"1.25rem","space-xl":"2rem","gutter":"0.75rem","space-md":"0.75rem","space-sm":"0.5rem","gutter-desktop":"1rem","margin-desktop":"1.5rem","margin":"1rem","space-xs":"0.25rem"},"fontFamily":{"body-md":["Inter"],"headline-xl":["Space Grotesk"],"label-sm":["JetBrains Mono"],"label-caps":["JetBrains Mono"],"headline-lg":["Space Grotesk"],"body-lg":["Inter"],"body-sm":["Inter"],"telemetry-data-lg":["JetBrains Mono"],"headline-xl-mobile":["Space Grotesk"],"telemetry-data-md":["JetBrains Mono"],"headline-md":["Space Grotesk"]},"fontSize":{"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["10px",{"lineHeight":"12px","letterSpacing":"0.05em","fontWeight":"500"}],"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"telemetry-data-lg":["20px",{"lineHeight":"26px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-xl-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"telemetry-data-md":["14px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"500"}],"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary selection:text-on-primary min-h-screen flex flex-col justify-between"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-2xl"><div class="h-16 w-full px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xl">local_fire_department</span></div><div><div class="flex items-center gap-space-xs"><span class="font-headline-md text-headline-md tracking-wider text-on-surface">FLAME IN FREEFALL</span><span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-label-sm text-label-sm">v4.2-AVX</span></div><p class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">MICROGRAVITY COMBUSTION SAFETY CONSOLE // NASA-STD-6001B OVERRIDE</p></div></div><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-caps text-label-caps text-secondary">SYS ONLINE // ISS FLIGHT 72 EXPEDITION</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex flex-col items-end px-space-sm py-1 rounded bg-surface-container-low"><div class="flex items-center gap-space-xs font-telemetry-data-md text-telemetry-data-md text-primary"><span class="material-symbols-outlined text-sm">schedule</span><span>UTC 14:28:09.412</span></div><span class="font-label-sm text-label-sm text-on-surface-variant">MET +184:12:05:19</span></div><div class="relative hidden lg:block"><div class="flex items-center gap-space-xs px-space-sm py-1.5 rounded bg-surface-container text-on-surface font-label-caps text-label-caps cursor-pointer"><span class="material-symbols-outlined text-sm text-primary">air</span><span>ISS ECLSS NOMINAL (21.0% O2, 1.0 atm)</span><span class="material-symbols-outlined text-xs text-on-surface-variant">expand_more</span></div></div><div class="flex items-center gap-space-sm pl-space-sm bg-surface-container-low py-1 pr-2 rounded"><div class="flex flex-col items-end text-right hidden sm:block"><span class="font-label-caps text-label-caps text-on-surface">CDR. ALBRIGHT // SPECIALIST</span><span class="font-label-sm text-label-sm text-secondary flex items-center gap-1 justify-end"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>COMMS ACTIVE</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrADxPk30Uu2pC4TwGHKkuE_2VT6Chs-xPjyGjMCXNW4JVO1rc181ACKVAvNOOSGyHWfy19jQ0JvQCsw9okqWeSKeR7-x828v79i0jkMvVyGu-F1oNwurtd3Ij7dSM0G2UVtyzgb4XKpnA3UXhKDfHfTZ17LjLO4yunAdBy42XzmfMzvrJEyihpQMI4C7wdTsa5Jrz8HhkfM4iB4kVc9Na0pqI31N5f_sDVE_cDwTLuP4Q"/></div></div></div><div class="h-12 w-full px-gutter-desktop bg-surface-container-low/95 flex items-center justify-between"><nav class="flex items-center h-full gap-space-xs overflow-x-auto" data-active-classes="bg-surface-container-highest text-primary font-bold shadow-[inset_0_-2px_0_0_#38bdf8]"><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="centro-de-mando" href="#">01 CENTRO DE MANDO</a><a aria-current="page" class="flex items-center h-12 px-space-md transition-colors whitespace-nowrap bg-surface-container-highest text-primary font-bold shadow-[inset_0_-2px_0_0_#38bdf8]" data-path="simulador-de-flamas" href="#">02 SIMULADOR DE FLAMAS</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="predictor-ia-y-nfpa-750" href="#">03 PREDICTOR IA &amp; NFPA 750</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="asistente-ia-guia" href="#">04 ASISTENTE IA GUÍA</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="repositorio-nasa-psi" href="#">05 REPOSITORIO NASA PSI</a></nav><div class="hidden lg:flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label-caps text-label-caps text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span>DATA ENGINE: 12.4 TB SYNCED</span></div><button class="flex items-center gap-space-xs px-space-md py-1.5 rounded bg-tertiary-container text-on-tertiary font-label-caps text-label-caps hover:bg-tertiary transition-colors"><span>⚠️ SIMULACIÓN DE CONTINGENCIA</span></button></div></div></header><main class="w-full pt-28 pb-10 bg-surface flex-1"><div class="flex flex-col w-full">
+<div class="w-full px-gutter-desktop py-space-md flex flex-col gap-space-md">
+<!-- Top Subsystem Bar: Operational Banner & Fast Diagnostics -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm bg-surface-container-low px-space-md py-space-sm rounded">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-on-surface">MÓDULO SIMULADOR FÍSICO 02 // DYNAMICS-CORE</span>
+</div>
+<span class="text-outline-variant">|</span>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span>MODELO CINÉTICO:</span>
+<span class="text-primary font-bold">NASA-PSI DETAILED KIN-88</span>
+</div>
+<span class="hidden md:inline text-outline-variant">|</span>
+<div class="hidden md:flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span>ATMÓSFERA CABINA:</span>
+<span class="text-secondary font-bold">21.0% O₂ / 79.0% N₂ (101.3 kPa)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-secondary">CIR RACK #4 CONNECTED</span>
+<span class="px-space-sm py-0.5 rounded bg-error-container text-on-error font-label-caps text-label-caps animate-pulse">ALERT: REG. MESETA ACTIVO</span>
+</div>
+</div>
+<!-- Main Grid: Top 2-Column Split (Parameters Deck & Morphology Dual Canvas) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md">
+<!-- SECTION 1: Parameters Control Deck (xl:col-span-5) -->
+<section class="xl:col-span-5 flex flex-col gap-space-md bg-surface-container-low p-space-md rounded shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-lg">tune</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">DECK DE PARÁMETROS FÍSICOS</h2>
+</div>
+<span class="font-label-sm text-label-sm text-outline tracking-wider">AERODYNAMICS CONSOLE</span>
+</div>
+<!-- Material Selector Dropdown -->
+<div class="flex flex-col gap-space-xs bg-surface-container p-space-sm rounded">
+<label class="font-label-caps text-label-caps text-on-surface-variant flex items-center justify-between" for="material-select">
+<span>01 // COMBUSTIBLE SÓLIDO ESPACIAL</span>
+<span class="text-primary font-label-sm text-label-sm">NASA-STD-6001B CERT</span>
+</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest text-on-surface font-label-caps text-label-caps py-2 px-space-sm rounded appearance-none cursor-pointer focus:outline-none" id="material-select">
+<option selected="" value="pmma">POLI(METACRILATO DE METILO) [PMMA TRANSPARENTE CIR]</option>
+<option value="etfe">ETFE (ETILENO-TETRAFLUOROETILENO - CABLEADO ISS)</option>
+<option value="nomex">NOMEX DUPONT (TRAJE EXTRAVEHICULAR EMU)</option>
+<option value="cotton">ALGODÓN SAFFIRE FLIGHT SAMPLE V</option>
+<option value="ldpe">POLIETILENO DE BAJA DENSIDAD (LDPE LOGÍSTICA)</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-primary">
+<span class="material-symbols-outlined text-sm">unfold_more</span>
+</div>
+</div>
+</div>
+<!-- Slider 1: Fuel Diameter (Bi << 0.1 trigger) -->
+<div class="flex flex-col gap-space-xs bg-surface-container p-space-sm rounded">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-caps text-label-caps text-on-surface">02 // DIÁMETRO DEL COMBUSTIBLE</span>
+<span class="font-label-sm text-label-sm text-outline">(d_f)</span>
+</div>
+<div class="flex items-center gap-1 font-telemetry-data-md text-telemetry-data-md text-primary">
+<span id="dia-val">0.80</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">mm</span>
+</div>
+</div>
+<div class="relative flex items-center py-1">
+<input class="w-full h-1.5 bg-surface-container-lowest rounded appearance-none cursor-pointer accent-primary" id="dia-slider" max="6.0" min="0.5" step="0.1" type="range" value="0.8"/>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>0.5 mm (Película delgada)</span>
+<span>6.0 mm (Sólido masivo)</span>
+</div>
+<!-- Critical Curvature Badge -->
+<div class="mt-1 flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-highest text-primary font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-sm animate-pulse">adjust</span>
+<span class="truncate">EFECTO CURVATURA CRÍTICO (≤ 1.0 mm, Biot Bi &lt;&lt; 0.1)</span>
+</div>
+</div>
+<!-- Slider 2: HVAC Flow Velocity (Plateau region 0.4 - 5.0) -->
+<div class="flex flex-col gap-space-xs bg-surface-container p-space-sm rounded">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-caps text-label-caps text-on-surface">03 // FLUJO FORZADO DE VENTILACIÓN HVAC</span>
+<span class="font-label-sm text-label-sm text-outline">(V_g)</span>
+</div>
+<div class="flex items-center gap-1 font-telemetry-data-md text-telemetry-data-md text-tertiary">
+<span id="hvac-val">1.40</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">cm/s</span>
+</div>
+</div>
+<div class="relative flex items-center py-1">
+<input class="w-full h-1.5 bg-surface-container-lowest rounded appearance-none cursor-pointer accent-tertiary" id="hvac-slider" max="12.0" min="0.1" step="0.1" type="range" value="1.4"/>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>0.1 cm/s (Estancado puro)</span>
+<span>12.0 cm/s (Flujo alto ISS)</span>
+</div>
+<!-- Critical Plateau Warning Badge -->
+<div class="mt-1 flex items-center justify-between px-space-sm py-1 rounded bg-error-container text-on-error font-label-caps text-label-caps animate-pulse">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span>MESETA CRÍTICA HVAC DETECTADA (0.4 – 5.0 cm/s)</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-error font-bold">PEAK RISK</span>
+</div>
+</div>
+<!-- Real-Time Microgravity Telemetry Cards -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container p-space-sm rounded flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-outline">TASA DE PROPAGACIÓN (Vf)</span>
+<div class="flex items-baseline gap-1 my-1">
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-on-surface font-bold" id="vf-display">2.85</span>
+<span class="font-label-sm text-label-sm text-primary">mm/s</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-label-caps text-secondary truncate">TASA ACELERADA</span>
+</div>
+</div>
+<div class="bg-surface-container p-space-sm rounded flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-outline">RÉGIMEN AERODINÁMICO</span>
+<div class="my-1">
+<span class="px-1.5 py-0.5 rounded bg-error-container text-on-error font-label-caps text-label-caps block truncate text-center">MESETA CRÍTICA HVAC</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline-variant truncate">Suministro O₂ acoplado</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-outline">GRADIENTE TÉRMICO RADIATIVO</span>
+<div class="flex items-baseline gap-1 my-1">
+<span class="font-telemetry-data-md text-telemetry-data-md text-primary font-bold">0.42</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">W/cm²</span>
+</div>
+<span class="font-label-caps text-label-caps text-primary">EQUILIBRIO SOOT SHELL</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-outline">EFECTO DE CURVATURA</span>
+<div class="my-1">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-primary font-label-caps text-label-caps block truncate text-center">ACELERADO (Bi &lt;&lt; 0.1)</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline truncate">Calentamiento volumétrico</span>
+</div>
+</div>
+</section>
+<!-- SECTION 2: Morphology 2D Dual Visualizer (xl:col-span-7) -->
+<section class="xl:col-span-7 flex flex-col gap-space-md bg-surface-container-low p-space-md rounded shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-lg">view_stream</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">MORFOLOGÍA 2D COMPARATIVA DE COMBUSTIÓN</h2>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm">
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant">SOPORTE CIR/FLEX OPTICS</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-primary">FIELD: 40×40 mm</span>
+</div>
+</div>
+<!-- Comparative Canvas Container -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Left: 1-g Earth Gravity -->
+<div class="flex flex-col bg-surface-container rounded p-space-sm relative overflow-hidden">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-caps text-label-caps text-tertiary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>1-G GRAVEDAD TERRESTRE
+              </span>
+<span class="font-label-sm text-label-sm text-outline">BUOYANCY ACTIVE</span>
+</div>
+<!-- Visualization Port 1-g -->
+<div class="relative w-full h-72 bg-surface-container-lowest rounded flex items-center justify-center overflow-hidden">
+<!-- Grid Reticle lines -->
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-outline-variant/10 to-transparent pointer-events-none"></div>
+<svg class="absolute inset-0 w-full h-full text-outline-variant/30" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="24" id="grid1g" patternunits="userSpaceOnUse" width="24">
+<path d="M 24 0 L 0 0 0 24" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid1g)" height="100%" width="100%"></rect>
+</svg>
+<!-- Convective Updraft Streamlines (Upward buoyancy arrows) -->
+<div class="absolute inset-0 flex flex-col justify-around px-4 opacity-30 pointer-events-none">
+<div class="flex justify-between text-outline text-[9px] font-label-sm">
+<span>▲ 85 cm/s</span>
+<span>▲ BUOYANCY PLUME</span>
+<span>▲ 85 cm/s</span>
+</div>
+<div class="flex justify-between text-outline text-[9px] font-label-sm">
+<span>▲ 45 cm/s</span>
+<span></span>
+<span>▲ 45 cm/s</span>
+</div>
+</div>
+<!-- Flame Tear Shape Inline SVG -->
+<div class="relative flex flex-col items-center justify-center">
+<svg class="filter drop-shadow-[0_0_18px_rgba(245,158,11,0.5)]" height="210" viewbox="0 0 150 210" width="150">
+<defs>
+<!-- Hot core plume gradient -->
+<radialgradient cx="50%" cy="75%" id="teardropCore" r="65%">
+<stop offset="0%" stop-color="#ffffff"></stop>
+<stop offset="25%" stop-color="#8ed5ff"></stop>
+<stop offset="50%" stop-color="#ffc174"></stop>
+<stop offset="85%" stop-color="#f59e0b"></stop>
+<stop offset="100%" stop-color="#93000a" stop-opacity="0"></stop>
+</radialgradient>
+<lineargradient id="sootSmoke" x1="50%" x2="50%" y1="100%" y2="0%">
+<stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"></stop>
+<stop offset="60%" stop-color="#3e484f" stop-opacity="0.5"></stop>
+<stop offset="100%" stop-color="#0a0e17" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Smoke Updraft Column -->
+<path d="M 65 70 C 60 40, 70 20, 75 5 C 80 20, 90 40, 85 70 Z" fill="url(#sootSmoke)"></path>
+<!-- Teardrop Convective Outer Flame Envelope -->
+<path d="M 75 18 C 95 65, 125 110, 125 150 C 125 185, 103 200, 75 200 C 47 200, 25 185, 25 150 C 25 110, 55 65, 75 18 Z" fill="url(#teardropCore)"></path>
+<!-- Inner Intense Reaction Blue Zone at Base -->
+<path d="M 75 115 C 90 140, 102 165, 100 185 C 90 196, 60 196, 50 185 C 48 165, 60 140, 75 115 Z" fill="#38bdf8" opacity="0.65"></path>
+<!-- Fuel Droplet / Filament Core -->
+<circle cx="75" cy="178" fill="#dfe2f0" r="5"></circle>
+<line stroke="#87929a" stroke-width="2" x1="75" x2="75" y1="178" y2="208"></line>
+</svg>
+<div class="absolute bottom-2 font-label-sm text-label-sm text-outline-variant bg-surface-container-lowest/80 px-2 py-0.5 rounded">
+                  ENFRIAMIENTO POR FLOTABILIDAD (30-100 cm/s)
+                </div>
+</div>
+</div>
+<div class="mt-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="text-tertiary font-bold font-label-caps text-label-caps">CONVECCIÓN NATURAL ACTIVA:</span>
+              El ascenso vertical de gases calientes arrastra aire fresco en la base, elongando la flama y forzando la pérdida de calor por convección forzada natural.
+            </div>
+</div>
+<!-- Right: 0-g Microgravity Spherical Diffusion -->
+<div class="flex flex-col bg-surface-container rounded p-space-sm relative overflow-hidden">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-caps text-label-caps text-primary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>0-G MICROGRAVEDAD PURA
+              </span>
+<span class="font-label-sm text-label-sm text-secondary">DIFFUSION SYMMETRY</span>
+</div>
+<!-- Visualization Port 0-g (Inspired by provided target reticle & soot shell graphic) -->
+<div class="relative w-full h-72 bg-surface-container-lowest rounded flex items-center justify-center overflow-hidden">
+<svg class="absolute inset-0 w-full h-full text-outline-variant/30" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="24" id="grid0g" patternunits="userSpaceOnUse" width="24">
+<path d="M 24 0 L 0 0 0 24" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid0g)" height="100%" width="100%"></rect>
+</svg>
+<!-- Target Reticle & Soot Shell Vector Composition directly expressing the prompt inspiration -->
+<div class="relative flex items-center justify-center w-64 h-64">
+<svg class="overflow-visible" height="240" viewbox="0 0 240 240" width="240">
+<defs>
+<!-- Outer 0-g blue diffusive glow -->
+<radialgradient cx="50%" cy="50%" id="microgFlame" r="50%">
+<stop offset="0%" stop-color="#c4e7ff" stop-opacity="1"></stop>
+<stop offset="25%" stop-color="#38bdf8" stop-opacity="0.85"></stop>
+<stop offset="55%" stop-color="#00668a" stop-opacity="0.45"></stop>
+<stop offset="85%" stop-color="#0f131d" stop-opacity="0.1"></stop>
+<stop offset="100%" stop-color="#0f131d" stop-opacity="0"></stop>
+</radialgradient>
+<lineargradient id="orbitRing" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#38bdf8"></stop>
+<stop offset="50%" stop-color="#ffc174"></stop>
+<stop offset="100%" stop-color="#f43f5e"></stop>
+</lineargradient>
+</defs>
+<!-- Outer Dashed Circular Reticle -->
+<circle cx="120" cy="120" fill="none" r="102" stroke="#262a34" stroke-dasharray="10 8" stroke-width="3"></circle>
+<!-- Reticle Crosshair Ticks -->
+<line stroke="#38bdf8" stroke-width="3.5" x1="120" x2="120" y1="12" y2="24"></line>
+<line stroke="#38bdf8" stroke-width="3.5" x1="120" x2="120" y1="216" y2="228"></line>
+<line stroke="#38bdf8" stroke-width="3.5" x1="12" x2="24" y1="120" y2="120"></line>
+<line stroke="#38bdf8" stroke-width="3.5" x1="216" x2="228" y1="120" y2="120"></line>
+<!-- Symmetric Blue Spherical Flame Core -->
+<circle cx="120" cy="120" fill="url(#microgFlame)" r="64"></circle>
+<!-- Soot Shell Boundary: Dotted Gold Ring where v_Stefan + v_thermo = 0 -->
+<circle class="animate-spin" cx="120" cy="120" fill="none" r="54" stroke="#ffc174" stroke-dasharray="5 5" stroke-width="2.5" style="animation-duration: 28s;"></circle>
+<!-- Elliptical Reaction Horizon Trajectory Ring (From reference style) -->
+<ellipse cx="120" cy="120" fill="none" rx="92" ry="46" stroke="url(#orbitRing)" stroke-width="2.5" transform="rotate(-22 120 120)"></ellipse>
+<!-- Micro-particles in Stagnation Shell -->
+<circle cx="95" cy="92" fill="#f43f5e" r="3.5"></circle>
+<circle cx="148" cy="136" fill="#38bdf8" r="2.8"></circle>
+<!-- Fuel Specimen Centered Core -->
+<circle cx="120" cy="120" fill="#dfe2f0" r="14"></circle>
+<circle cx="120" cy="120" fill="#0f131d" r="7"></circle>
+</svg>
+<div class="absolute bottom-2 font-label-sm text-label-sm text-primary bg-surface-container-lowest/90 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>SOOT SHELL: v_Stefan + v_thermo = 0</span>
+</div>
+</div>
+</div>
+<div class="mt-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="text-primary font-bold font-label-caps text-label-caps">0-G ESFERICIDAD DIFUSIVA:</span>
+              Sin empuje de Arquímedes, el oxígeno difunde radialmente de forma simétrica. Las partículas de hollín quedan atrapadas en la concha radiativa externa en equilibrio dinámico.
+            </div>
+</div>
+</div>
+</section>
+</div>
+<!-- SECTION 3: Aerodynamic Plateau Curve Chart & LTC Cold Flame Transient Section (Split 7 / 5) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md">
+<!-- Left: SVG Interactive Coordinates Non-Monotonic Curve (xl:col-span-7) -->
+<section class="xl:col-span-7 flex flex-col gap-space-md bg-surface-container-low p-space-md rounded shadow-md">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-lg">show_chart</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">DINÁMICA AERODINÁMICA: CURVA NO MONÓTONA (Vf vs Vg)</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Velocidad de propagación en función de la velocidad del flujo forzado HVAC</p>
+</div>
+<div class="flex items-center gap-space-sm font-label-caps text-label-caps">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-on-error"></span>MESETA CRÍTICA [0.4 - 5.0 cm/s]
+            </span>
+</div>
+</div>
+<!-- Inline Aerospace SVG Coordinate Chart -->
+<div class="relative w-full bg-surface-container p-space-sm rounded overflow-hidden">
+<svg class="w-full h-64 overflow-visible font-label-sm" viewbox="0 0 740 260" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<!-- Critical Plateau Red Shading Gradient -->
+<lineargradient id="plateauZoneGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#93000a" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="#93000a" stop-opacity="0.05"></stop>
+</lineargradient>
+<lineargradient id="curveLineGrad" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#38bdf8"></stop>
+<stop offset="35%" stop-color="#f59e0b"></stop>
+<stop offset="50%" stop-color="#ffb4ab"></stop>
+<stop offset="80%" stop-color="#38bdf8"></stop>
+<stop offset="100%" stop-color="#87929a"></stop>
+</lineargradient>
+</defs>
+<!-- Chart Horizontal Grid Lines -->
+<line stroke="#262a34" stroke-width="1" x1="60" x2="710" y1="210" y2="210"></line>
+<line stroke="#262a34" stroke-dasharray="3 3" stroke-width="1" x1="60" x2="710" y1="160" y2="160"></line>
+<line stroke="#262a34" stroke-dasharray="3 3" stroke-width="1" x1="60" x2="710" y1="110" y2="110"></line>
+<line stroke="#262a34" stroke-dasharray="3 3" stroke-width="1" x1="60" x2="710" y1="60" y2="60"></line>
+<line stroke="#262a34" stroke-dasharray="3 3" stroke-width="1" x1="60" x2="710" y1="20" y2="20"></line>
+<!-- Highlight Zone: Critical HVAC Plateau (0.4 to 5.0 cm/s corresponds to X=85 to X=350) -->
+<rect fill="url(#plateauZoneGrad)" height="190" width="265" x="85" y="20"></rect>
+<line stroke="#ffb4ab" stroke-dasharray="4 2" stroke-width="1" x1="85" x2="85" y1="20" y2="210"></line>
+<line stroke="#ffb4ab" stroke-dasharray="4 2" stroke-width="1" x1="350" x2="350" y1="20" y2="210"></line>
+<text class="font-label-caps text-label-caps font-bold" fill="#ffb4ab" text-anchor="middle" x="217" y="36">
+              MESETA CRÍTICA HVAC (MÁXIMO RIESGO FLIGHT CABIN)
+            </text>
+<!-- Axes Labels -->
+<!-- Y-Axis (Vf mm/s) -->
+<text fill="#87929a" text-anchor="end" x="50" y="214">0.0</text>
+<text fill="#87929a" text-anchor="end" x="50" y="164">1.0</text>
+<text fill="#87929a" text-anchor="end" x="50" y="114">2.0</text>
+<text fill="#87929a" text-anchor="end" x="50" y="64">3.0</text>
+<text fill="#87929a" text-anchor="end" x="50" y="24">4.0</text>
+<text class="font-label-caps text-label-caps font-semibold" fill="#bdc8d1" text-anchor="middle" transform="rotate(-90 20 115)" x="20" y="115">
+              Vf // VELOCIDAD PROPAGACIÓN (mm/s)
+            </text>
+<!-- X-Axis (Vg cm/s) -->
+<line stroke="#3e484f" stroke-width="1.5" x1="60" x2="710" y1="210" y2="210"></line>
+<text fill="#87929a" text-anchor="middle" x="60" y="230">0.0</text>
+<text fill="#87929a" text-anchor="middle" x="140" y="230">1.0</text>
+<text fill="#87929a" text-anchor="middle" x="220" y="230">2.5</text>
+<text fill="#87929a" text-anchor="middle" x="350" y="230">5.0</text>
+<text fill="#87929a" text-anchor="middle" x="490" y="230">8.0</text>
+<text fill="#87929a" text-anchor="middle" x="630" y="230">10.0</text>
+<text fill="#87929a" text-anchor="middle" x="700" y="230">12.0</text>
+<text class="font-label-caps text-label-caps font-semibold" fill="#bdc8d1" text-anchor="middle" x="385" y="248">
+              Vg // VELOCIDAD FLUJO VENTILACIÓN FORZADA HVAC (cm/s)
+            </text>
+<!-- Non-monotonic Parabolic Curve: Low oxygen stagnation -> Rapid peak -> Blow-off cooling drop -->
+<!-- Path goes through: (60,195) -> (85,150) -> peak at (165,68) [Vg=1.4, Vf=2.85] -> (350,75) -> blowoff descent -> (680,205) -->
+<path d="M 60 198 C 80 170, 110 90, 165 68 C 220 50, 310 52, 350 75 C 440 120, 540 175, 700 206" fill="none" stroke="url(#curveLineGrad)" stroke-width="3"></path>
+<!-- Active Operating Point Crosshair & Pulse (Vg=1.4 cm/s, Vf=2.85 mm/s) at x=165, y=68 -->
+<g id="active-point-cursor">
+<line stroke="#38bdf8" stroke-dasharray="2 2" stroke-width="1" x1="165" x2="165" y1="20" y2="210"></line>
+<line stroke="#38bdf8" stroke-dasharray="2 2" stroke-width="1" x1="60" x2="710" y1="68" y2="68"></line>
+<!-- Reticle Circle Crosshairs -->
+<circle cx="165" cy="68" fill="none" r="9" stroke="#38bdf8" stroke-width="1.5"></circle>
+<circle cx="165" cy="68" fill="#ffffff" r="4"></circle>
+<!-- Tooltip Tag -->
+<rect fill="#0a0e17" height="32" rx="3" stroke="#38bdf8" stroke-width="1" width="168" x="180" y="52"></rect>
+<text class="font-label-caps text-label-caps font-bold" fill="#38bdf8" x="188" y="66">Vg: 1.40 cm/s</text>
+<text class="font-label-sm text-label-sm" fill="#dfe2f0" x="188" y="78">Vf: 2.85 mm/s (MESETA)</text>
+</g>
+<!-- Quenching & Blow-off regime callouts -->
+<text class="font-label-sm text-label-sm" fill="#87929a" x="75" y="185">Sofocación 0-g</text>
+<text class="font-label-sm text-label-sm" fill="#87929a" x="610" y="185">Soplado Térmico</text>
+</svg>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-space-sm bg-surface-container px-space-sm py-2 rounded">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-secondary">info</span>
+<span>EXPLICACIÓN MECÁNICA: En flujos ultra-lentos (&lt; 0.4 cm/s) la llama se ahoga en sus propios productos (CO/CO₂). En la meseta (0.4-5.0 cm/s), la renovación de O₂ supera las pérdidas térmicas y la velocidad de propagación alcanza su cresta.</span>
+</div>
+</div>
+</section>
+<!-- Right: Section 4 - Cool Flame Transient Module (LTC Dynamics) (xl:col-span-5) -->
+<section class="xl:col-span-5 flex flex-col gap-space-md bg-surface-container-low p-space-md rounded shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-lg">cyclone</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">DINÁMICA LTC (COOL FLAMES)</h2>
+</div>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary font-bold">TRANSITORIO 60s</span>
+</div>
+<!-- 60-second Multi-Phase Progress Bar -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-tertiary font-semibold">FASE 1: VISIBLE (0-12s)</span>
+<span class="text-outline font-semibold">FASE 2: APAGADO RAD. (12-16s)</span>
+<span class="text-primary font-semibold">FASE 3: LTC INVISIBLE (16-60s)</span>
+</div>
+<div class="w-full h-3 bg-surface-container-lowest rounded overflow-hidden flex">
+<!-- Phase 1: 20% width -->
+<div class="h-full bg-gradient-to-r from-tertiary to-error w-[20%]"></div>
+<!-- Phase 2: 7% width -->
+<div class="h-full bg-surface-container-highest w-[7%]"></div>
+<!-- Phase 3: 73% width with active glowing cyan-amber gradient -->
+<div class="h-full bg-gradient-to-r from-primary via-secondary to-tertiary w-[73%] relative">
+<!-- Active Transient Marker (at 18.4s => ~30% along overall bar) -->
+<div class="absolute top-0 bottom-0 left-[14%] w-1.5 bg-on-surface shadow-[0_0_8px_#ffffff]" id="timeline-indicator"></div>
+</div>
+</div>
+</div>
+<!-- Four Quadrant Phosphor Digital Telemetry -->
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Q1: Elapsed Time -->
+<div class="bg-surface-container p-space-sm rounded flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-outline">CRONOMETRO TRANSITORIO</span>
+<div class="my-1 flex items-baseline gap-1">
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-primary font-bold" id="transient-timer">18.4</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">s / 60s</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">CICLO CINÉTICO ACTIVO</span>
+</div>
+<!-- Q2: Flame Temperature (LTC: 600 - 800 K) -->
+<div class="bg-surface-container p-space-sm rounded flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-outline">TEMPERATURA DE LLAMA</span>
+<div class="my-1 flex items-baseline gap-1">
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-tertiary font-bold" id="transient-temp">742</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">K (468.8 °C)</span>
+</div>
+<div class="flex items-center gap-1 font-label-caps text-label-caps text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>CINÉTICA LTC [600-800 K]</span>
+</div>
+</div>
+<!-- Q3: Chemical Radicals H2O2 -->
+<div class="bg-surface-container p-space-sm rounded flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-outline">RADICAL PERÓXIDO (H₂O₂)</span>
+<div class="my-1 flex items-baseline gap-1">
+<span class="font-telemetry-data-lg text-telemetry-data-lg text-secondary font-bold" id="transient-h2o2">28.5</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">ppm</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">REACCIÓN QUENCHING O₂</span>
+</div>
+<!-- Q4: Kinetic State Badge -->
+<div class="bg-surface-container p-space-sm rounded flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-outline">FASE CINÉTICA RECIPIENTE</span>
+<div class="my-1">
+<span class="px-2 py-1 rounded bg-tertiary-container text-on-tertiary font-label-caps text-label-caps block text-center animate-pulse">
+                LLAMA FRÍA INVISIBLE LTC
+              </span>
+</div>
+<span class="font-label-sm text-label-sm text-error truncate">EMISIÓN IR NO DETECTABLE</span>
+</div>
+</div>
+<!-- Primary Action Trigger & Quick Reset -->
+<div class="flex items-center gap-space-sm">
+<button class="flex-1 h-14 bg-primary text-on-primary hover:bg-primary-container font-label-caps text-label-caps tracking-widest rounded flex items-center justify-center gap-space-sm transition-all shadow-md active:scale-[0.99] cursor-pointer" id="btn-start-transient">
+<span class="material-symbols-outlined text-xl">play_circle</span>
+<span>INICIAR SIMULACIÓN DE TRANSITORIO (60s)</span>
+</button>
+<button class="w-14 h-14 bg-surface-container hover:bg-surface-container-highest text-on-surface rounded flex items-center justify-center transition-colors cursor-pointer" id="btn-reset-transient" title="Reiniciar Simulación">
+<span class="material-symbols-outlined">restart_alt</span>
+</button>
+</div>
+<!-- Critical Operational Security Warning Box -->
+<div class="bg-error-container/20 border-l-4 border-error p-space-sm rounded flex gap-space-sm">
+<span class="material-symbols-outlined text-error text-xl shrink-0 mt-0.5">report_problem</span>
+<div class="flex flex-col gap-0.5">
+<span class="font-label-caps text-label-caps text-error font-bold tracking-wider">PELIGRO OPERATIVO EXTREMO // REGLA DE FLIGHT DIRECTOR</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              La llama en régimen LTC es <strong class="text-on-surface">ópticamente invisible a cámaras convencionales</strong>. Si la tripulación restablece la ventilación forzada antes del enfriamiento a fondo (&lt;450 K), ocurrirá una <span class="text-error font-semibold">re-ignición visible violenta catastrófica</span>.
+            </p>
+</div>
+</div>
+</section>
+</div>
+<!-- Bottom Secondary Ribbon: Real-time Micro-telemetry Vectors -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-space-sm bg-surface-container-low p-space-sm rounded font-label-sm text-label-sm">
+<div class="flex flex-col">
+<span class="text-outline">NÚMERO DE BIOT (Bi):</span>
+<span class="text-primary font-telemetry-data-md font-bold">0.038 (&lt;&lt; 0.1)</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline">STEFAN BLOWING VEL:</span>
+<span class="text-on-surface font-telemetry-data-md">1.18 cm/s</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline">THERMOPHORETIC VEL:</span>
+<span class="text-on-surface font-telemetry-data-md">-1.18 cm/s</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline">SOOT SHELL RADIUS:</span>
+<span class="text-tertiary font-telemetry-data-md">14.2 mm</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline">DAMKÖHLER NUMBER (Da):</span>
+<span class="text-secondary font-telemetry-data-md">4.92 (EQUILIBRIUM)</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline">CIR HARDWARE STATUS:</span>
+<span class="text-secondary font-telemetry-data-md flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>CHAMBER SEALED
+        </span>
+</div>
+</div>
+</div>
+<!-- Interactive JavaScript Logic -->
+<script>
+    (function initFlightSimulator() {
+      // Sliders & Realtime math calculation
+      const diaSlider = document.getElementById('dia-slider');
+      const hvacSlider = document.getElementById('hvac-slider');
+      const diaVal = document.getElementById('dia-val');
+      const hvacVal = document.getElementById('hvac-val');
+      const vfDisplay = document.getElementById('vf-display');
+
+      function calculateVf(dia, hvac) {
+        // Microgravity empirical curve: higher curvature (smaller dia) accelerates Vf;
+        // HVAC flow creates critical plateau between 0.4 and 5.0 with peak near 1.4-2.0
+        const curvatureFactor = (1.0 / Math.pow(dia, 0.45));
+        // Non-monotonic shape: rapid surge then gradual plateau drop
+        const hvacPeak = 3.2 * (hvac / (0.8 + 0.6 * hvac)) * Math.exp(-hvac / 14.0);
+        const vf = (curvatureFactor * hvacPeak * 0.85).toFixed(2);
+        return Math.max(0.1, vf);
+      }
+
+      function updateReadouts() {
+        if (!diaSlider || !hvacSlider) return;
+        const d = parseFloat(diaSlider.value);
+        const h = parseFloat(hvacSlider.value);
+        diaVal.innerText = d.toFixed(2);
+        hvacVal.innerText = h.toFixed(2);
+        const calculatedVf = calculateVf(d, h);
+        vfDisplay.innerText = calculatedVf;
+      }
+
+      if (diaSlider && hvacSlider) {
+        diaSlider.addEventListener('input', updateReadouts);
+        hvacSlider.addEventListener('input', updateReadouts);
+      }
+
+      // 60-Second Cool Flame Transient Simulation Runner
+      const startBtn = document.getElementById('btn-start-transient');
+      const resetBtn = document.getElementById('btn-reset-transient');
+      const timerDisplay = document.getElementById('transient-timer');
+      const tempDisplay = document.getElementById('transient-temp');
+      const h2o2Display = document.getElementById('transient-h2o2');
+      const timelineIndicator = document.getElementById('timeline-indicator');
+
+      let timerId = null;
+      let currentSeconds = 18.4;
+      let isRunning = false;
+
+      function updateSimulationUI(sec) {
+        timerDisplay.innerText = sec.toFixed(1);
+        
+        // Progress marker placement (0% to 100% of the 60s bar)
+        const pct = Math.min(100, Math.max(0, (sec / 60) * 100));
+        if (timelineIndicator) {
+          timelineIndicator.style.left = pct + '%';
+        }
+
+        // Temperature & Radical profile:
+        // 0-12s: Hot Flame (1600K -> 1200K)
+        // 12-16s: Radiative Quenching (1200K -> 700K)
+        // 16-60s: LTC Low Temp (650K - 780K with gentle oscillations)
+        let temp, h2o2;
+        if (sec < 12) {
+          temp = Math.round(1650 - (sec * 35));
+          h2o2 = (4.0 + sec * 0.8).toFixed(1);
+        } else if (sec < 16) {
+          temp = Math.round(1230 - ((sec - 12) * 125));
+          h2o2 = (14.0 + (sec - 12) * 2.5).toFixed(1);
+        } else {
+          // LTC Cold flame regime
+          const oscillation = Math.sin(sec * 0.5) * 28;
+          temp = Math.round(735 + oscillation);
+          h2o2 = (27.5 + Math.cos(sec * 0.4) * 3.5).toFixed(1);
+        }
+
+        tempDisplay.innerText = temp;
+        h2o2Display.innerText = h2o2;
+      }
+
+      if (startBtn) {
+        startBtn.addEventListener('click', function() {
+          if (isRunning) {
+            clearInterval(timerId);
+            isRunning = false;
+            startBtn.innerHTML = '<span class="material-symbols-outlined text-xl">play_circle</span><span>REANUDAR SIMULACIÓN</span>';
+            startBtn.classList.remove('bg-tertiary-container');
+            startBtn.classList.add('bg-primary');
+          } else {
+            isRunning = true;
+            startBtn.innerHTML = '<span class="material-symbols-outlined text-xl">pause_circle</span><span>PAUSAR SIMULACIÓN</span>';
+            startBtn.classList.remove('bg-primary');
+            startBtn.classList.add('bg-tertiary-container');
+            timerId = setInterval(function() {
+              currentSeconds += 0.2;
+              if (currentSeconds >= 60.0) {
+                currentSeconds = 60.0;
+                clearInterval(timerId);
+                isRunning = false;
+                startBtn.innerHTML = '<span class="material-symbols-outlined text-xl">replay</span><span>REPETIR SIMULACIÓN COMPLETA</span>';
+              }
+              updateSimulationUI(currentSeconds);
+            }, 200);
+          }
+        });
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function() {
+          clearInterval(timerId);
+          isRunning = false;
+          currentSeconds = 0.0;
+          if (startBtn) {
+            startBtn.innerHTML = '<span class="material-symbols-outlined text-xl">play_circle</span><span>INICIAR SIMULACIÓN DE TRANSITORIO (60s)</span>';
+            startBtn.classList.remove('bg-tertiary-container');
+            startBtn.classList.add('bg-primary');
+          }
+          updateSimulationUI(currentSeconds);
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="fixed bottom-0 left-0 right-0 z-40 h-8 w-full bg-surface-container-lowest/95 backdrop-blur-xl flex items-center px-gutter-desktop"><div class="w-full flex items-center justify-between overflow-hidden whitespace-nowrap"><div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant animate-pulse"><span class="text-secondary font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>CORE: NOMINAL</span><span class="text-outline">|</span><span>DIFFUSION FLAME CORE: STABLE</span><span class="text-outline">|</span><span class="text-primary">HVAC PLENUM: 1.2 cm/s (MESETA CRÍTICA)</span><span class="text-outline">|</span><span>SOOT SHELL EQUILIBRIUM: v_Stefan + v_thermo = 0</span><span class="text-outline">|</span><span class="text-secondary">F-500 EA RESERVE: 100% (35 BAR)</span></div><div class="hidden md:flex items-center gap-space-sm font-label-sm text-label-sm text-outline"><span class="material-symbols-outlined text-xs">wifi_tethering</span><span>ORBIT 416 KM // VELOCITY 7.66 KM/S</span></div></div></footer></body></html>

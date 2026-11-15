@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Flame in Freefall // NASA Microgravity Combustion Safety Console</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-error":"#690005","outline":"#87929a","surface-container-highest":"#31353f","on-tertiary-fixed-variant":"#653e00","on-error-container":"#ffdad6","on-surface-variant":"#bdc8d1","on-tertiary-fixed":"#2a1700","surface-variant":"#31353f","tertiary-fixed-dim":"#ffb95f","surface-dim":"#0f131d","surface-container":"#1c1f29","surface-container-lowest":"#0a0e17","surface-container-high":"#262a34","error-container":"#93000a","on-surface":"#dfe2f0","on-primary-fixed-variant":"#004c69","on-primary-fixed":"#001e2c","tertiary":"#ffc174","inverse-primary":"#00668a","secondary-container":"#00a572","surface-container-low":"#181b25","inverse-on-surface":"#2d303b","surface-bright":"#353944","outline-variant":"#3e484f","secondary":"#4edea3","on-secondary-fixed-variant":"#005236","secondary-fixed-dim":"#4edea3","on-secondary-fixed":"#002113","error":"#ffb4ab","background":"#0f131d","on-primary-container":"#004965","on-primary":"#00354a","tertiary-container":"#f59e0b","on-secondary-container":"#00311f","on-background":"#dfe2f0","secondary-fixed":"#6ffbbe","primary-fixed-dim":"#7bd0ff","primary":"#8ed5ff","primary-container":"#38bdf8","surface-tint":"#7bd0ff","tertiary-fixed":"#ffddb8","on-tertiary":"#472a00","primary-fixed":"#c4e7ff","inverse-surface":"#dfe2f0","on-tertiary-container":"#613b00","surface":"#0f131d","on-secondary":"#003824"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-lg":"1.25rem","space-xl":"2rem","gutter":"0.75rem","space-md":"0.75rem","space-sm":"0.5rem","gutter-desktop":"1rem","margin-desktop":"1.5rem","margin":"1rem","space-xs":"0.25rem"},"fontFamily":{"body-md":["Inter"],"headline-xl":["Space Grotesk"],"label-sm":["JetBrains Mono"],"label-caps":["JetBrains Mono"],"headline-lg":["Space Grotesk"],"body-lg":["Inter"],"body-sm":["Inter"],"telemetry-data-lg":["JetBrains Mono"],"headline-xl-mobile":["Space Grotesk"],"telemetry-data-md":["JetBrains Mono"],"headline-md":["Space Grotesk"]},"fontSize":{"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["10px",{"lineHeight":"12px","letterSpacing":"0.05em","fontWeight":"500"}],"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"telemetry-data-lg":["20px",{"lineHeight":"26px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-xl-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"telemetry-data-md":["14px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"500"}],"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary selection:text-on-primary min-h-screen flex flex-col justify-between"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-2xl"><div class="h-16 w-full px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xl">local_fire_department</span></div><div><div class="flex items-center gap-space-xs"><span class="font-headline-md text-headline-md tracking-wider text-on-surface">FLAME IN FREEFALL</span><span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-label-sm text-label-sm">v4.2-AVX</span></div><p class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">MICROGRAVITY COMBUSTION SAFETY CONSOLE // NASA-STD-6001B OVERRIDE</p></div></div><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-caps text-label-caps text-secondary">SYS ONLINE // ISS FLIGHT 72 EXPEDITION</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex flex-col items-end px-space-sm py-1 rounded bg-surface-container-low"><div class="flex items-center gap-space-xs font-telemetry-data-md text-telemetry-data-md text-primary"><span class="material-symbols-outlined text-sm">schedule</span><span>UTC 14:28:09.412</span></div><span class="font-label-sm text-label-sm text-on-surface-variant">MET +184:12:05:19</span></div><div class="relative hidden lg:block"><div class="flex items-center gap-space-xs px-space-sm py-1.5 rounded bg-surface-container text-on-surface font-label-caps text-label-caps cursor-pointer"><span class="material-symbols-outlined text-sm text-primary">air</span><span>ISS ECLSS NOMINAL (21.0% O2, 1.0 atm)</span><span class="material-symbols-outlined text-xs text-on-surface-variant">expand_more</span></div></div><div class="flex items-center gap-space-sm pl-space-sm bg-surface-container-low py-1 pr-2 rounded"><div class="flex flex-col items-end text-right hidden sm:block"><span class="font-label-caps text-label-caps text-on-surface">CDR. ALBRIGHT // SPECIALIST</span><span class="font-label-sm text-label-sm text-secondary flex items-center gap-1 justify-end"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>COMMS ACTIVE</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrADxPk30Uu2pC4TwGHKkuE_2VT6Chs-xPjyGjMCXNW4JVO1rc181ACKVAvNOOSGyHWfy19jQ0JvQCsw9okqWeSKeR7-x828v79i0jkMvVyGu-F1oNwurtd3Ij7dSM0G2UVtyzgb4XKpnA3UXhKDfHfTZ17LjLO4yunAdBy42XzmfMzvrJEyihpQMI4C7wdTsa5Jrz8HhkfM4iB4kVc9Na0pqI31N5f_sDVE_cDwTLuP4Q"/></div></div></div><div class="h-12 w-full px-gutter-desktop bg-surface-container-low/95 flex items-center justify-between"><nav class="flex items-center h-full gap-space-xs overflow-x-auto" data-active-classes="bg-surface-container-highest text-primary font-bold shadow-[inset_0_-2px_0_0_#38bdf8]"><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="centro-de-mando" href="#">01 CENTRO DE MANDO</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="simulador-de-flamas" href="#">02 SIMULADOR DE FLAMAS</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="predictor-ia-y-nfpa-750" href="#">03 PREDICTOR IA &amp; NFPA 750</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="asistente-ia-guia" href="#">04 ASISTENTE IA GUÍA</a><a class="flex items-center h-12 px-space-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors whitespace-nowrap" data-path="repositorio-nasa-psi" href="#">05 REPOSITORIO NASA PSI</a></nav><div class="hidden lg:flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label-caps text-label-caps text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span>DATA ENGINE: 12.4 TB SYNCED</span></div><button class="flex items-center gap-space-xs px-space-md py-1.5 rounded bg-tertiary-container text-on-tertiary font-label-caps text-label-caps hover:bg-tertiary transition-colors"><span>⚠️ SIMULACIÓN DE CONTINGENCIA</span></button></div></div></header><main class="w-full pt-28 pb-10 bg-surface flex-1"><div class="flex flex-col w-full">
+<!-- Sub-header HUD context banner -->
+<div class="w-full bg-surface-container-low px-gutter-desktop py-space-sm flex flex-wrap items-center justify-between gap-space-sm shadow-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-secondary">NEURAL COPILOT V4.9 // ONLINE</span>
+</div>
+<span class="text-outline font-label-sm">|</span>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-primary">psychology</span>
+<span>INFERENCIA TRANSPARENTE: CHAIN-OF-THOUGHT ACTIVADO</span>
+</div>
+<span class="hidden md:inline text-outline font-label-sm">|</span>
+<div class="hidden md:flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-tertiary">database</span>
+<span>INDEXADOS: 43 CASOS PSI (GLENN GRC)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm">LATENCIA: 18ms</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-secondary font-label-sm text-label-sm">CERT: NASA-STD-6001B OVERRIDE</span>
+</div>
+</div>
+<div class="w-full px-gutter-desktop py-space-md space-y-space-md">
+<!-- 1. NATURAL LANGUAGE SEARCH BAR & TOP PROMPTING SUITE -->
+<div class="w-full bg-surface-container rounded-xl p-space-md relative overflow-hidden shadow-md">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs text-primary font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-sm text-primary animate-spin" style="animation-duration: 6s;">auto_awesome</span>
+<span>CONSULTA COGNITIVA AL SISTEMA DE VUELO // ISS SAFETY DIRECTIVE</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant hidden sm:inline">PROCESADOR LLM: NEURAL-AERO-PHYSICS v2.8</span>
+</div>
+<!-- Aerospace Command Input & Ergonomic Button -->
+<div class="flex flex-col lg:flex-row items-stretch gap-space-sm">
+<div class="flex-1 flex items-center bg-surface-container-lowest rounded-lg px-space-md py-space-xs shadow-inner">
+<span class="material-symbols-outlined text-primary text-xl mr-space-sm">terminal</span>
+<input class="w-full bg-transparent text-on-surface font-body-md text-body-md focus:outline-none placeholder:text-outline" id="ai-query-input" type="text" value="Consulte sobre cinéticas de llama fría, falla de NASA-STD-6001B o protocolos de extinción..."/>
+<span class="material-symbols-outlined text-outline-variant hover:text-on-surface cursor-pointer text-lg">mic</span>
+</div>
+<button class="h-[52px] px-space-lg rounded-lg bg-primary text-on-primary font-label-caps text-label-caps flex items-center justify-center gap-space-xs hover:bg-primary-container transition-all active:scale-[0.98] shadow-sm whitespace-nowrap" id="btn-run-query">
+<span class="material-symbols-outlined text-lg">send</span>
+<span>[ ENVIAR CONSULTA AL COPILOTO ]</span>
+</button>
+</div>
+<!-- Quick Consultation Query Pills -->
+<div class="flex flex-wrap items-center gap-space-xs pt-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant mr-space-xs">QUICK TOKENS:</span>
+<button class="query-pill px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container-highest text-tertiary font-label-caps text-label-caps transition-colors flex items-center gap-1">
+<span>🔥 Llamas Frías LTC</span>
+</button>
+<button class="query-pill px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container-highest text-error font-label-caps text-label-caps transition-colors flex items-center gap-1">
+<span>⚠️ Accidentes Históricos ISS/Mir</span>
+</button>
+<button class="query-pill px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container-highest text-secondary font-label-caps text-label-caps transition-colors flex items-center gap-1">
+<span>🧪 Materiales LOI</span>
+</button>
+<button class="query-pill px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container-highest text-primary font-label-caps text-label-caps transition-colors flex items-center gap-1">
+<span>💧 Supresión NFPA 750</span>
+</button>
+<button class="query-pill px-space-sm py-1 rounded bg-surface-container-low hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-label-caps text-label-caps transition-colors flex items-center gap-1">
+<span>📡 Detectores Brunswick</span>
+</button>
+</div>
+</div>
+</div>
+<!-- MAIN TWO-COLUMN SPLIT: NASA Case Selector vs. Copilot Dynamic Workstation -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md items-start">
+<!-- 2. SELECTOR LATERAL DE CASOS DE ESTUDIO OFICIALES NASA (43 CASOS) -->
+<aside class="xl:col-span-4 bg-surface-container rounded-xl p-space-md flex flex-col gap-space-md shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-xl">folder_special</span>
+<h2 class="font-headline-md text-headline-md text-on-surface uppercase">Casos Oficiales NASA</h2>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest font-label-sm text-label-sm text-primary">43 INDEXADOS</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Corpus de vuelo validado por Glenn Research Center (GRC). Misiones CIR, FLEX, ACME y Saffire con micro-acelerómetros ISS.
+        </p>
+<!-- Search in cases -->
+<div class="flex items-center bg-surface-container-lowest rounded px-space-sm py-1.5 gap-space-xs">
+<span class="material-symbols-outlined text-outline text-sm">search</span>
+<input class="w-full bg-transparent text-on-surface font-label-sm text-label-sm focus:outline-none placeholder:text-outline" placeholder="Filtrar por material, flujo o ID..." type="text"/>
+</div>
+<!-- Scrollable Case List -->
+<div class="space-y-space-xs max-h-[640px] overflow-y-auto pr-1">
+<!-- Case 1: EXP-04 (Selected) -->
+<div class="case-card cursor-pointer p-space-sm rounded-lg bg-surface-container-high transition-all" data-case="EXP-04">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-caps text-label-caps text-primary">EXP-04 // CIR-ISS</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-tertiary font-label-sm text-label-sm">LLAMA FRÍA LTC</span>
+</div>
+<h3 class="font-headline-md text-sm text-on-surface mb-1">Transitorio de Llama Fría con n-heptano (ISS CIR)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              Gotícula de 3.0 mm en O2 al 21%. Extinción visible a 1250 K seguida de combustión de baja temperatura cuasi-estacionaria a 620 K.
+            </p>
+<div class="flex items-center justify-between mt-space-xs pt-space-xs text-outline font-label-sm text-label-sm">
+<span>Flujo: 0.0 cm/s (Puro difusivo)</span>
+<span class="text-secondary flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>MATCH 98.4%</span>
+</div>
+</div>
+<!-- Case 2: EXP-12 -->
+<div class="case-card cursor-pointer p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all" data-case="EXP-12">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-caps text-label-caps text-outline">EXP-12 // SAFFIRE II</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-error font-label-sm text-label-sm">IGNICIÓN HVAC</span>
+</div>
+<h3 class="font-headline-md text-sm text-on-surface mb-1">Ignición autosostenida de PMMA en meseta HVAC (Cygnus)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              Validación en cápsula Cygnus despresurizada. Flujo inducido de 1.2 cm/s eliminó asfixia por hollín permitiendo frente de fuego continuo.
+            </p>
+<div class="flex items-center justify-between mt-space-xs pt-space-xs text-outline font-label-sm text-label-sm">
+<span>Flujo: 1.2 cm/s (Crítico)</span>
+<span class="text-on-surface-variant">MATCH 92.1%</span>
+</div>
+</div>
+<!-- Case 3: EXP-19 -->
+<div class="case-card cursor-pointer p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all" data-case="EXP-19">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-caps text-label-caps text-outline">EXP-19 // FLEX</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-tertiary font-label-sm text-label-sm">REIGNICIÓN</span>
+</div>
+<h3 class="font-headline-md text-sm text-on-surface mb-1">Extinción aparente y reignición violenta por flujo forzado</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              La recirculación ventilatoria suministró oxígeno a una nube de peróxidos latentes previamente invisibles al espectro óptico estándar.
+            </p>
+<div class="flex items-center justify-between mt-space-xs pt-space-xs text-outline font-label-sm text-label-sm">
+<span>Flujo: Pulso 3.4 cm/s</span>
+<span class="text-on-surface-variant">MATCH 89.7%</span>
+</div>
+</div>
+<!-- Case 4: EXP-27 -->
+<div class="case-card cursor-pointer p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all" data-case="EXP-27">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-caps text-label-caps text-outline">EXP-27 // ACME-ISS</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-primary font-label-sm text-label-sm">HOLLÍN &amp; IR</span>
+</div>
+<h3 class="font-headline-md text-sm text-on-surface mb-1">Medición de envoltura concéntrica de hollín con pirómetro IR</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              Detección de equilibrio esférico v_Stefan + v_thermo = 0. Blindaje radiativo que enfría la flama activa e induce extinción parcial.
+            </p>
+<div class="flex items-center justify-between mt-space-xs pt-space-xs text-outline font-label-sm text-label-sm">
+<span>Pirómetro: 7.5 μm</span>
+<span class="text-on-surface-variant">MATCH 84.3%</span>
+</div>
+</div>
+<!-- Case 5: EXP-31 (Extra NASA anomaly) -->
+<div class="case-card cursor-pointer p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all" data-case="EXP-31">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-caps text-label-caps text-outline">EXP-31 // MIR O2 GEN</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-error font-label-sm text-label-sm">HISTÓRICO</span>
+</div>
+<h3 class="font-headline-md text-sm text-on-surface mb-1">Incendio por cartucho TGK en módulo Kvant-1 (Mir 1997)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              Enriquecimiento local de O2 superó el 38%. Bloqueo de evacuación por máscaras IP-4 saturadas y humo denso en gravedad cero.
+            </p>
+<div class="flex items-center justify-between mt-space-xs pt-space-xs text-outline font-label-sm text-label-sm">
+<span>Presión: 1.05 atm</span>
+<span class="text-on-surface-variant">REF CRÍTICA</span>
+</div>
+</div>
+</div>
+<!-- Lateral Telemetry Badge -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-sm">cloud_done</span>
+<span class="font-label-sm text-label-sm text-on-surface">NASA PSI REPO SYNCLINK</span>
+</div>
+<span class="font-telemetry-data-md text-telemetry-data-md text-secondary">ACTIVE</span>
+</div>
+</aside>
+<!-- 3. MAIN WORKSTATION: Dynamic Tabs (Reasoning vs. Interactive Contingency Checklist) -->
+<section class="xl:col-span-8 bg-surface-container rounded-xl p-space-md flex flex-col gap-space-md shadow-md min-w-0">
+<!-- Tab Bar -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-xs">
+<div class="flex items-center bg-surface-container-lowest p-1 rounded-lg">
+<button class="px-space-md py-2 rounded font-label-caps text-label-caps transition-all flex items-center gap-space-xs bg-surface-container-highest text-primary shadow-sm" id="tab-btn-cot" onclick="switchTab('cot')">
+<span class="material-symbols-outlined text-sm">psychology</span>
+<span>RAZONAMIENTO TRANSPARENTE (CHAIN OF THOUGHT)</span>
+</button>
+<button class="px-space-md py-2 rounded font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-space-xs" id="tab-btn-checklist" onclick="switchTab('checklist')">
+<span class="material-symbols-outlined text-sm">checklist</span>
+<span>PROCEDIMIENTO ASISTIDO (CHECKLIST DE CONTINGENCIA)</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-1 rounded bg-surface-container-low text-tertiary font-label-caps text-label-caps flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+              STATUS: EVALUANDO INCIDENTE
+            </span>
+</div>
+</div>
+<!-- TAB CONTENT 1: CHAIN OF THOUGHT CIENTÍFICO (ACTIVE) -->
+<div class="flex flex-col gap-space-md" id="tab-content-cot">
+<!-- Scientific Infographic Visual Representation (Inspired by NASA Combustion Physics reticle & droplet) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-space-md shadow-inner">
+<div class="flex-1 space-y-space-xs">
+<div class="flex items-center gap-space-xs text-primary font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-sm">blur_circular</span>
+<span>MODELO DE FRENTE ESFÉRICO QUASI-ESTACIONARIO // ISS EXP-04</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Equilibrio Dinámico de Stefan &amp; Termoforesis</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                En microgravedad pura (<span class="font-telemetry-data-md text-primary">10⁻⁶ g</span>), la ausencia de empuje boyante anula el penacho convencional. La envoltura de combustión adopta una geometría esférica concéntrica donde los peróxidos alcanzan meseta térmica a 620 K.
+              </p>
+<div class="flex flex-wrap gap-space-md pt-space-xs font-label-sm text-label-sm text-outline">
+<div>RADIO DE LLAMA: <span class="text-on-surface font-telemetry-data-md">r_f = 4.2 mm</span></div>
+<div>GRADIENTE TÉRMICO: <span class="text-tertiary font-telemetry-data-md">dT/dr = -140 K/mm</span></div>
+<div>FLUJO DE STEFAN: <span class="text-secondary font-telemetry-data-md">v_s = +0.8 cm/s</span></div>
+</div>
+</div>
+<!-- Precision Reticle SVG Diagram inspired by prompt image -->
+<div class="w-48 h-48 sm:w-56 sm:h-56 relative flex-shrink-0 flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<!-- Outer dashed reticle circle -->
+<circle class="text-outline-variant" cx="100" cy="100" fill="none" r="86" stroke="currentColor" stroke-dasharray="8 6" stroke-width="2.5"></circle>
+<!-- Reticle crosshairs -->
+<line class="text-primary" stroke="currentColor" stroke-width="3" x1="100" x2="100" y1="6" y2="18"></line>
+<line class="text-primary" stroke="currentColor" stroke-width="3" x1="100" x2="100" y1="182" y2="194"></line>
+<line class="text-primary" stroke="currentColor" stroke-width="3" x1="6" x2="18" y1="100" y2="100"></line>
+<line class="text-primary" stroke="currentColor" stroke-width="3" x1="182" x2="194" y1="100" y2="100"></line>
+<!-- Inner warning dashed circle -->
+<circle class="text-tertiary" cx="100" cy="100" fill="none" opacity="0.8" r="54" stroke="currentColor" stroke-dasharray="4 4" stroke-width="2"></circle>
+<!-- Droplet diffusion glow (Cyan/Blue microgravity sphere) -->
+<defs>
+<radialgradient cx="50%" cy="50%" id="sphereGlow" r="50%">
+<stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"></stop>
+<stop offset="25%" stop-color="#8ed5ff" stop-opacity="0.8"></stop>
+<stop offset="65%" stop-color="#00668a" stop-opacity="0.45"></stop>
+<stop offset="100%" stop-color="#0f131d" stop-opacity="0"></stop>
+</radialgradient>
+<lineargradient id="orbitalRing" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#8ed5ff"></stop>
+<stop offset="50%" stop-color="#c4e7ff"></stop>
+<stop offset="100%" stop-color="#ffb4ab"></stop>
+</lineargradient>
+</defs>
+<circle cx="100" cy="100" fill="url(#sphereGlow)" r="48"></circle>
+<!-- Core droplet -->
+<circle class="animate-pulse" cx="100" cy="100" fill="#ffffff" r="14" style="animation-duration: 2.5s;"></circle>
+<!-- Inclined Ellipse (Orbital path / thermophoretic soot line) -->
+<ellipse cx="100" cy="100" fill="none" rx="82" ry="46" stroke="url(#orbitalRing)" stroke-width="2.5" transform="rotate(-26 100 100)"></ellipse>
+<!-- Active tracer particles (thermophoretic equilibrium) -->
+<circle class="animate-ping" cx="76" cy="74" fill="#ffb4ab" r="3.5" style="animation-duration: 3s;"></circle>
+<circle cx="76" cy="74" fill="#ffb4ab" r="3"></circle>
+<circle cx="126" cy="116" fill="#38bdf8" r="2.5"></circle>
+</svg>
+<div class="absolute bottom-1 right-1 font-label-sm text-[9px] text-outline-variant uppercase">CANAL IR 7.5μm</div>
+</div>
+</div>
+<!-- Caja de Proceso en 3 Pasos secuenciales con badges luminosos -->
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface">SECUENCIA DE INFERENCIA ANALÍTICA</span>
+<span class="font-label-sm text-label-sm text-secondary">TODOS LOS PASOS CONVERGENTES</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<!-- Paso 1 -->
+<div class="bg-surface-container-low rounded-lg p-space-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary font-label-caps text-label-caps">PASO 01</span>
+<span class="font-label-sm text-label-sm text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>CAPTURADO
+                  </span>
+</div>
+<h4 class="font-headline-md text-sm text-on-surface mb-1">Detección de Parámetros de Cabina</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  ECLSS informa O2 al 21.0%, flujo de ventilación forzada en 1.2 cm/s, y sustrato aislante ETFE en arnés eléctrico avionics.
+                </p>
+<div class="mt-space-sm pt-space-xs text-primary font-telemetry-data-md text-xs">
+                  V_HVAC = 1.2 cm/s (MESETA CRÍTICA)
+                </div>
+</div>
+<!-- Paso 2 -->
+<div class="bg-surface-container-low rounded-lg p-space-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="px-2 py-0.5 rounded bg-tertiary text-on-tertiary font-label-caps text-label-caps">PASO 02</span>
+<span class="font-label-sm text-label-sm text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>VALIDADO
+                  </span>
+</div>
+<h4 class="font-headline-md text-sm text-on-surface mb-1">Consulta al Corpus NASA PSI</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Validación cruzada contra 12 TB de datos ISS. Match con experimento FLEX-2 y Saffire II: el flujo desplaza la zona de asfixia por hollín.
+                </p>
+<div class="mt-space-sm pt-space-xs text-tertiary font-telemetry-data-md text-xs">
+                  CROSS-REF: DOI 10.1016/j.combustflame
+                </div>
+</div>
+<!-- Paso 3 -->
+<div class="bg-surface-container-low rounded-lg p-space-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps">PASO 03</span>
+<span class="font-label-sm text-label-sm text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>EQUILIBRADO
+                  </span>
+</div>
+<h4 class="font-headline-md text-sm text-on-surface mb-1">Análisis Termodinámico &amp; LTC</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Cálculo del balance entre flujo de Stefan y fuerza termoforética. Confirmación de reacción sostenida de baja temperatura (LTC) a 600-650 K.
+                </p>
+<div class="mt-space-sm pt-space-xs text-secondary font-telemetry-data-md text-xs">
+                  v_stefan + v_thermo = 0 (ESTABLE)
+                </div>
+</div>
+</div>
+</div>
+<!-- Human-readable deep scientific explanation -->
+<div class="bg-surface-container-low rounded-xl p-space-md space-y-space-sm">
+<div class="flex items-center gap-space-xs text-tertiary font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-sm">science</span>
+<span>INFORME DE INFERENCIA EXPLICABLE (HUMAN-READABLE REASONING)</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">
+              ¿Por qué falla el estándar terrestre NASA-STD-6001B frente a la ventilación forzada?
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              En las pruebas estándar 1G de <span class="text-on-surface font-semibold">NASA-STD-6001B (Test 1)</span>, la convección natural acelera el ascenso de los gases calientes a más de 30-50 cm/s, enfriando o barriendo la base de llama de polímeros como el ETFE. Sin embargo, en el entorno de microgravedad de la ISS, la convección boyante desaparece por completo. 
+            </p>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Cuando el sistema de ventilación de cabina (HVAC) opera en la <span class="text-primary font-semibold">meseta crítica de 1.0 a 2.5 cm/s</span>, aporta el comburente exacto para mantener la llama viva sin inducir el estiramiento ni la disipación térmica que provocaría su extinción. La combustión transiciona a un régimen de <span class="text-tertiary font-semibold">llama fría (LTC - Low Temperature Combustion)</span> donde peróxidos e hidroperóxidos siguen reaccionando de manera invisible al ojo humano y a los fotodetectores estándar de radiación UV.
+            </p>
+</div>
+<!-- Fuente Oficial NASA Verificada Box -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-xl">verified</span>
+</div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-caps text-label-caps text-secondary">FUENTE OFICIAL NASA VERIFICADA</span>
+<span class="font-label-sm text-label-sm text-outline">GRC / PSI REPOSITORY</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface font-semibold">
+                  NASA Glenn Research Center // PSI Repository - Paper DOI: 10.1016/j.combustflame.2021.111824
+                </div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">
+                  Investigadores principales: Williams, F.A., Ferkul, P.V., Olson, S.L., et al. (Misiones CIR / FLEX / Saffire)
+                </div>
+</div>
+</div>
+<button class="px-space-md py-2 rounded bg-surface-container-high text-primary hover:bg-surface-container-highest font-label-caps text-label-caps whitespace-nowrap transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+<span>VER DATASET RAW</span>
+</button>
+</div>
+<!-- Cuadrícula 2 Columnas: Recaudo Operacional vs. Minimización de Error de Falsa Alarma -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Columna 1: Recaudo Operacional -->
+<div class="bg-surface-container-low rounded-xl p-space-md space-y-space-sm">
+<div class="flex items-center gap-space-xs text-error font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-sm">shield</span>
+<span>RECAUDO OPERACIONAL CRÍTICO</span>
+</div>
+<h4 class="font-headline-md text-sm text-on-surface">Vigilancia de Nube Térmica Oculta</h4>
+<ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<li class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-error text-base flex-shrink-0">dangerous</span>
+<span><strong class="text-on-surface">Prohibido reactivar ventilación forzada</strong> hasta transcurridos 180 segundos de enfriamiento total verificado por pirómetro IR.</span>
+</li>
+<li class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-base flex-shrink-0">warning</span>
+<span>La concentración de calor radiativo en microgravedad se disipa 8 veces más lento que en tierra por ausencia de penacho ascendente.</span>
+</li>
+</ul>
+</div>
+<!-- Columna 2: Minimización de Error de Falsa Alarma -->
+<div class="bg-surface-container-low rounded-xl p-space-md space-y-space-sm">
+<div class="flex items-center gap-space-xs text-secondary font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-sm">task_alt</span>
+<span>MINIMIZACIÓN DE FALSA ALARMA</span>
+</div>
+<h4 class="font-headline-md text-sm text-on-surface">Validación Espectral Cruzada</h4>
+<ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<li class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-base flex-shrink-0">check_circle</span>
+<span>Discriminación activa entre condensado de desgasificación polimérica y frente de reacción LTC mediante canal infrarrojo en 7.5 μm.</span>
+</li>
+<li class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-base flex-shrink-0">check_circle</span>
+<span>Sensor Brunswick con doble cámara iónica calibrada para evitar activación errónea de micro-niebla NFPA 750 en avionics funcionales.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- TAB CONTENT 2: PROCEDIMIENTO ASISTIDO PASO A PASO (CHECKLIST DE CONTINGENCIA) -->
+<div class="hidden flex-col gap-space-md" id="tab-content-checklist">
+<!-- Progress indicator header -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-xl">playlist_add_check</span>
+<span class="font-label-caps text-label-caps text-on-surface">PROGRESO DE MITIGACIÓN CONTINGENTE</span>
+</div>
+<span class="font-telemetry-data-md text-telemetry-data-md text-secondary" id="checklist-progress-text">
+                2 de 5 Pasos Completados (40%)
+              </span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary transition-all duration-300" id="checklist-progress-bar" style="width: 40%;"></div>
+</div>
+<div class="flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>PROTOCOLO: ISS-EMERG-FIRE-LTC-04</span>
+<span>AUTORIZACIÓN: COMANDANTE DE MISIÓN / FLIGHT CONTROLLER</span>
+</div>
+</div>
+<!-- 5 Pasos Interactivos con casillas de verificación táctiles grandes -->
+<div class="space-y-space-sm">
+<!-- Step 1 (Completed) -->
+<label class="checklist-item flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-all select-none">
+<div class="pt-0.5">
+<input checked="" class="w-6 h-6 rounded bg-surface-container-lowest border-outline-variant text-primary focus:ring-0 cursor-pointer" onchange="updateChecklistProgress()" type="checkbox"/>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-secondary">PASO 010 // POTENCIA ELÉCTRICA</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-container/20 text-secondary font-label-sm text-label-sm">EJECUTADO</span>
+</div>
+<div class="font-headline-md text-sm text-on-surface">
+                  Aislar subsistema eléctrico afectado y cortar alimentación de bus DC 120V.
+                </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Disyuntores en rack AV-02 disparados. Verificada corriente nula en el conducto de cableado ETFE de navegación inercial.
+                </p>
+</div>
+</label>
+<!-- Step 2 (Completed with Warning Box) -->
+<div class="space-y-space-xs">
+<label class="checklist-item flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-all select-none">
+<div class="pt-0.5">
+<input checked="" class="w-6 h-6 rounded bg-surface-container-lowest border-outline-variant text-primary focus:ring-0 cursor-pointer" onchange="updateChecklistProgress()" type="checkbox"/>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-secondary">PASO 020 // DINÁMICA DE AIRE ECLSS</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-container/20 text-secondary font-label-sm text-label-sm">EJECUTADO</span>
+</div>
+<div class="font-headline-md text-sm text-on-surface">
+                    Interrumpir inmediatamente la ventilación forzada HVAC en el módulo para evitar la meseta crítica.
+                  </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                    Compuertas de ventilación cerradas. La supresión de corriente anula el flujo de 1.2 cm/s conduciendo al régimen de asfixia por hollín.
+                  </p>
+</div>
+</label>
+<!-- Amber warning for Step 2 -->
+<div class="mx-space-sm p-space-sm rounded-lg bg-surface-container-lowest flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-xl flex-shrink-0">warning</span>
+<div class="font-body-sm text-body-sm text-tertiary">
+<strong>ADVERTENCIA OPERATIVA:</strong> La detención del flujo HVAC acumula CO2 en la micro-región. No ingresar al módulo sin equipo respiratorio autónomo de emergencia (PBAs).
+                </div>
+</div>
+</div>
+<!-- Step 3 (Pending with Red Alert Box) -->
+<div class="space-y-space-xs">
+<label class="checklist-item flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-all select-none">
+<div class="pt-0.5">
+<input class="w-6 h-6 rounded bg-surface-container-lowest border-outline-variant text-primary focus:ring-0 cursor-pointer" onchange="updateChecklistProgress()" type="checkbox"/>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-error">PASO 030 // ESPECTROMETRÍA INFRARROJA</span>
+<span class="px-1.5 py-0.5 rounded bg-error-container/30 text-error font-label-sm text-label-sm">PENDIENTE CRÍTICO</span>
+</div>
+<div class="font-headline-md text-sm text-on-surface">
+                    NO fiarse de la desaparición de llama visible; monitorear canal IR de 7.5 μm para H2O2 (llama fría LTC).
+                  </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                    El ojo humano percibe extinción cuando la flama cae de 1000 K. Comprobar que el gradiente térmico de peróxidos descienda de los 450 K antes de desbloquear el compartimento.
+                  </p>
+</div>
+</label>
+<!-- Red critical alert for Step 3 -->
+<div class="mx-space-sm p-space-sm rounded-lg bg-surface-container-lowest flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-error text-xl flex-shrink-0">emergency</span>
+<div class="font-body-sm text-body-sm text-error">
+<strong>CRÍTICO DE VUELO:</strong> No encender ventiladores tras extinción aparente; riesgo de reignición explosiva instantánea documentado en caso NASA EXP-19 (FLEX-ISS).
+                </div>
+</div>
+</div>
+<!-- Step 4 (Pending) -->
+<label class="checklist-item flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-all select-none">
+<div class="pt-0.5">
+<input class="w-6 h-6 rounded bg-surface-container-lowest border-outline-variant text-primary focus:ring-0 cursor-pointer" onchange="updateChecklistProgress()" type="checkbox"/>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-primary">PASO 040 // SUPRESIÓN NFPA 750</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">EN ESPERA</span>
+</div>
+<div class="font-headline-md text-sm text-on-surface">
+                  Armar sistema de micro-niebla NFPA 750 a 35 bar con aditivo F-500 EA (150 ml).
+                </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Generación de gotas sub-micrónicas de 20 a 50 μm. Capacidad de encapsulación micelar sobre radicales libres sin generar cortocircuitos en racks vecinos.
+                </p>
+</div>
+</label>
+<!-- Step 5 (Pending) -->
+<label class="checklist-item flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-all select-none">
+<div class="pt-0.5">
+<input class="w-6 h-6 rounded bg-surface-container-lowest border-outline-variant text-primary focus:ring-0 cursor-pointer" onchange="updateChecklistProgress()" type="checkbox"/>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline">PASO 050 // CUARENTENA TÉRMICA</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">BLOQUEADO</span>
+</div>
+<div class="font-headline-md text-sm text-on-surface">
+                  Mantener sellado hermético durante 180 segundos antes de reactivar recirculación ECLSS.
+                </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Permite la coalescencia total de microgotas y la condensación de peróxidos residuales sobre las placas absorbentes del plenum.
+                </p>
+</div>
+</label>
+</div>
+<!-- Bottom Action Confirmation Strip -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary">lock_clock</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">TIEMPO DE ESPERA ENFRIAMIENTO TRANSCURRIDO: <strong class="text-on-surface">114s / 180s</strong></span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded bg-surface-container-high text-on-surface hover:bg-surface-container-highest font-label-caps text-label-caps transition-colors">
+                SOLICITAR OVERRIDE MANUAL
+              </button>
+<button class="px-space-md py-2 rounded bg-primary text-on-primary font-label-caps text-label-caps hover:bg-primary-container transition-colors shadow-sm">
+                VALIDAR PROTOCOLO CON CAPCOM
+              </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<script>
+  // Dynamic Tab Switcher Functionality
+  function switchTab(target) {
+    const cotTab = document.getElementById('tab-content-cot');
+    const checklistTab = document.getElementById('tab-content-checklist');
+    const cotBtn = document.getElementById('tab-btn-cot');
+    const checklistBtn = document.getElementById('tab-btn-checklist');
+
+    if (target === 'cot') {
+      cotTab.classList.remove('hidden');
+      cotTab.classList.add('flex');
+      checklistTab.classList.add('hidden');
+      checklistTab.classList.remove('flex');
+
+      // Styles
+      cotBtn.className = 'px-space-md py-2 rounded font-label-caps text-label-caps transition-all flex items-center gap-space-xs bg-surface-container-highest text-primary shadow-sm';
+      checklistBtn.className = 'px-space-md py-2 rounded font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-space-xs';
+    } else {
+      checklistTab.classList.remove('hidden');
+      checklistTab.classList.add('flex');
+      cotTab.classList.add('hidden');
+      cotTab.classList.remove('flex');
+
+      // Styles
+      checklistBtn.className = 'px-space-md py-2 rounded font-label-caps text-label-caps transition-all flex items-center gap-space-xs bg-surface-container-highest text-primary shadow-sm';
+      cotBtn.className = 'px-space-md py-2 rounded font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-space-xs';
+    }
+  }
+
+  // Interactive Checklist Progress Updater
+  function updateChecklistProgress() {
+    const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+    const total = checkboxes.length;
+    let checkedCount = 0;
+    checkboxes.forEach(cb => {
+      if (cb.checked) checkedCount++;
+    });
+
+    const percent = Math.round((checkedCount / total) * 100);
+    const progressBar = document.getElementById('checklist-progress-bar');
+    const progressText = document.getElementById('checklist-progress-text');
+
+    if (progressBar && progressText) {
+      progressBar.style.width = percent + '%';
+      progressText.textContent = checkedCount + ' de ' + total + ' Pasos Completados (' + percent + '%)';
+    }
+  }
+
+  // Interaction for Quick Prompt Pills & Study Cases
+  document.addEventListener('DOMContentLoaded', () => {
+    const queryInput = document.getElementById('ai-query-input');
+    const pills = document.querySelectorAll('.query-pill');
+    
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const text = pill.innerText.trim();
+        if (queryInput) {
+          queryInput.value = 'Análisis de vuelo para: ' + text + ' // Inferencia de seguridad ISS...';
+          queryInput.focus();
+        }
+      });
+    });
+
+    // Case Selection highlighting
+    const caseCards = document.querySelectorAll('.case-card');
+    caseCards.forEach(card => {
+      card.addEventListener('click', () => {
+        caseCards.forEach(c => {
+          c.classList.remove('bg-surface-container-high');
+          c.classList.add('bg-surface-container-low');
+        });
+        card.classList.remove('bg-surface-container-low');
+        card.classList.add('bg-surface-container-high');
+        
+        // Update query input with selected case
+        const caseId = card.getAttribute('data-case');
+        const title = card.querySelector('h3').innerText;
+        if (queryInput) {
+          queryInput.value = 'Consultar caso ' + caseId + ' (' + title + ') y evaluar correlación actual.';
+        }
+      });
+    });
+
+    // Simulate Enter or Click on query run
+    const runBtn = document.getElementById('btn-run-query');
+    if (runBtn && queryInput) {
+      runBtn.addEventListener('click', () => {
+        const originalText = runBtn.innerHTML;
+        runBtn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">refresh</span><span>RAZONANDO...</span>';
+        setTimeout(() => {
+          runBtn.innerHTML = originalText;
+          switchTab('cot');
+        }, 600);
+      });
+    }
+  });
+</script></main><footer class="fixed bottom-0 left-0 right-0 z-40 h-8 w-full bg-surface-container-lowest/95 backdrop-blur-xl flex items-center px-gutter-desktop"><div class="w-full flex items-center justify-between overflow-hidden whitespace-nowrap"><div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant animate-pulse"><span class="text-secondary font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>CORE: NOMINAL</span><span class="text-outline">|</span><span>DIFFUSION FLAME CORE: STABLE</span><span class="text-outline">|</span><span class="text-primary">HVAC PLENUM: 1.2 cm/s (MESETA CRÍTICA)</span><span class="text-outline">|</span><span>SOOT SHELL EQUILIBRIUM: v_Stefan + v_thermo = 0</span><span class="text-outline">|</span><span class="text-secondary">F-500 EA RESERVE: 100% (35 BAR)</span></div><div class="hidden md:flex items-center gap-space-sm font-label-sm text-label-sm text-outline"><span class="material-symbols-outlined text-xs">wifi_tethering</span><span>ORBIT 416 KM // VELOCITY 7.66 KM/S</span></div></div></footer></body></html>

@@ -1,0 +1,348 @@
+{
+  "entries": [
+    {
+      "id": "KB-001",
+      "question": "¿Cómo se comporta una llama en microgravedad?",
+      "keywords": ["llama", "microgravedad", "comportamiento", "forma", "esférica"],
+      "answer": "En microgravedad, las llamas adoptan formas esféricas o hemisféricas debido a la ausencia de convección boyante. Sin la fuerza de gravedad, no existe corriente ascendente que alargue la llama. El transporte de oxígeno ocurre únicamente por difusión molecular, resultando en llamas más débiles, azuladas y con menor temperatura. Las pérdidas radiativas se vuelven proporcionalmente más importantes, pudiendo causar extinción radiativa en condiciones de flujo muy bajo.",
+      "source": "FLEX/FLEX-2 (NASA Glenn Research Center), Dietrich et al., Combustion and Flame, 2014",
+      "category": "comportamiento_llamas"
+    },
+    {
+      "id": "KB-002",
+      "question": "¿Qué son las llamas frías o cool flames?",
+      "keywords": ["llama fría", "cool flame", "LTC", "baja temperatura", "invisible"],
+      "answer": "Las llamas frías (cool flames) son un fenómeno de combustión a baja temperatura (600-800 K) descubierto en microgravedad por los experimentos FLEX de la NASA. Tras la extinción aparente de una llama caliente por pérdidas radiativas, la combustión puede continuar de forma invisible a través de química de baja temperatura (LTC). En este régimen, intermediarios como H2O2 (peróxido de hidrógeno) y CH2O (formaldehído) se acumulan, manteniendo una reacción exotérmica sin llama visible. Este fenómeno es exclusivo de microgravedad debido a la ausencia de convección que dispersaría los intermediarios.",
+      "source": "Nayagam et al., Combustion and Flame, 2012 (FLEX); Dietrich et al., 2014",
+      "category": "cool_flames"
+    },
+    {
+      "id": "KB-003",
+      "question": "¿Por qué las cool flames son peligrosas para la seguridad espacial?",
+      "keywords": ["cool flame", "peligro", "seguridad", "invisible", "detección"],
+      "answer": "Las cool flames representan un riesgo crítico para la seguridad espacial porque: 1) Son invisibles al ojo humano y a sensores de llama convencionales (UV/IR), 2) Generan CO y otros gases tóxicos que se acumulan en cabina, 3) Pueden reencindir como llama caliente si las condiciones cambian (aumento de O2 o flujo), 4) Los detectores de humo actuales de la ISS no están diseñados para detectarlas. La detección requiere sensores químicos (H2O2, CH2O) o sensores de temperatura de alta sensibilidad.",
+      "source": "FLEX-2 (NASA PSI Program); Shaw et al., Combustion and Flame, 2017",
+      "category": "cool_flames"
+    },
+    {
+      "id": "KB-004",
+      "question": "¿Qué es el LOI y cómo cambia en microgravedad?",
+      "keywords": ["LOI", "índice", "oxígeno", "límite", "microgravedad", "cambio"],
+      "answer": "El LOI (Limiting Oxygen Index / Índice Limitante de Oxígeno) es la concentración mínima de oxígeno necesaria para sostener la combustión de un material. En microgravedad, el LOI disminuye típicamente 3-5% absoluto respecto a 1-g. Ejemplo: PMMA tiene LOI ~18.3% en 1-g pero ~15% en micro-g. Esto significa que materiales considerados 'seguros' en gravedad terrestre pueden ser inflamables en el espacio. Este cambio se debe a: menor pérdida convectiva de calor, ausencia de 'estirado' gravitacional de la llama, y mayor tiempo de residencia del combustible en la zona de reacción.",
+      "source": "BASS-II (Ferkul et al., AIAA 2016); SoFIE (NASA GRC, 2022-presente)",
+      "category": "flammability"
+    },
+    {
+      "id": "KB-005",
+      "question": "¿Qué es la NASA-STD-6001B y por qué es insuficiente?",
+      "keywords": ["NASA-STD-6001", "estándar", "6001", "Test 1", "limitaciones", "insuficiente"],
+      "answer": "NASA-STD-6001B es el estándar de la NASA para evaluación de flamabilidad de materiales espaciales. Su Test 1 (upward flame propagation) evalúa si un material propaga llama hacia arriba en gravedad normal. Las limitaciones son: 1) Se realiza en 1-g, no representando condiciones de microgravedad, 2) No detecta materiales que son más inflamables en micro-g, 3) La propagación hacia arriba en 1-g es el caso más severo por boyantez, pero en micro-g la propagación no depende de la dirección, 4) No evalúa cool flames ni extinción radiativa. El proyecto FLARE de la NASA busca desarrollar un reemplazo basado en datos reales de microgravedad.",
+      "source": "NASA-STD-6001B (NASA Technical Standards); Proyecto FLARE (NASA GRC, 2024)",
+      "category": "standards"
+    },
+    {
+      "id": "KB-006",
+      "question": "¿Qué es el proyecto FLARE?",
+      "keywords": ["FLARE", "proyecto", "estándar", "nuevo", "ISO", "4589"],
+      "answer": "FLARE (Flammability Assessment for Reduced-gravity Environments) es un proyecto de la NASA para desarrollar un nuevo método estándar de evaluación de flamabilidad específico para microgravedad. Se basa en el estándar ISO 4589-4 (LOI test) adaptado para condiciones espaciales. FLARE busca: 1) Medir LOI real en microgravedad para materiales de referencia, 2) Crear una base de datos de flamabilidad en micro-g, 3) Desarrollar un test terrestre que prediga el comportamiento en micro-g, 4) Proporcionar la base científica para reemplazar el Test 1 de NASA-STD-6001B.",
+      "source": "NASA FLARE Project Overview, 2024; SoFIE/FLARE (NASA Glenn Research Center)",
+      "category": "standards"
+    },
+    {
+      "id": "KB-007",
+      "question": "¿Qué es la extinción radiativa?",
+      "keywords": ["extinción", "radiativa", "radiación", "quiescent", "micro-g"],
+      "answer": "La extinción radiativa ocurre cuando las pérdidas de calor por radiación superan la generación de calor por la reacción química. En microgravedad, sin convección boyante, la llama pierde calor predominantemente por radiación. A flujos muy bajos (<2 cm/s), la cáscara de hollín (soot shell) que se forma alrededor de la llama actúa como radiador, enfriando la zona de reacción hasta extinguir la llama caliente. Este mecanismo es responsable de la transición a cool flames en los experimentos FLEX.",
+      "source": "BASS/BASS-II (NASA GRC); Bhattacharjee et al., Combustion and Flame, 2014",
+      "category": "comportamiento_llamas"
+    },
+    {
+      "id": "KB-008",
+      "question": "¿Qué es la cáscara de hollín (soot shell)?",
+      "keywords": ["hollín", "soot", "shell", "cáscara", "partículas"],
+      "answer": "La cáscara de hollín (soot shell) es una estructura esférica de partículas de carbono que se forma alrededor de llamas de difusión en microgravedad. Sin gravedad, las partículas de hollín no son arrastradas hacia arriba por convección sino que se acumulan en una capa esférica. Esta estructura: 1) Aumenta la pérdida radiativa de la llama, 2) Puede causar extinción radiativa, 3) Es visible como un halo naranja-rojo alrededor de la llama, 4) Es un fenómeno exclusivo de microgravedad. Fue documentada extensivamente en los experimentos ACME y SPICE.",
+      "source": "ACME (Sunderland et al., Combustion and Flame, 2020); SPICE (NASA GRC)",
+      "category": "comportamiento_llamas"
+    },
+    {
+      "id": "KB-009",
+      "question": "¿Qué es SoFIE?",
+      "keywords": ["SoFIE", "Solid Fuel", "ignición", "extinción", "ISS"],
+      "answer": "SoFIE (Solid Fuel Ignition and Extinction) es la investigación activa más importante de la NASA sobre inflamabilidad de materiales sólidos en microgravedad. Opera desde 2022 en el CIR (Combustion Integrated Rack) de la ISS. SoFIE evalúa materiales de referencia (PMMA negro, PMMA transparente) bajo rangos amplios de O2 (17-40%) y velocidad de flujo (0-25 cm/s). Su objetivo principal es generar datos para actualizar los estándares de seguridad contra incendios para misiones Artemis, donde la atmósfera tendrá 34% O2 a menor presión.",
+      "source": "SoFIE (Ferkul et al., NASA TM-2022); NASA GRC PSI Program",
+      "category": "investigations"
+    },
+    {
+      "id": "KB-010",
+      "question": "¿Qué fueron los experimentos Saffire?",
+      "keywords": ["Saffire", "fuego", "gran escala", "Cygnus", "grande"],
+      "answer": "Saffire (Spacecraft Fire Experiment) fue una serie de 6 experimentos (Saffire-I a Saffire-VI, 2016-2022) que produjeron los primeros fuegos a gran escala controlados en el espacio. Se realizaron dentro de módulos Cygnus de Northrop Grumman después de desacoplarse de la ISS. Saffire-I quemó una muestra de 0.4 × 0.95 m de tela Sibal, demostrando que la llama se propaga completamente en microgravedad. Los experimentos posteriores evaluaron múltiples materiales, sistemas de supresión por CO2, y materiales para futuras misiones Artemis.",
+      "source": "Ruff et al., npj Microgravity, 2023; NASA Saffire Program (GRC)",
+      "category": "investigations"
+    },
+    {
+      "id": "KB-011",
+      "question": "¿Qué es FLEX y qué descubrió?",
+      "keywords": ["FLEX", "Flame Extinguishment", "gotas", "descubrimiento"],
+      "answer": "FLEX (Flame Extinguishment Experiment) fue una serie de investigaciones en la ISS (2009-2017) que estudió la combustión de gotas aisladas de combustible en microgravedad. Su descubrimiento más revolucionario fue la existencia de 'llamas frías' (cool flames): tras la extinción aparente de la llama caliente, la combustión continuaba de forma invisible a 600-800 K mediante química de baja temperatura (LTC). Este descubrimiento transformó nuestra comprensión de la combustión y tiene implicaciones tanto para seguridad espacial como para motores de combustión terrestre.",
+      "source": "Nayagam et al., Combustion and Flame, 2012; Dietrich et al., 2014",
+      "category": "investigations"
+    },
+    {
+      "id": "KB-012",
+      "question": "¿Qué pasó en el incendio del Apollo 1?",
+      "keywords": ["Apollo 1", "incendio", "1967", "accidente", "oxígeno puro"],
+      "answer": "El 27 de enero de 1967, un incendio catastrófico en la cápsula Apollo 1 durante una prueba en tierra mató a los astronautas Gus Grissom, Ed White y Roger Chaffee. La cápsula estaba presurizada con 100% oxígeno a 16.7 psia (sobrepresión). Una chispa eléctrica inició un incendio que se propagó con violencia extrema en la atmósfera de oxígeno puro. Los astronautas no pudieron abrir la escotilla (se abría hacia adentro y la presión interna lo impedía). Este desastre llevó a cambios fundamentales: eliminación de atmósferas de O2 puro en lanzamiento, rediseño de materiales de cabina, y eventual desarrollo del programa de evaluación de materiales que evolucionó a NASA-STD-6001.",
+      "source": "NASA History Division, Apollo 1 Report; NASA-STD-6001 Origins",
+      "category": "accidents"
+    },
+    {
+      "id": "KB-013",
+      "question": "¿Qué pasó con el incendio del Apollo 13?",
+      "keywords": ["Apollo 13", "accidente", "explosión", "tanque", "oxígeno"],
+      "answer": "El 13 de abril de 1970, una explosión en el tanque de oxígeno #2 del Módulo de Servicio del Apollo 13 dañó severamente la nave a ~320,000 km de la Tierra. Aunque técnicamente no fue un 'incendio' sino una ruptura por sobrecalentamiento de cables dañados dentro del tanque de O2 criogénico, el evento demostró la vulnerabilidad de los sistemas espaciales a fallos térmicos. La tripulación (Lovell, Swigert, Haise) sobrevivió usando el Módulo Lunar como bote salvavidas. El evento reforzó la importancia de la seguridad de materiales eléctricos en presencia de oxígeno.",
+      "source": "NASA Apollo 13 Review Board Report, 1970; NASA History Division",
+      "category": "accidents"
+    },
+    {
+      "id": "KB-014",
+      "question": "¿Qué ocurrió con el incendio de la estación Mir?",
+      "keywords": ["Mir", "incendio", "1997", "rusia", "generador", "oxígeno"],
+      "answer": "El 23 de febrero de 1997, un generador de oxígeno de perclorato de litio (velas de oxígeno) se incendió a bordo de la estación espacial Mir. El fuego ardió durante ~14 minutos, generando humo denso y llamas que bloquearon una de las rutas de escape hacia la cápsula Soyuz. La tripulación (incluyendo al astronauta de la NASA Jerry Linenger) combatió el fuego con extintores y mascarillas. El incidente demostró: 1) La dificultad de combatir fuego en microgravedad, 2) La necesidad de múltiples rutas de escape, 3) La peligrosidad del humo en cabina cerrada, 4) La importancia de detectores y sistemas de supresión confiables.",
+      "source": "Linenger, 'Off the Planet', 2000; NASA Mir Fire Investigation Report",
+      "category": "accidents"
+    },
+    {
+      "id": "KB-015",
+      "question": "¿Cómo se propaga la llama en materiales sólidos en microgravedad?",
+      "keywords": ["propagación", "sólido", "spread", "material", "dirección"],
+      "answer": "En microgravedad, la propagación de llama en sólidos es fundamentalmente diferente a la terrestre: 1) No hay dirección preferencial (en 1-g la propagación hacia arriba es más rápida por boyantez), 2) La tasa de propagación muestra un máximo no-monotónico vs velocidad de flujo opuesto, 3) A flujos muy bajos, la extinción radiativa limita la propagación, 4) A flujos altos, la extinción por enfriamiento aerodinámico (blow-off) detiene la llama, 5) En la región intermedia (0.5-5 cm/s, rango HVAC de la ISS), la propagación es más eficiente que en 1-g. Los experimentos BASS y SoFIE han mapeado estos comportamientos extensivamente.",
+      "source": "BASS/BASS-II (NASA GRC); SoFIE (Ferkul et al., 2022)",
+      "category": "comportamiento_llamas"
+    },
+    {
+      "id": "KB-016",
+      "question": "¿Qué efecto tiene el diámetro del combustible en la flamabilidad?",
+      "keywords": ["diámetro", "curvatura", "delgado", "cable", "fino"],
+      "answer": "El diámetro del combustible tiene un efecto dramático en la flamabilidad en microgravedad. Los experimentos BASS-II demostraron que combustibles cilíndricos delgados (cables, barras) queman significativamente más rápido que muestras gruesas. El efecto de curvatura (número de Biot < 0.1) permite calentamiento más uniforme y pirolisis más eficiente. Un cable de 0.5 mm puede tener tasas de propagación 5-10x mayores que una barra de 6 mm del mismo material. Esto es especialmente relevante para la seguridad del cableado eléctrico en vehículos espaciales, donde kilómetros de cables delgados aislados con ETFE o Kapton representan una carga combustible significativa.",
+      "source": "BASS-II (Ferkul et al., AIAA 2016); SoFIE-GEL (NASA GRC)",
+      "category": "flammability"
+    },
+    {
+      "id": "KB-017",
+      "question": "¿Qué es la atmósfera Artemis y por qué afecta la flamabilidad?",
+      "keywords": ["Artemis", "atmósfera", "34%", "O2", "presión reducida", "Gateway"],
+      "answer": "La atmósfera Artemis propuesta para la estación Gateway y hábitats lunares es de 10.2 psia (70.3 kPa) con 34% O2. Esta composición reduce la presión total (beneficiando EVAs al disminuir tiempo de prebreathina) pero aumenta la fracción de oxígeno. Aunque la presión parcial de O2 es similar a la terrestre (~24 kPa vs 21 kPa), la mayor fracción de O2 aumenta la flamabilidad de materiales. En las condiciones Artemis, el LOI de muchos materiales disminuye adicionalmente, y la tasa de propagación de llama puede ser 30-50% mayor que en la atmósfera estándar ISS (21% O2). Los experimentos SoFIE y Saffire-V están evaluando materiales bajo estas condiciones.",
+      "source": "SoFIE (NASA GRC, 2022); Saffire-V (NASA, 2021); NASA Artemis Atmosphere Trade Study",
+      "category": "atmosphere"
+    },
+    {
+      "id": "KB-018",
+      "question": "¿Cómo funcionan los detectores de incendios en la ISS?",
+      "keywords": ["detector", "humo", "incendio", "ISS", "alarma", "sensor"],
+      "answer": "La ISS utiliza detectores de humo por dispersión de luz (light-scattering photoelectric) distribuidos en cada módulo. Sin embargo, estos detectores tienen limitaciones en microgravedad: 1) Las partículas de humo no ascienden sino que forman nubes estáticas, 2) El humo puede no alcanzar el detector rápidamente sin convección, 3) Los detectores actuales no pueden detectar cool flames, 4) La distribución de tamaño de partículas en micro-g difiere de la terrestre. Los experimentos SMOKE demostraron que detectores fotoeléctricos son más efectivos que ionizantes en micro-g. Se están desarrollando detectores multi-sensor (humo + CO + temperatura) para futuras misiones.",
+      "source": "SMOKE (Meyer et al., Fire Safety Journal, 2018); NASA ISS Fire Safety Systems Overview",
+      "category": "detection"
+    },
+    {
+      "id": "KB-019",
+      "question": "¿Cómo se suprime un incendio en el espacio?",
+      "keywords": ["supresión", "extintor", "CO2", "Halon", "combatir", "apagar"],
+      "answer": "La supresión de incendios en el espacio utiliza primariamente CO2 (en la ISS, extintores portátiles de CO2). Los desafíos incluyen: 1) Sin convección, el agente supresor debe ser dirigido directamente a la llama, 2) Mayor concentración de CO2 es necesaria en micro-g, 3) El CO2 desplaza O2 en cabina cerrada, requiriendo mascarillas, 4) El reencendido es posible tras supresión parcial. Los experimentos Saffire evaluaron supresión por CO2 y Novec 1230 (fluoroketona), encontrando ambos efectivos pero con requerimientos mayores. Investigaciones como DAFT exploran supresión acústica como alternativa no tóxica. La evacuación y cierre de compuerta sigue siendo el protocolo primario.",
+      "source": "Saffire-IV/VI (NASA GRC); DAFT (NASA GRC, 2021); ISS Fire Response Procedures",
+      "category": "suppression"
+    },
+    {
+      "id": "KB-020",
+      "question": "¿Qué es el MOC (Maximum Oxygen Concentration)?",
+      "keywords": ["MOC", "máxima", "concentración", "oxígeno", "inerting"],
+      "answer": "El MOC (Maximum Oxygen Concentration) es la máxima concentración de oxígeno en la que un material NO puede sostener combustión, independientemente de la fuente de ignición. Es complementario al LOI: LOI es el mínimo O2 para quemar, MOC es el máximo O2 al que es seguro. En microgravedad, el MOC puede ser menor que en 1-g, lo que amplía el rango de condiciones peligrosas. Para diseño de atmósferas espaciales, el MOC de todos los materiales presentes debe ser mayor que la concentración de O2 de la atmósfera, con un margen de seguridad adecuado.",
+      "source": "NASA-STD-6001B; SoFIE/FLARE Project (NASA GRC)",
+      "category": "flammability"
+    },
+    {
+      "id": "KB-021",
+      "question": "¿Qué materiales se usan comúnmente en naves espaciales?",
+      "keywords": ["materiales", "PMMA", "Nomex", "Kapton", "ETFE", "nave"],
+      "answer": "Los materiales comunes en vehículos espaciales incluyen: 1) PMMA (polimetilmetacrilato): usado en ventanas y paneles, altamente combustible en micro-g (LOI ~15% en micro-g), 2) ETFE (etileno-tetrafluoroetileno): aislante de cables, propaga llama en micro-g aunque resiste en 1-g, 3) Nomex: tela aramida retardante de fuego, más resistente pero no inmune en micro-g, 4) Kapton: poliimida para aislamiento eléctrico, alta resistencia térmica, 5) Teflon (PTFE): muy resistente al fuego, usado en componentes críticos, 6) Velcro: extensivamente usado en micro-g, moderadamente combustible. Cada material debe evaluarse específicamente para las condiciones atmosféricas de la misión.",
+      "source": "NASA-STD-6001B; BASS-II/SoFIE (NASA GRC); Saffire-II Material Testing",
+      "category": "materials"
+    },
+    {
+      "id": "KB-022",
+      "question": "¿Qué es el CIR (Combustion Integrated Rack)?",
+      "keywords": ["CIR", "rack", "combustión", "infraestructura", "ISS"],
+      "answer": "El CIR (Combustion Integrated Rack) es la instalación de investigación de combustión de la ISS, ubicada en el módulo Destiny. Es una plataforma multi-usuario que ha alojado múltiples investigaciones incluyendo FLEX, ACME y SoFIE. Proporciona: 1) Cámara de combustión sellada con control de presión y composición atmosférica, 2) Diagnósticos: cámaras UV, IR, imagen de alta velocidad, 3) Sistema de suministro de combustible y gases, 4) Control remoto desde Glenn Research Center. Ha realizado más de 1500 pruebas de combustión desde 2008, siendo la infraestructura más importante del programa PSI de combustión de la NASA.",
+      "source": "NASA CIR Factsheet; NASA GRC ISS Research",
+      "category": "infrastructure"
+    },
+    {
+      "id": "KB-023",
+      "question": "¿Cómo afecta la ventilación HVAC de la ISS a la flamabilidad?",
+      "keywords": ["HVAC", "ventilación", "flujo", "aire", "ISS", "velocidad"],
+      "answer": "El sistema HVAC de la ISS produce flujos de aire de 0.4-5.0 cm/s para mantener circulación y distribución uniforme de CO2/O2. Irónicamente, este rango coincide con la 'meseta crítica' de máxima propagación de llama en microgravedad. Los experimentos BASS y SoFIE demostraron que en este rango, el flujo proporciona suficiente O2 para la combustión sin causar enfriamiento excesivo. Esto hace que la condición operativa normal de la ISS sea precisamente la más peligrosa para la propagación de fuego. Los protocolos de emergencia incluyen apagar ventilación para intentar extinguir fuegos por depleción de O2, pero esto también afecta la habitabilidad.",
+      "source": "BASS/BASS-II (NASA GRC); ISS ECLSS Technical Manual",
+      "category": "safety"
+    },
+    {
+      "id": "KB-024",
+      "question": "¿Qué es el NTC (Negative Temperature Coefficient)?",
+      "keywords": ["NTC", "coeficiente", "temperatura negativo", "cinética", "cool flame"],
+      "answer": "El NTC (Negative Temperature Coefficient) es un fenómeno cinético donde la tasa de reacción química DISMINUYE al aumentar la temperatura en un rango específico (~700-900 K). En este régimen, los radicales peróxido (RO2) que impulsan la combustión a baja temperatura se descomponen más rápido de lo que se forman, creando una zona de reactividad reducida. El NTC es responsable de las oscilaciones observadas en las cool flames de los experimentos FLEX: la temperatura oscila alrededor de un equilibrio inestable, creando ciclos límite de ~0.25 Hz. Este fenómeno es bien conocido en motores de combustión interna (knock/detonación) pero fue observado por primera vez en llamas aisladas en microgravedad.",
+      "source": "FLEX/FLEX-2 (NASA GRC); Nayagam et al., 2012",
+      "category": "cool_flames"
+    },
+    {
+      "id": "KB-025",
+      "question": "¿Cómo se mide la flamabilidad de materiales para uso espacial?",
+      "keywords": ["medir", "flamabilidad", "test", "evaluación", "NASA", "procedimiento"],
+      "answer": "Actualmente, la evaluación de flamabilidad para uso espacial se realiza mediante NASA-STD-6001B, que incluye: Test 1 (Upward Flame Propagation): muestra vertical de 30 cm en 1-g, se observa si la llama se autopropaga >15 cm. Test 2 (Heat and Visible Smoke Release): calorimetría de cono. Test 3 (Offgassing): análisis de gases emitidos a temperatura ambiente. La limitación principal es que Test 1 se realiza en gravedad terrestre. El proyecto FLARE de la NASA está desarrollando un nuevo test basado en ISO 4589-4 (LOI) específicamente para condiciones de microgravedad.",
+      "source": "NASA-STD-6001B; FLARE Project (NASA GRC, 2024)",
+      "category": "standards"
+    },
+    {
+      "id": "KB-026",
+      "question": "¿Qué diferencia hay entre propagación concurrente y opuesta?",
+      "keywords": ["concurrente", "opuesto", "propagación", "dirección", "flujo"],
+      "answer": "En combustión de sólidos, la propagación puede ser: Opuesta (opposed flow): la llama se mueve contra la dirección del flujo de aire. Es el modo más estudiado en micro-g y muestra el comportamiento no-monotónico clásico. Concurrente (concurrent flow): la llama se mueve en la misma dirección que el flujo. Es generalmente más rápida y peligrosa porque el flujo precalienta el combustible virgen. En 1-g, la propagación hacia arriba es 'concurrente' (la boyantez crea flujo ascendente). En microgravedad sin flujo forzado, no hay distinción entre concurrente y opuesta. Los experimentos Saffire-I observaron propagación concurrente a gran escala.",
+      "source": "BASS/SoFIE (NASA GRC); Saffire-I (Ruff et al., 2023)",
+      "category": "comportamiento_llamas"
+    },
+    {
+      "id": "KB-027",
+      "question": "¿Por qué la gravedad afecta tanto la combustión?",
+      "keywords": ["gravedad", "efecto", "convección", "boyantez", "por qué"],
+      "answer": "La gravedad afecta la combustión a través de la convección natural (boyante): 1) En 1-g, los gases calientes ascienden por ser menos densos, creando corrientes convectivas que: traen O2 fresco a la llama, eliminan productos de combustión, estiran y enfrían la llama, establecen una dirección preferencial. 2) En micro-g, sin boyantez: el transporte es puramente difusivo (mucho más lento), los productos se acumulan alrededor de la llama, la llama adopta formas esféricas/simétricas, las pérdidas radiativas dominan, la cool flame se hace posible. Esta diferencia fundamental hace que la flamabilidad en micro-g NO sea predecible a partir de datos terrestres.",
+      "source": "Programa PSI de Ciencias de Combustión (NASA GRC); Múltiples investigaciones ISS",
+      "category": "comportamiento_llamas"
+    },
+    {
+      "id": "KB-028",
+      "question": "¿Qué rol juegan los peróxidos en las cool flames?",
+      "keywords": ["peróxido", "H2O2", "intermediario", "LTC", "acumulación"],
+      "answer": "Los peróxidos, especialmente H2O2 (peróxido de hidrógeno), son intermediarios críticos en las cool flames de microgravedad. En el régimen LTC (Low Temperature Chemistry, 600-800 K): 1) Las reacciones de oxidación producen peróxidos orgánicos (ROOH) y H2O2, 2) Estas moléculas son metaestables y liberan calor al descomponerse, 3) Su acumulación mantiene la reacción exotérmica sin temperatura suficiente para una llama visible, 4) En micro-g, la difusión lenta permite su acumulación (en 1-g la convección las dispersa), 5) Concentraciones de H2O2 de hasta 40+ ppm fueron medidas en experimentos FLEX. La detección de H2O2 podría servir como indicador de cool flames.",
+      "source": "FLEX/FLEX-2 (Dietrich et al., 2014); Nayagam et al., Combustion and Flame, 2012",
+      "category": "cool_flames"
+    },
+    {
+      "id": "KB-029",
+      "question": "¿Qué es el formaldehído y por qué es importante en combustión espacial?",
+      "keywords": ["formaldehído", "CH2O", "tóxico", "indicador", "combustión"],
+      "answer": "El formaldehído (CH2O) es un intermediario tóxico de la combustión de baja temperatura. En cool flames de microgravedad: 1) Se produce como intermediario de la oxidación parcial de hidrocarburos, 2) Se acumula a concentraciones de hasta 30 ppm en régimen LTC, 3) Es tóxico: el SMAC (Spacecraft Maximum Allowable Concentration) para 1 hora es 0.4 ppm, 4) Podría servir como indicador químico de cool flames para sistemas de detección, 5) Su fluorescencia UV-visible permite detección óptica. La acumulación de CH2O en cabina durante una cool flame no detectada podría crear condiciones tóxicas antes de que se identifique el problema.",
+      "source": "FLEX (NASA GRC); NASA SMAC Guidelines; Dietrich et al., 2014",
+      "category": "cool_flames"
+    },
+    {
+      "id": "KB-030",
+      "question": "¿Qué es PMMA y por qué es el material de referencia?",
+      "keywords": ["PMMA", "referencia", "acrílico", "plexiglass", "benchmark"],
+      "answer": "PMMA (polimetilmetacrilato, conocido comercialmente como Plexiglas o acrílico) es el material de referencia estándar en investigaciones de combustión espacial porque: 1) Tiene propiedades termoquímicas bien caracterizadas, 2) Se descompone térmicamente de forma limpia (monómero MMA), 3) No forma carbonización (char), facilitando el modelado, 4) Es usado extensivamente en ventanas y paneles de naves, 5) Su LOI (~18.3% en 1-g, ~15% en micro-g) lo coloca en el rango de interés. PMMA negro es usado en SoFIE como material de referencia primario, y PMMA transparente como secundario.",
+      "source": "SoFIE (NASA GRC); BASS/BASS-II; Múltiples publicaciones PSI",
+      "category": "materials"
+    },
+    {
+      "id": "KB-031",
+      "question": "¿Qué diferencia hay entre la gravedad lunar y la microgravedad orbital?",
+      "keywords": ["lunar", "gravedad", "1/6", "luna", "diferencia", "parcial"],
+      "answer": "La gravedad lunar (1/6 g = 1.62 m/s²) crea un entorno intermedio entre la microgravedad orbital (~10⁻⁶ g) y la gravedad terrestre (1 g). En gravedad lunar: 1) Existe convección boyante, pero es ~6x más débil que en la Tierra, 2) Las llamas serán más altas y lentas que en 1-g pero no esféricas como en micro-g, 3) Se espera que el LOI sea intermedio entre micro-g y 1-g, 4) Los datos de combustión en gravedad parcial son escasos (no hay experimentos reales). Los hábitats lunares Artemis presentan un desafío adicional: la combinación de gravedad parcial con atmósfera enriquecida en O2 (32% a 8.2 psia) podría crear condiciones de flamabilidad diferentes a cualquier configuración estudiada.",
+      "source": "NASA Artemis Atmosphere Trade Study; Extrapolación de datos SoFIE/FLARE",
+      "category": "atmosphere"
+    },
+    {
+      "id": "KB-032",
+      "question": "¿Cuántas investigaciones de combustión ha realizado la NASA en la ISS?",
+      "keywords": ["cuántas", "investigaciones", "total", "ISS", "número", "PSI"],
+      "answer": "El programa PSI (Physical Sciences Informatics) de la NASA ha registrado 24 investigaciones de ciencias de combustión realizadas en plataformas espaciales (ISS, Transbordador Espacial, Cygnus). Estas cubren 6 categorías principales: 1) Combustión de gotas (FLEX, FLEX-2, DCE, ACME-MDCA), 2) Propagación de llama en sólidos (BASS, BASS-II, SoFIE, MSI), 3) Fuego a gran escala (Saffire I-VI), 4) Llamas de difusión (ACME, SPICE, SLICE), 5) Detección y supresión (SMOKE, DAFT, S-FLAME), 6) Estándares (FLARE, SoFIE-GEL). En total, se han generado más de 12 TB de datos experimentales disponibles en el repositorio PSI de la NASA.",
+      "source": "NASA PSI Data Repository (psi.nasa.gov); NASA GRC Combustion Science Program",
+      "category": "investigations"
+    },
+    {
+      "id": "KB-033",
+      "question": "¿Qué es ETFE y por qué es preocupante en el espacio?",
+      "keywords": ["ETFE", "cable", "aislante", "wire", "peligro"],
+      "answer": "ETFE (etileno-tetrafluoroetileno) es un polímero fluorado usado como aislante de cables eléctricos en vehículos espaciales (y aviones). Es preocupante porque: 1) En pruebas terrestres (1-g), ETFE generalmente no propaga llama y pasa NASA-STD-6001B Test 1, 2) En microgravedad, ETFE puede propagar llama, especialmente en diámetros delgados, 3) BASS-II demostró que el LOI de ETFE en micro-g es ~3% menor que en 1-g, 4) Los vehículos espaciales contienen kilómetros de cableado con aislante ETFE, 5) Un cortocircuito podría iniciar propagación de llama a lo largo del cable. Esto representa un caso claro donde los estándares terrestres son inadecuados.",
+      "source": "BASS-II (Ferkul et al., AIAA 2016); NASA Cable Flammability Studies",
+      "category": "materials"
+    },
+    {
+      "id": "KB-034",
+      "question": "¿Qué pasa con el humo en microgravedad?",
+      "keywords": ["humo", "partículas", "micro-g", "distribución", "comportamiento"],
+      "answer": "El humo en microgravedad se comporta muy diferente al terrestre: 1) Las partículas no ascienden sino que forman nubes estacionarias, 2) La distribución de tamaño de partículas es más uniforme y con partículas más grandes (los experimentos SMOKE midieron tamaños de 1-10 μm vs 0.1-1 μm en 1-g), 3) El humo se dispersa lentamente por difusión y flujo HVAC, 4) Puede acumularse en zonas muertas de flujo, 5) La detección es más difícil porque el humo puede no alcanzar los detectores montados en paredes/techos. Los detectores fotoeléctricos de dispersión son más efectivos que los ionizantes en micro-g.",
+      "source": "SMOKE (Meyer et al., Fire Safety Journal, 2018); NASA ISS Smoke Detection Studies",
+      "category": "detection"
+    },
+    {
+      "id": "KB-035",
+      "question": "¿Qué es el programa PSI de la NASA?",
+      "keywords": ["PSI", "programa", "Physical Sciences", "datos", "repositorio"],
+      "answer": "PSI (Physical Sciences Informatics) es el sistema de datos abiertos de la NASA que proporciona acceso público a datos de investigaciones de ciencias físicas realizadas en el espacio. Para combustión, PSI alberga datos de todos los experimentos mayores: FLEX, BASS, ACME, SoFIE, Saffire, SPICE, SMOKE y otros. Los datos incluyen: videos de alta velocidad, mediciones de temperatura, composición de gases, tasas de propagación, y metadatos experimentales. El repositorio está disponible en psi.nasa.gov y contiene más de 12 TB de datos de ciencias de combustión. Es la fuente primaria de información para investigaciones de flamabilidad en microgravedad.",
+      "source": "NASA PSI (psi.nasa.gov); NASA GRC Physical Sciences Division",
+      "category": "data"
+    },
+    {
+      "id": "KB-036",
+      "question": "¿Cómo afecta la presión a la flamabilidad en microgravedad?",
+      "keywords": ["presión", "efecto", "flamabilidad", "baja presión", "alta"],
+      "answer": "La presión total afecta la flamabilidad en microgravedad de múltiples formas: 1) Mayor presión aumenta la densidad del oxidante, incrementando la tasa de reacción, 2) A presiones reducidas (como la atmósfera Artemis de 10.2 psia), la cinética se ralentiza pero la mayor fracción de O2 puede compensar, 3) La presión afecta la formación de hollín: mayor presión = más hollín = más pérdida radiativa, 4) Los límites de flamabilidad (LOI, MOC) dependen de la presión total, no solo de la fracción de O2. Los experimentos FLEX-2 y SoFIE han mapeado estos efectos en rangos de 0.5-3 atm.",
+      "source": "FLEX-2 (Shaw et al., 2017); SoFIE (NASA GRC, 2022-presente)",
+      "category": "flammability"
+    },
+    {
+      "id": "KB-037",
+      "question": "¿Cuáles son los principales riesgos de incendio en la ISS?",
+      "keywords": ["riesgo", "ISS", "incendio", "fuente", "ignición", "peligro"],
+      "answer": "Los principales riesgos de incendio en la ISS incluyen: 1) Cortocircuitos eléctricos: >600 km de cableado, historial de fallos eléctricos, 2) Sobrecalentamiento de equipos: computadoras, sistemas de potencia, 3) Baterías de litio: usadas extensivamente, riesgo de thermal runaway, 4) Generadores de O2 por electrólisis: pueden producir O2 concentrado, 5) Experimentos científicos: fuentes de calor controladas, 6) Materiales almacenados: velcro, papel, empaques, 7) Colisión con micrometeorito/debris: posible exposición de cables. La ISS tiene ~25 detectores de humo, extintores de CO2 portátiles, y protocolos de respuesta que incluyen cierre de ventilación y potencial evacuación a Soyuz/Dragon.",
+      "source": "NASA ISS Fire Safety Systems Overview; ISS Emergency Procedures Manual",
+      "category": "safety"
+    },
+    {
+      "id": "KB-038",
+      "question": "¿Qué es Nomex y cuán resistente es al fuego en el espacio?",
+      "keywords": ["Nomex", "aramida", "resistente", "fuego", "traje"],
+      "answer": "Nomex es una meta-aramida fabricada por DuPont, ampliamente usada en trajes de astronautas (ACES, EMU), revestimientos interiores y barreras térmicas. En 1-g, Nomex tiene un LOI de ~28-30%, significativamente más alto que PMMA (~18%). En microgravedad, su LOI estimado baja a ~24-26%, manteniéndose por encima del 21% O2 de la ISS. Sin embargo, no es inmune: en condiciones Artemis (34% O2), Nomex podría estar cerca de su LOI en micro-g. Los experimentos Saffire-II confirmaron que Nomex resiste propagación en atmósfera estándar pero con márgenes reducidos. Su descomposición térmica produce HCN (cianuro de hidrógeno), un gas extremadamente tóxico.",
+      "source": "Saffire-II (NASA GRC, 2016); BASS-II; Material Safety Data, DuPont",
+      "category": "materials"
+    },
+    {
+      "id": "KB-039",
+      "question": "¿Qué papel juega la ley D² en la combustión de gotas?",
+      "keywords": ["D²", "ley", "gota", "quemado", "regresión", "diámetro"],
+      "answer": "La ley D² (o ley del cuadrado del diámetro) es el modelo clásico de combustión de gotas, que predice que el cuadrado del diámetro de una gota en combustión decrece linealmente con el tiempo: D²(t) = D₀² - K·t, donde K es la constante de quemado. Los experimentos DCE y FLEX en microgravedad confirmaron que la ley D² se cumple mejor sin convección natural, pero con desviaciones importantes: 1) La radiación causa tasas de quemado menores que la predicción clásica, 2) La acumulación de hollín modifica K con el tiempo, 3) En el régimen de cool flame, la regresión continúa pero con una K mucho menor. Estos datos de micro-g son esenciales para validar modelos de combustión de sprays.",
+      "source": "DCE (Nayagam et al., 1998); FLEX (Nayagam et al., 2012)",
+      "category": "comportamiento_llamas"
+    },
+    {
+      "id": "KB-040",
+      "question": "¿Qué implicaciones tiene la combustión en microgravedad para la exploración de Marte?",
+      "keywords": ["Marte", "exploración", "viaje", "largo", "seguridad"],
+      "answer": "La combustión en microgravedad tiene implicaciones críticas para misiones a Marte (~6-9 meses de tránsito): 1) Tránsito en micro-g con riesgo de incendio durante meses sin posibilidad de evacuación a la Tierra, 2) Necesidad de sistemas de detección y supresión completamente autónomos, 3) Materiales del vehículo deben evaluarse en condiciones reales de micro-g, no solo en tests terrestres, 4) Cool flames podrían generar gases tóxicos sin detección visual durante meses, 5) La superficie de Marte tiene gravedad parcial (0.38 g) con datos de combustión aún más escasos que para la Luna, 6) La atmósfera del vehículo será probablemente similar a Artemis (presión reducida, O2 enriquecido). Los datos de SoFIE, FLARE y Saffire son fundamentales para hacer posible la exploración marciana segura.",
+      "source": "NASA Mars Mission Architecture Studies; SoFIE/FLARE (NASA GRC); NASA Safety Advisory Panel Reports",
+      "category": "exploration"
+    },
+    {
+      "id": "KB-041",
+      "question": "¿Qué es la quimioluminiscencia y cómo se usa para detectar cool flames?",
+      "keywords": ["quimioluminiscencia", "CH*", "OH*", "detección", "diagnóstico", "óptico"],
+      "answer": "La quimioluminiscencia es la emisión de luz por moléculas excitadas durante reacciones químicas. En combustión: 1) CH* (431 nm) y OH* (309 nm) son marcadores de llamas calientes (>1200 K), 2) En cool flames (~700 K), estas emisiones están ausentes porque la temperatura es insuficiente para excitar CH y OH, 3) Sin embargo, la fluorescencia de CH2O (formaldehído) a ~395 nm sí está presente en cool flames y puede usarse como diagnóstico, 4) Los experimentos ACME-MDCA usaron quimioluminiscencia CH* para confirmar la transición de llama caliente a cool flame. Para detección en cabina, sensores de fluorescencia de CH2O podrían complementar los detectores de humo convencionales.",
+      "source": "ACME-MDCA (Liu et al., 2019); FLEX (NASA GRC)",
+      "category": "detection"
+    },
+    {
+      "id": "KB-042",
+      "question": "¿Cuáles son los productos tóxicos de un incendio espacial?",
+      "keywords": ["tóxico", "productos", "combustión", "CO", "HCN", "veneno"],
+      "answer": "Los productos tóxicos de combustión en el espacio incluyen: 1) CO (monóxido de carbono): producto de combustión incompleta, SMAC-1h = 55 ppm, 2) HCN (cianuro de hidrógeno): de materiales nitrogenados como Nomex/Nylon, SMAC-1h = 4 ppm, 3) HF (fluoruro de hidrógeno): de fluoropolímeros como Teflon/ETFE, extremadamente corrosivo, 4) HCl (cloruro de hidrógeno): de PVC y otros clorados, 5) CH2O (formaldehído): de combustión parcial, especialmente cool flames, 6) Acroleína: de combustión de polímeros, irritante severo. En microgravedad estos productos se acumulan más rápido porque no se dispersan por convección natural, y el volumen de cabina es limitado. Los SMAC (Spacecraft Maximum Allowable Concentrations) son más restrictivos que los límites industriales terrestres.",
+      "source": "NASA SMAC Guidelines (JSC-20584); SMOKE/CFI (NASA GRC); NASA Toxicology Group",
+      "category": "safety"
+    },
+    {
+      "id": "KB-043",
+      "question": "¿Qué velocidad de flujo es más peligrosa en microgravedad?",
+      "keywords": ["velocidad", "flujo", "peligrosa", "máxima", "propagación", "crítica"],
+      "answer": "Los experimentos BASS y SoFIE han demostrado que la propagación de llama en microgravedad muestra un máximo no-monotónico vs velocidad de flujo opuesto. La velocidad más peligrosa depende del material y diámetro, pero generalmente está en el rango de 2-8 cm/s. Por debajo de ~0.5 cm/s, la extinción radiativa limita la propagación (insuficiente aporte de O2). Por encima de ~15-20 cm/s, el enfriamiento convectivo excesivo (blow-off) extingue la llama. La región de 0.4-5 cm/s coincide exactamente con el rango de ventilación HVAC de la ISS, haciendo que las condiciones operativas normales sean las más propicias para la propagación de incendios.",
+      "source": "BASS/BASS-II (Bhattacharjee et al., 2014); SoFIE (NASA GRC, 2022-presente)",
+      "category": "comportamiento_llamas"
+    }
+  ]
+}
