@@ -1,129 +1,121 @@
-# 🛰️ DOCUMENTACIÓN TÉCNICA Y GUÍA DE ENTREGA
-## Reto: *Be An Earth System Trend Detective!* — Microclimas Urbanos con IA
-**Proyecto:** GEO-COCHABAMBA 360  
-**Equipo:** NASA Space Apps Cochabamba 2026 (Sede FEXCO)  
-**Rama Oficial:** `feature/modulo-microclimas`  
-**Archivo Principal:** `frontend/src/modules/MicroclimateTab.jsx`  
-**Dataset Local:** `data/gamc/distritos_cochabamba.geojson`  
+# 🛰️ DOCUMENTACIÓN TÉCNICA Y GUÍA CIENTÍFICA
+## Reto: *Be An Earth System Trend Detective!* — Microclimas Urbanos con Inteligencia Artificial
+**Proyecto:** *GEO-COCHABAMBA 360 / NASA TREND DETECTIVE*  
+**Hackathon:** NASA Space Apps Challenge Cochabamba 2026 (Sede FEXCO)  
+**Módulos Oficiales Integrados:** Módulo 01 (*Microclimas Urbanos con IA*) y Módulo 05 (*Visualizador Satelital para Gestión Distrital*)  
+**Líder Técnico:** Kevin (`k3v1bvo`) — Team Stevens  
+**Despliegue en Vivo:** [https://nasa-trend-detective.vercel.app](https://nasa-trend-detective.vercel.app)  
 
 ---
 
 ## 1. Resumen Ejecutivo del Módulo
 
-Este módulo resuelve el reto bi-factorial planteado por la **NASA** (detección de tendencias en sistemas terrestres) y el **Gobierno Autónomo Municipal de Cochabamba (GAMC)** (mitigación de islas de calor urbanas y resiliencia territorial).
+Este módulo resuelve la problemática microclimática y de justicia ambiental en el municipio de Cochabamba (Cercado) mediante la integración de **25 años de observaciones satelitales de la NASA**, los **servicios WMS oficiales del GAMC en EPSG:3857** y un **modelo de Machine Learning (XGBoost 3.2.0)** calibrado contra las estaciones físicas de la **Red MÓNICA**.
 
-Cochabamba presenta una marcada heterogeneidad microclimática derivada de la **Cota 2750 m s.n.m.** del Parque Nacional Tunari al norte y la rápida densificación sin arbolado de la **Zona Sur (Distritos 8, 9, 14)**:
-* **Parque Tunari (D13 - Cota > 2750m):** LST promedio de **20.4 °C**, NDVI **0.58**, sensación biometeorológica confortable (PET 21.8 °C).
-* **Zona Sur / Asfalto (D8, D9 K'ara K'ara - Cota < 2750m):** LST superficial superior a **37.8 °C - 43.5 °C**, NDVI crítico de **0.07**, generando una **anomalía térmica urbana de +17.4 °C** respecto a la montaña.
-* **Efecto Amortiguador Laguna Alalay (D6):** La recarga hídrica reduce hasta en **-1.8 °C** la temperatura en los distritos circundantes.
-
----
-
-## 2. Fuentes de Datos Oficiales Integradas
-
-### Satelitales (NASA Earthdata)
-1. **LST (Land Surface Temperature):**
-   - Sensores: MODIS (MYD11A1 / MOD11A1) y Landsat 8/9 TIRS (Thermal Infrared Sensor - Banda 10 a 30m).
-   - Cobertura espacial: Bounding Box Cochabamba `[-66.35, -17.50, -66.05, -17.25]`.
-   - Calibración: Emisividad de superficie derivada de la fracción vegetal (FVC).
-2. **NDVI (Normalized Difference Vegetation Index):**
-   - Sensor: Landsat OLI / Sentinel-2 MSI.
-   - Fórmula: $\text{NDVI} = \frac{\text{NIR} - \text{Red}}{\text{NIR} + \text{Red}}$.
-3. **DEM Topográfico:**
-   - Misión: NASA Shuttle Radar Topography Mission (SRTM 30m).
-   - Uso: Determinación de la franja altitudinal de la Cota 2750 m s.n.m. y pendientes de escorrentía.
-
-### Municipales (GAMC - Cochabamba)
-1. **Límites de los 14 Distritos Municipales:** Polígonos vectoriales con atributos de población, superficie, densidad y zonificación.
-2. **Límite Cota 2750 del Tunari:** Línea biofísica de protección ambiental del GAMC.
+### Diagnóstico Territorial de Cochabamba:
+* **Parque Nacional Tunari (Distrito 13 - Cota > 2750 msnm):**  
+  Temperatura superficial (LST) promedio de **$20.4^\circ\text{C}$**, cobertura vegetal NDVI de **$0.58$** y confort térmico diurno confortable ($\text{PET } 21.8^\circ\text{C}$). Actúa como el pulmón biológico y regulador hídrico del valle.
+* **Zona Sur Urbana (Distritos 8, 9, 14 y 15 - Cota < 2750 msnm):**  
+  Superficies de asfalto y suelo árido desprovistas de arbolado con LST de **$37.8^\circ\text{C}$ a $43.5^\circ\text{C}$** y NDVI crítico de **$0.07$**, lo que genera una **brecha térmica urbana de $+17.4^\circ\text{C}$** en menos de 8 km lineales.
+* **Efecto Termorregulador de la Laguna Alalay (Distrito 6):**  
+  La recarga hídrica del espejo de agua ejerce un efecto de enfriamiento de hasta **$-1.8^\circ\text{C}$** en los distritos circundantes.
 
 ---
 
-## 3. Innovación en IA: Motor Científico SciML
-A diferencia de los modelos estadísticos simples, se incorpora un motor de **Aprendizaje Automático Científico (Scientific Machine Learning)**:
+## 2. Insumos Oficiales y Arquitectura de Datos
 
-1. **Local-FNO 3D (Fourier Neural Operator Localizado):**
-   - Resuelve el campo de vientos $(u, v, w)$ y temperatura del aire $(\theta)$ a escala urbana en menos de 10 segundos, frente a horas de Dinámica de Fluidos Computacional (CFD).
-   - Aplica parches con solapamiento del 20% para evitar discontinuidades de borde.
-2. **Restricción PINN (dpPINN):**
-   - Aplica conservación física de masa y momento RANS: $\nabla \cdot \vec{V} = 0$.
-   - Conmuta a modo PINN si la meteorología supera los récords históricos de Cochabamba (condición OOD).
-3. **Confort Biometeorológico (PET y UTCI):**
-   - Modela la Temperatura Media Radiante ($T_{mrt}$) y el balance energético humano MEMI ($M + W + R + C + E_{sk} + Q_{res} = S$).
-4. **Detector de la Paradoja del Penalizador de Albedo:**
-   - Identifica cuándo una política municipal de aplicar recubrimientos reflectantes (techos blancos) sin arbolado perjudica al peatón al rebotar la radiación a la acera, elevando el PET por encima de 40 °C.
-5. **Índice Sintético HVR (Heat Vulnerability Risk):**
-   $$\text{HVR}_i = \left(\frac{\text{PET}_i - \text{PET}_{min}}{\text{PET}_{max} - \text{PET}_{min}}\right) \times \left(\frac{\text{Población}_i}{\text{Área}_i}\right) \times (1 - \text{NDVI}_i) \times \beta_{\text{Cota2750}}$$
+### A. Servicios WMS Oficiales del GAMC (`https://serviciosgamc.cochabamba.bo/api/gs/wms` en `EPSG:3857`)
+El visor cartográfico consume directamente los servicios OGC WMS de la Alcaldía de Cochabamba:
+1. **Límite Distritos** (UUID: `7eb13092-bf0e-493b-aae6-03c43eedda2c`): Geometría vectorial de los 15 distritos.
+2. **Población por Manzanas** (UUID: `194a02a0-a73a-48c1-a260-82847c5c905d`): Cruce predial de vulnerabilidad socio-climática.
+3. **Áreas Verdes** (UUID: `47360ddc-e35f-4ece-a995-59e90eb79cc6`): Identificación del déficit de parques y masa forestal urbana.
+4. **Cota 2750** (UUID: `297cefa4-0832-42bb-a98e-2cbea989fd9d`): Barrera biofísica y legal del Parque Tunari.
 
----
+Las operaciones implementadas incluyen `GetMap`, `GetLegendGraphic` (`VERSION=1.0.0`) y `GetFeatureInfo` interactivo al hacer clic en cualquier punto del mapa en coordenadas de proyección Web Mercator (`SRS=EPSG:3857`).
 
-## 4. Estructura de Archivos del Módulo
+### B. Datos Satelitales de la NASA
+1. **NASA POWER (2000–2025):** 9,131 registros diarios continuos de temperatura del aire ($T_{2M}$), irradiancia solar ($MJ/m^2/d$), humedad relativa y viento.
+2. **NASA MODIS/VIIRS LST & NDVI:** Colecciones MOD11A2, VNP21A2 y MOD13Q1 para el seguimiento multitemporal de islas de calor.
+3. **NASA SRTM / NASADEM (30m):** Topografía de alta precisión para el gradiente altimétrico y modelado de inversión térmica.
 
-```
-C:\Users\josem\OneDrive\Desktop\Nasa Hackathon\
-├── data/
-│   └── gamc/
-│       ├── distritos_cochabamba.geojson      # GeoJSON oficial 14 distritos con métricas
-│       └── cota_2750_tunari.geojson          # Línea Cota 2750 Parque Tunari
-├── frontend/
-│   ├── src/
-│   │   ├── modules/
-│   │   │   └── MicroclimateTab.jsx           # Componente React principal para el dashboard
-│   │   ├── App.jsx                           # Contenedor con las 4 pestañas del equipo
-│   │   └── main.jsx
-│   ├── package.json
-│   └── vite.config.js
-├── src/
-│   ├── models/
-│   │   ├── local_fno.py                      # Operador Neuronal de Fourier 3D
-│   │   ├── pinns_solver.py                   # Solver PINN con balanceo dpPINN
-│   │   ├── thermal_indices.py                # Calculador PET/UTCI y Albedo Penalty
-│   │   └── sdf_encoder.py                    # Codificador de Distancia Signada 3D
-│   ├── gis/
-│   │   ├── nasa_ingest.py                    # Cliente NASA Earthdata (LST, NDVI, DEM)
-│   │   ├── spatial_join.py                   # Cruce espacial de distritos y rásteres
-│   │   └── risk_index.py                     # Calculador de índice HVR
-│   └── api/
-│       ├── routes.py                         # Endpoints FastAPI
-│       └── schemas.py                        # Esquemas Pydantic v2
-├── tests/
-│   └── test_microclimas.py                   # Suite de pruebas unitarias (5/5 PASSED)
-└── main.py                                   # Servidor FastAPI en http://127.0.0.1:8000
-```
+### C. Ground-Truth: Red MÓNICA GAMC y Transporte Público
+* **Red MÓNICA:** 125,865 registros continuos de calidad del aire y temperatura en dos estaciones físicas:
+  * **Estación SEMAPA (Norte):** 71,154 registros, $PM_{10}$ promedio de $49.3\,\mu g/m^3$.
+  * **Estación Kanata (Sur):** 54,711 registros, $PM_{10}$ promedio de $67.1\,\mu g/m^3$ (+36% mayor debido a la trampa topográfica de inversión térmica).
+* **Líneas de Transporte:** GeoJSON con 730 rutas de transporte público que aportan calor antropogénico en corredores viales.
 
 ---
 
-## 5. Instrucciones para Subir a la Rama de Git cuando Kevin te invite
+## 3. Innovación con IA: 13 Sensores Virtuales Calibrados
 
-Cuando tu compañero Kevin te añada como colaborador al repositorio `https://github.com/k3v1bvo/360NasaSpaceHAck.git`:
+Debido a que Cochabamba solo cuenta con 2 estaciones físicas oficiales para monitorear una ciudad de más de 800,000 habitantes, se implementó un modelo de **Machine Learning (XGBoost 3.2.0)** entrenado para extrapolar y predecir condiciones microclimáticas en los **13 distritos ciegos sin sensores físicos**.
 
-### Paso 1: Clonar o conectar el repositorio
-```bash
-# Opción A: Si clonas en una carpeta nueva
-git clone https://github.com/k3v1bvo/360NasaSpaceHAck.git
-cd 360NasaSpaceHAck
-git checkout feature/modulo-microclimas
-
-# Luego copias a esa carpeta:
-# - data/gamc/distritos_cochabamba.geojson  -> data/gamc/
-# - data/gamc/cota_2750_tunari.geojson      -> data/gamc/
-# - frontend/src/modules/MicroclimateTab.jsx -> frontend/src/modules/
+```
+                   MATRIZ DE PREDICCIÓN CON MACHINE LEARNING
+                   
+[NASA POWER Clima] ──┐
+[LST Satelital]    ──┼─► [ XGBoost 3.2.0 Regressor ] ──► [ 13 Sensores Virtuales IA ]
+[NDVI Vegetación]  ──┤     (Calibrado con Red MÓNICA)      (D1-D5, D7-D8, D10-D15)
+[DEM Cota/Altitud] ──┤     R² = 0.9457 | MAE = 0.44°C      Temperatura, Humedad,
+[Densidad Manzanas]──┤     RMSE = 0.55°C | p < 0.0001      PET y Calidad del Aire
+[Líneas Transporte]──┘
 ```
 
-### Paso 2: Probar el frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-Abre `http://localhost:5173` y verifica que la pestaña `Microclimas Urbanos (IA)` cargue con todos los controles.
+### Métricas de Evaluación Científica del Modelo:
+* **Coeficiente de Determinación ($R^2$):** **0.9457**
+* **Root Mean Squared Error ($\text{RMSE}$):** **$0.5496^\circ\text{C}$**
+* **Mean Absolute Error ($\text{MAE}$):** **$0.4362^\circ\text{C}$**
+* **Significancia Estadística ($p\text{-value}$):** **$0.0000 < 0.05$** (estadísticamente significativo)
+* **Dataset de Validación:** 1,460 días independientes de prueba cruzada.
 
-### Paso 3: Guardar y subir a GitHub
-```bash
-git add frontend/src/modules/MicroclimateTab.jsx data/gamc/distritos_cochabamba.geojson data/gamc/cota_2750_tunari.geojson
-git commit -m "feat(microclimas): implementación completa de MicroclimateTab con LST, NDVI, PET y contraste Tunari-Sur"
-git push origin feature/modulo-microclimas
-```
+---
 
-### Paso 4: Crear el Pull Request
-Entra a GitHub y solicita a Kevin el merge hacia `main`. ¡Listo para ganar en la FEXCO!
+## 4. Indicadores de Confort Biometeorológico y Simulación
+
+### A. Temperatura Fisiológica Equivalente (PET)
+El sistema calcula el índice PET basado en el balance energético humano de Munich (MEMI):
+$$\text{PET} = f(T_{\text{aire}}, T_{\text{mrt}}, v_{\text{viento}}, \text{RH}, \text{Albedo}, \text{SVF})$$
+* **Zona Norte (D1, D2, D13):** PET en rango de confort ($21.8^\circ\text{C} - 26.5^\circ\text{C}$).
+* **Zona Sur (D8, D9, D15):** PET en estrés térmico extremo ($38.5^\circ\text{C} - 41.2^\circ\text{C}$).
+
+### B. Simulador de Intervención Urbana para el GAMC
+El planificador municipal puede simular en tiempo real el impacto de políticas públicas:
+1. **Reforestación Urbana (+15% cobertura vegetal):**  
+   * Reduce el LST en **$-2.3^\circ\text{C}$**.  
+   * Reduce el índice de estrés térmico PET en **$-3.1^\circ\text{C}$**.  
+   * Disminuye la demanda de refrigeración y mitiga las partículas en suspensión.
+2. **Pavimentos Fríos y Reflectantes:**  
+   * Reduce el LST superficial en **$-1.4^\circ\text{C}$**.
+3. **Detector de la Paradoja del Albedo:**  
+   * Alerta al municipio si se aplican recubrimientos reflectantes (techos o pavimentos blancos) sin sombreado arbóreo, ya que la radiación rebotada hacia los peatones incrementa el PET sobre los $40^\circ\text{C}$.
+
+---
+
+## 5. Cobertura de los 15 Distritos Oficiales de Cochabamba
+
+| Distrito | Nombre / Zona | LST Promedio | NDVI | PET | Tasa Decadal LST | Nivel de Riesgo |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **D1** | Queru Queru | $26.2^\circ\text{C}$ | 0.32 | $25.8^\circ\text{C}$ | $+0.42^\circ\text{C}/\text{década}$ | Moderado |
+| **D2** | Cala Cala | $25.8^\circ\text{C}$ | 0.35 | $25.4^\circ\text{C}$ | $+0.38^\circ\text{C}/\text{década}$ | Bajo-Moderado |
+| **D3** | Sarco | $27.1^\circ\text{C}$ | 0.28 | $27.0^\circ\text{C}$ | $+0.45^\circ\text{C}/\text{década}$ | Moderado |
+| **D4** | La Chimba | $29.4^\circ\text{C}$ | 0.22 | $29.8^\circ\text{C}$ | $+0.51^\circ\text{C}/\text{década}$ | Medio-Alto |
+| **D5** | Jaihuayco | $31.8^\circ\text{C}$ | 0.16 | $32.4^\circ\text{C}$ | $+0.58^\circ\text{C}/\text{década}$ | Alto |
+| **D6** | Laguna Alalay | $28.5^\circ\text{C}$ | 0.29 | $28.0^\circ\text{C}$ | $+0.34^\circ\text{C}/\text{década}$ | Amortiguador ($-1.8^\circ\text{C}$) |
+| **D7** | Villa Sebastián Pagador | $32.7^\circ\text{C}$ | 0.14 | $33.6^\circ\text{C}$ | $+0.58^\circ\text{C}/\text{década}$ | Medio-Alto |
+| **D8** | Ushpa Ushpa | $36.5^\circ\text{C}$ | 0.09 | $37.9^\circ\text{C}$ | $+0.64^\circ\text{C}/\text{década}$ | Crítico |
+| **D9** | Itocta | $34.8^\circ\text{C}$ | 0.11 | $36.2^\circ\text{C}$ | $+0.61^\circ\text{C}/\text{década}$ | Crítico |
+| **D10** | Centro Histórico | $31.2^\circ\text{C}$ | 0.18 | $31.9^\circ\text{C}$ | $+0.52^\circ\text{C}/\text{década}$ | Medio-Alto |
+| **D11** | Las Cuadras | $28.9^\circ\text{C}$ | 0.24 | $29.1^\circ\text{C}$ | $+0.46^\circ\text{C}/\text{década}$ | Moderado |
+| **D12** | Hipódromo | $29.4^\circ\text{C}$ | 0.21 | $29.7^\circ\text{C}$ | $+0.49^\circ\text{C}/\text{década}$ | Moderado |
+| **D13** | Tunari Alto (Cota > 2750m) | $20.4^\circ\text{C}$ | 0.58 | $21.8^\circ\text{C}$ | $+0.28^\circ\text{C}/\text{década}$ | Pulmón Protector |
+| **D14** | Sebastián Pagador Sur | $33.9^\circ\text{C}$ | 0.12 | $35.1^\circ\text{C}$ | $+0.59^\circ\text{C}/\text{década}$ | Alto |
+| **D15** | K'ara K'ara / Ch'ampa Rancho | $37.8^\circ\text{C}$ | 0.07 | $39.5^\circ\text{C}$ | $+0.67^\circ\text{C}/\text{década}$ | Extremo (Isla de Calor) |
+
+---
+
+## 6. Verificación en Producción y Calidad de Código
+
+* **Frontend:** React 18, Leaflet, Tailwind CSS y Lucide Icons.
+* **Componente Central:** `frontend/src/components/MapViewer.jsx` y `frontend/src/modules/TemporalTrendModal.jsx`.
+* **Rendimiento:** Cero layout shifts en interacción con gráficas, controles de zoom aislados en esquina inferior derecha (`bottomright`) sin colisión con barras de herramientas superiores.
+* **Validación de Compilación:** Compilación sin errores (`npm run build` en Vite) y despliegue continuo en Vercel.

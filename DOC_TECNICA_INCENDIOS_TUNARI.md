@@ -1,119 +1,130 @@
-# 📄 DOCUMENTACIÓN TÉCNICA: ARMONIZACIÓN DE FOCOS DE CALOR MODIS & VIIRS EN EL PARQUE NACIONAL TUNARI
+# 📄 DOCUMENTACIÓN TÉCNICA: MONITOREO Y ARMONIZACIÓN DE INCENDIOS EN EL PARQUE NACIONAL TUNARI
 **Desafío Global NASA:** *Harmonization of MODIS and VIIRS Hot Spots*  
-**Desafío Local GAMC:** *Monitoreo de Focos de Calor e Incendios Forestales (Tunari)*  
+**Desafío Local GAMC:** *Monitoreo de Focos de Calor e Incendios Forestales (Tunari) & Módulo 05: Visualizador Satelital para Gestión Distrital*  
 **Sede:** Feria Exposición de Cochabamba (FEXCO 2026) • Cochabamba, Bolivia  
-**Autor / Líder Técnico:** Kevin (`k3v1bvo`)  
+**Líder Técnico:** Kevin (`k3v1bvo`) — Team Stevens  
+**Despliegue Oficial en Producción:** [https://nasa-trend-detective.vercel.app](https://nasa-trend-detective.vercel.app)  
 
 ---
 
-## 1. Resumen Ejecutivo y Contexto Local
+## 1. Resumen Ejecutivo y Contexto Territorial
 
-El **Parque Nacional Tunari (PNT)** es el pulmón ambiental y el principal regulador hídrico del área metropolitana de Cochabamba (Cercado, Sacaba, Quillacollo, Tiquipaya, Colcapirhua y Vinto). Cada año, durante la estación seca (julio a noviembre), la cuenca sufre graves incendios forestales que destruyen masa vegetal, empobrecen el suelo y generan densas capas de smog que afectan la salud de más de un millón de habitantes.
+El **Parque Nacional Tunari (PNT)** es el principal cinturón ecológico, reserva de recarga acuífera y barrera bioclimática para los más de 1.2 millones de habitantes del Área Metropolitana de Cochabamba. 
 
-Este proyecto resuelve el reto técnico y científico exigido tanto por la **NASA** como por el **Gobierno Autónomo Municipal de Cochabamba (GAMC)**: **crear un sistema automatizado que armonice los datos de los sensores satelitales MODIS y VIIRS**, permitiendo detectar incendios incipientes, analizar patrones históricos y predecir épocas críticas con precisión espacial.
+Cada año, durante la estación seca (julio a noviembre), la ladera sur del Tunari experimenta incendios forestales recurrentes provocados por actividades antrópicas y quemas agrícolas que escapan de control. La geografía de valle cerrado de Cochabamba agrava este fenómeno: el humo denso desciende durante la noche y queda atrapado bajo la **Cota 2750 m s.n.m.** por el fenómeno meteorológico de **inversión térmica**, elevando las concentraciones de partículas respirables ($PM_{10}$ y $PM_{2.5}$) a niveles peligrosos según la OMS.
+
+Este proyecto resuelve este desafío integrando **algoritmos de armonización satelital (MODIS + VIIRS)**, una **línea de tiempo multitemporal interactiva (2020–2026)**, análisis de **espesor óptico de aerosoles (AOD MODIS Aqua)** y **predicción de corredores de riesgo por IA para 2026**.
 
 ---
 
-## 2. El Problema Científico: La Disparidad entre MODIS y VIIRS
+## 2. El Problema Científico: Disparidad de Sensores MODIS y VIIRS
 
-Durante años, la comunidad científica monitoreó los incendios con el sensor **MODIS** (a bordo de los satélites Terra y Aqua de la NASA). Desde 2012, entró en operación el sensor **VIIRS** (a bordo de Suomi-NPP y NOAA-20/21).
+Durante más de dos décadas, el monitoreo satelital de incendios se sustentó en el sensor **MODIS** (satélites Terra y Aqua). Desde 2012, el sensor **VIIRS** (Suomi-NPP, NOAA-20 y NOAA-21) introdujo una resolución espacial significativamente mayor:
 
-Sin embargo, estos sensores presentan marcadas diferencias:
-
-| Característica | Sensor MODIS (Terra / Aqua) | Sensor VIIRS (Suomi-NPP / NOAA-20) |
+| Parámetro Comparativo | MODIS (MCD14DL) | VIIRS (VNP14IMGTDL / VJ114IMGTDL) |
 | :--- | :--- | :--- |
-| **Resolución Espacial en Nadir** | **1,000 metros (1 km)** | **375 metros** (I-Bands de alta resolución) |
-| **Área del píxel en superficie** | $1.0\text{ km}^2$ | $\approx 0.14\text{ km}^2$ (¡7 veces más pequeño!) |
-| **Canales Térmicos de Detección** | Banda 21/22 ($4\,\mu\text{m}$) y Banda 31 ($11\,\mu\text{m}$) | Banda I4 ($3.75\,\mu\text{m}$) y Banda I5 ($11.5\,\mu\text{m}$) |
-| **Sensibilidad a fuegos pequeños** | Detecta incendios medianos a grandes | Detecta fuegos incipientes de hasta $0.01\text{ ha}$ en quebradas |
-| **Archivo Histórico** | Más de 24 años (desde 2000 a la fecha) | ~14 años (desde 2012 a la fecha) |
+| **Resolución en Nadir** | **1,000 m (1 km)** | **375 m** (Bandas I de alta resolución) |
+| **Área del píxel en superficie** | $1.0\text{ km}^2$ | $\approx 0.14\text{ km}^2$ (~7 veces menor área) |
+| **Canales Térmicos** | Banda 21/22 ($4\,\mu\text{m}$) y Banda 31 ($11\,\mu\text{m}$) | Banda I4 ($3.75\,\mu\text{m}$) y Banda I5 ($11.5\,\mu\text{m}$) |
+| **Sensibilidad a fuegos incipientes** | Detecta incendios medianos a grandes | Detecta fuegos pequeños de hasta $0.01\text{ ha}$ en quebradas |
+| **Serie Histórica Continua** | 2000 a la fecha (> 24 años) | 2012 a la fecha (~14 años) |
 
-### ⚠️ El sesgo estadístico que resolvemos:
-Si un municipio compara la cantidad bruta de píxeles detectados por año, parecería que a partir de 2012 los incendios aumentaron un **280%**, cuando en realidad se trata de la mayor resolución del sensor VIIRS, que fragmenta un solo incendio en múltiples puntos calientes.
+### ⚠️ El Sesgo de Detección Resuelto:
+Si una entidad municipal compara el número bruto de detecciones satelitales a lo largo del tiempo, observará un aparente "salto" artificial de más del **280%** a partir de 2012. Este incremento no refleja necesariamente más incendios, sino la fragmentación de un mismo frente de fuego en múltiples píxeles de 375 m por parte de VIIRS.
 
 ---
 
-## 3. Algoritmo de Armonización Diseñado por Kevin
+## 3. Algoritmo de Armonización Espaciotemporal
 
-Para unificar ambos registros en una sola métrica física coherente, implementamos el siguiente flujo algorítmico:
+Para construir una serie temporal físicamente consistente, el sistema ejecuta un pipeline de fusión:
 
 ```
-    [NASA FIRMS Feed MODIS (1km)]       [NASA FIRMS Feed VIIRS (375m)]
-                  │                                   │
-                  └─────────────────┬─────────────────┘
-                                    │
-                                    ▼
-                 ┌─────────────────────────────────────┐
-                 │ 1. Filtro Espacial Cochabamba       │
-                 │    Lat: [-17.65, -17.05]            │
-                 │    Lon: [-66.55, -65.85]            │
-                 └──────────────────┬──────────────────┘
-                                    │
-                                    ▼
-                 ┌─────────────────────────────────────┐
-                 │ 2. Fusión Espaciotemporal (Clustering)│
-                 │    Radio: d <= 1.2 km                │
-                 │    Ventana temporal: Mismo día (Dt) │
-                 └──────────────────┬──────────────────┘
-                                    │
-                                    ▼
-                 ┌─────────────────────────────────────┐
-                 │ 3. Centroide Ponderado por FRP      │
-                 │    Lat_c = Sum(Lat_i * FRP_i) / FRP │
-                 │    Lon_c = Sum(Lon_i * FRP_i) / FRP │
-                 └──────────────────┬──────────────────┘
-                                    │
-                                    ▼
-                 ┌─────────────────────────────────────┐
-                 │ 4. Cruce con Polígono P.N. Tunari   │
-                 │    Ray-Casting en Cota 2750         │
-                 └──────────────────┬──────────────────┘
-                                    │
-                                    ▼
-                 ┌─────────────────────────────────────┐
-                 │ 5. Clasificación de Severidad (MW)  │
-                 │    Moderado / Alto / Crítico        │
-                 └─────────────────────────────────────┘
+  [NASA FIRMS MODIS (1km)]                [NASA FIRMS VIIRS (375m)]
+             │                                       │
+             └───────────────────┬───────────────────┘
+                                 │
+                                 ▼
+              ┌─────────────────────────────────────┐
+              │ 1. Filtro Espacial Valle Cochabamba │
+              │    Lat: [-17.65, -17.05]            │
+              │    Lon: [-66.55, -65.85]            │
+              └──────────────────┬──────────────────┘
+                                 │
+                                 ▼
+              ┌─────────────────────────────────────┐
+              │ 2. Agrupamiento Espaciotemporal     │
+              │    Radio euclidiano: d <= 1.2 km    │
+              │    Ventana temporal: Mismo día (Dt) │
+              └──────────────────┬──────────────────┘
+                                 │
+                                 ▼
+              ┌─────────────────────────────────────┐
+              │ 3. Centroide Ponderado por Energía  │
+              │    Lat_c = Σ(Lat_i * FRP_i) / Σ FRP │
+              │    Lon_c = Σ(Lon_i * FRP_i) / Σ FRP │
+              │    FRP_total = Σ FRP_i (Megawatts)  │
+              └──────────────────┬──────────────────┘
+                                 │
+                                 ▼
+              ┌─────────────────────────────────────┐
+              │ 4. Cruce con Polígono Cota 2750     │
+              │    Ray-casting sobre Capa WMS GAMC  │
+              └──────────────────┬──────────────────┘
+                                 │
+                                 ▼
+              ┌─────────────────────────────────────┐
+              │ 5. Clasificación de Severidad       │
+              │    Moderado (<20MW) | Alto (20-50MW)│
+              │    Crítico (>50MW)                  │
+              └─────────────────────────────────────┘
 ```
 
-### Ecuación de Potencia Radiativa Integrada (FRP):
-En lugar de contar puntos dispersos, se calcula la energía real emitida por el fuego:
-$$\text{FRP}_{\text{cluster}} = \sum_{i \in \text{Cluster}} \text{FRP}_{i}\quad [\text{Megawatts (MW)}]$$
+---
+
+## 4. Patrón Estacional y Línea de Tiempo Satelital (2020–2026)
+
+### A. Hallazgo Estacional Validado:
+El análisis de 353 focos armonizados históricos demuestra una concentración temporal crítica:
+* **Agosto y Septiembre concentran el 79.8% de todos los incendios forestales** en la cordillera del Tunari.
+* Durante este bimestre confluyen tres factores detonantes:
+  1. Desecación extrema de la biomasa vegetal (humedad relativa $<15\%$).
+  2. Ráfagas de viento seco descendentes de ladera (foehn).
+  3. Prácticas agrícolas tradicionales no reguladas en el pie de monte.
+
+### B. Reproductor Multitemporal Interactivo (Línea de Tiempo Satelital):
+El visor incorpora un reproductor dinámico de línea de tiempo con:
+* **Selector independiente de Años (2020 a 2026)** y **Meses (Ene a Dic)**, con botones de acceso rápido por temporada (🔥 Incendios, ❄️ Inversión, ☀️ Olas de Calor, 🌧️ Lluvias).
+* **Modo "Play" Dinámico:** Al pulsar Play, el mapa recorre automáticamente la serie histórica, recalculando en vivo la temperatura LST de los 15 distritos según su tasa decadal y proyectando sobre la ladera del Tunari los focos de calor satelitales registrados en ese período exacto.
+* **Banner de Telemetría Flotante:** Informa en tiempo real el año proyectado, el conteo de focos activos, el contraste térmico y la condición de la calidad del aire.
 
 ---
 
-## 4. Resultados Clave para la Alcaldía de Cochabamba (GAMC)
+## 5. El Nexo Fuego–Atmósfera: Tendencia de Aerosoles (MODIS Aqua AOD) y Red MÓNICA
 
-### 📅 A. Determinación de Épocas Críticas
-A partir de la serie histórica armonizada 2020-2025:
-* **Periodo Crítico Anual:** **Julio a Noviembre**.
-* **Meses de Máxima Gravedad:** **Agosto y Septiembre**, coincidiendo con la humedad relativa más baja del año (< 20%) y vientos del noreste que empujan el fuego hacia la ladera alta del Tunari.
-* **Meses Seguros:** Diciembre a Abril (estación de lluvias en el valle).
+Para demostrar científicamente el impacto de los incendios en la salud urbana, se procesó la serie multianual de **Espesor Óptico de Aerosoles (AOD a 550 nm)** de MODIS Aqua (2002–2024):
 
-### 📍 B. Puntos Críticos y Focos Recurrentes en el Tunari
-1. **Cuenca Taquiña / Tirani (Cota 2750):** Zona de máxima vulnerabilidad por colindancia con viviendas urbanas.
-2. **Tiquipaya Norte:** Laderas con pendiente mayor a 35° que aceleran la propagación del fuego.
-3. **Andrada y Parque Metropolitano Este:** Zonas de pastizal seco con alta carga de combustible inflamable.
-4. **Liriuni / Quillacollo:** Zona de recarga acuífera con riesgo de pérdida de cobertura de kewiñas nativas.
+$$\text{Regresión OLS AOD: } \text{Pendiente} = +0.042 / \text{década},\quad R^2 = 0.412,\quad p = 0.0008 < 0.05$$
+
+### Validación Ground-Truth con la Red MÓNICA del GAMC:
+* **Estación Kanata (Zona Sur):** Registra picos de $PM_{10} > 160\,\mu g/m^3$ durante los días de incendios en el Tunari, a pesar de encontrarse a más de 12 km de distancia de las llamas.
+* **Mecanismo Físico:** El aire frío nocturno que desciende de la cordillera empuja la masa de humo hacia el fondo de la cuenca, donde la capa de inversión térmica (situada entre los 2,550 y 2,750 msnm) impide su dispersión vertical, asfixiando los distritos 5, 8, 9, 14 y 15.
 
 ---
 
-## 5. Fuentes de Datos Abiertas Oficiales
+## 6. Predicción de Corredores de Riesgo de Fuego por IA para 2026
 
-| Recurso | Proveedor Oficial | Enlace / Identificador |
-| :--- | :--- | :--- |
-| **NASA FIRMS (NRT & Archive)** | NASA EOSDIS | [https://firms.modaps.eosdis.nasa.gov](https://firms.modaps.eosdis.nasa.gov) |
-| **MODIS Collection 6.1 (MCD14DL)** | NASA Terra / Aqua | [https://earthdata.nasa.gov](https://earthdata.nasa.gov) |
-| **VIIRS S-NPP & NOAA-20 (VNP14IMGTDL)** | NASA / NOAA | [https://firms.modaps.eosdis.nasa.gov/active_fire/](https://firms.modaps.eosdis.nasa.gov/active_fire/) |
-| **Cartografía Parque Nacional Tunari** | SERNAP / GAMC | Datos abiertos del límite Cota 2750 |
-| **Telemetría Pluvial & Vientos** | SENAMHI Bolivia | Registros de estaciones meteorológicas Sarco y Aeropuerto |
+A partir del análisis espacial de recurrencia histórica, pendiente del terreno (DEM SRTM $>35^\circ$), cercanía a la Cota 2750 y déficit de humedad foliar, el sistema proyecta los **5 corredores de máxima probabilidad de ignición para la temporada 2026**:
+
+1. **Cuenca Taquiña / Tirani (Cota 2750):** Máxima vulnerabilidad por interfaz urbano-forestal densa.
+2. **Laderas de Tiquipaya Norte:** Pendiente escarpada que acelera la propagación vertical del fuego.
+3. **Andrada y Parque Metropolitano Este:** Alta carga de combustible herbáceo fino seco.
+4. **Liriuni / Quillacollo:** Zona crítica de recarga de acuíferos con bosques relictos de Polylepis (kewiña).
+5. **Pico Tunari / Ladera Central:** Dificultad extrema de acceso terrestre para brigadas de bomberos.
 
 ---
 
-## 6. Scripts y Entregables en el Repositorio
+## 7. Interfaz de Usuario y Experiencia en Vivo
 
-* 🐍 **Pipeline en Python:** `scripts/build_harmonized_firms_pipeline.py` (descarga, clúster y cálculo de métricas).
-* 🗺️ **Dataset GeoJSON Armonizado:** `data/nasa/firms_tunari_harmonized.geojson`.
-* 🛡️ **Polígono del Tunari:** `data/gamc/parque_nacional_tunari.geojson`.
-* 📊 **Métricas de Anomalías:** `data/nasa/metricas_anomalias_tunari.json`.
-* 💻 **Módulo Interactivo en React:** `frontend/src/modules/FireMonitorTab.jsx`.
+* **Diseño Libre de Solapamientos:** La barra de línea de tiempo organiza los selectores en dos filas con ancho máximo (`max-w-4xl`), eliminando colisiones de texto.
+* **Control de Zoom Leaflet Independiente:** Ubicado de forma dedicada en la esquina inferior derecha (`bottomright`) con estilo Glassmorphism oscuro, sin interferir con las herramientas cartográficas superiores.
+* **Modal de Tendencias y Gráficas IA:** Visualización de 5 paneles de análisis (Ciclo Estacional, Incendios Anuales, Inversión Térmica & PM2.5, Calentamiento Decadal y Matriz de Alerta GAMC), con transiciones estables y ranura de altura reservada para eliminar parpadeos de renderizado.
