@@ -44,25 +44,25 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md p-2 sm:p-4 overflow-y-auto animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-5xl rounded-3xl border border-white/15 bg-[#0a0f1d] text-white shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
+        className="relative w-full max-w-6xl rounded-2xl sm:rounded-3xl border border-white/15 bg-[#0a0f1d] text-white shadow-2xl overflow-hidden flex flex-col max-h-[92vh] sm:max-h-[88vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cabecera del Modal */}
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 bg-gradient-to-r from-blue-950/60 via-[#0e1628] to-purple-950/60">
+        <div className="flex items-center justify-between border-b border-white/10 px-4 sm:px-6 py-3 sm:py-3.5 bg-gradient-to-r from-blue-950/60 via-[#0e1628] to-purple-950/60 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-400/40 shadow-inner">
+            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl sm:rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-400/40 shadow-inner">
               <TrendingUp className="h-5 w-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-black uppercase tracking-wider text-cyan-400 font-mono">
+                <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-cyan-400 font-mono">
                   NASA Trend Detective
                 </span>
-                <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-[10px] font-bold text-purple-300 border border-purple-400/30">
+                <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-[9px] sm:text-[10px] font-bold text-purple-300 border border-purple-400/30">
                   Análisis Temporal & Predicción IA
                 </span>
               </div>
-              <h2 className="text-base sm:text-lg font-black tracking-tight text-white">
+              <h2 className="text-sm sm:text-base md:text-lg font-black tracking-tight text-white">
                 Tendencias Históricas y Pronóstico de Protección Territorial
               </h2>
             </div>
@@ -76,71 +76,78 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
           </button>
         </div>
 
-        {/* Barra de Pestañas Interactivas */}
-        <div className="flex items-center gap-1 border-b border-white/10 px-4 py-2 bg-[#090d18] overflow-x-auto no-scrollbar shrink-0">
-          {[
-            { id: 'seasonality', label: 'Ciclo Estacional (Mes a Mes)', icon: Calendar },
-            { id: 'fires', label: 'Incendios Anuales (2020-2026)', icon: Flame },
-            { id: 'air_quality', label: 'Inversión Térmica & PM2.5', icon: Wind },
-            { id: 'decadal', label: 'Calentamiento Decadal LST', icon: Thermometer },
-            { id: 'protection', label: 'Matriz de Alerta & Protección', icon: ShieldAlert },
-            { id: 'sources', label: '14 Recursos Oficiales NASA & Socios', icon: BookOpen },
-          ].map((tab) => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition whitespace-nowrap ${
-                  isActive
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50 ring-1 ring-blue-400/50'
-                    : 'text-slate-400 hover:bg-neutral-800/80 hover:text-slate-200'
-                }`}
-              >
-                <Icon className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-slate-400'}`} />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
+        {/* Barra de Pestañas Interactivas (Segmented Grid: Cero desbordes ni texto cortado) */}
+        <div className="border-b border-white/10 p-2 sm:px-4 sm:py-2.5 bg-[#070b14] shrink-0">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 sm:gap-1.5">
+            {[
+              { id: 'seasonality', label: 'Ciclo Estacional', sub: 'Mes a Mes', icon: Calendar },
+              { id: 'fires', label: 'Incendios Anuales', sub: '2020-2026', icon: Flame },
+              { id: 'air_quality', label: 'Inversión & PM2.5', sub: 'Red MÓNICA', icon: Wind },
+              { id: 'decadal', label: 'Tendencias LST', sub: 'Mann-Kendall', icon: Thermometer },
+              { id: 'protection', label: 'Matriz de Alerta', sub: 'Protección GAMC', icon: ShieldAlert },
+              { id: 'sources', label: 'Recursos NASA', sub: '14 Fuentes', icon: BookOpen },
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center sm:flex-col justify-center gap-1.5 sm:gap-0.5 rounded-xl px-2 py-1.5 sm:py-2 text-center transition ${
+                    isActive
+                      ? 'bg-blue-600 text-white shadow-md shadow-blue-900/40 ring-1 ring-blue-400/60 font-black'
+                      : 'text-slate-400 hover:bg-white/5 hover:text-slate-200 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <Icon className={`h-3.5 w-3.5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                    <span className="text-xs truncate">{tab.label}</span>
+                  </div>
+                  <span className={`hidden sm:inline text-[10px] font-mono leading-none ${isActive ? 'text-blue-200' : 'text-slate-500'}`}>
+                    {tab.sub}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Contenido Principal con Scroll */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+        {/* Contenido Principal con Scroll Suave */}
+        <div className="flex-1 overflow-y-auto custom-modal-scroll p-3.5 sm:p-5 space-y-4 sm:space-y-5">
 
           {/* ========================================================================= */}
           {/* PESTAÑA 1: CICLO ESTACIONAL MES A MES                                      */}
           {/* ========================================================================= */}
           {activeTab === 'seasonality' && (
-            <div className="space-y-6 animate-in fade-in duration-200">
-              <div className="rounded-2xl border border-blue-500/20 bg-blue-950/20 p-4 text-xs text-blue-200 flex items-start gap-3">
-                <Info className="h-5 w-5 text-cyan-400 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-white font-bold">Patrón Estacional del Valle de Cochabamba (Validado por NASA & GAMC):</strong>
-                  <p className="mt-1 text-slate-300 leading-relaxed">
-                    Los datos históricos de NASA FIRMS y la Red MÓNICA demuestran que Cochabamba no tiene riesgos uniformes todo el año:
-                    <strong className="text-red-300"> Agosto y Septiembre concentran el 79.8% de los incendios forestales</strong> debido a la desecación de biomasa y vientos de ladera; mientras que <strong className="text-amber-300">Mayo, Junio y Julio sufren asfixia por Inversión Térmica</strong> nocturna bajo la Cota 2.750 msnm.
-                  </p>
+            <div className="space-y-3.5 sm:space-y-4 animate-in fade-in duration-200">
+              {/* Alerta de Contexto Físico */}
+              <div className="rounded-xl border border-blue-500/25 bg-blue-950/25 p-2.5 sm:p-3 text-xs text-blue-200 flex items-start gap-2.5">
+                <Info className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
+                <div className="text-[11.5px] leading-relaxed">
+                  <span className="text-white font-bold">Patrón Estacional del Valle (NASA & GAMC): </span>
+                  <span className="text-slate-300">
+                    <strong className="text-red-300">Agosto y Septiembre concentran el 79.8% de los incendios</strong> por desecación y vientos; mientras que <strong className="text-amber-300">Mayo, Junio y Julio sufren asfixia por Inversión Térmica nocturna</strong> bajo la Cota 2.750 msnm.
+                  </span>
                 </div>
               </div>
 
               {/* Gráfica de Barras Interactiva de Incendios por Mes */}
-              <div className="rounded-2xl border border-white/10 bg-[#0d1322] p-4 sm:p-5">
-                <div className="flex items-center justify-between mb-4">
+              <div className="rounded-2xl border border-white/10 bg-[#0c1220] p-3 sm:p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2.5">
                   <div>
-                    <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                    <h3 className="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
                       <Flame className="h-4 w-4 text-orange-400" /> Distribución Mensual de Incendios en el Tunari (Promedio Histórico)
                     </h3>
-                    <p className="text-xs text-slate-400">Porcentaje y número de focos detectados por MODIS/VIIRS cada mes</p>
+                    <p className="text-[11px] text-slate-400">Porcentaje y número de focos detectados por MODIS/VIIRS cada mes</p>
                   </div>
-                  <span className="text-[11px] font-mono text-cyan-400 bg-cyan-950/60 px-2 py-1 rounded border border-cyan-800/40">
+                  <span className="text-[10px] sm:text-[11px] font-mono text-cyan-300 bg-cyan-950/70 px-2.5 py-0.5 rounded-md border border-cyan-800/40 w-fit shrink-0">
                     Pico: Agosto-Septiembre (79.8%)
                   </span>
                 </div>
 
                 {/* SVG Bar Chart */}
-                <div className="relative pt-2 pb-6">
-                  <div className="grid grid-cols-12 gap-1 sm:gap-2 h-44 sm:h-52 items-end border-b border-white/15 px-1">
+                <div className="relative pt-1 pb-1">
+                  <div className="grid grid-cols-12 gap-1 sm:gap-2 h-32 sm:h-40 items-end border-b border-white/15 px-1 pb-1">
                     {ciclo_estacional_mensual.map((m) => {
                       const heightPct = (m.incendios_promedio / maxFocosMonth) * 100;
                       const isPeak = m.mes_num === 8 || m.mes_num === 9;
@@ -152,20 +159,20 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
                           onMouseEnter={() => setHoveredMonth(m.mes_num)}
                           onMouseLeave={() => setHoveredMonth(null)}
                         >
-                          <span className={`text-[10px] font-mono font-bold mb-1 transition ${
-                            isPeak ? 'text-red-400' : 'text-slate-400'
+                          <span className={`text-[9px] sm:text-[10px] font-mono font-bold mb-0.5 transition ${
+                            isPeak ? 'text-red-400 font-black' : 'text-slate-400'
                           }`}>
                             {m.incendios_promedio}
                           </span>
                           <div 
-                            className={`w-full rounded-t-lg transition-all duration-300 ${
+                            className={`w-full rounded-t-md transition-all duration-300 ${
                               isPeak 
-                                ? 'bg-gradient-to-t from-red-600 via-orange-500 to-amber-400 shadow-lg shadow-red-950/50' 
+                                ? 'bg-gradient-to-t from-red-600 via-orange-500 to-amber-400 shadow-md shadow-red-950/60' 
                                 : m.mes_num === 6 || m.mes_num === 7
                                 ? 'bg-gradient-to-t from-amber-600 to-amber-400'
                                 : 'bg-gradient-to-t from-blue-700/60 to-cyan-500/60'
                             } ${isHovered ? 'scale-105 brightness-125 ring-2 ring-white/60' : 'hover:brightness-110'}`}
-                            style={{ height: `${Math.max(heightPct, 4)}%` }}
+                            style={{ height: `${Math.max(heightPct, 5)}%` }}
                           />
                         </div>
                       );
@@ -173,9 +180,9 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
                   </div>
 
                   {/* Etiquetas de Meses */}
-                  <div className="grid grid-cols-12 gap-1 sm:gap-2 mt-2 px-1 text-center">
+                  <div className="grid grid-cols-12 gap-1 sm:gap-2 mt-1 px-1 text-center">
                     {ciclo_estacional_mensual.map((m) => (
-                      <div key={m.mes_num} className="text-[10px] sm:text-xs font-bold text-slate-400 truncate">
+                      <div key={m.mes_num} className="text-[10px] font-bold text-slate-400 truncate">
                         {m.mes_nombre.slice(0, 3)}
                       </div>
                     ))}
@@ -186,13 +193,13 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
                 {hoveredMonth && (() => {
                   const m = ciclo_estacional_mensual.find(x => x.mes_num === hoveredMonth);
                   return (
-                    <div className="mt-3 p-3 rounded-xl border border-cyan-500/30 bg-cyan-950/40 text-xs flex items-center justify-between animate-in fade-in">
+                    <div className="mt-2 p-2 rounded-xl border border-cyan-500/30 bg-cyan-950/50 text-xs flex items-center justify-between animate-in fade-in">
                       <div>
                         <strong className="text-cyan-300 font-bold">{m.mes_nombre}: {m.temporada}</strong>
                         <p className="text-slate-300 text-[11px] mt-0.5">{m.descripcion}</p>
                       </div>
                       <div className="text-right shrink-0 ml-3">
-                        <span className="font-mono font-bold text-orange-400 text-sm">{m.incendios_pct}% del año</span>
+                        <span className="font-mono font-bold text-orange-400 text-xs">{m.incendios_pct}% del año</span>
                         <div className="text-[10px] text-slate-400">PM2.5: {m.pm25_promedio_ugm3} µg/m³ ({m.calidad_aire})</div>
                       </div>
                     </div>
@@ -200,57 +207,65 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
                 })()}
               </div>
 
-              {/* Grid de las 4 Temporadas Clave del Valle */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-                <div className="rounded-2xl border border-red-500/30 bg-red-950/20 p-4">
-                  <div className="flex items-center gap-2 text-red-400 font-black text-xs uppercase tracking-wider">
-                    <Flame className="h-4 w-4" /> Temporada de Incendios
+              {/* Grid de las 4 Temporadas Clave del Valle (Tarjetas perfectamente dimensionadas) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
+                <div className="rounded-xl border border-red-500/30 bg-red-950/20 p-2.5 sm:p-3 flex flex-col justify-between hover:border-red-500/50 transition">
+                  <div>
+                    <div className="flex items-center gap-1.5 text-red-400 font-black text-[10.5px] uppercase tracking-wider">
+                      <Flame className="h-3.5 w-3.5" /> Temporada Incendios
+                    </div>
+                    <div className="text-xs sm:text-sm font-bold text-white mt-0.5">Agosto — Octubre</div>
+                    <p className="text-slate-300 text-[11px] mt-1 leading-snug">
+                      Humedad &lt; 15%, vientos de ladera &gt; 35 km/h. Concentra el <strong>79.8% de los focos</strong> de la década.
+                    </p>
                   </div>
-                  <div className="text-base font-bold text-white mt-1">Agosto — Octubre</div>
-                  <p className="text-slate-300 text-xs mt-1.5 leading-relaxed">
-                    Humedad &lt; 15%, ráfagas de viento de ladera &gt; 35 km/h. Concentra el <strong>79.8% de todos los focos</strong> de la década.
-                  </p>
-                  <div className="mt-3 text-[11px] font-mono text-red-300 bg-red-950/80 px-2.5 py-1 rounded border border-red-800/60 inline-block">
-                    Peligro Máximo en D13 y D3
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-amber-500/30 bg-amber-950/20 p-4">
-                  <div className="flex items-center gap-2 text-amber-400 font-black text-xs uppercase tracking-wider">
-                    <Wind className="h-4 w-4" /> Inversión Térmica
-                  </div>
-                  <div className="text-base font-bold text-white mt-1">Mayo — Julio</div>
-                  <p className="text-slate-300 text-xs mt-1.5 leading-relaxed">
-                    Piscina de aire frío nocturno queda atrapada bajo la Cota 2.750 msnm. Pico de asfixia en el Casco Viejo (PM2.5 &gt; 78 µg/m³).
-                  </p>
-                  <div className="mt-3 text-[11px] font-mono text-amber-300 bg-amber-950/80 px-2.5 py-1 rounded border border-amber-800/60 inline-block">
-                    San Juan (23 Jun): Alerta Roja
+                  <div className="mt-2 text-[10px] font-mono font-semibold text-red-300 bg-red-950/80 px-2 py-0.5 rounded border border-red-800/60 w-fit">
+                    Peligro: D13 y D3
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-orange-500/30 bg-orange-950/20 p-4">
-                  <div className="flex items-center gap-2 text-orange-400 font-black text-xs uppercase tracking-wider">
-                    <Thermometer className="h-4 w-4" /> Olas de Calor Extremo
+                <div className="rounded-xl border border-amber-500/30 bg-amber-950/20 p-2.5 sm:p-3 flex flex-col justify-between hover:border-amber-500/50 transition">
+                  <div>
+                    <div className="flex items-center gap-1.5 text-amber-400 font-black text-[10.5px] uppercase tracking-wider">
+                      <Wind className="h-3.5 w-3.5" /> Inversión Térmica
+                    </div>
+                    <div className="text-xs sm:text-sm font-bold text-white mt-0.5">Mayo — Julio</div>
+                    <p className="text-slate-300 text-[11px] mt-1 leading-snug">
+                      Piscina de aire frío nocturno queda atrapada bajo Cota 2.750. Asfixia en Casco Viejo (PM2.5 &gt; 78 µg/m³).
+                    </p>
                   </div>
-                  <div className="text-base font-bold text-white mt-1">Octubre — Diciembre</div>
-                  <p className="text-slate-300 text-xs mt-1.5 leading-relaxed">
-                    Radiación solar máxima sobre suelos áridos de la Zona Sur (D15 y D8), generando temperaturas superficiales LST &gt; 41°C.
-                  </p>
-                  <div className="mt-3 text-[11px] font-mono text-orange-300 bg-orange-950/80 px-2.5 py-1 rounded border border-orange-800/60 inline-block">
-                    Estrés Térmico PET &gt; 38°C
+                  <div className="mt-2 text-[10px] font-mono font-semibold text-amber-300 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-800/60 w-fit">
+                    San Juan: Alerta Roja
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-blue-500/30 bg-blue-950/20 p-4">
-                  <div className="flex items-center gap-2 text-cyan-400 font-black text-xs uppercase tracking-wider">
-                    <Layers className="h-4 w-4" /> Lavado y Torrenteras
+                <div className="rounded-xl border border-orange-500/30 bg-orange-950/20 p-2.5 sm:p-3 flex flex-col justify-between hover:border-orange-500/50 transition">
+                  <div>
+                    <div className="flex items-center gap-1.5 text-orange-400 font-black text-[10.5px] uppercase tracking-wider">
+                      <Thermometer className="h-3.5 w-3.5" /> Calor Extremo
+                    </div>
+                    <div className="text-xs sm:text-sm font-bold text-white mt-0.5">Octubre — Diciembre</div>
+                    <p className="text-slate-300 text-[11px] mt-1 leading-snug">
+                      Radiación máxima sobre suelos áridos de Zona Sur (D15, D8, D9), alcanzando LST &gt; 41°C en superficie.
+                    </p>
                   </div>
-                  <div className="text-base font-bold text-white mt-1">Diciembre — Marzo</div>
-                  <p className="text-slate-300 text-xs mt-1.5 leading-relaxed">
-                    Lluvias intensas lavan la atmósfera (PM2.5 &lt; 16 µg/m³), pero activan 60 torrenteras con riesgo de aluvión en cuencas quemadas.
-                  </p>
-                  <div className="mt-3 text-[11px] font-mono text-cyan-300 bg-blue-950/80 px-2.5 py-1 rounded border border-cyan-800/60 inline-block">
-                    Riesgo Aluvión: Taquiña y Pintumayu
+                  <div className="mt-2 text-[10px] font-mono font-semibold text-orange-300 bg-orange-950/80 px-2 py-0.5 rounded border border-orange-800/60 w-fit">
+                    Estrés PET &gt; 38°C
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-cyan-500/30 bg-blue-950/20 p-2.5 sm:p-3 flex flex-col justify-between hover:border-cyan-500/50 transition">
+                  <div>
+                    <div className="flex items-center gap-1.5 text-cyan-400 font-black text-[10.5px] uppercase tracking-wider">
+                      <Layers className="h-3.5 w-3.5" /> Lavado & Torrenteras
+                    </div>
+                    <div className="text-xs sm:text-sm font-bold text-white mt-0.5">Diciembre — Marzo</div>
+                    <p className="text-slate-300 text-[11px] mt-1 leading-snug">
+                      Lluvias intensas lavan la atmósfera (PM2.5 &lt; 16 µg/m³), pero activan 60 torrenteras con riesgo de aluvión.
+                    </p>
+                  </div>
+                  <div className="mt-2 text-[10px] font-mono font-semibold text-cyan-300 bg-blue-950/80 px-2 py-0.5 rounded border border-cyan-800/60 w-fit">
+                    Aluvión: Taquiña
                   </div>
                 </div>
               </div>
@@ -476,8 +491,8 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
                 </span>
               </div>
 
-              {/* Lista Comparativa de Distritos */}
-              <div className="space-y-2">
+              {/* Lista Comparativa de Distritos (Grid de 2 Columnas para Máxima Legibilidad) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-2.5">
                 {tendencias_decadales_distritos.map((dist, idx) => {
                   const isWarming = dist.tasa_calentamiento_decadal_c > 0;
                   const isSevere = dist.tasa_calentamiento_decadal_c >= 0.70;
@@ -485,41 +500,41 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
                   return (
                     <div 
                       key={dist.distrito_id}
-                      className={`p-3.5 rounded-2xl border transition flex items-center justify-between ${
+                      className={`p-2.5 sm:p-3 rounded-xl border transition flex items-center justify-between ${
                         isSevere 
-                          ? 'border-red-500/40 bg-red-950/15'
+                          ? 'border-red-500/40 bg-red-950/20 shadow-sm'
                           : isCooling
-                          ? 'border-cyan-500/40 bg-cyan-950/15'
-                          : 'border-white/10 bg-[#0d1322]'
+                          ? 'border-cyan-500/40 bg-cyan-950/20 shadow-sm'
+                          : 'border-white/10 bg-[#0d1322] hover:border-white/20'
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className={`flex h-8 w-10 items-center justify-center rounded-xl text-xs font-mono font-black ${
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <span className={`flex h-7 w-9 shrink-0 items-center justify-center rounded-lg text-xs font-mono font-black ${
                           isSevere ? 'bg-red-600 text-white' : isCooling ? 'bg-cyan-600 text-white' : 'bg-neutral-800 text-slate-300'
                         }`}>
                           {dist.distrito_id}
                         </span>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-white">{dist.nombre}</span>
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="text-xs sm:text-sm font-bold text-white truncate max-w-[140px] sm:max-w-[180px]">{dist.nombre}</span>
+                            <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full ${
                               isSevere ? 'bg-red-950 text-red-300 border border-red-800' : isCooling ? 'bg-cyan-950 text-cyan-300 border border-cyan-800' : 'bg-neutral-800 text-slate-400'
                             }`}>
                               {dist.nivel_riesgo_calor}
                             </span>
                           </div>
-                          <p className="text-xs text-slate-400 mt-0.5 max-w-xl">{dist.causa_principal}</p>
+                          <p className="text-[11px] text-slate-400 mt-0.5 truncate max-w-[220px] sm:max-w-xs">{dist.causa_principal}</p>
                         </div>
                       </div>
 
-                      <div className="text-right shrink-0 ml-4">
-                        <div className={`text-base font-mono font-black ${
+                      <div className="text-right shrink-0 ml-2.5">
+                        <div className={`text-xs sm:text-sm font-mono font-black ${
                           isSevere ? 'text-red-400' : isCooling ? 'text-cyan-400' : 'text-slate-200'
                         }`}>
-                          {dist.tasa_calentamiento_decadal_c > 0 ? '+' : ''}{dist.tasa_calentamiento_decadal_c} °C/década
+                          {dist.tasa_calentamiento_decadal_c > 0 ? '+' : ''}{dist.tasa_calentamiento_decadal_c} °C/déc
                         </div>
-                        <div className="text-[10px] text-slate-400 font-mono">
-                          p = {dist.p_value} ({dist.significativo ? '✓ Significativo' : 'No sig.'})
+                        <div className="text-[9px] text-slate-400 font-mono">
+                          p = {dist.p_value} ({dist.significativo ? '✓ Sig.' : 'No sig.'})
                         </div>
                       </div>
                     </div>
@@ -996,14 +1011,15 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
         </div>
 
         {/* Pie del Modal con Botones */}
-        <div className="flex items-center justify-between border-t border-white/10 px-5 py-3.5 bg-[#090d18] text-xs text-slate-400">
+        <div className="flex items-center justify-between border-t border-white/10 px-4 sm:px-6 py-2.5 sm:py-3 bg-[#070b14] text-xs text-slate-400 shrink-0">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Algoritmo de Detección de Tendencias: Mann-Kendall + XGBoost 3.2.0</span>
+            <span className="hidden sm:inline">Algoritmo de Detección: </span>
+            <span className="font-mono text-slate-300 font-bold">Mann-Kendall + XGBoost 3.2.0 (p &lt; 0.05)</span>
           </div>
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition shadow-lg shadow-blue-900/40"
+            className="px-4 py-1.5 sm:py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold transition shadow-lg shadow-blue-900/40"
           >
             Volver al Mapa
           </button>
