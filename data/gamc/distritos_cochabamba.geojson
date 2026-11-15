@@ -67,7 +67,14 @@
         "temp_aire_pred_c": 27.4,
         "pet_pred_c": 25.8,
         "nivel_alerta": "Bajo",
-        "estrategia_recomendada": "Conservación de masa arbórea"
+        "estrategia_recomendada": "Conservación de masa arbórea",
+        "centroide": [
+          -17.3751,
+          -66.1326
+        ],
+        "resena_historica": "Zona residencial y boscosa del norte (Queru Queru y Aranjuez). Cuenta con quebradas naturales que descienden del Tunari, manteniendo microclimas frescos y buena cobertura de eucaliptos y molles.",
+        "hito_urbano": "Av. América Este • Jardín Botánico Martín Cárdenas • Ciclovía del Norte",
+        "tendencia_detectada": "Microclima estable y fresco regulado por la cercanía a la Serranía de San Pedro."
       }
     },
     {
@@ -127,7 +134,14 @@
         "temp_aire_pred_c": 26.8,
         "pet_pred_c": 24.5,
         "nivel_alerta": "Bajo",
-        "estrategia_recomendada": "Sede Estación SEMAPA (Red MÓNICA)"
+        "estrategia_recomendada": "Sede Estación SEMAPA (Red MÓNICA)",
+        "centroide": [
+          -17.3701,
+          -66.1681
+        ],
+        "resena_historica": "Cala Cala y Tupuraya, tradicional zona de quintas hoy consolidada. Alberga la sede central de SEMAPA y la Estación Norte de la Red MÓNICA (Ground Truth).",
+        "hito_urbano": "SEMAPA • Parque Fidel Anze • Av. Circunvalación Norte",
+        "tendencia_detectada": "Excelente amortiguamiento térmico natural gracias al arbolado de parques lineales."
       }
     },
     {
@@ -187,7 +201,14 @@
         "temp_aire_pred_c": 27.9,
         "pet_pred_c": 27.2,
         "nivel_alerta": "Bajo-Medio",
-        "estrategia_recomendada": "Arborización en torrenteras secundarias"
+        "estrategia_recomendada": "Arborización en torrenteras secundarias",
+        "centroide": [
+          -17.368,
+          -66.191
+        ],
+        "resena_historica": "Sarco y Temporal, área de transición con Tiquipaya. Cruce de varias torrenteras menores que bajan de la cordillera hacia el cauce del Río Rocha.",
+        "hito_urbano": "Av. Beijing Norte • Parque de la Familia Sarco • Límite Tiquipaya",
+        "tendencia_detectada": "Calentamiento moderado por impermeabilización progresiva del suelo en urbanizaciones."
       }
     },
     {
@@ -247,7 +268,14 @@
         "temp_aire_pred_c": 29.5,
         "pet_pred_c": 30.1,
         "nivel_alerta": "Medio",
-        "estrategia_recomendada": "Protección de humedal Coña Coña"
+        "estrategia_recomendada": "Protección de humedal Coña Coña",
+        "centroide": [
+          -17.3954,
+          -66.1923
+        ],
+        "resena_historica": "La Chimba y Coña Coña, sector oeste del valle atravesado por la Av. Blanco Galindo. Alberga el humedal regulador de la Laguna Coña Coña.",
+        "hito_urbano": "Laguna Coña Coña • Av. Blanco Galindo km 4-6 • Colcapirhua límite",
+        "tendencia_detectada": "Pérdida histórica del espejo de agua de Coña Coña elevó la temperatura local en +1.9 °C."
       }
     },
     {
@@ -315,7 +343,14 @@
         "temp_aire_pred_c": 32.1,
         "pet_pred_c": 34.6,
         "nivel_alerta": "Alto",
-        "estrategia_recomendada": "Sede Estación 6 de Agosto + Cinturón verde Maica"
+        "estrategia_recomendada": "Sede Estación 6 de Agosto + Cinturón verde Maica",
+        "centroide": [
+          -17.4202,
+          -66.1792
+        ],
+        "resena_historica": "Jaihuayco y La Maica, zona suroeste con vocación lechera y agropecuaria. Contiene el Aeropuerto Internacional Jorge Wilstermann y la Estación Sur de la Red MÓNICA.",
+        "hito_urbano": "Aeropuerto Wilstermann • Mercado Jaihuayco • Cuenca Lechera Maica",
+        "tendencia_detectada": "Fuerte contraste: campiña húmeda al oeste frente a pista de asfalto y cemento caliente al este."
       }
     },
     {
@@ -383,7 +418,14 @@
         "temp_aire_pred_c": 28.2,
         "pet_pred_c": 26.9,
         "nivel_alerta": "Moderado",
-        "estrategia_recomendada": "Isla Fría Bioclimática (-1.8 °C de amortiguamiento)"
+        "estrategia_recomendada": "Isla Fría Bioclimática (-1.8 °C de amortiguamiento)",
+        "centroide": [
+          -17.4223,
+          -66.145
+        ],
+        "resena_historica": "Entorno de la Laguna Alalay y Cerro Verde. Actúa como el principal pulmón bioclimático del sur, generando un efecto de 'Isla Fría' que amortigua el calor del valle.",
+        "hito_urbano": "Laguna Alalay • Recinto Ferial FEXCO • Country Club Cochabamba",
+        "tendencia_detectada": "Isla fría comprobada: reduce -1.8 °C en su área de influencia inmediata cuando el espejo tiene agua."
       }
     },
     {
@@ -443,7 +485,14 @@
         "temp_aire_pred_c": 31.8,
         "pet_pred_c": 33.9,
         "nivel_alerta": "Alto",
-        "estrategia_recomendada": "Parques lineales en laderas San Pedro sur"
+        "estrategia_recomendada": "Parques lineales en laderas San Pedro sur",
+        "centroide": [
+          -17.4253,
+          -66.1187
+        ],
+        "resena_historica": "Valle Hermoso y Villa Sebastián Pagador Norte, ladera este en las faldas de la Serranía de San Pedro. Zona de alta radiación solar sobre pendientes pedregosas.",
+        "hito_urbano": "Refinería Gualberto Villarroel • Mercado Campesino • Ladera San Pedro",
+        "tendencia_detectada": "Almacenamiento térmico en cerros desprovistos de vegetación, irradiando calor nocturno."
       }
     },
     {
@@ -499,7 +548,14 @@
         "temp_aire_pred_c": 34.6,
         "pet_pred_c": 38.2,
         "nivel_alerta": "Crítico",
-        "estrategia_recomendada": "Arborización masiva de choque (Molles / Jacarandás)"
+        "estrategia_recomendada": "Arborización masiva de choque (Molles / Jacarandás)",
+        "centroide": [
+          -17.4575,
+          -66.1108
+        ],
+        "resena_historica": "Ushpa Ushpa y Valle Hermoso Sur, sector árido periurbano del sureste. Zona de asentamientos recientes en lomas secas con escasa cobertura vegetal (NDVI < 0.10).",
+        "hito_urbano": "Av. Petrolera km 7 al 10 • Quebrada Ushpa Ushpa • Salida al Valle Alto",
+        "tendencia_detectada": "Isla de calor crítica con déficit de arbolado del 82% y estrés hídrico edáfico sostenido."
       }
     },
     {
@@ -567,7 +623,14 @@
         "temp_aire_pred_c": 33.8,
         "pet_pred_c": 37.1,
         "nivel_alerta": "Muy Alto",
-        "estrategia_recomendada": "Recuperación de ronda hídrica Río Tamborada"
+        "estrategia_recomendada": "Recuperación de ronda hídrica Río Tamborada",
+        "centroide": [
+          -17.4641,
+          -66.1806
+        ],
+        "resena_historica": "Itocta, Pucará y cuenca del Río Tamborada. Histórica zona de cultivos del sur hoy en rápida transición urbana hacia barrios residenciales populares.",
+        "hito_urbano": "Río Tamborada • Polideportivo Pucará • Av. Panamericana Sur",
+        "tendencia_detectada": "Calor diurno muy elevado (+35.8 °C LST) atenuado parcialmente por la humedad de parcelas de cultivo."
       }
     },
     {
@@ -631,7 +694,14 @@
         "temp_aire_pred_c": 31.2,
         "pet_pred_c": 33.4,
         "nivel_alerta": "Medio-Alto",
-        "estrategia_recomendada": "Hotspot La Cancha (+8 °C) • Corredores sombreados"
+        "estrategia_recomendada": "Hotspot La Cancha (+8 °C) • Corredores sombreados",
+        "centroide": [
+          -17.3935,
+          -66.1551
+        ],
+        "resena_historica": "Casco Viejo, Centro Histórico y La Coronilla. Corazón comercial de la ciudad que alberga el gran mercado La Cancha, una de las áreas comerciales abiertas más grandes de Sudamérica.",
+        "hito_urbano": "Plaza 14 de Septiembre • El Prado • Mercado La Cancha • Cerro San Sebastián",
+        "tendencia_detectada": "Hotspot urbano extremo en La Cancha (+8.1 °C sobre Tunari) por densidad de calaminas y asfalto."
       }
     },
     {
@@ -691,7 +761,14 @@
         "temp_aire_pred_c": 29.1,
         "pet_pred_c": 29.8,
         "nivel_alerta": "Medio",
-        "estrategia_recomendada": "Isla Verde Campus UMSS • Protección de arbolado"
+        "estrategia_recomendada": "Isla Verde Campus UMSS • Protección de arbolado",
+        "centroide": [
+          -17.3976,
+          -66.1279
+        ],
+        "resena_historica": "Las Cuadras, San Pedro y Muyurina. Alberga el Campus Central de la Universidad Mayor de San Simón (UMSS) y el monumento del Cristo de la Concordia en la cumbre este.",
+        "hito_urbano": "Campus Central UMSS • Cristo de la Concordia • Hospital Viedma",
+        "tendencia_detectada": "El campus arbolado de la UMSS actúa como 'Isla Verde', bajando hasta 2.5 °C el calor del entorno."
       }
     },
     {
@@ -751,7 +828,14 @@
         "temp_aire_pred_c": 30.8,
         "pet_pred_c": 32.7,
         "nivel_alerta": "Medio-Alto",
-        "estrategia_recomendada": "Techos reflectivos combinados con árboles"
+        "estrategia_recomendada": "Techos reflectivos combinados con árboles",
+        "centroide": [
+          -17.3897,
+          -66.1763
+        ],
+        "resena_historica": "Hipódromo, Sarco Sur y Villa Galindo. Área residencial central delimitada por las avenidas Gabriel René Moreno y Blanco Galindo.",
+        "hito_urbano": "Ex-Hipódromo (Parque Urbano) • Av. Melchor Pérez de Olguín",
+        "tendencia_detectada": "Microclima templado-cálido con alto tráfico vehicular pero arbolado urbano moderado."
       }
     },
     {
@@ -835,7 +919,14 @@
         "temp_aire_pred_c": 19.8,
         "pet_pred_c": 18.2,
         "nivel_alerta": "Bajo (Reserva Fría)",
-        "estrategia_recomendada": "Límite Cota 2750 • Prevención de Incendios Forestales"
+        "estrategia_recomendada": "Límite Cota 2750 • Prevención de Incendios Forestales",
+        "centroide": [
+          -17.334,
+          -66.1585
+        ],
+        "resena_historica": "Parque Nacional Tunari Alto y Taquiña. Reserva forestal y cuenca hídrica del municipio sobre la Cota 2750. Bosques de pinos, eucaliptos, qeñuas y fuentes de vertientes.",
+        "hito_urbano": "Parque Nacional Tunari • Cota 2750 • Cuenca Taquiña • Vertientes Tirani",
+        "tendencia_detectada": "Reserva bioclimática de aire frío (20.4 °C LST) y barrera contra vientos secos del altiplano."
       }
     },
     {
@@ -887,7 +978,14 @@
         "temp_aire_pred_c": 33.9,
         "pet_pred_c": 36.8,
         "nivel_alerta": "Muy Alto",
-        "estrategia_recomendada": "Estabilización de taludes y cobertura vegetal de secano"
+        "estrategia_recomendada": "Estabilización de taludes y cobertura vegetal de secano",
+        "centroide": [
+          -17.4448,
+          -66.1314
+        ],
+        "resena_historica": "Alto Cochabamba y Sebastián Pagador Sur. Distrito montañoso y árido del este en las serranías que dominan la vista panorámica del valle sur.",
+        "hito_urbano": "Mirador Alto Cochabamba • Tanques de agua SEMAPA • Cerros Sur",
+        "tendencia_detectada": "Alta amplitud térmica (días sofocantes de 35.2 °C y noches frías por viento catabático)."
       }
     },
     {
@@ -951,7 +1049,14 @@
         "temp_aire_pred_c": 35.4,
         "pet_pred_c": 39.5,
         "nivel_alerta": "Extremo (Isla de Calor Máxima)",
-        "estrategia_recomendada": "Plan Maestro de Reforestación Prioritaria de la Alcaldía"
+        "estrategia_recomendada": "Plan Maestro de Reforestación Prioritaria de la Alcaldía",
+        "centroide": [
+          -17.4698,
+          -66.1412
+        ],
+        "resena_historica": "K'ara K'ara, Arrumani y Pampa San Miguel. El distrito más austral de Cochabamba, caracterizado por suelos arcillosos erosionados y el histórico relleno sanitario.",
+        "hito_urbano": "Zona K'ara K'ara • Serranía de Canto Grande • Pampa San Miguel",
+        "tendencia_detectada": "Máxima isla de calor urbana de Cochabamba: 37.8 °C en superficie, con una brecha térmica de +17.4 °C respecto al Tunari."
       }
     }
   ]

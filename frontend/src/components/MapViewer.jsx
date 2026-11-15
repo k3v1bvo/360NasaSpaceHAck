@@ -358,23 +358,76 @@ export default function MapViewer({
           fillOpacity: 0.30,
         });
 
+        // Etiqueta permanente y legible en el centroide de cada distrito
+        const shortName = p.nombre.split('-')[1]?.trim() || p.nombre;
+        polygon.bindTooltip(`
+          <div style="display: flex; align-items: center; gap: 4px; font-family: sans-serif; font-size: 10px; font-weight: 800;">
+            <span style="background: ${color}; color: #fff; padding: 1px 5px; border-radius: 4px; font-size: 9px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);">${p.distrito_id}</span>
+            <span>${shortName}</span>
+            <span style="color: ${color}; font-size: 9px; font-weight: bold;">(${lstVal}°C)</span>
+          </div>
+        `, {
+          permanent: true,
+          direction: 'center',
+          className: 'custom-district-tooltip',
+          opacity: 0.95
+        });
+
+        // Hover dinámico para destacar el distrito seleccionado
+        polygon.on('mouseover', () => {
+          polygon.setStyle({ weight: 3, color: '#ffffff', fillOpacity: 0.55 });
+        });
+
+        polygon.on('mouseout', () => {
+          polygon.setStyle({ weight: 1.5, color, fillOpacity: 0.30 });
+        });
+
         polygon.bindPopup(`
-          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 230px; line-height: 1.45;">
-            <div style="font-weight: bold; font-size: 13px; color: ${color}; border-bottom: 2px solid ${color}; padding-bottom: 4px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">
-              <span>📍 ${p.nombre}</span>
-              ${p.nivel_alerta ? `<span style="font-size: 10px; background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 4px;">${p.nivel_alerta}</span>` : ''}
+          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 270px; max-width: 320px; line-height: 1.45;">
+            <div style="background: ${color}; color: white; padding: 6px 10px; border-radius: 6px 6px 0 0; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 13px;">📍 ${p.nombre}</span>
+              <span style="font-size: 9px; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">
+                ${p.nivel_alerta || 'Distrito GAMC'}
+              </span>
             </div>
-            <strong>Temperatura LST (NASA):</strong> <span style="font-weight: bold; color: ${color};">${lstVal} °C</span><br/>
-            ${p.temp_aire_pred_c ? `<strong>Temp. Aire Estimada:</strong> ${p.temp_aire_pred_c} °C<br/>` : ''}
-            ${p.pet_pred_c ? `<strong>Confort Térmico Humano (PET):</strong> <span style="font-weight: bold; color: ${p.pet_pred_c > 35 ? '#b91c1c' : '#047857'};">${p.pet_pred_c} °C</span><br/>` : ''}
-            <strong>Índice Vegetación NDVI:</strong> ${p.ndvi_promedio || p.ndvi_vegetacion || '0.25'}<br/>
-            ${p.riesgo_termico_hvr ? `<strong>Índice Riesgo HVR:</strong> <span style="font-weight: bold;">${p.riesgo_termico_hvr}</span><br/>` : ''}
-            ${p.poblacion_total ? `<strong>Población Expuesta:</strong> ${Number(p.poblacion_total).toLocaleString()} hab. (${p.densidad_hab_km2 || ''} hab/km²)<br/>` : ''}
-            ${p.estrategia_recomendada ? `
-              <div style="margin-top: 5px; padding: 4px; background: #f8fafc; border-left: 3px solid ${color}; font-size: 11px;">
-                <strong>Estrategia GAMC:</strong> ${p.estrategia_recomendada}
+            <div style="padding: 10px; border: 1px solid ${color}; border-top: none; border-radius: 0 0 6px 6px; background: white;">
+              ${p.resena_historica ? `
+                <div style="margin-bottom: 7px; color: #334155; font-size: 11px; line-height: 1.4; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px;">
+                  ${p.resena_historica}
+                </div>
+              ` : ''}
+
+              ${p.hito_urbano ? `
+                <div style="margin-bottom: 7px; font-size: 10px; color: #475569; background: #f8fafc; padding: 4px 6px; border-radius: 4px;">
+                  🏛️ <strong>Hitos urbanos:</strong> ${p.hito_urbano}
+                </div>
+              ` : ''}
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 6px; font-size: 11px;">
+                <div><strong>LST (NASA):</strong> <span style="font-weight: bold; color: ${color};">${lstVal} °C</span></div>
+                <div><strong>NDVI (Verde):</strong> <span>${p.ndvi_promedio || 0.25}</span></div>
+                ${p.temp_aire_pred_c ? `<div><strong>Aire T2M:</strong> ${p.temp_aire_pred_c} °C</div>` : ''}
+                ${p.pet_pred_c ? `<div><strong>Confort (PET):</strong> <span style="font-weight: bold; color: ${p.pet_pred_c > 35 ? '#b91c1c' : '#047857'};">${p.pet_pred_c} °C</span></div>` : ''}
               </div>
-            ` : ''}
+
+              ${p.poblacion_total ? `
+                <div style="font-size: 11px; color: #475569; margin-bottom: 5px;">
+                  👥 <strong>Población:</strong> ${Number(p.poblacion_total).toLocaleString()} hab. • <strong>Déficit árboles:</strong> ${p.deficit_arbolado_pct || 50}%
+                </div>
+              ` : ''}
+
+              ${p.tendencia_detectada ? `
+                <div style="margin-top: 6px; padding: 5px; background: #eff6ff; border-left: 3px solid #3b82f6; font-size: 10px; color: #1e3a8a;">
+                  📈 <strong>Diagnóstico NASA:</strong> ${p.tendencia_detectada}
+                </div>
+              ` : ''}
+
+              ${p.estrategia_recomendada ? `
+                <div style="margin-top: 5px; padding: 5px; background: #f0fdf4; border-left: 3px solid #16a34a; font-size: 10px; color: #14532d;">
+                  🌱 <strong>Estrategia Alcaldía:</strong> ${p.estrategia_recomendada}
+                </div>
+              ` : ''}
+            </div>
           </div>
         `);
         polygon.addTo(layersGroupRef.current);
