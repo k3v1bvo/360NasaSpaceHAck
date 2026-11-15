@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const GAMC_PROXY = 'https://recursosgamc.cochabamba.bo/proxy';
+// Endpoint oficial con CORS abierto habilitado por la Alcaldía de Cochabamba
+const GAMC_PROXY = 'https://serviciosgamc.cochabamba.bo/api/gs/wms';
 const GAMC_KEY = '1a3d2d9c6e1d6a94062d11a9021a48b24ae0e05e8183e9d8';
 
 // Validador estricto para evitar que Leaflet pida capas con UUIDs inválidos
