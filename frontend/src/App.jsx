@@ -13,13 +13,6 @@ import MicroclimateAITab from './modules/MicroclimateAITab';
 // Módulo 3: Causa Física Térmica (Incendios Tunari, NASA FIRMS y Plumas AOD)
 import FireMonitorTab from './modules/FireMonitorTab';
 
-// Módulo 4: Riesgo Hidrológico & Torrenteras (NASA SAR / DEM + 60 Puntos GAMC)
-import FloodRiskTab from './modules/FloodRiskTab';
-
-// Módulo 5: Asistente Agro-Climático Resiliente (NASA SMAP + Evapotranspiración Valles)
-import AgroAdvisorTab from './modules/AgroAdvisorTab';
-
-import CitizenReportModal from './modules/CitizenReportModal';
 import SystemWorkflowTour from './components/SystemWorkflowTour';
 
 // Datos satelitales armonizados y crudos
@@ -35,7 +28,6 @@ export default function App() {
   const [isTemporalModalOpen, setIsTemporalModalOpen] = useState(false);
   const [mobileView, setMobileView] = useState('map'); // 'map' | 'panel' para vista móvil responsive
   const [offlineMode, setOfflineMode] = useState(false); // Online por defecto para consumir NASA POWER & WMS
-  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [selectedGlobalSpot, setSelectedGlobalSpot] = useState(null);
   const [sensorMode, setSensorMode] = useState('HARMONIZED'); // 'HARMONIZED' | 'MODIS' | 'VIIRS'
@@ -56,14 +48,6 @@ export default function App() {
   const [nasaGibs, setNasaGibs] = useState(false);
   const [gibsDate, setGibsDate] = useState('2024-09-15');
 
-  const [reports, setReports] = useState([
-    { tipo: 'humo', zona: 'Cota 2750 Tunari (Taquiña)', desc: 'Columna de humo divisada', fecha: '10:15 AM' }
-  ]);
-
-  const handleAddReport = (nuevoReporte) => {
-    setReports((prev) => [nuevoReporte, ...prev]);
-  };
-
   const currentFocosData = sensorMode === 'HARMONIZED'
     ? focosHarmonized.features
     : sensorMode === 'MODIS'
@@ -81,7 +65,6 @@ export default function App() {
         setActiveTab={handleTabChange}
         offlineMode={offlineMode}
         setOfflineMode={setOfflineMode}
-        onOpenReport={() => setIsReportModalOpen(true)}
         isTourOpen={isTourOpen}
         setIsTourOpen={setIsTourOpen}
         onOpenTemporalAnalytics={() => setIsTemporalModalOpen(true)}
@@ -170,28 +153,6 @@ export default function App() {
               offlineMode={offlineMode}
             />
           )}
-
-          {activeTab === 'torrenteras' && (
-            <FloodRiskTab
-              selectedPoint={selectedPoint}
-              onSelectPunto={(point) => {
-                const [lng, lat] = point.geometry.coordinates;
-                setSelectedPoint({ lat, lon: lng, ...point.properties });
-                setMobileView('map');
-              }}
-              onOpenReportModal={() => setIsReportModalOpen(true)}
-            />
-          )}
-
-          {activeTab === 'agrotech' && (
-            <AgroAdvisorTab
-              onOpenReportModal={() => setIsReportModalOpen(true)}
-              onSelectParcela={(parcela) => {
-                setSelectedPoint({ lat: parcela.lat, lon: parcela.lon, ...parcela });
-                setMobileView('map');
-              }}
-            />
-          )}
         </aside>
       </div>
 
@@ -220,13 +181,6 @@ export default function App() {
           <span>Ver Panel</span>
         </button>
       </div>
-
-      {/* Modal Flotante de Alerta Ciudadana */}
-      <CitizenReportModal
-        isOpen={isReportModalOpen}
-        onClose={() => setIsReportModalOpen(false)}
-        onAddReport={handleAddReport}
-      />
 
       {/* Guía Interactiva del Sistema / Flujo de Demostración */}
       <SystemWorkflowTour

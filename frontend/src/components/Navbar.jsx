@@ -1,12 +1,11 @@
 import React from 'react';
-import { Radio, BellRing, Satellite, Compass, TrendingUp } from 'lucide-react';
+import { Radio, Satellite, Compass, TrendingUp } from 'lucide-react';
 
 export default function Navbar({ 
   activeTab, 
   setActiveTab, 
   offlineMode, 
   setOfflineMode, 
-  onOpenReport,
   isTourOpen,
   setIsTourOpen,
   onOpenTemporalAnalytics
@@ -101,14 +100,6 @@ export default function Navbar({
           >
             <Radio className={`h-4 w-4 ${offlineMode ? 'animate-pulse text-emerald-400' : ''}`} />
             <span className="hidden sm:inline">{offlineMode ? 'Caché Local' : 'NASA Stream'}</span>
-          </button>
-
-          <button
-            onClick={onOpenReport}
-            className="flex items-center gap-1.5 rounded-lg bg-red-600 px-3 sm:px-3.5 py-1.5 text-xs sm:text-sm font-bold text-white shadow-md hover:bg-red-500 transition"
-          >
-            <BellRing className="h-4 w-4" />
-            <span className="hidden sm:inline">Alerta Temprana</span>
           </button>
         </div>
       </div>
