@@ -24,7 +24,6 @@ const GLOBAL_CENTER = [15.0, -10.0];
 const GLOBAL_ZOOM = 3;
 const COCHABAMBA_CENTER = [-17.3895, -66.1568];
 const COCHABAMBA_ZOOM = 12;
-const CARTO_API_KEY = 'cb1_4mth_1_6594809bcefc062849f9ce07'; // Cuenta k3v1bvoLabs (5M req/mes)
 
 const DISTRICTS_CONFIG = [
   { id: 'D1', num: 1, name: 'Queru Queru / Pacata', zone: 'NORTE', color: '#10b981', lst: 26.2, hito: 'Palacio Portales • UPB', keywords: 'queru queru pacata mayorazgo aranjuez upb palacio portales ciclovia américa este' },
@@ -244,17 +243,17 @@ export default function MapViewer({
       // Reposicionar controles de zoom en la esquina inferior derecha (visible y accesible sin tapar nada)
       L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-      // 1. Base Callejero / Topográfico de Alta Definición (CartoDB Voyager Autenticado)
+      // 1. Base Callejero / Topográfico Abierto (OpenStreetMap Estándar - 100% Sin Marcas de Agua)
       const streetsLayer = L.tileLayer(
-        `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`,
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          subdomains: 'abcd',
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          subdomains: ['a', 'b', 'c'],
           maxZoom: 19,
         }
       );
 
-      // 2. Base Satelital NASA / Esri World Imagery con Etiquetas Viales Oficiales de CARTO
+      // 2. Base Satelital de Alta Resolución (NASA Earthdata / Esri World Imagery con Etiquetas Viales)
       const satTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: '&copy; NASA Earthdata &copy; Esri',
         maxNativeZoom: 18,
@@ -262,10 +261,9 @@ export default function MapViewer({
       });
 
       const satLabels = L.tileLayer(
-        `https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`,
+        'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
         {
-          attribution: '&copy; CARTO',
-          subdomains: 'abcd',
+          attribution: '&copy; Esri World Boundaries',
           maxZoom: 19,
           opacity: 0.95,
         }
@@ -273,20 +271,30 @@ export default function MapViewer({
 
       const satGroup = L.layerGroup([satTiles, satLabels]);
 
-      // 3. Base Oscura de Alta Definición (CartoDB Dark Matter Autenticado)
-      const darkLayer = L.tileLayer(
-        `https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`,
+      // 3. Base Oscura Científica (Esri Dark Canvas - 100% Libre de Marcas de Agua)
+      const darkBase = L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
         {
-          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-          subdomains: 'abcd',
+          attribution: '&copy; Esri, DeLorme, NAVTEQ',
           maxZoom: 19,
         }
       );
 
+      const darkLabels = L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+        {
+          attribution: '&copy; Esri Canvas Reference',
+          maxZoom: 19,
+          opacity: 0.9,
+        }
+      );
+
+      const darkGroup = L.layerGroup([darkBase, darkLabels]);
+
       baseLayersRef.current = {
         streets: streetsLayer,
         satellite: satGroup,
-        dark: darkLayer,
+        dark: darkGroup,
       };
 
       // Iniciar con la capa callejera/topográfica activa para máxima claridad territorial
@@ -1668,9 +1676,9 @@ export default function MapViewer({
         </div>
       )}
 
-      {/* Banner Telemetría de Animación Temporal Activa (Centrado Arriba) */}
+      {/* Banner Telemetría de Animación Temporal Activa (Posicionado limpio arriba del reproductor temporal, sin colisiones) */}
       {(timelineYear !== 'ALL' || isPlayingTimeline) && (
-        <div className="absolute top-14 left-1/2 -translate-x-1/2 z-[415] flex items-center gap-2 rounded-full border border-cyan-500/40 bg-[#070b14]/95 px-3.5 py-1.5 shadow-2xl backdrop-blur-xl text-xs text-white transition-all animate-in fade-in max-w-[94vw]">
+        <div className="absolute bottom-28 sm:bottom-24 left-1/2 -translate-x-1/2 z-[415] flex items-center gap-2 rounded-full border border-cyan-500/40 bg-[#070b14]/95 px-3.5 py-1.5 shadow-2xl backdrop-blur-xl text-xs text-white transition-all animate-in fade-in max-w-[94vw]">
           <span className="flex h-2 w-2 rounded-full bg-rose-500 animate-ping shrink-0"></span>
           <span className="font-mono font-black text-cyan-300 text-[11px] sm:text-xs shrink-0">
             {timelineYear === 'ALL' ? 'HISTÓRICO 2020-2025' : timelineYear === 2026 ? '✨ PREDICCIÓN IA 2026' : `SERIE SATELITAL: AÑO ${timelineYear}`}
@@ -1694,14 +1702,14 @@ export default function MapViewer({
         </div>
       )}
       
-      {/* 1. Selector de Capas Base (Callejero / Satélite / Oscuro) y Recentrar */}
-      <div className="absolute top-3 left-3 z-[400] flex items-center gap-1.5 sm:gap-2 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1.5 text-xs sm:text-sm text-white backdrop-blur-xl shadow-2xl">
+      {/* 1. Selector de Capas Base (Callejero / Satélite / Oscuro) y Controles */}
+      <div className="absolute top-3 left-3 z-[400] flex items-center gap-1 sm:gap-1.5 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1 text-xs text-white backdrop-blur-xl shadow-2xl">
         <button
           onClick={() => setBaseMapType('streets')}
-          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition ${
+          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
             baseMapType === 'streets'
               ? 'bg-blue-600 text-white shadow'
-              : 'text-slate-300 hover:text-white'
+              : 'text-slate-300 hover:text-white hover:bg-white/5'
           }`}
           title="Mapa Callejero Oficial de Cochabamba (OpenStreetMap sin marcas de agua)"
         >
@@ -1710,10 +1718,10 @@ export default function MapViewer({
 
         <button
           onClick={() => setBaseMapType('satellite')}
-          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition ${
+          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
             baseMapType === 'satellite'
               ? 'bg-blue-600 text-white shadow'
-              : 'text-slate-300 hover:text-white'
+              : 'text-slate-300 hover:text-white hover:bg-white/5'
           }`}
           title="Vista Satelital NASA/Esri con Viario Oficial y Etiquetas Viales"
         >
@@ -1722,40 +1730,40 @@ export default function MapViewer({
 
         <button
           onClick={() => setBaseMapType('dark')}
-          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition ${
+          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
             baseMapType === 'dark'
               ? 'bg-blue-600 text-white shadow'
-              : 'text-slate-300 hover:text-white'
+              : 'text-slate-300 hover:text-white hover:bg-white/5'
           }`}
           title="Modo Oscuro Profesional (Esri Canvas Dark sin marcas de agua)"
         >
           <span>🌙 Oscuro</span>
         </button>
 
-        <div className="h-5 w-px bg-white/10 mx-0.5" />
+        <div className="h-4 w-px bg-white/10 mx-0.5" />
 
-        {/* Botón para alternar etiquetas de distritos a voluntad */}
+        {/* Botón para alternar etiquetas de distritos */}
         {activeTab === 'microclimas' && (
           <button
             onClick={() => setShowDistrictLabels(!showDistrictLabels)}
-            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition shadow-sm ${
+            className={`flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold transition shadow-sm ${
               showDistrictLabels
                 ? 'bg-amber-600 text-white shadow-amber-900/40 ring-1 ring-amber-400/50'
                 : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
             }`}
-            title={showDistrictLabels ? "Ocultar nombres fijos de distritos (Muestra vista limpia de calles)" : "Mostrar nombres y códigos de los 15 distritos"}
+            title={showDistrictLabels ? "Ocultar nombres de distritos (Muestra vista limpia de calles)" : "Mostrar nombres y códigos de los 15 distritos"}
           >
-            {showDistrictLabels ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4 text-slate-400" />}
+            {showDistrictLabels ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5 text-slate-400" />}
             <span className="hidden sm:inline">{showDistrictLabels ? 'Nombres ON' : 'Nombres OFF'}</span>
             <span className="sm:hidden">{showDistrictLabels ? 'Nombres' : 'Limpio'}</span>
           </button>
         )}
 
-        {/* Botón para alternar sensores a voluntad */}
+        {/* Botón para alternar sensores */}
         {activeTab === 'microclimas' && (
           <button
             onClick={() => setShowSensors(!showSensors)}
-            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs sm:text-[13px] font-bold transition shadow-sm ${
+            className={`flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold transition shadow-sm ${
               showSensors
                 ? 'bg-cyan-600 text-white shadow-cyan-900/40 ring-1 ring-cyan-400/50'
                 : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
@@ -1767,13 +1775,13 @@ export default function MapViewer({
           </button>
         )}
 
-        {/* Selector de Capas WMS Oficiales GAMC (Proyectos 01 & 05: Microclimas y Gestión Distrital) */}
+        {/* Selector de Capas WMS Oficiales GAMC */}
         {activeTab === 'microclimas' && (
           <div className="relative">
             <div className="flex items-center rounded-lg overflow-hidden shadow-sm">
               <button
                 onClick={() => setShowGamcWms(!showGamcWms)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs sm:text-[13px] font-bold transition ${
+                className={`flex items-center gap-1 px-2 py-1 text-xs font-semibold transition ${
                   showGamcWms
                     ? 'bg-purple-600 text-white shadow-purple-900/40 ring-1 ring-purple-400/50'
                     : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
@@ -1784,7 +1792,7 @@ export default function MapViewer({
               </button>
               <button
                 onClick={() => setIsGamcMenuOpen(!isGamcMenuOpen)}
-                className={`px-1.5 py-1.5 text-xs transition border-l ${
+                className={`px-1 py-1 text-xs transition border-l ${
                   showGamcWms
                     ? 'bg-purple-700 text-purple-200 border-purple-500 hover:bg-purple-800'
                     : 'bg-neutral-800 text-slate-400 border-neutral-700 hover:text-white'
@@ -1855,14 +1863,14 @@ export default function MapViewer({
           </div>
         )}
 
-        <div className="h-5 w-px bg-white/10 mx-0.5" />
+        <div className="h-4 w-px bg-white/10 mx-0.5" />
 
         <button
           onClick={handleRecenter}
-          className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs sm:text-[13px] font-bold text-cyan-300 hover:text-white hover:bg-neutral-800 transition"
+          className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-cyan-300 hover:text-white hover:bg-neutral-800 transition"
           title="Recentrar Vista del Territorio"
         >
-          <Crosshair className="h-4 w-4" />
+          <Crosshair className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">Recentrar</span>
         </button>
       </div>

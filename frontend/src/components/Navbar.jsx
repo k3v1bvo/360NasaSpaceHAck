@@ -63,49 +63,42 @@ export default function Navbar({
           ))}
         </nav>
 
-        {/* Acciones Rápidas & Guía del Sistema */}
+        {/* Acciones Rápidas & Guía del Sistema (Flujo Claro y Sin Botones Repetidos) */}
         <div className="flex items-center gap-1.5 sm:gap-2">
-          {/* Botón Visor WMS Exacto GAMC + Regresión NASA */}
+          {/* Botón Tendencias & Predicción IA */}
           <button
-            onClick={onOpenGamcExact}
-            className="flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/90 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-700 hover:bg-zinc-800 transition shadow-sm"
-            title="Abrir Visor Cartográfico GAMC WMS + Tendencia Superficial NASA en tiempo real"
+            onClick={onOpenTemporalAnalytics}
+            className="flex items-center gap-1.5 rounded-lg border border-indigo-500/30 bg-indigo-950/60 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-indigo-200 hover:text-white hover:border-indigo-400 hover:bg-indigo-900 transition shadow-sm"
+            title="Ver Análisis Multitemporal, Ciclo Estacional y Predicción IA 2026"
           >
-            <span>🏛️ WMS GAMC</span>
+            <TrendingUp className="h-3.5 w-3.5 text-indigo-400" />
+            <span className="hidden sm:inline">Tendencias & IA</span>
+            <span className="sm:hidden">IA</span>
           </button>
 
           {/* Botón Rúbrica Oficial NASA */}
           <button
             onClick={onOpenRubric}
-            className="flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/90 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-700 hover:bg-zinc-800 transition shadow-sm"
+            className="flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-950/40 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-amber-200 hover:text-white hover:border-amber-400 hover:bg-amber-900/60 transition shadow-sm"
             title="Ver Matriz de Cumplimiento de los 5 Criterios Oficiales de Evaluación NASA"
           >
             <Award className="h-3.5 w-3.5 text-amber-400" />
-            <span className="hidden sm:inline">Rúbrica</span>
-          </button>
-
-          {/* Botón Tendencias & Predicción IA */}
-          <button
-            onClick={onOpenTemporalAnalytics}
-            className="flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/90 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-700 hover:bg-zinc-800 transition shadow-sm"
-            title="Ver Análisis Multitemporal, Ciclo Estacional y Predicción IA 2026"
-          >
-            <TrendingUp className="h-3.5 w-3.5 text-indigo-400" />
-            <span className="hidden sm:inline">Tendencias</span>
+            <span className="hidden sm:inline">Rúbrica NASA</span>
+            <span className="sm:hidden">Rúbrica</span>
           </button>
 
           {/* Botón Guía del Sistema / Presentación */}
           <button
             onClick={() => setIsTourOpen(!isTourOpen)}
-            className={`flex items-center gap-1.5 rounded-lg border px-2.5 sm:px-3 py-1.5 text-xs font-medium transition shadow-sm ${
+            className={`flex items-center gap-1.5 rounded-lg border px-2.5 sm:px-3 py-1.5 text-xs font-semibold transition shadow-sm ${
               isTourOpen
-                ? 'border-indigo-500/80 bg-indigo-950/60 text-indigo-300'
+                ? 'border-cyan-500 bg-cyan-950/80 text-cyan-200'
                 : 'border-zinc-800 bg-zinc-900/90 text-zinc-300 hover:text-white hover:border-zinc-700 hover:bg-zinc-800'
             }`}
             title="Abrir u ocultar la Guía de Flujo del Reto"
           >
-            <Compass className="h-3.5 w-3.5 text-indigo-400" />
-            <span className="hidden sm:inline">Guía</span>
+            <Compass className="h-3.5 w-3.5 text-cyan-400" />
+            <span className="hidden sm:inline">Guía del Reto</span>
             <span className="sm:hidden">Guía</span>
           </button>
 

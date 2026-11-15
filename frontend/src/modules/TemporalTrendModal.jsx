@@ -26,6 +26,7 @@ import temporalData from '../data/temporal_trends_data.json';
 export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seasonality' }) {
   const [activeTab, setActiveTab] = useState(initialTab); // 'seasonality' | 'fires' | 'air_quality' | 'decadal' | 'protection'
   const [hoveredMonth, setHoveredMonth] = useState(null);
+  const [hoveredPm25Month, setHoveredPm25Month] = useState(null);
   const [hoveredDistrict, setHoveredDistrict] = useState(null);
 
   if (!isOpen) return null;
@@ -155,23 +156,23 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
                       return (
                         <div 
                           key={m.mes_num} 
-                          className="flex flex-col items-center h-full justify-end group cursor-pointer"
+                          className="flex flex-col items-center h-full justify-end cursor-pointer"
                           onMouseEnter={() => setHoveredMonth(m.mes_num)}
                           onMouseLeave={() => setHoveredMonth(null)}
                         >
                           <span className={`text-[9px] sm:text-[10px] font-mono font-bold mb-0.5 transition ${
-                            isPeak ? 'text-red-400 font-black' : 'text-slate-400'
+                            isPeak ? 'text-red-400 font-black' : isHovered ? 'text-cyan-300 font-bold' : 'text-slate-400'
                           }`}>
                             {m.incendios_promedio}
                           </span>
                           <div 
-                            className={`w-full rounded-t-md transition-all duration-300 ${
+                            className={`w-full rounded-t-md transition-colors duration-150 ${
                               isPeak 
                                 ? 'bg-gradient-to-t from-red-600 via-orange-500 to-amber-400 shadow-md shadow-red-950/60' 
                                 : m.mes_num === 6 || m.mes_num === 7
                                 ? 'bg-gradient-to-t from-amber-600 to-amber-400'
                                 : 'bg-gradient-to-t from-blue-700/60 to-cyan-500/60'
-                            } ${isHovered ? 'scale-105 brightness-125 ring-2 ring-white/60' : 'hover:brightness-110'}`}
+                            } ${isHovered ? 'brightness-125 ring-2 ring-cyan-400 shadow-md shadow-cyan-950/80' : 'opacity-85 hover:opacity-100'}`}
                             style={{ height: `${Math.max(heightPct, 5)}%` }}
                           />
                         </div>
@@ -380,102 +381,199 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
           {/* PESTAÑA 3: INVERSIÓN TÉRMICA & CALIDAD DEL AIRE (PM2.5)                     */}
           {/* ========================================================================= */}
           {activeTab === 'air_quality' && (
-            <div className="space-y-6 animate-in fade-in duration-200">
-              <div className="rounded-2xl border border-amber-500/20 bg-amber-950/20 p-4 text-xs text-amber-200">
-                <strong className="text-white font-bold text-sm">El Fenómeno Físico de la Inversión Térmica en Cochabamba:</strong>
-                <p className="mt-1 text-slate-300 leading-relaxed">
-                  Cochabamba es una cuenca cerrada rodeada de montañas. En invierno (Mayo a Julio), el aire frío y denso desciende de la Cordillera del Tunari durante la noche y se asienta en el fondo del valle (2.550 msnm). Sobre este aire frío queda una capa de aire más caliente a la altura de la <strong className="text-emerald-300">Cota 2.750 msnm</strong>, actuando como una <strong>tapa hermética</strong>. El humo de las ladrilleras, vehículos y fogatas no puede ascender y queda atrapado respirándose en el valle.
-                </p>
+            <div className="space-y-4 animate-in fade-in duration-200">
+              <div className="rounded-xl border border-amber-500/25 bg-amber-950/20 p-3 sm:p-4 text-xs text-amber-200 flex items-start gap-2.5">
+                <Info className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+                <div className="text-[11.5px] leading-relaxed">
+                  <span className="text-white font-bold">Fenómeno Físico de Inversión Térmica (Red MÓNICA & NASA): </span>
+                  <span className="text-slate-300">
+                    En invierno (Mayo a Julio), el aire frío nocturno baja de la Cordillera del Tunari y se asienta en el fondo del valle (2.550 msnm). Sobre este aire frío queda aire más cálido a la altura de la <strong className="text-emerald-300 font-bold">Cota 2.750 msnm</strong>, actuando como una <strong>tapa hermética</strong> que atrapa el humo de ladrilleras, parque automotor y quemas en la Zona Sur.
+                  </span>
+                </div>
               </div>
 
               {/* Gráfica de Concentración de PM2.5 a lo largo del Año */}
-              <div className="rounded-2xl border border-white/10 bg-[#0d1322] p-5">
-                <div className="flex items-center justify-between mb-4">
+              <div className="rounded-2xl border border-white/10 bg-[#0c1220] p-3.5 sm:p-5">
+                {/* Cabecera con Título y Leyenda Limpia (Sin Textos Encimados) */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                   <div>
-                    <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                    <h3 className="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
                       <Wind className="h-4 w-4 text-cyan-400" /> Concentración Mensual de Material Particulado PM2.5 (Red MÓNICA GAMC)
                     </h3>
-                    <p className="text-xs text-slate-400">Umbral OMS: 15 µg/m³ (Línea punteada) | Umbral Crítico GAMC: &gt; 50 µg/m³</p>
+                    <p className="text-[11px] text-slate-400">Datos continuos de estaciones Kanata (Sur) y SEMAPA (Norte) correlacionados con AOD MODIS Aqua</p>
                   </div>
-                  <span className="text-xs font-mono font-bold text-red-400 bg-red-950/60 px-2.5 py-1 rounded border border-red-800/40">
-                    Pico: Junio (78.4 µg/m³) & Septiembre (88.6 µg/m³)
-                  </span>
+                  {/* Badges de Referencia Sanitarias Oficiales */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="flex items-center gap-1 text-[10px] sm:text-[11px] font-bold text-emerald-300 bg-emerald-950/70 border border-emerald-800/60 px-2 py-0.5 rounded-md">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400"></span> Guía OMS: 15 µg/m³
+                    </span>
+                    <span className="flex items-center gap-1 text-[10px] sm:text-[11px] font-bold text-red-300 bg-red-950/70 border border-red-800/60 px-2 py-0.5 rounded-md">
+                      <span className="h-2 w-2 rounded-full bg-red-500"></span> Umbral Crítico GAMC: &gt; 50 µg/m³
+                    </span>
+                  </div>
                 </div>
 
-                {/* SVG Curve Chart */}
-                <div className="relative pt-4 pb-2">
-                  <svg className="w-full h-44 sm:h-52 overflow-visible" viewBox="0 0 600 200" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="pm25Gradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#ef4444" stopOpacity="0.5" />
-                        <stop offset="50%" stopColor="#f59e0b" stopOpacity="0.25" />
-                        <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.05" />
-                      </linearGradient>
-                    </defs>
+                {/* SVG Curve Chart Interactivo */}
+                <div className="relative pt-2 pb-1">
+                  <div className="relative h-44 sm:h-52 w-full">
+                    {/* Líneas Horizontales de Referencia Sanitaria con Textos Alineados a la Derecha Fuera de la Curva */}
+                    <div className="absolute inset-0 pointer-events-none flex flex-col justify-between">
+                      {/* Línea Crítica 50 ug/m3 */}
+                      <div className="absolute w-full top-[50%] border-b border-dashed border-red-500/50 flex items-center justify-end pr-1">
+                        <span className="text-[9px] font-mono font-bold text-red-400 bg-[#0c1220]/95 px-1.5 py-0.5 rounded border border-red-800/40 -translate-y-1/2">
+                          50 µg/m³ (Límite GAMC)
+                        </span>
+                      </div>
+                      {/* Línea Guía OMS 15 ug/m3 */}
+                      <div className="absolute w-full top-[85%] border-b border-dashed border-emerald-500/50 flex items-center justify-end pr-1">
+                        <span className="text-[9px] font-mono font-bold text-emerald-400 bg-[#0c1220]/95 px-1.5 py-0.5 rounded border border-emerald-800/40 -translate-y-1/2">
+                          15 µg/m³ (Guía OMS)
+                        </span>
+                      </div>
+                    </div>
 
-                    {/* Línea Guía OMS (15 ug/m3) */}
-                    <line x1="0" y1="166" x2="600" y2="166" stroke="#10b981" strokeDasharray="4 4" strokeWidth="1.5" />
-                    <text x="10" y="160" fill="#10b981" fontSize="10" fontWeight="bold">Límite Guía OMS (15 µg/m³)</text>
+                    <svg className="w-full h-full overflow-visible" viewBox="0 0 600 200" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="pm25Gradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#ef4444" stopOpacity="0.45" />
+                          <stop offset="50%" stopColor="#f59e0b" stopOpacity="0.20" />
+                          <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.02" />
+                        </linearGradient>
+                      </defs>
 
-                    {/* Línea Umbral Crítico (50 ug/m3) */}
-                    <line x1="0" y1="90" x2="600" y2="90" stroke="#ef4444" strokeDasharray="4 4" strokeWidth="1.5" />
-                    <text x="10" y="84" fill="#ef4444" fontSize="10" fontWeight="bold">Umbral Daño a la Salud GAMC (50 µg/m³)</text>
+                      {/* Curva de PM2.5 */}
+                      {(() => {
+                        const points = ciclo_estacional_mensual.map((m, idx) => {
+                          const x = (idx / 11) * 600;
+                          const y = 200 - (m.pm25_promedio_ugm3 / 100) * 200;
+                          return `${x},${y}`;
+                        });
+                        const dArea = `M 0,200 L ${points.join(' L ')} L 600,200 Z`;
+                        const dLine = `M ${points.join(' L ')}`;
+                        return (
+                          <>
+                            <path d={dArea} fill="url(#pm25Gradient)" />
+                            <path d={dLine} fill="none" stroke="#f43f5e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                            {ciclo_estacional_mensual.map((m, idx) => {
+                              const x = (idx / 11) * 600;
+                              const y = 200 - (m.pm25_promedio_ugm3 / 100) * 200;
+                              const isHovered = hoveredPm25Month === m.mes_num;
+                              const isCritical = m.pm25_promedio_ugm3 > 50;
+                              return (
+                                <g key={m.mes_num}>
+                                  {isHovered && (
+                                    <line x1={x} y1={0} x2={x} y2={200} stroke="#38bdf8" strokeDasharray="3 3" strokeWidth="1.5" />
+                                  )}
+                                  <circle 
+                                    cx={x} 
+                                    cy={y} 
+                                    r={isHovered ? 7 : isCritical ? 5 : 4} 
+                                    fill={isCritical ? '#ef4444' : '#06b6d4'} 
+                                    stroke="#ffffff" 
+                                    strokeWidth={isHovered ? 2.5 : 1.5} 
+                                    className="transition-all duration-150"
+                                  />
+                                </g>
+                              );
+                            })}
+                          </>
+                        );
+                      })()}
+                    </svg>
 
-                    {/* Curva de PM2.5 */}
-                    {(() => {
-                      const points = ciclo_estacional_mensual.map((m, idx) => {
-                        const x = (idx / 11) * 600;
-                        const y = 200 - (m.pm25_promedio_ugm3 / 100) * 200;
-                        return `${x},${y}`;
-                      });
-                      const dArea = `M 0,200 L ${points.join(' L ')} L 600,200 Z`;
-                      const dLine = `M ${points.join(' L ')}`;
+                    {/* Columnas Interactivas Transparentes para Hover Táctil y Ratón */}
+                    <div className="absolute inset-0 grid grid-cols-12 z-10">
+                      {ciclo_estacional_mensual.map((m) => (
+                        <div
+                          key={m.mes_num}
+                          className="h-full w-full cursor-pointer hover:bg-white/[0.04] transition-colors"
+                          onMouseEnter={() => setHoveredPm25Month(m.mes_num)}
+                          onMouseLeave={() => setHoveredPm25Month(null)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Etiquetas de Meses y Valores Diarios */}
+                  <div className="grid grid-cols-12 text-center mt-2 px-0.5">
+                    {ciclo_estacional_mensual.map((m) => {
+                      const isHovered = hoveredPm25Month === m.mes_num;
+                      const isCritical = m.pm25_promedio_ugm3 > 50;
                       return (
-                        <>
-                          <path d={dArea} fill="url(#pm25Gradient)" />
-                          <path d={dLine} fill="none" stroke="#f43f5e" strokeWidth="3.5" strokeLinecap="round" />
-                          {ciclo_estacional_mensual.map((m, idx) => {
-                            const x = (idx / 11) * 600;
-                            const y = 200 - (m.pm25_promedio_ugm3 / 100) * 200;
-                            return (
-                              <circle 
-                                key={m.mes_num} 
-                                cx={x} 
-                                cy={y} 
-                                r={m.mes_num === 6 || m.mes_num === 9 ? 6 : 4} 
-                                fill={m.pm25_promedio_ugm3 > 50 ? '#ef4444' : '#06b6d4'} 
-                                stroke="#ffffff" 
-                                strokeWidth="2" 
-                              />
-                            );
-                          })}
-                        </>
+                        <div 
+                          key={m.mes_num} 
+                          className={`text-center cursor-pointer transition ${
+                            isHovered ? 'text-cyan-300 font-black' : isCritical ? 'text-red-400 font-bold' : 'text-slate-400'
+                          }`}
+                          onMouseEnter={() => setHoveredPm25Month(m.mes_num)}
+                          onMouseLeave={() => setHoveredPm25Month(null)}
+                        >
+                          <div className="text-[10px] sm:text-xs font-bold">{m.mes_nombre.slice(0, 3)}</div>
+                          <div className={`text-[9px] font-mono ${isCritical ? 'text-red-300 font-bold' : 'text-slate-400'}`}>
+                            {m.pm25_promedio_ugm3}
+                          </div>
+                        </div>
                       );
-                    })()}
-                  </svg>
-
-                  {/* Etiquetas de Meses */}
-                  <div className="flex justify-between mt-2 text-[10px] sm:text-xs font-bold text-slate-400">
-                    {ciclo_estacional_mensual.map((m) => (
-                      <span key={m.mes_num} className={m.mes_num === 6 || m.mes_num === 9 ? 'text-red-400 font-bold' : ''}>
-                        {m.mes_nombre.slice(0, 3)}
-                      </span>
-                    ))}
+                    })}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-4 pt-3 border-t border-white/10 text-xs">
-                  <div>
-                    <span className="text-slate-400">Pico 1 (Inversión & San Juan):</span>
-                    <div className="text-amber-400 font-mono font-bold">78.4 µg/m³ (Junio)</div>
+                {/* Banner de Detalle del Mes con Altura Fija Reservada (Cero Layout Shift) */}
+                <div className="min-h-[50px] mt-3 flex items-center">
+                  {hoveredPm25Month ? (() => {
+                    const m = ciclo_estacional_mensual.find(x => x.mes_num === hoveredPm25Month);
+                    const isCritical = m.pm25_promedio_ugm3 > 50;
+                    return (
+                      <div className={`w-full p-2.5 rounded-xl border text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-in fade-in ${
+                        isCritical 
+                          ? 'border-red-500/40 bg-red-950/50 text-red-200' 
+                          : 'border-cyan-500/30 bg-cyan-950/40 text-cyan-200'
+                      }`}>
+                        <div>
+                          <strong className="text-white font-bold text-xs sm:text-sm">
+                            {m.mes_nombre} ({m.temporada}):
+                          </strong>
+                          <span className="text-slate-200 ml-1 text-[11px]">{m.descripcion}</span>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                            isCritical ? 'bg-red-900/80 text-white' : 'bg-emerald-900/80 text-white'
+                          }`}>
+                            {m.calidad_aire}
+                          </span>
+                          <span className="font-mono font-bold text-white text-xs sm:text-sm">
+                            {m.pm25_promedio_ugm3} µg/m³
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })() : (
+                    <div className="w-full p-2.5 rounded-xl border border-white/5 bg-white/[0.02] text-[11px] text-slate-400 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <Info className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
+                        Pasa el cursor sobre cualquier mes en la gráfica para ver la concentración exacta de PM2.5 y el diagnóstico médico-ambiental
+                      </span>
+                      <span className="font-mono text-[10px] text-slate-400 hidden md:inline">Ground-Truth: Red MÓNICA GAMC (125k reg.)</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* 3 Tarjetas de Resumen Histórico */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-3 pt-3 border-t border-white/10 text-xs">
+                  <div className="p-2 rounded-lg bg-amber-950/30 border border-amber-500/20">
+                    <span className="text-slate-400 text-[11px]">Pico 1 (Inversión Térmica & San Juan):</span>
+                    <div className="text-amber-300 font-mono font-bold text-sm">78.4 µg/m³ (Junio)</div>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Asfixia por aire frío bajo Cota 2.750</p>
                   </div>
-                  <div>
-                    <span className="text-slate-400">Pico 2 (Incendios & Humo):</span>
-                    <div className="text-red-400 font-mono font-bold">88.6 µg/m³ (Septiembre)</div>
+                  <div className="p-2 rounded-lg bg-red-950/30 border border-red-500/20">
+                    <span className="text-slate-400 text-[11px]">Pico 2 (Incendios Tunari & Humo):</span>
+                    <div className="text-red-300 font-mono font-bold text-sm">88.6 µg/m³ (Septiembre)</div>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Humo arrastrado por vientos del noreste</p>
                   </div>
-                  <div>
-                    <span className="text-slate-400">Mínimo (Lavado Pluvial):</span>
-                    <div className="text-emerald-400 font-mono font-bold">14.2 µg/m³ (Febrero)</div>
+                  <div className="p-2 rounded-lg bg-emerald-950/30 border border-emerald-500/20">
+                    <span className="text-slate-400 text-[11px]">Mínimo Anual (Lavado Pluvial):</span>
+                    <div className="text-emerald-300 font-mono font-bold text-sm">14.2 µg/m³ (Febrero)</div>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Atmósfera limpia pero 60 torrenteras activas</p>
                   </div>
                 </div>
               </div>

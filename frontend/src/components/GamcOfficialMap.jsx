@@ -119,9 +119,9 @@ export default function GamcOfficialMap({ onClose }) {
       maxZoom: 19,
     });
 
-    // Mapa base limpio en Web Mercator (EPSG:3857)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '© OpenStreetMap · © CARTO · GAMC Cochabamba',
+    // Mapa base limpio en Web Mercator (EPSG:3857) - OpenStreetMap Oficial 100% Sin Marcas de Agua
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors · GAMC Cochabamba',
       maxZoom: 19,
     }).addTo(map);
 
