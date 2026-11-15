@@ -251,7 +251,7 @@ Puedo responder de forma autónoma a cualquier pregunta que redactes en lenguaje
               >
                 {/* Sender badge & timestamp */}
                 <div className="flex items-center gap-2 mb-2 text-xs font-mono text-slate-400 px-1 font-semibold">
-                  <span>{msg.sender === 'user' ? 'Astronauta / Operador de Misión' : 'Flame in Freefall Copilot'}</span>
+                  <span>{msg.sender === 'user' ? 'Astronauta / Operador de Misión' : 'FireLock Copilot'}</span>
                   <span>•</span>
                   <span>{msg.timestamp}</span>
                   {msg.isRealTimeLLM && (

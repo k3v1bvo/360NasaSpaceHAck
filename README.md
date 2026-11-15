@@ -1,4 +1,4 @@
-# 🔥 Flame in Freefall — NASA Space Apps Challenge 2026
+# 🛡️ FireLock — NASA Space Apps Challenge 2026
 ## AI-Powered Microgravity Fire Safety Dashboard & PSI Data Platform
 
 [![NASA PSI](https://img.shields.io/badge/NASA-PSI%20Data%20Repository-blue.svg)](https://science.nasa.gov/physical-sciences-informatics-psi/)

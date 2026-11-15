@@ -1,5 +1,5 @@
 /**
- * Flame in Freefall — Autonomous Natural Language Reasoning AI Engine
+ * FireLock — Autonomous Natural Language Reasoning AI Engine
  * NASA Space Apps Challenge 2026
  *
  * Provides:
@@ -71,9 +71,9 @@ const CORPUS: KnowledgeItem[] = [
     id: 'GUIDE-MODULES',
     title: 'Guía Integral de Módulos y Flujo Operacional',
     category: 'guia_modulo',
-    citation: 'Manual de Operaciones Flame in Freefall // NASA PSI Safety Suite',
+    citation: 'Manual de Operaciones FireLock // NASA PSI Safety Suite',
     keywords: ['modulo', 'modulos', 'guia', 'tutorial', 'como', 'funciona', 'usar', 'paso', 'flujo', 'navegacion'],
-    body: `### 🧭 Flujo Operacional Paso a Paso en Flame in Freefall:
+    body: `### 🧭 Flujo Operacional Paso a Paso en FireLock:
 
 1. **Centro de Mando:**
    - Inspecciona el selector superior para alternar la atmósfera de trabajo (*ISS 14.7 psia*, *Artemis 8.2 psia* o *Lunar 10.2 psia*).
@@ -324,7 +324,7 @@ function searchCorpus(query: string): { item: KnowledgeItem; score: number }[] {
 async function callGeminiAPI(query: string, apiKey: string): Promise<string | null> {
   try {
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-    const systemInstruction = `Eres Flame in Freefall AI, el asistente científico y operacional oficial de seguridad contra incendios en microgravedad para astronautas y diseñadores espaciales (NASA Space Apps Challenge 2026).
+    const systemInstruction = `Eres FireLock AI, el asistente científico y operacional oficial de seguridad contra incendios en microgravedad para astronautas y diseñadores espaciales (NASA Space Apps Challenge 2026).
 Tus respuestas deben ser rigurosas, basadas en la física de combustión de microgravedad y respaldadas por los experimentos oficiales de la NASA (BASS-II, SoFIE, Saffire, FLARE ISO 4589-4, FLEX-2).
 Cita siempre normas como NASA-STD-6001B y NFPA 750 (micro-niebla de agua a 35 bar con aditivo F-500 EA).
 Sé conciso, estructurado y claro, utilizando viñetas y formato Markdown técnico. Responde en español.`;
