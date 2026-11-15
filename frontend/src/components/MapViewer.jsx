@@ -518,21 +518,23 @@ export default function MapViewer({
         });
       }
 
-      // 1. Polígonos de Distritos con Gradiente Térmico LST y Métricas GAMC
+      // 1. Polígonos Oficiales de Distritos de Cercado (Catastro Municipal GAMC / INE 100% Topológico)
       distritosData?.features?.forEach((dist) => {
         const p = dist.properties;
-        const polyCoords = dist.geometry.coordinates[0].map(([lng, lat]) => [lat, lng]);
 
         const lstVal = p.lst_nasa_promedio_c || p.lst_temperatura_c || 28.0;
         const color = lstVal > 35 ? '#ef4444' :
                       lstVal > 30 ? '#f59e0b' :
                       lstVal > 26 ? '#3b82f6' : '#10b981';
 
-        const polygon = L.polygon(polyCoords, {
-          color,
-          weight: 2,
-          fillColor: color,
-          fillOpacity: 0.14, // Relleno translúcido para mantener 100% visible el mapa de calles y avenidas del fondo
+        const polygon = L.geoJSON(dist, {
+          style: {
+            color: color,
+            weight: 2.2,
+            opacity: 0.9,
+            fillColor: color,
+            fillOpacity: 0.16, // Relleno translúcido de alta definición para mantener visible el trazado vial
+          }
         });
 
         // Nombre y badge del distrito con legibilidad superior permanente
@@ -544,7 +546,7 @@ export default function MapViewer({
             <span style="color: #fde047; font-size: 11px; font-weight: 800;">${lstVal}°</span>
           </div>
         `, {
-          permanent: true,
+          permanent: showDistrictLabels,
           direction: 'center',
           className: 'custom-district-tooltip',
           opacity: 0.95
@@ -560,7 +562,7 @@ export default function MapViewer({
           if (isSelected) {
             polygon.setStyle({ weight: 4.5, color: '#ffffff', fillOpacity: 0.55 });
           } else {
-            polygon.setStyle({ weight: 2, color, fillOpacity: 0.14 });
+            polygon.setStyle({ weight: 2.2, color, fillOpacity: 0.16 });
           }
         });
 
@@ -570,8 +572,8 @@ export default function MapViewer({
               type: 'district',
               id: p.distrito_id,
               distrito_id: p.distrito_id,
-              lat: p.centroide ? p.centroide[0] : polyCoords[0][0],
-              lon: p.centroide ? p.centroide[1] : polyCoords[0][1],
+              lat: p.centroide ? p.centroide[0] : -17.39,
+              lon: p.centroide ? p.centroide[1] : -66.15,
               ...p
             });
           }
@@ -631,7 +633,7 @@ export default function MapViewer({
             layer: polygon,
             defaultColor: color,
             data: p,
-            center: p.centroide || polyCoords[0]
+            center: p.centroide || [-17.39, -66.15]
           };
         }
       });
