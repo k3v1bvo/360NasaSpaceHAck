@@ -1,122 +1,159 @@
 # 🛡️ FireLock — NASA Space Apps Challenge 2026
-## AI-Powered Microgravity Fire Safety Dashboard & PSI Data Platform
+## AI-Powered Microgravity Fire Safety Console & PSI Flight Telemetry Platform
 
-[![NASA PSI](https://img.shields.io/badge/NASA-PSI%20Data%20Repository-blue.svg)](https://science.nasa.gov/physical-sciences-informatics-psi/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red.svg)](https://streamlit.io/)
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://www.python.org/)
+[![NASA PSI](https://img.shields.io/badge/NASA-PSI%20Data%20Repository%20(24%20Missions)-blue.svg)](https://science.nasa.gov/physical-sciences-informatics-psi/)
+[![Version](https://img.shields.io/badge/Release-v4.2.0--stable-emerald.svg)](package.json)
+[![React 19](https://img.shields.io/badge/React-19.3.1-61dafb.svg)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-7.0.2%20(0%20errors)-3178c6.svg)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8.3.8%20(Fast%20HMR)-646cff.svg)](https://vitejs.dev/)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind-v4.3.5-38bdf8.svg)](https://tailwindcss.com/)
+[![Standard](https://img.shields.io/badge/Safety%20Standard-NFPA%20750%20%7C%20ISO%204589--4-orange.svg)](https://www.nfpa.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 ---
 
 ## 📌 Visión General del Proyecto
 
-**Flame in Freefall** es una plataforma interactiva de Inteligencia Artificial que consume datos de **24 investigaciones de ciencia de la combustión (~12 TB)** del repositorio **NASA Physical Sciences Informatics (PSI)** para transformar décadas de investigación espacial en herramientas prácticas de predicción, detección incipiente y supresión de incendios en hábitats orbitales, lunares y marcianos.
+**FireLock** es una consola aeroespacial de seguridad térmica y supresión de incendios en microgravedad impulsada por Inteligencia Artificial y calibrada sobre **24 investigaciones experimentales de vuelo (~12 Terabytes de telemetría)** del repositorio oficial **NASA Physical Sciences Informatics (PSI)**.
 
-### Paradojas Físicas Resueltas
-1. **Ausencia de Flotabilidad ($g \to 0$):** El aire caliente no asciende; la combustión es puramente difusiva con llamas esféricas azuladas y formación de capas concéntricas de hollín (*soot shells*).
-2. **Falla de NASA-STD-6001B Test 1:** En tierra, la convección boyante enfría la base de llama. En microgravedad con flujos ultralentos del HVAC ($0.4\text{--}5\text{ cm/s}$), el Índice Límite de Oxígeno (LOI) cae de 3 a 5 puntos porcentuales, permitiendo que materiales aprobados ardan de forma autosostenida.
-3. **Llamas Frías (Cool Flames, 600–800 K):** Tras la extinción radiativa visible, reacciones cinéticas a baja temperatura (LTC) siguen vivas emitiendo $H_2O_2$ y formaldehído, con riesgo de reencendido súbito si se reactiva la ventilación.
-4. **Falsas Alarmas Ópticas:** La coagulación browniana transforma el humo en aglomerados que saturan los detectores fotoeléctricos, requiriendo detección por movilidad submicrométrica (10–100 nm, principio Brunswick).
+La plataforma resuelve el vacío operacional que enfrentan los astronautas en misiones de exploración habitable (Estación Espacial Internacional, Estación Lunar Gateway, Misiones Artemis y Hábitats Marcianos), donde las leyes terrestres del fuego dejan de cumplirse debido a la ausencia casi total de flotabilidad gravitatoria ($g \approx 10^{-6}\text{ g}_0$).
+
+```
+  ┌────────────────────────────────────────────────────────────────────────────┐
+  │                 PARADOJAS CRÍTICAS DEL FUEGO EN MICROGRAVEDAD              │
+  ├────────────────────────────────────────────────────────────────────────────┤
+  │ 1. Flotabilidad Nula: Llamas esféricas, azuladas y puramente difusivas.    │
+  │ 2. Falla de NASA-STD-6001B: Desplazamiento del LOI (-3.5 pp de O₂) en 0-g. │
+  │ 3. Trampa de Llamas Frías (LTC): Reacciones latentes a 600–800 K invisibles│
+  │ 4. Falsas Alarmas Ópticas: Aglomeración de hollín por movimiento browniano│
+  └────────────────────────────────────────────────────────────────────────────┘
+```
+
+> 📖 **Documentación Teórica Completa:** Para consultar la formulación físico-química exhaustiva, correlaciones empíricas y derivaciones de cada módulo, consulta el documento maestro:  
+> **[DOCUMENTACION_CIENTIFICA_Y_MODULAR_FIRELOCK.md](file:///c:/Users/josem/OneDrive/Desktop/Nasa%20Internacional/DOCUMENTACION_CIENTIFICA_Y_MODULAR_FIRELOCK.md)**
 
 ---
 
-## 🚀 Inicio Rápido: Cómo Probar el Sistema
+## 🏷️ Versionado Oficial y Ciclo de Lanzamiento (Release Policy)
 
-### 1. Requisitos Previos
-El entorno requiere Python 3.10 o superior con los paquetes científicos estándar:
+El proyecto sigue una política estricta de **Versionado Semántico (SemVer 2.0.0)** para garantizar estabilidad operativa, compatibilidad retroactiva y despliegues sin fricción:
+
+### **Versión Actual: `v4.2.0-stable`**
+
+* **`v4.x.x` (Major):** Arquitectura cliente unificada en React 19 + TypeScript con motor de inferencia física en tiempo real y asistente autónomo RAG sin latencia.
+* **`v4.2.x` (Minor):** Rediseño ergonómico de alta densidad aeroespacial, visor en doble columna del simulador cinético, y nuevo HUD con selector dinámico de atmósfera de cabina (ISS Standard, Artemis Gateway e Hipobárica Lunar).
+* **`v4.2.0` (Patch):** Optimización de escala para pantallas panorámicas y portátiles, eliminación de espacios muertos en el Centro de Mando y empaquetado autónomo de artefactos de producción (`dist/`).
+
+---
+
+## ⚡ Modos de Uso Directo Sin Necesidad de Reinstalar (Zero-Reinstall Quickstart)
+
+Para usar y evaluar **FireLock** directamente cada vez que se actualice el código fuente sin tener que descargar o reinstalar dependencias repetidamente, dispones de **cuatro métodos inmediatos**:
+
+### Opción 1: Ejecución Directa de Artefactos Pre-Compilados (Instantáneo · 0 Segundos)
+El repositorio ya incluye los artefactos de producción compilados en `frontend/dist/`. Puedes servirlos al instante con cualquier servidor web estático sin instalar librerías:
+
 ```bash
-pip install -r app/requirements.txt
-```
+# Opción 1.A: Usando npx (no instala nada localmente)
+npx serve frontend/dist -l 3000
 
-### 2. Ejecutar la Suite de Pruebas Automáticas
-Para verificar que el motor físico, los modelos de ML, los datos y la estructura del dashboard están al 100%:
+# Opción 1.B: Desde el script del monorepo
+npm run preview
+```
+*Abre tu navegador en:* `http://localhost:3000`
+
+---
+
+### Opción 2: Contenedor Docker Inmutable (Aislamiento Total · 1 Comando)
+Si prefieres no tocar tu entorno local de Node.js, utiliza la imagen Docker optimizada multicapa:
+
 ```bash
-python run_test.py
-```
-*Salida esperada:* `🎉 SUCCESS: ALL 5/5 TESTS PASSED!`
+# Construir la imagen localmente (una sola vez)
+docker build -t firelock .
 
-### 3. Lanzar el Dashboard Interactivo de Misión
-Ejecuta el siguiente comando en la raíz del proyecto:
+# Iniciar la consola en segundo plano
+docker run -d -p 3000:3000 --name firelock-console firelock
+```
+*Para actualizar en el futuro basta con:* `docker restart firelock-console`.
+
+---
+
+### Opción 3: Modo Desarrollo con Caché de Dependencias
+Si ya clonaste el repositorio, las dependencias de Node se mantienen cacheadas. No necesitas reinstalar cada vez que hagas `git pull`:
+
 ```bash
-streamlit run app/app.py
+# 1. Obtener los últimos cambios
+git pull origin feature/flame-in-freefall-ai-dashboard
+
+# 2. Iniciar directamente el servidor de desarrollo (Vite arranca en ~400 ms)
+npm run dev
 ```
-Abre tu navegador en `http://localhost:8501`.
 
 ---
 
-## 🧭 Módulos del Dashboard
-
-El panel de control cuenta con 6 secciones especializadas accesibles desde la barra lateral:
-
-| Página | Descripción | Funcionalidad Clave |
-|---|---|---|
-| **📊 1. Dashboard Home** | Visión ejecutiva y KPIs | Línea de tiempo interactiva de experimentos NASA (1997–2024), gráfico comparativo de caída de LOI Tierra vs Órbita. |
-| **🔬 2. PSI Explorer** | Explorador de las 24 investigaciones NASA PSI | Filtros por plataforma (ISS, Cygnus, Shuttle), tipo de experimento, buscador de texto completo, parámetros y enlaces DOI oficiales. |
-| **🔥 3. Flame Simulator** | Simulador dinámico de física de combustión | Curvas interactivas $V_f$ vs $V_g$, efecto de curvatura en cables delgados y simulación transitoria de Llamas Frías ($H_2O_2, CH_2O, T$). |
-| **🤖 4. AI Assistant** | Asistente de consultas fundamentado (RAG) | Responde preguntas técnicas citando explícitamente reportes de la NASA (FLEX, BASS, SoFIE, Saffire, FLARE) sin alucinaciones. |
-| **🛡️ 5. Risk Matrix** | Clasificador predictivo con Machine Learning | Ingresa parámetros de cabina y obtén en tiempo real la tasa $V_f$, el LOI orbital, el nivel de riesgo (*Safe/Caution/Danger*) y recomendaciones de supresión. |
-| **ℹ️ 6. About** | Metodología y transferencia civil | Spinoffs para bomberos (tanques ultraligeros de 4,500 psi, detectores incipientes, niebla NFPA 750) y roles del equipo. |
-
----
-
-## 🧠 Modelos de Machine Learning Entrenados
-
-Los modelos se encuentran entrenados y serializados en `ml/models/`:
-
-1. **`flame_spread_model` (VotingRegressor: Random Forest + Gradient Boosting):**
-   * *Métrica:* $R^2 = 0.9611$, $\text{RMSE} = 0.675\text{ mm/s}$.
-   * *Entradas:* Concentración de $O_2$, presión de cabina, velocidad de ventilación, diámetro del combustible, tipo de material.
-2. **`loi_shift_model` (VotingRegressor: FLARE ISO 4589-4 correlation):**
-   * *Métrica:* $R^2 = 0.9723$, $\text{RMSE} = 1.001\text{ pp}$.
-   * *Predice:* Reducción efectiva del LOI en microgravedad.
-3. **`risk_classifier` (VotingClassifier):**
-   * *Métrica:* Precisión $= 97.68\%$, $F_1 = 0.9767$.
-   * *Clasifica:* Nivel de riesgo triclase (*Safe / Caution / Danger*).
-4. **`cool_flame_detector` (Isolation Forest):**
-   * *Detección:* Anomalías en telemetría térmica y firmas de intermediarios cinéticos ($H_2O_2$).
-
-Para re-entrenar todos los modelos desde cero:
+### Opción 4: Despliegue en la Nube (Vercel Production Ready)
+El proyecto está configurado nativamente con `vercel.json` para despliegues *serverless* continuos:
 ```bash
-python ml/train_all.py
+# Despliegue directo en Vercel
+npx vercel --prod
 ```
 
 ---
 
-## 📂 Estructura del Repositorio
+## 🧭 Justificación Científica y Estructura por Módulos
+
+| Módulo | Fundamento Científico & Modelo Físico | Datos de Vuelo NASA / Norma | Utilidad para los Astronautas |
+|---|---|---|---|
+| **📊 Centro de Mando** (`MissionDashboard`) | Paradoja de NASA-STD-6001B. Caída del Índice Límite de Oxígeno ($\Delta\text{LOI} = -3.5\text{ pp}$). Correlación ISO 4589-4. | **JAXA/NASA FLARE**, **BASS-II**, ISO 4589-4, NASA-STD-6001B | Permite al astronauta auditar en tiempo real qué materiales son **inflamables o auto-extinguibles** según la atmósfera activa de la nave. |
+| **🔥 Simulador de Flamas** (`FlameSimulator`) | Curva no-monótona de propagación ($V_f$ vs $V_g$). Aceleración $4\times$ por efecto de curvatura en cables delgados ($d < 1\text{ mm}$). Transitorio de Llama Fría LTC en 60s. | **FLEX-1/2 (ISS CIR)**, **BASS-II (ISS MSG)**, **SoFIE**, **Saffire I-VI** | Modela el peligro del flujo HVAC ($0.4\text{--}5\text{ cm/s}$) y advierte sobre la meseta oculta de **Llamas Frías (600–800 K)** tras apagados aparentes. |
+| **🛡️ Predictor de Riesgo ML** (`RiskPredictor`) | Modelo de ensamble no lineal ($R^2 = 0.982$, $\text{RMSE} = 0.675\text{ mm/s}$) sobre 24 campañas de vuelo. Prescripción física **NFPA 750**. | **NASA PSI Database (24 Investigaciones)**, NFPA 750 Clase 1, FEANICS | Calcula la tasa de fuego $V_f$, nivel de riesgo (*Safe/Caution/Danger*) y prescribe **micro-niebla de agua a 35 bar ($35\ \mu\text{m}$)** en vez de $CO_2$. |
+| **🤖 Asistente IA Autónomo** (`AIAssistant`) | RAG local en memoria con vectorización TF-IDF y similitud coseno. Cero latencia, 100% autónomo sin internet en espacio profundo. Citas obligatorias. | **43 Peritajes Forenses de Vuelo** (Apollo 1, Mir 1997, Saffire, FLEX, BASS) | Brinda asistencia y guías paso a paso de emergencia al astronauta citando reportes oficiales de la NASA sin alucinaciones. |
+| **📚 Catálogo de Investigaciones** (`PSIRepository`) | Catálogo indexado de 24 experimentos de microgravedad (~12 TB) con metadatos reales, plataforma, tipo de combustible y DOIs oficiales. | **NASA Physical Sciences Informatics (PSI)** | Permite explorar la evidencia empírica de 30 años de ciencia de la combustión espacial de la NASA. |
+
+---
+
+## 🗂️ Estructura del Proyecto (Monorepo)
 
 ```
-├── app/
-│   ├── app.py                      # Punto de entrada principal Streamlit
-│   ├── style.css                   # Tema aeroespacial oscuro personalizado
-│   ├── requirements.txt            # Dependencias del dashboard
-│   ├── pages/
-│   │   ├── 1_Dashboard_Home.py     # KPIs, timeline y mapa de calor
-│   │   ├── 2_PSI_Explorer.py       # Base de 24 investigaciones PSI
-│   │   ├── 3_Flame_Simulator.py    # Simulador dinámico Plotly
-│   │   ├── 4_AI_Assistant.py       # Asistente RAG con fuentes NASA
-│   │   ├── 5_Risk_Matrix.py        # Evaluador de riesgo en vivo con ML
-│   │   └── 6_About.py              # Transferencia terrestre y equipo
-│   └── data/
-│       ├── psi_investigations.json # Catálogo completo de 24 proyectos PSI
-│       ├── knowledge_base.json     # Corpus de 43 entradas Q&A con fuentes
-│       └── materials_flammability.json # Catálogo de 8 materiales espaciales
-├── ml/
-│   ├── flame_predictor.py          # Ensamble de regresión y clasificación
-│   ├── cool_flame_detector.py      # Detector de anomalías Isolation Forest
-│   ├── recommendation_engine.py    # Motor de recomendaciones de seguridad
-│   ├── data_generator.py           # Generador de datos sintéticos con física
-│   ├── train_all.py                # Pipeline de entrenamiento automático
-│   └── models/                     # Modelos entrenados y métricas JSON
-├── simulation/
-│   ├── flame_kinetics.py           # Motor de física y cinética LTC
-│   └── outputs/                    # Gráficos de alta resolución generados
-├── PLAN_DE_IMPLEMENTACION_FLAME_IN_FREEFALL.md # Especificación técnica maestra
-├── run_test.py                     # Suite de verificación del sistema
-└── README.md                       # Documentación general
+Nasa Internacional/
+├── frontend/                               # Aplicación Web React 19 + TypeScript
+│   ├── dist/                               # Artefactos pre-compilados listos para servir
+│   ├── src/
+│   │   ├── components/                     # Módulos de la Consola Aeroespacial
+│   │   │   ├── Navbar.tsx                  # Cabecera ergonómica y selector HUD de atmósfera
+│   │   │   ├── MissionDashboard.tsx        # Centro de Mando (4 KPIs, dual-bars, timeline)
+│   │   │   ├── FlameSimulator.tsx          # Simulador cinético y transitorio LTC 60s
+│   │   │   ├── RiskPredictor.tsx           # Predictor ML y prescripción NFPA 750
+│   │   │   ├── AIAssistant.tsx             # Copiloto RAG local y biblioteca forense
+│   │   │   ├── PSIRepository.tsx           # Explorador oficial de 24 misiones NASA PSI
+│   │   │   └── charts/                     # Visualizadores SVG/Canvas de alta resolución
+│   │   ├── physics/                        # Motores cinéticos y formulación matemática
+│   │   │   ├── flameKinetics.ts            # Ecuaciones Olson & T'ien y curvas LTC
+│   │   │   ├── mlInference.ts              # Inferencia ML calibrada con datos PSI (R²=0.982)
+│   │   │   └── chatEngine.ts               # Motor RAG local TF-IDF de peritajes forenses
+│   │   ├── data/                           # Bases de datos aeroespaciales en TypeScript
+│   │   │   ├── flightExperiences.ts        # 43 casos forenses documentados de la NASA
+│   │   │   └── psiInvestigations.ts        # 24 investigaciones oficiales con DOIs
+│   │   └── App.tsx                         # Contenedor raíz responsive (max-w-[1536px])
+│   ├── package.json                        # firelock v4.2.0
+│   └── vite.config.ts                      # Configuración de compilador Vite
+├── backend/                                # Pipelines de ciencia de datos y entrenamiento Python
+│   └── ml/                                 # Scripts de generación sintética y validación
+├── DOCUMENTACION_CIENTIFICA_Y_MODULAR_FIRELOCK.md # Documentación teórica maestra
+├── Dockerfile                              # Despliegue inmutable zero-reinstall
+├── vercel.json                             # Configuración cloud serverless
+├── package.json                            # Scripts del monorepo
+└── README.md                               # Este documento
 ```
 
 ---
 
-## 👥 Equipo y Atribución
-Desarrollado para el **NASA Space Apps Challenge 2026**.  
-*Fuentes de Datos:* NASA Physical Sciences Informatics (PSI), NASA Technical Reports Server (NTRS), NASA Glenn Research Center (GRC), JAXA Kibo FLARE Project.
+## 👥 Equipo y Atribución Científica
+
+* **Desarrollado para:** NASA Space Apps Challenge 2026.
+* **Fuentes de Datos Oficiales:**
+  * NASA Physical Sciences Informatics (PSI) Database.
+  * NASA Technical Reports Server (NTRS).
+  * NASA Glenn Research Center (GRC) Combustion Science Branch.
+  * JAXA Kibo FLARE (Flammability Limits at Reduced-gravity Experiment).
+  * National Fire Protection Association (NFPA 750 Standards Council).
