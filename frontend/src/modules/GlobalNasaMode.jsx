@@ -143,14 +143,14 @@ export default function GlobalNasaMode({
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <h2 className="text-sm font-black tracking-wide text-cyan-300 uppercase">
+              <h2 className="text-base sm:text-lg font-black tracking-wide text-cyan-300 uppercase">
                 NASA TREND DETECTIVE
               </h2>
-              <span className="rounded bg-indigo-950 px-1.5 py-0.5 text-[9px] font-bold text-indigo-300 border border-indigo-800">
+              <span className="rounded bg-indigo-950 px-2 py-0.5 text-xs font-bold text-indigo-300 border border-indigo-800">
                 GLOBAL TRACK
               </span>
             </div>
-            <p className="text-[11px] text-neutral-400">
+            <p className="text-xs sm:text-sm text-slate-300 font-medium">
               Detección Planetaria de Tendencias del Sistema Terrestre
             </p>
           </div>
@@ -158,40 +158,40 @@ export default function GlobalNasaMode({
       </div>
 
       {/* 2. Sub-Tabs de Navegación del Módulo Detective */}
-      <div className="flex items-center gap-1 rounded-xl bg-neutral-900/90 p-1 border border-neutral-800 text-[11px]">
+      <div className="flex items-center gap-1.5 rounded-xl bg-neutral-900/90 p-1.5 border border-neutral-800 text-xs sm:text-[13px]">
         <button
           onClick={() => setActiveSubTab('anomalies')}
-          className={`flex-1 rounded-lg py-1.5 px-2 font-semibold transition flex items-center justify-center gap-1 ${
+          className={`flex-1 rounded-lg py-2 px-2.5 font-bold transition flex items-center justify-center gap-1.5 ${
             activeSubTab === 'anomalies'
               ? 'bg-blue-600 text-white shadow'
-              : 'text-neutral-400 hover:text-white'
+              : 'text-slate-400 hover:text-white'
           }`}
         >
-          <Compass className="h-3.5 w-3.5" />
+          <Compass className="h-4 w-4" />
           <span>Puntos Críticos</span>
         </button>
 
         <button
           onClick={() => setActiveSubTab('live_stream')}
-          className={`flex-1 rounded-lg py-1.5 px-2 font-semibold transition flex items-center justify-center gap-1 ${
+          className={`flex-1 rounded-lg py-2 px-2.5 font-bold transition flex items-center justify-center gap-1.5 ${
             activeSubTab === 'live_stream'
               ? 'bg-blue-600 text-white shadow'
-              : 'text-neutral-400 hover:text-white'
+              : 'text-slate-400 hover:text-white'
           }`}
         >
-          <Satellite className="h-3.5 w-3.5" />
+          <Satellite className="h-4 w-4" />
           <span>NASA POWER</span>
         </button>
 
         <button
           onClick={() => setActiveSubTab('methodology')}
-          className={`flex-1 rounded-lg py-1.5 px-2 font-semibold transition flex items-center justify-center gap-1 ${
+          className={`flex-1 rounded-lg py-2 px-2.5 font-bold transition flex items-center justify-center gap-1.5 ${
             activeSubTab === 'methodology'
               ? 'bg-blue-600 text-white shadow'
-              : 'text-neutral-400 hover:text-white'
+              : 'text-slate-400 hover:text-white'
           }`}
         >
-          <FileText className="h-3.5 w-3.5" />
+          <FileText className="h-4 w-4" />
           <span>Método Científico</span>
         </button>
       </div>
@@ -202,77 +202,77 @@ export default function GlobalNasaMode({
       {activeSubTab === 'anomalies' && (
         <div className="space-y-3.5">
           {/* Tarjeta de las 4 Preguntas Clave de la NASA */}
-          <div className="rounded-xl border border-blue-800/60 bg-gradient-to-r from-blue-950/60 via-neutral-950 to-indigo-950/40 p-3 text-xs space-y-2">
-            <div className="flex items-center justify-between text-blue-300 font-bold border-b border-blue-900/40 pb-1.5">
-              <span className="flex items-center gap-1.5 text-[11px]">
-                <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+          <div className="rounded-xl border border-blue-800/60 bg-gradient-to-r from-blue-950/60 via-neutral-950 to-indigo-950/40 p-3.5 text-xs sm:text-[13px] space-y-2.5">
+            <div className="flex items-center justify-between text-blue-300 font-bold border-b border-blue-900/40 pb-2">
+              <span className="flex items-center gap-2 text-xs sm:text-sm">
+                <Sparkles className="h-4 w-4 text-cyan-400" />
                 Las 4 Preguntas Obligatorias del Reto NASA
               </span>
-              <span className="text-[9px] font-mono bg-blue-900/60 text-blue-200 px-1.5 py-0.5 rounded">
+              <span className="text-xs font-mono font-bold bg-blue-900/60 text-blue-200 px-2 py-0.5 rounded">
                 Trend Detective
               </span>
             </div>
             
-            <div className="grid grid-cols-2 gap-2 text-[10px]">
-              <div className="rounded bg-neutral-900/80 p-2 border border-neutral-800">
-                <span className="text-cyan-400 font-bold block mb-0.5">1. ¿Qué está cambiando?</span>
-                <span className="text-neutral-300">Temperatura superficial LST, cobertura vegetal NDVI, humedad y aerosoles AOD de incendios.</span>
+            <div className="grid grid-cols-2 gap-2 text-xs sm:text-[13px]">
+              <div className="rounded bg-neutral-900/80 p-2.5 border border-neutral-800">
+                <span className="text-cyan-300 font-bold block mb-1 text-xs sm:text-sm">1. ¿Qué está cambiando?</span>
+                <span className="text-slate-200 leading-relaxed">Temperatura superficial LST, cobertura vegetal NDVI, humedad y aerosoles AOD de incendios.</span>
               </div>
-              <div className="rounded bg-neutral-900/80 p-2 border border-neutral-800">
-                <span className="text-cyan-400 font-bold block mb-0.5">2. ¿Dónde está cambiando?</span>
-                <span className="text-neutral-300">7 puntos críticos planetarios + contraste urbano/alpino en el Valle de Cochabamba.</span>
+              <div className="rounded bg-neutral-900/80 p-2.5 border border-neutral-800">
+                <span className="text-cyan-300 font-bold block mb-1 text-xs sm:text-sm">2. ¿Dónde está cambiando?</span>
+                <span className="text-slate-200 leading-relaxed">7 puntos críticos planetarios + contraste urbano/alpino en el Valle de Cochabamba.</span>
               </div>
-              <div className="rounded bg-neutral-900/80 p-2 border border-neutral-800">
-                <span className="text-cyan-400 font-bold block mb-0.5">3. ¿Cuánto está cambiando?</span>
-                <span className="text-neutral-300">Pendientes decadales precisas (°C/década) y brechas térmicas de hasta +17.4 °C.</span>
+              <div className="rounded bg-neutral-900/80 p-2.5 border border-neutral-800">
+                <span className="text-cyan-300 font-bold block mb-1 text-xs sm:text-sm">3. ¿Cuánto está cambiando?</span>
+                <span className="text-slate-200 leading-relaxed">Pendientes decadales precisas (°C/década) y brechas térmicas de hasta +17.4 °C.</span>
               </div>
-              <div className="rounded bg-neutral-900/80 p-2 border border-neutral-800">
-                <span className="text-cyan-400 font-bold block mb-0.5">4. ¿Es significativo?</span>
-                <span className="text-neutral-300">Validado con Mann-Kendall y regresión OLS a un nivel de confianza del 95% (p &lt; 0.05).</span>
+              <div className="rounded bg-neutral-900/80 p-2.5 border border-neutral-800">
+                <span className="text-cyan-300 font-bold block mb-1 text-xs sm:text-sm">4. ¿Es significativo?</span>
+                <span className="text-slate-200 leading-relaxed">Validado con Mann-Kendall y regresión OLS a un nivel de confianza del 95% (p &lt; 0.05).</span>
               </div>
             </div>
           </div>
 
           {/* Selector de Hotspots Globales */}
-          <div className="space-y-1.5">
-            <span className="text-xs font-bold text-neutral-300 flex items-center justify-between">
+          <div className="space-y-2">
+            <span className="text-xs sm:text-sm font-bold text-slate-200 flex items-center justify-between">
               <span>Selecciona un Punto Crítico (Global & Bolivia):</span>
-              <span className="text-[10px] text-cyan-400 font-mono">{globalHotspots.length} Puntos Validados</span>
+              <span className="text-xs text-cyan-400 font-mono font-bold">{globalHotspots.length} Puntos Validados</span>
             </span>
-            <div className="grid grid-cols-1 gap-1 text-xs">
+            <div className="grid grid-cols-1 gap-1.5 text-xs sm:text-sm">
               {globalHotspots.map((spot) => (
                 <button
                   key={spot.id}
                   onClick={() => handleSelectHotspot(spot)}
-                  className={`w-full flex items-center justify-between p-2 rounded-xl border text-left transition ${
+                  className={`w-full flex items-center justify-between p-3 rounded-xl border text-left transition ${
                     currentHotspotId === spot.id
-                      ? 'border-cyan-500 bg-cyan-950/40 text-cyan-100 shadow-md'
-                      : 'border-neutral-800 bg-neutral-900/70 text-neutral-300 hover:border-neutral-700 hover:bg-neutral-900'
+                      ? 'border-cyan-500 bg-cyan-950/40 text-cyan-100 shadow-md ring-1 ring-cyan-500/50'
+                      : 'border-neutral-800 bg-neutral-900/70 text-slate-200 hover:border-neutral-700 hover:bg-neutral-900'
                   }`}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
                     <span className={`h-2.5 w-2.5 rounded-full ${
                       spot.is_pilot ? 'bg-purple-400 animate-ping' :
                       spot.id === 'artico' ? 'bg-cyan-300' :
                       spot.id === 'sahel' ? 'bg-amber-400' : 'bg-red-400'
                     }`}></span>
                     <div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-bold text-[11px]">{spot.name}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-xs sm:text-sm text-white">{spot.name}</span>
                         {spot.is_pilot && (
-                          <span className="rounded bg-purple-950 text-purple-300 border border-purple-800 text-[8px] font-bold px-1">
+                          <span className="rounded bg-purple-950 text-purple-300 border border-purple-800 text-[10px] sm:text-xs font-bold px-1.5 py-0.5">
                             CASO PILOTO
                           </span>
                         )}
                       </div>
-                      <span className="text-[10px] text-neutral-400 block">{spot.tipo_tendencia}</span>
+                      <span className="text-xs text-slate-300 block mt-0.5">{spot.tipo_tendencia}</span>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] font-mono font-bold text-amber-400 block">
+                    <span className="text-xs font-mono font-bold text-amber-400 block">
                       {spot.tasa_cambio_decadal.split(' ')[0]} {spot.tasa_cambio_decadal.split(' ')[1]}
                     </span>
-                    <span className="text-[9px] text-emerald-400 font-mono">
+                    <span className="text-xs text-emerald-400 font-mono font-semibold">
                       p &lt; 0.05 ✓
                     </span>
                   </div>
@@ -282,64 +282,64 @@ export default function GlobalNasaMode({
           </div>
 
           {/* Tarjeta Detallada del Hotspot Seleccionado */}
-          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-3.5 space-y-3">
-            <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
+          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-4 space-y-3.5">
+            <div className="flex items-center justify-between border-b border-neutral-800 pb-2.5">
               <div>
-                <span className="text-[9px] text-cyan-400 font-mono uppercase tracking-wider block">
+                <span className="text-xs text-cyan-300 font-mono uppercase tracking-wider block font-semibold">
                   {activeHotspot.region} • {activeHotspot.country}
                 </span>
-                <h3 className="text-xs font-black text-white">{activeHotspot.name}</h3>
+                <h3 className="text-sm sm:text-base font-black text-white">{activeHotspot.name}</h3>
               </div>
-              <span className="rounded bg-emerald-950 px-2 py-0.5 text-[9px] font-mono text-emerald-400 border border-emerald-800">
+              <span className="rounded bg-emerald-950 px-2.5 py-0.5 text-xs font-mono font-bold text-emerald-400 border border-emerald-800">
                 {activeHotspot.significancia.split(' ')[0]} {activeHotspot.significancia.split(' ')[1]}
               </span>
             </div>
 
             {/* Banner Especial si es el Caso Piloto de Cochabamba */}
             {activeHotspot.is_pilot && (
-              <div className="rounded-lg border border-purple-800/80 bg-gradient-to-r from-purple-950/80 to-blue-950/60 p-2.5 flex items-center justify-between text-xs">
+              <div className="rounded-xl border border-purple-800/80 bg-gradient-to-r from-purple-950/80 to-blue-950/60 p-3 flex items-center justify-between text-xs sm:text-sm">
                 <div>
-                  <span className="font-bold text-purple-200 block text-[11px]">
+                  <span className="font-bold text-purple-200 block text-xs sm:text-sm">
                     🌟 Caso Piloto Oficial del Equipo Stevens
                   </span>
-                  <span className="text-[10px] text-neutral-300">
-                    Microclimas en 14 Distritos, Red MÓNICA e Incendios Tunari.
+                  <span className="text-xs text-slate-200 block mt-0.5">
+                    Microclimas en 15 Distritos, Red MÓNICA e Incendios Tunari.
                   </span>
                 </div>
                 <button
                   onClick={onSwitchToPilot}
-                  className="rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 px-3 py-1.5 text-[11px] font-bold text-white shadow-lg hover:from-purple-500 hover:to-blue-500 transition flex items-center gap-1"
+                  className="rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 px-3.5 py-2 text-xs sm:text-sm font-bold text-white shadow-lg hover:from-purple-500 hover:to-blue-500 transition flex items-center gap-1.5 shrink-0 ml-2"
                 >
                   <span>Explorar Piloto</span>
-                  <ArrowRight className="h-3 w-3" />
+                  <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
             )}
 
             {/* Métricas del Hotspot */}
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800">
-                <span className="text-[10px] text-neutral-400 flex items-center gap-1">
-                  <Thermometer className="h-3 w-3 text-red-400" />
+              <div className="rounded-lg bg-neutral-900 p-2.5 border border-neutral-800">
+                <span className="text-xs text-slate-300 font-semibold flex items-center gap-1">
+                  <Thermometer className="h-3.5 w-3.5 text-red-400" />
                   Temp. Superficie LST:
                 </span>
-                <span className="text-base font-black text-red-400 font-mono">
+                <span className="text-lg font-black text-red-400 font-mono block my-0.5">
                   {activeHotspot.lst_superficie_c} °C
                 </span>
-                <span className="text-[9px] text-neutral-500 block">
+                <span className="text-xs text-slate-400 block">
                   Aire: {activeHotspot.temp_aire_t2m_c} °C
                 </span>
               </div>
 
-              <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800">
-                <span className="text-[10px] text-neutral-400 flex items-center gap-1">
-                  <TrendingUp className="h-3 w-3 text-amber-400" />
+              <div className="rounded-lg bg-neutral-900 p-2.5 border border-neutral-800">
+                <span className="text-xs text-slate-300 font-semibold flex items-center gap-1">
+                  <TrendingUp className="h-3.5 w-3.5 text-amber-400" />
                   Tasa de Cambio:
                 </span>
-                <span className="text-xs font-black text-amber-400 font-mono block truncate">
+                <span className="text-sm font-bold text-amber-400 font-mono block truncate my-0.5">
                   {activeHotspot.tasa_cambio_decadal}
                 </span>
-                <span className="text-[9px] text-emerald-400 font-mono block">
+                <span className="text-xs text-emerald-400 font-mono font-semibold block">
                   Mann-Kendall Z: {activeHotspot.z_score_mann_kendall}
                 </span>
               </div>
@@ -347,18 +347,18 @@ export default function GlobalNasaMode({
 
             {/* Gráfica de Serie Temporal (SVG Multi-Decadal) */}
             {activeHotspot.series_historica && (
-              <div className="rounded-lg bg-neutral-900/90 p-2.5 border border-neutral-800 space-y-1.5">
-                <div className="flex items-center justify-between text-[10px]">
-                  <span className="font-bold text-neutral-300 flex items-center gap-1">
-                    <BarChart3 className="h-3 w-3 text-cyan-400" />
+              <div className="rounded-xl bg-neutral-900/90 p-3 border border-neutral-800 space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-slate-200 flex items-center gap-1.5">
+                    <BarChart3 className="h-4 w-4 text-cyan-400" />
                     Serie Temporal 2016-2026 (Satelital LST vs Tendencia OLS)
                   </span>
-                  <span className="text-emerald-400 font-mono font-bold">
+                  <span className="text-emerald-400 font-mono font-bold text-xs sm:text-sm">
                     p = {activeHotspot.p_value} (&lt; 0.05)
                   </span>
                 </div>
 
-                <div className="h-24 w-full flex items-end justify-between gap-1 pt-2 px-1">
+                <div className="h-28 w-full flex items-end justify-between gap-1.5 pt-2 px-1">
                   {activeHotspot.series_historica.map((pt, idx) => {
                     const min = Math.min(...activeHotspot.series_historica.map(p => p.lst)) - 1;
                     const max = Math.max(...activeHotspot.series_historica.map(p => p.lst)) + 1;
@@ -369,13 +369,13 @@ export default function GlobalNasaMode({
                           className="w-full rounded-t bg-gradient-to-t from-blue-600 to-cyan-400 transition-all group-hover:from-blue-500 group-hover:to-cyan-300"
                           style={{ height: `${heightPercent}%` }}
                         />
-                        <span className="text-[8px] text-neutral-500 font-mono mt-1">
+                        <span className="text-xs text-slate-400 font-mono mt-1 font-medium">
                           {pt.year.toString().slice(2)}
                         </span>
                         {/* Tooltip hover */}
-                        <div className="absolute bottom-10 hidden group-hover:flex flex-col rounded bg-neutral-950 p-1 text-[9px] text-white border border-neutral-700 shadow-xl z-20 whitespace-nowrap">
-                          <span>{pt.year}: <strong>{pt.lst} °C</strong></span>
-                          <span className="text-neutral-400">Tendencia: {pt.trend} °C</span>
+                        <div className="absolute bottom-10 hidden group-hover:flex flex-col rounded-lg bg-neutral-950 p-2 text-xs text-white border border-neutral-700 shadow-xl z-20 whitespace-nowrap">
+                          <span>{pt.year}: <strong className="text-cyan-300">{pt.lst} °C</strong></span>
+                          <span className="text-slate-400">Tendencia: {pt.trend} °C</span>
                         </div>
                       </div>
                     );
@@ -385,8 +385,8 @@ export default function GlobalNasaMode({
             )}
 
             {/* Diagnóstico Científico */}
-            <div className="rounded-lg bg-neutral-900/60 p-2 border border-neutral-800 text-[11px] text-neutral-300 leading-relaxed">
-              <strong className="text-cyan-400 block text-[10px] uppercase mb-0.5">Fundamento Científico:</strong>
+            <div className="rounded-lg bg-neutral-900/60 p-3 border border-neutral-800 text-xs sm:text-[13px] text-slate-200 leading-relaxed">
+              <strong className="text-cyan-400 block text-xs uppercase font-bold mb-1">Fundamento Científico:</strong>
               {activeHotspot.descripcion_cientifica}
             </div>
           </div>
@@ -398,50 +398,50 @@ export default function GlobalNasaMode({
       {/* ==================================================================== */}
       {activeSubTab === 'live_stream' && (
         <div className="space-y-3.5">
-          <div className="rounded-xl border border-cyan-800/60 bg-gradient-to-r from-cyan-950/60 to-blue-950/40 p-3 text-xs space-y-1">
-            <span className="font-bold text-cyan-300 flex items-center gap-1.5 text-[11px]">
-              <Satellite className="h-3.5 w-3.5 text-cyan-400" />
+          <div className="rounded-xl border border-cyan-800/60 bg-gradient-to-r from-cyan-950/60 to-blue-950/40 p-3.5 text-xs sm:text-[13px] space-y-1.5">
+            <span className="font-bold text-cyan-300 flex items-center gap-2 text-xs sm:text-sm">
+              <Satellite className="h-4 w-4 text-cyan-400" />
               Sensor Satelital Virtual Planetario (NASA POWER API)
             </span>
-            <p className="text-[10px] text-neutral-300 leading-snug">
+            <p className="text-xs sm:text-[13px] text-slate-200 leading-relaxed">
               Ingresa cualquier coordenada geográfica en el planeta o <strong>haz clic directamente en el mapa mundial</strong> para consultar la serie meteorológica satelital en tiempo real.
             </p>
           </div>
 
           {/* Formulario de Coordenadas */}
-          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-3 space-y-2">
-            <span className="text-xs font-bold text-neutral-300 flex items-center gap-1.5">
-              <Search className="h-3.5 w-3.5 text-cyan-400" />
+          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-3.5 space-y-2.5">
+            <span className="text-xs sm:text-sm font-bold text-slate-200 flex items-center gap-2">
+              <Search className="h-4 w-4 text-cyan-400" />
               Consulta por Coordenadas:
             </span>
-            <div className="flex gap-2 text-xs">
+            <div className="flex gap-2 text-xs sm:text-sm">
               <div className="flex-1">
-                <label className="text-[10px] text-neutral-400 block mb-0.5">Latitud:</label>
+                <label className="text-xs text-slate-300 font-medium block mb-1">Latitud:</label>
                 <input
                   type="number"
                   step="0.0001"
                   value={lat}
                   onChange={(e) => setLat(Number(e.target.value))}
-                  className="w-full rounded bg-neutral-900 p-1.5 text-xs text-neutral-200 border border-neutral-800 outline-none focus:border-cyan-500 font-mono"
+                  className="w-full rounded-lg bg-neutral-900 p-2 text-xs sm:text-sm text-neutral-200 border border-neutral-800 outline-none focus:border-cyan-500 font-mono"
                 />
               </div>
               <div className="flex-1">
-                <label className="text-[10px] text-neutral-400 block mb-0.5">Longitud:</label>
+                <label className="text-xs text-slate-300 font-medium block mb-1">Longitud:</label>
                 <input
                   type="number"
                   step="0.0001"
                   value={lon}
                   onChange={(e) => setLon(Number(e.target.value))}
-                  className="w-full rounded bg-neutral-900 p-1.5 text-xs text-neutral-200 border border-neutral-800 outline-none focus:border-cyan-500 font-mono"
+                  className="w-full rounded-lg bg-neutral-900 p-2 text-xs sm:text-sm text-neutral-200 border border-neutral-800 outline-none focus:border-cyan-500 font-mono"
                 />
               </div>
               <div className="flex items-end">
                 <button
                   onClick={() => handleQueryNasaPower(lat, lon, `Coordenada: ${lat.toFixed(3)}, ${lon.toFixed(3)}`)}
                   disabled={isLoading}
-                  className="rounded bg-cyan-600 px-3 py-1.5 font-bold text-white hover:bg-cyan-500 transition shadow flex items-center gap-1"
+                  className="rounded-lg bg-cyan-600 px-3.5 py-2 font-bold text-white hover:bg-cyan-500 transition shadow flex items-center gap-1.5 text-xs sm:text-sm"
                 >
-                  {isLoading ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Search className="h-3.5 w-3.5" />}
+                  {isLoading ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
                   <span>Consultar</span>
                 </button>
               </div>
@@ -449,56 +449,56 @@ export default function GlobalNasaMode({
           </div>
 
           {/* Telemetría Retornada */}
-          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-3.5 space-y-3">
-            <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
+          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-4 space-y-3.5">
+            <div className="flex items-center justify-between border-b border-neutral-800 pb-2.5">
               <div>
-                <span className="text-[10px] text-cyan-400 font-mono block">Locus Seleccionado</span>
-                <h3 className="text-xs font-bold text-white">{customLocationName}</h3>
+                <span className="text-xs text-cyan-400 font-mono font-bold block">Locus Seleccionado</span>
+                <h3 className="text-sm font-bold text-white">{customLocationName}</h3>
               </div>
-              <span className="rounded bg-emerald-950 px-2 py-0.5 text-[9px] font-mono text-emerald-400 border border-emerald-800">
+              <span className="rounded bg-emerald-950 px-2.5 py-0.5 text-xs font-mono font-bold text-emerald-400 border border-emerald-800">
                 {liveStreamData.status}
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800">
-                <span className="text-[10px] text-neutral-400 flex items-center gap-1">
-                  <Thermometer className="h-3 w-3 text-red-400" />
+              <div className="rounded-lg bg-neutral-900 p-2.5 border border-neutral-800">
+                <span className="text-xs text-slate-300 font-semibold flex items-center gap-1">
+                  <Thermometer className="h-3.5 w-3.5 text-red-400" />
                   Temp. Superficie (TS):
                 </span>
-                <span className="text-base font-black text-red-400 font-mono">
+                <span className="text-lg font-black text-red-400 font-mono block my-0.5">
                   {liveStreamData.avg_surface_temp} °C
                 </span>
-                <span className="text-[9px] text-neutral-500 block">
+                <span className="text-xs text-slate-400 block">
                   Temp. Aire 2m: {liveStreamData.avg_air_temp} °C
                 </span>
               </div>
 
-              <div className="rounded-lg bg-neutral-900 p-2 border border-neutral-800">
-                <span className="text-[10px] text-neutral-400 flex items-center gap-1">
-                  <CloudRain className="h-3 w-3 text-blue-400" />
+              <div className="rounded-lg bg-neutral-900 p-2.5 border border-neutral-800">
+                <span className="text-xs text-slate-300 font-semibold flex items-center gap-1">
+                  <CloudRain className="h-3.5 w-3.5 text-blue-400" />
                   Precipitación Anual:
                 </span>
-                <span className="text-base font-black text-blue-400 font-mono">
+                <span className="text-lg font-black text-blue-400 font-mono block my-0.5">
                   {liveStreamData.precipitation_sum} mm
                 </span>
-                <span className="text-[9px] text-neutral-500 block">
+                <span className="text-xs text-slate-400 block">
                   Humedad Relativa: {liveStreamData.relative_humidity}%
                 </span>
               </div>
             </div>
 
-            <div className="rounded-lg bg-neutral-900/80 p-2.5 border border-neutral-800 space-y-1 text-[11px]">
+            <div className="rounded-lg bg-neutral-900/80 p-3 border border-neutral-800 space-y-1.5 text-xs sm:text-[13px]">
               <div className="flex justify-between">
-                <span className="text-neutral-400">Tendencia Térmica Calculada:</span>
-                <strong className="text-amber-400 font-mono">{liveStreamData.thermal_trend}</strong>
+                <span className="text-slate-300">Tendencia Térmica Calculada:</span>
+                <strong className="text-amber-400 font-mono font-bold">{liveStreamData.thermal_trend}</strong>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-400">Significancia Estadística:</span>
-                <strong className="text-emerald-400 font-mono">p = {liveStreamData.p_value} (&lt; 0.05 ✓)</strong>
+                <span className="text-slate-300">Significancia Estadística:</span>
+                <strong className="text-emerald-400 font-mono font-bold">p = {liveStreamData.p_value} (&lt; 0.05 ✓)</strong>
               </div>
-              <div className="pt-1 border-t border-neutral-800 text-[10px] text-neutral-400">
-                <strong>Diagnóstico:</strong> {liveStreamData.anomaly_status}
+              <div className="pt-1.5 border-t border-neutral-800 text-xs text-slate-300">
+                <strong className="text-white">Diagnóstico:</strong> {liveStreamData.anomaly_status}
               </div>
             </div>
           </div>
@@ -509,47 +509,47 @@ export default function GlobalNasaMode({
       {/* SUB-TAB 3: METODOLOGÍA CIENTÍFICA & ESTADÍSTICA (p < 0.05)           */}
       {/* ==================================================================== */}
       {activeSubTab === 'methodology' && (
-        <div className="space-y-3 text-xs">
-          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-3 space-y-1">
-            <span className="font-bold text-cyan-300 block text-[11px]">
+        <div className="space-y-3.5 text-xs sm:text-[13px]">
+          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-3.5 space-y-1.5">
+            <span className="font-bold text-cyan-300 block text-xs sm:text-sm">
               🔬 Metodología Estadística Exigida por la NASA
             </span>
-            <p className="text-[10px] text-neutral-400">
+            <p className="text-xs text-slate-300 leading-relaxed">
               Para declarar que un cambio es una <strong>"tendencia real"</strong> y no mero ruido estacional:
             </p>
           </div>
 
-          <div className="space-y-2">
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900/80 p-2.5">
-              <strong className="text-white block text-[11px] mb-0.5">1. Descomposición de Series STL:</strong>
-              <div className="bg-neutral-950 rounded p-1.5 font-mono text-[10px] text-cyan-300 mb-1 border border-neutral-800">
+          <div className="space-y-2.5">
+            <div className="rounded-xl border border-neutral-800 bg-neutral-900/80 p-3 space-y-1.5">
+              <strong className="text-white block text-xs sm:text-sm font-bold">1. Descomposición de Series STL:</strong>
+              <div className="bg-neutral-950 rounded-lg p-2 font-mono text-xs sm:text-sm text-cyan-300 border border-neutral-800">
                 Y(t) = T(t) + S(t) + R(t)
               </div>
-              <p className="text-[10px] text-neutral-300 leading-snug">
+              <p className="text-xs sm:text-[13px] text-slate-200 leading-relaxed">
                 Filtra el ciclo estacional de verano e invierno ($S(t)$) para extraer la tendencia real de fondo ($T(t)$), tal como lo establece el paper científico oficial de la NASA (SeaWiFS time-series).
               </p>
             </div>
 
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900/80 p-2.5">
-              <strong className="text-white block text-[11px] mb-0.5">2. Prueba No Paramétrica de Mann-Kendall:</strong>
-              <p className="text-[10px] text-neutral-300 leading-snug">
+            <div className="rounded-xl border border-neutral-800 bg-neutral-900/80 p-3 space-y-1">
+              <strong className="text-white block text-xs sm:text-sm font-bold">2. Prueba No Paramétrica de Mann-Kendall:</strong>
+              <p className="text-xs sm:text-[13px] text-slate-200 leading-relaxed">
                 Evalúa si existe una tendencia monótona sin asumir normalidad en los datos. Robusta contra valores atípicos y nubes dispersas.
               </p>
             </div>
 
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900/80 p-2.5">
-              <strong className="text-white block text-[11px] mb-0.5">3. Estimador de Pendiente de Sen:</strong>
-              <p className="text-[10px] text-neutral-300 leading-snug">
+            <div className="rounded-xl border border-neutral-800 bg-neutral-900/80 p-3 space-y-1">
+              <strong className="text-white block text-xs sm:text-sm font-bold">3. Estimador de Pendiente de Sen:</strong>
+              <p className="text-xs sm:text-[13px] text-slate-200 leading-relaxed">
                 Calcula la mediana de todas las pendientes entre pares de puntos temporales para cuantificar la tasa real en °C/década.
               </p>
             </div>
 
-            <div className="rounded-xl border border-purple-800/60 bg-purple-950/30 p-2.5">
-              <strong className="text-purple-300 block text-[11px] mb-0.5">4. Criterio de Significancia Científica:</strong>
-              <div className="bg-neutral-950 rounded p-1.5 font-mono text-[10px] text-emerald-400 mb-1 border border-purple-900/40">
+            <div className="rounded-xl border border-purple-800/60 bg-purple-950/30 p-3 space-y-1.5">
+              <strong className="text-purple-300 block text-xs sm:text-sm font-bold">4. Criterio de Significancia Científica:</strong>
+              <div className="bg-neutral-950 rounded-lg p-2 font-mono text-xs sm:text-sm text-emerald-400 border border-purple-900/40">
                 p-value &lt; 0.05  (Nivel de Confianza ≥ 95%)
               </div>
-              <p className="text-[10px] text-neutral-300 leading-snug">
+              <p className="text-xs sm:text-[13px] text-slate-200 leading-relaxed">
                 Si $p \ge 0.05$, la variación se clasifica como fluctuación meteorológica transitoria, garantizando que el GAMC no tome decisiones basadas en falsas alarmas.
               </p>
             </div>

@@ -329,14 +329,14 @@ export default function MapViewer({
           });
           polygon.bindPopup(`<strong>📍 ${p.nombre}</strong><br/>LST NASA: ${lstVal} °C<br/>NDVI: ${p.ndvi_promedio || '0.25'}`);
           polygon.addTo(layersGroupRef.current);
-        if (layerRegistryRef.current) {
-          layerRegistryRef.current.districts[p.distrito_id] = {
-            layer: polygon,
-            defaultColor: color,
-            data: p,
-            center: p.centroide || polyCoords[0]
-          };
-        }
+          if (layerRegistryRef.current) {
+            layerRegistryRef.current.districts[p.distrito_id] = {
+              layer: polygon,
+              defaultColor: polyColor,
+              data: p,
+              center: p.centroide || polyCoords[0]
+            };
+          }
         });
 
         monicaData?.estaciones_fisicas?.forEach((est) => {
@@ -402,10 +402,10 @@ export default function MapViewer({
         // Nombre ultracorto de 1 o 2 palabras para evitar colisiones en distritos pequeños del centro
         const compactName = (p.nombre.split('-')[1]?.trim() || p.nombre).split('/')[0].trim();
         polygon.bindTooltip(`
-          <div style="display: flex; align-items: center; gap: 3px; font-family: sans-serif; font-size: 10px; font-weight: 800; white-space: nowrap;">
-            <span style="background: ${color}; color: #fff; padding: 1px 5px; border-radius: 4px; font-size: 9px; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">${p.distrito_id}</span>
-            <span>${compactName}</span>
-            <span style="color: ${color}; font-size: 9px; font-weight: bold;">${lstVal}°</span>
+          <div style="display: flex; align-items: center; gap: 4px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 800; white-space: nowrap;">
+            <span style="background: ${color}; color: #ffffff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">${p.distrito_id}</span>
+            <span style="color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.8);">${compactName}</span>
+            <span style="color: #fde047; font-size: 11px; font-weight: 800;">${lstVal}°</span>
           </div>
         `, {
           permanent: showDistrictLabels,
@@ -442,47 +442,47 @@ export default function MapViewer({
         });
 
         polygon.bindPopup(`
-          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 270px; max-width: 320px; line-height: 1.45;">
-            <div style="background: ${color}; color: white; padding: 6px 10px; border-radius: 6px 6px 0 0; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 13px;">📍 ${p.nombre}</span>
-              <span style="font-size: 9px; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">
+          <div style="color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; min-width: 290px; max-width: 340px; line-height: 1.5;">
+            <div style="background: ${color}; color: white; padding: 8px 12px; border-radius: 6px 6px 0 0; font-weight: 800; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 14px;">📍 ${p.nombre}</span>
+              <span style="font-size: 11px; font-weight: 700; background: rgba(0,0,0,0.3); padding: 2px 7px; border-radius: 4px; text-transform: uppercase;">
                 ${p.nivel_alerta || 'Distrito GAMC'}
               </span>
             </div>
-            <div style="padding: 10px; border: 1px solid ${color}; border-top: none; border-radius: 0 0 6px 6px; background: white;">
+            <div style="padding: 12px; border: 1px solid ${color}; border-top: none; border-radius: 0 0 6px 6px; background: white;">
               ${p.resena_historica ? `
-                <div style="margin-bottom: 7px; color: #334155; font-size: 11px; line-height: 1.4; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px;">
+                <div style="margin-bottom: 8px; color: #334155; font-size: 12px; line-height: 1.45; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;">
                   ${p.resena_historica}
                 </div>
               ` : ''}
 
               ${p.hito_urbano ? `
-                <div style="margin-bottom: 7px; font-size: 10px; color: #475569; background: #f8fafc; padding: 4px 6px; border-radius: 4px;">
+                <div style="margin-bottom: 8px; font-size: 11px; color: #334155; background: #f8fafc; padding: 6px 8px; border-radius: 6px; border: 1px solid #e2e8f0;">
                   🏛️ <strong>Hitos urbanos:</strong> ${p.hito_urbano}
                 </div>
               ` : ''}
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 6px; font-size: 11px;">
-                <div><strong>LST (NASA):</strong> <span style="font-weight: bold; color: ${color};">${lstVal} °C</span></div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px; font-size: 12px;">
+                <div><strong>LST (NASA):</strong> <span style="font-weight: 800; color: ${color};">${lstVal} °C</span></div>
                 <div><strong>NDVI (Verde):</strong> <span>${p.ndvi_promedio || 0.25}</span></div>
                 ${p.temp_aire_pred_c ? `<div><strong>Aire T2M:</strong> ${p.temp_aire_pred_c} °C</div>` : ''}
-                ${p.pet_pred_c ? `<div><strong>Confort (PET):</strong> <span style="font-weight: bold; color: ${p.pet_pred_c > 35 ? '#b91c1c' : '#047857'};">${p.pet_pred_c} °C</span></div>` : ''}
+                ${p.pet_pred_c ? `<div><strong>Confort (PET):</strong> <span style="font-weight: 800; color: ${p.pet_pred_c > 35 ? '#b91c1c' : '#047857'};">${p.pet_pred_c} °C</span></div>` : ''}
               </div>
 
               ${p.poblacion_total ? `
-                <div style="font-size: 11px; color: #475569; margin-bottom: 5px;">
+                <div style="font-size: 12px; color: #475569; margin-bottom: 6px;">
                   👥 <strong>Población:</strong> ${Number(p.poblacion_total).toLocaleString()} hab. • <strong>Déficit árboles:</strong> ${p.deficit_arbolado_pct || 50}%
                 </div>
               ` : ''}
 
               ${p.tendencia_detectada ? `
-                <div style="margin-top: 6px; padding: 5px; background: #eff6ff; border-left: 3px solid #3b82f6; font-size: 10px; color: #1e3a8a;">
+                <div style="margin-top: 8px; padding: 6px 8px; background: #eff6ff; border-left: 3px solid #3b82f6; font-size: 11px; color: #1e3a8a; border-radius: 0 4px 4px 0;">
                   📈 <strong>Diagnóstico NASA:</strong> ${p.tendencia_detectada}
                 </div>
               ` : ''}
 
               ${p.estrategia_recomendada ? `
-                <div style="margin-top: 5px; padding: 5px; background: #f0fdf4; border-left: 3px solid #16a34a; font-size: 10px; color: #14532d;">
+                <div style="margin-top: 6px; padding: 6px 8px; background: #f0fdf4; border-left: 3px solid #16a34a; font-size: 11px; color: #14532d; border-radius: 0 4px 4px 0;">
                   🌱 <strong>Estrategia Alcaldía:</strong> ${p.estrategia_recomendada}
                 </div>
               ` : ''}
@@ -1176,45 +1176,45 @@ export default function MapViewer({
       
       {/* HUD Flotante de Elemento Seleccionado / Enfoque Activo */}
       {selectedPoint && (
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[450] flex items-center gap-2 rounded-full border border-blue-500/50 bg-[#090d16]/95 px-3.5 py-1.5 shadow-2xl backdrop-blur-md text-xs font-bold text-white transition-all animate-in fade-in slide-in-from-top-2 max-w-[90vw]">
-          <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-pulse shrink-0"></span>
-          <span className="text-cyan-300 font-mono text-[10px] uppercase tracking-wider shrink-0">
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[450] flex items-center gap-2.5 rounded-full border border-blue-500/60 bg-[#090d16]/95 px-4 py-2 shadow-2xl backdrop-blur-md text-xs sm:text-sm font-bold text-white transition-all animate-in fade-in slide-in-from-top-2 max-w-[92vw]">
+          <span className="flex h-2.5 w-2.5 rounded-full bg-cyan-400 animate-pulse shrink-0"></span>
+          <span className="text-cyan-300 font-mono text-xs uppercase tracking-wider shrink-0 font-bold">
             {selectedPoint.type === 'district' ? 'Distrito' :
              selectedPoint.type === 'sensor' ? 'Sensor IA' :
              selectedPoint.type === 'foco' ? 'Foco Tunari' :
              selectedPoint.type === 'global' ? 'Global NASA' : 'Enfoque'}:
           </span>
-          <span className="text-white font-bold truncate max-w-[150px] sm:max-w-xs text-xs">
+          <span className="text-white font-black truncate max-w-[180px] sm:max-w-xs text-xs sm:text-sm">
             {selectedPoint.nombre || selectedPoint.name || selectedPoint.zona || selectedPoint.distrito_id || 'Elemento'}
           </span>
           {(selectedPoint.lst_nasa_promedio_c || selectedPoint.lst_nasa_c) && (
-            <span className="rounded bg-red-950/80 px-2 py-0.5 text-[10px] font-mono text-red-300 border border-red-800/60 shrink-0">
+            <span className="rounded bg-red-950 px-2.5 py-0.5 text-xs font-mono font-bold text-red-300 border border-red-800/80 shrink-0">
               {selectedPoint.lst_nasa_promedio_c || selectedPoint.lst_nasa_c} °C LST
             </span>
           )}
           {selectedPoint.frp_total_mw && (
-            <span className="rounded bg-orange-950/80 px-2 py-0.5 text-[10px] font-mono text-orange-300 border border-orange-800/60 shrink-0">
+            <span className="rounded bg-orange-950 px-2.5 py-0.5 text-xs font-mono font-bold text-orange-300 border border-orange-800/80 shrink-0">
               {selectedPoint.frp_total_mw} MW
             </span>
           )}
           <button
             onClick={() => setSelectedPoint && setSelectedPoint(null)}
-            className="ml-1 rounded-full p-1 text-neutral-400 hover:text-white hover:bg-neutral-800 transition shrink-0"
+            className="ml-1 rounded-full p-1 text-slate-400 hover:text-white hover:bg-neutral-800 transition shrink-0"
             title="Cerrar enfoque y limpiar selección"
           >
-            <X className="h-3.5 w-3.5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
       
       {/* 1. Selector de Capas Base (Satélite / Callejero / Oscuro) y Recentrar */}
-      <div className="absolute top-3 left-3 z-[400] flex items-center gap-1 sm:gap-1.5 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1 text-xs text-white backdrop-blur-xl shadow-2xl">
+      <div className="absolute top-3 left-3 z-[400] flex items-center gap-1.5 sm:gap-2 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1.5 text-xs sm:text-sm text-white backdrop-blur-xl shadow-2xl">
         <button
           onClick={() => setBaseMapType('satellite')}
-          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold transition ${
+          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition ${
             baseMapType === 'satellite'
               ? 'bg-blue-600 text-white shadow'
-              : 'text-neutral-400 hover:text-white'
+              : 'text-slate-300 hover:text-white'
           }`}
           title="Vista Satelital NASA (Esri)"
         >
@@ -1223,10 +1223,10 @@ export default function MapViewer({
 
         <button
           onClick={() => setBaseMapType('streets')}
-          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold transition ${
+          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition ${
             baseMapType === 'streets'
               ? 'bg-blue-600 text-white shadow'
-              : 'text-neutral-400 hover:text-white'
+              : 'text-slate-300 hover:text-white'
           }`}
           title="Mapa Callejero y Topográfico (OpenStreetMap Oficial)"
         >
@@ -1235,30 +1235,30 @@ export default function MapViewer({
 
         <button
           onClick={() => setBaseMapType('dark')}
-          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold transition ${
+          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition ${
             baseMapType === 'dark'
               ? 'bg-blue-600 text-white shadow'
-              : 'text-neutral-400 hover:text-white'
+              : 'text-slate-300 hover:text-white'
           }`}
           title="Modo Oscuro Espacial (Esri Dark Canvas)"
         >
           <span>🌙 Oscuro</span>
         </button>
 
-        <div className="h-4 w-px bg-white/10 mx-0.5" />
+        <div className="h-5 w-px bg-white/10 mx-0.5" />
 
         {/* Botón para alternar etiquetas de distritos a voluntad */}
         {activeTab === 'microclimas' && (
           <button
             onClick={() => setShowDistrictLabels(!showDistrictLabels)}
-            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[11px] font-bold transition shadow-sm ${
+            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition shadow-sm ${
               showDistrictLabels
-                ? 'bg-amber-600/90 text-white shadow-amber-900/40 ring-1 ring-amber-400/50'
-                : 'bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-700/60'
+                ? 'bg-amber-600 text-white shadow-amber-900/40 ring-1 ring-amber-400/50'
+                : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
             }`}
             title={showDistrictLabels ? "Ocultar nombres y etiquetas de distritos (Vista satelital limpia al alejar)" : "Mostrar nombres permanentes de los 15 distritos"}
           >
-            {showDistrictLabels ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5 text-neutral-400" />}
+            {showDistrictLabels ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4 text-slate-400" />}
             <span className="hidden sm:inline">{showDistrictLabels ? 'Nombres ON' : 'Nombres OFF'}</span>
             <span className="sm:hidden">{showDistrictLabels ? 'Nombres' : 'Limpio'}</span>
           </button>
@@ -1268,10 +1268,10 @@ export default function MapViewer({
         {activeTab === 'microclimas' && (
           <button
             onClick={() => setShowSensors(!showSensors)}
-            className={`flex items-center gap-1.5 rounded-lg px-2 py-1 text-[11px] font-bold transition shadow-sm ${
+            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs sm:text-[13px] font-bold transition shadow-sm ${
               showSensors
-                ? 'bg-cyan-600/90 text-white shadow-cyan-900/40 ring-1 ring-cyan-400/50'
-                : 'bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-700/60'
+                ? 'bg-cyan-600 text-white shadow-cyan-900/40 ring-1 ring-cyan-400/50'
+                : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
             }`}
             title={showSensors ? "Ocultar puntos de sensores MÓNICA e IA" : "Mostrar sensores en el mapa"}
           >
@@ -1280,14 +1280,14 @@ export default function MapViewer({
           </button>
         )}
 
-        <div className="h-4 w-px bg-white/10 mx-0.5" />
+        <div className="h-5 w-px bg-white/10 mx-0.5" />
 
         <button
           onClick={handleRecenter}
-          className="flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold text-cyan-300 hover:text-white hover:bg-neutral-800 transition"
+          className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs sm:text-[13px] font-bold text-cyan-300 hover:text-white hover:bg-neutral-800 transition"
           title="Recentrar Vista del Territorio"
         >
-          <Crosshair className="h-3.5 w-3.5" />
+          <Crosshair className="h-4 w-4" />
           <span className="hidden sm:inline">Recentrar</span>
         </button>
       </div>
@@ -1297,15 +1297,15 @@ export default function MapViewer({
         {!isLegendOpen ? (
           <button
             onClick={() => setIsLegendOpen(true)}
-            className="flex items-center gap-1.5 rounded-xl border border-white/15 bg-[#0f172a]/95 px-3 py-1.5 text-[11px] font-bold text-cyan-300 shadow-2xl backdrop-blur-xl hover:bg-neutral-800 transition"
+            className="flex items-center gap-1.5 rounded-xl border border-white/15 bg-[#0f172a]/95 px-3.5 py-2 text-xs sm:text-sm font-bold text-cyan-300 shadow-2xl backdrop-blur-xl hover:bg-neutral-800 transition"
           >
-            <Info className="h-3.5 w-3.5" />
+            <Info className="h-4 w-4" />
             <span>Leyenda</span>
           </button>
         ) : (
-          <div className="rounded-2xl border border-white/10 bg-[#0f172a]/95 p-3 sm:p-3.5 text-xs text-white backdrop-blur-xl shadow-2xl max-w-[270px] sm:max-w-xs">
-            <div className="flex items-center justify-between border-b border-white/10 pb-1.5 mb-2">
-              <span className="font-bold text-[10px] text-cyan-400 uppercase tracking-wider truncate mr-2">
+          <div className="rounded-2xl border border-white/10 bg-[#0f172a]/95 p-3.5 sm:p-4 text-xs sm:text-[13px] text-white backdrop-blur-xl shadow-2xl max-w-[290px] sm:max-w-xs">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2.5">
+              <span className="font-bold text-xs text-cyan-400 uppercase tracking-wider truncate mr-2">
                 {activeTab === 'global_nasa' && 'EARTH DETECTIVE'}
                 {activeTab === 'microclimas' && 'PILOTO COCHABAMBA'}
                 {activeTab === 'incendios' && 'HUMO & CALOR TUNARI'}
@@ -1321,7 +1321,7 @@ export default function MapViewer({
               </button>
             </div>
 
-            <div className="space-y-1.5 text-[10px] sm:text-[11px]">
+            <div className="space-y-2 text-xs sm:text-[13px]">
               {activeTab === 'global_nasa' && (
                 <>
                   <div className="flex items-center gap-2">
@@ -1340,7 +1340,7 @@ export default function MapViewer({
                     <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 border border-white"></span>
                     <span>Océanos & Barrera Coralina</span>
                   </div>
-                  <div className="pt-1 border-t border-white/10 text-[9px] text-cyan-300">
+                  <div className="pt-1.5 border-t border-white/10 text-xs text-cyan-300">
                     💡 Clic en cualquier lugar para medir LST.
                   </div>
                 </>
@@ -1397,7 +1397,7 @@ export default function MapViewer({
                       <span>Detección VIIRS (375 m)</span>
                     </div>
                   )}
-                  <div className="flex items-center gap-2 pt-1 border-t border-white/5">
+                  <div className="flex items-center gap-2 pt-1.5 border-t border-white/5">
                     <span className="h-2.5 w-2.5 rounded border border-emerald-400 bg-emerald-900/60"></span>
                     <span>Cota 2750 Tunari (Límite PNT)</span>
                   </div>
@@ -1422,7 +1422,7 @@ export default function MapViewer({
                     <span className="h-2.5 w-2.5 rounded border border-blue-400"></span>
                     <span>Cuenca Alta Cordillera Tunari</span>
                   </div>
-                  <div className="pt-1 border-t border-white/10 text-[9px] text-cyan-300">
+                  <div className="pt-1.5 border-t border-white/10 text-xs text-cyan-300">
                     🌧️ Umbral Crítico SENAMHI: &gt; 35 mm/24h.
                   </div>
                 </>
@@ -1446,7 +1446,7 @@ export default function MapViewer({
                     <span className="h-2.5 w-2.5 rounded bg-stone-600/80"></span>
                     <span>Suelo Pedregoso (Laderas Tunari)</span>
                   </div>
-                  <div className="pt-1 border-t border-white/10 text-[9px] text-emerald-300">
+                  <div className="pt-1.5 border-t border-white/10 text-xs text-emerald-300">
                     🌱 Rotación Sugerida: Maíz + Tarwi / Haba.
                   </div>
                 </>
