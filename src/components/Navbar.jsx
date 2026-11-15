@@ -1,19 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { 
   Flame, 
   Orbit, 
   Volume2, 
   VolumeX, 
   Info, 
+  Award, 
   ExternalLink, 
-  ShieldCheck, 
-  Activity,
-  Layers,
   Sparkles
 } from 'lucide-react'
 import { sound } from '../utils/audioEffects'
 
-export default function Navbar({ muted, onToggleMute, onOpenInfoModal }) {
+export default function Navbar({ 
+  muted, 
+  onToggleMute, 
+  onOpenInfoModal,
+  onOpenRubricModal 
+}) {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-cyan-500/15 bg-slate-950/80 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
@@ -52,7 +55,19 @@ export default function Navbar({ muted, onToggleMute, onOpenInfoModal }) {
         </div>
 
         {/* Right: Quick Actions */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
+          {/* NASA Rubric Button */}
+          <button
+            onClick={() => {
+              sound.playClick()
+              onOpenRubricModal()
+            }}
+            className="px-3 py-1.5 text-xs font-mono font-bold rounded-xl bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 border border-amber-500/40 text-amber-300 transition-all flex items-center gap-1.5 shadow-[0_0_12px_rgba(245,158,11,0.2)] active:scale-95"
+          >
+            <Award className="w-4 h-4 text-amber-400" />
+            <span>Rúbrica Jurado (5/5)</span>
+          </button>
+
           {/* Mute Button */}
           <button
             onClick={() => {

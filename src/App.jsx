@@ -8,6 +8,7 @@ import SuppressionControls from './components/SuppressionControls'
 import ScenarioPresets from './components/ScenarioPresets'
 import AIResearchAssistant from './components/AIResearchAssistant'
 import InfoModal from './components/InfoModal'
+import NASAJudgingRubricModal from './components/NASAJudgingRubricModal'
 import { calculateCombustionState, NASA_SCENARIOS } from './utils/combustionPhysics'
 import { sound } from './utils/audioEffects'
 
@@ -26,6 +27,7 @@ export default function App() {
   const [currentScenarioId, setCurrentScenarioId] = useState('iss_flex_nominal')
   const [muted, setMuted] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
+  const [isRubricModalOpen, setIsRubricModalOpen] = useState(false)
 
   // Real-time calculated physical telemetry & safety status
   const telemetry = useMemo(() => {
@@ -57,7 +59,6 @@ export default function App() {
         }))
       }, 700)
     } else {
-      // Temporary gas cloud / spray, then extinguishes or quenches
       setTimeout(() => {
         setParams(prev => ({
           ...prev,
@@ -114,6 +115,7 @@ export default function App() {
         muted={muted}
         onToggleMute={handleToggleMute}
         onOpenInfoModal={() => setIsInfoModalOpen(true)}
+        onOpenRubricModal={() => setIsRubricModalOpen(true)}
       />
 
       {/* Main Mission Control Cockpit */}
@@ -192,6 +194,12 @@ export default function App() {
       <InfoModal 
         isOpen={isInfoModalOpen}
         onClose={() => setIsInfoModalOpen(false)}
+      />
+
+      {/* NASA Space Apps 5 Criteria & Rubric Defense Modal */}
+      <NASAJudgingRubricModal 
+        isOpen={isRubricModalOpen}
+        onClose={() => setIsRubricModalOpen(false)}
       />
 
       {/* Cockpit Footer */}
