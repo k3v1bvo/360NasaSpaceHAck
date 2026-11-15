@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Cpu, 
   Thermometer, 
@@ -14,14 +14,51 @@ import {
   Flame, 
   ArrowRight,
   Info,
-  Layers
+  Layers,
+  Building2,
+  Users,
+  Compass
 } from 'lucide-react';
 import monicaData from '../data/monica_virtual_sensors.json';
+import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
 
-export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) {
-  const [activeSubTab, setActiveSubTab] = useState('sensors'); // 'sensors' | 'divergence' | 'simulator' | 'impact_fire'
+export default function MicroclimateAITab({ selectedPoint, onSelectPoint, onNavigateToFires }) {
+  const [activeSubTab, setActiveSubTab] = useState('distritos'); // 'distritos' | 'sensors' | 'divergence' | 'simulator' | 'impact_fire'
   const [selectedSensorId, setSelectedSensorId] = useState('MONICA-01');
+  const [selectedDistrictId, setSelectedDistrictId] = useState('D15');
   const [filterType, setFilterType] = useState('ALL'); // 'ALL' | 'FISICA' | 'VIRTUAL' | 'HOTSPOT'
+  const [districtFilter, setDistrictFilter] = useState('ALL'); // 'ALL' | 'CRITICO' | 'MODERADO'
+
+  // Lista de 15 Distritos con geometrías y metadatos
+  const distritosList = distritosData?.features?.map(f => ({
+    ...f.properties,
+    geometry: f.geometry
+  })) || [];
+
+  const selectedDistrict = distritosList.find(d => d.distrito_id === selectedDistrictId) || 
+                           distritosList.find(d => d.distrito_id === 'D15') || 
+                           distritosList[0] || {};
+
+  const filteredDistritos = distritosList.filter((d) => {
+    if (districtFilter === 'CRITICO') return (d.lst_nasa_promedio_c || 0) >= 30;
+    if (districtFilter === 'MODERADO') return (d.lst_nasa_promedio_c || 0) < 30;
+    return true;
+  });
+
+  // Sincronización bidireccional cuando se hace clic en el mapa
+  useEffect(() => {
+    if (!selectedPoint) return;
+    if (selectedPoint.type === 'district' || (selectedPoint.distrito_id && selectedPoint.distrito_id.startsWith('D') && selectedPoint.distrito_id.length <= 4)) {
+      const dId = selectedPoint.distrito_id || selectedPoint.id;
+      if (dId) {
+        setSelectedDistrictId(dId);
+        setActiveSubTab('distritos');
+      }
+    } else if (selectedPoint.id) {
+      setSelectedSensorId(selectedPoint.id);
+      setActiveSubTab('sensors');
+    }
+  }, [selectedPoint]);
 
   // Sliders del Simulador Predictivo GAMC + NASA
   const [reforestBonus, setReforestBonus] = useState(25); // %
@@ -103,6 +140,16 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
       {/* 2. Sub-Navegación del Módulo */}
       <div className="flex items-center gap-1 border-b border-neutral-800 pb-2 text-[10px]">
         <button
+          onClick={() => setActiveSubTab('distritos')}
+          className={`flex-1 py-1.5 px-1 rounded-lg font-bold text-center transition ${
+            activeSubTab === 'distritos'
+              ? 'bg-neutral-800 text-amber-300 shadow'
+              : 'text-neutral-400 hover:text-neutral-200'
+          }`}
+        >
+          15 Distritos
+        </button>
+        <button
           onClick={() => setActiveSubTab('sensors')}
           className={`flex-1 py-1.5 px-1 rounded-lg font-bold text-center transition ${
             activeSubTab === 'sensors'
@@ -144,7 +191,194 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
         </button>
       </div>
 
-      {/* 3A. SUB-TAB 1: LISTA DE ESTACIONES FÍSICAS Y SENSORES VIRTUALES IA */}
+      {/* 3A. SUB-TAB 0: EXPLORADOR DE LOS 15 DISTRITOS DE CERCADO */}
+      {activeSubTab === 'distritos' && (
+        <div className="space-y-3">
+          {/* Ficha Detalle del Distrito Seleccionado */}
+          <div className="rounded-xl border border-amber-900/60 bg-gradient-to-b from-amber-950/30 to-neutral-950 p-3.5 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-[10px] text-amber-400 font-mono block">
+                  DISTRITO MUNICIPAL • GAMC CERCADO
+                </span>
+                <h3 className="text-sm font-black text-white flex items-center gap-1.5">
+                  <Building2 className="h-4 w-4 text-amber-400 shrink-0" />
+                  <span>{selectedDistrict.nombre || selectedDistrict.distrito_id}</span>
+                </h3>
+              </div>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${
+                (selectedDistrict.lst_nasa_promedio_c || 0) > 34
+                  ? 'bg-red-950 text-red-400 border-red-800'
+                  : (selectedDistrict.lst_nasa_promedio_c || 0) > 28
+                  ? 'bg-amber-950 text-amber-400 border-amber-800'
+                  : 'bg-emerald-950 text-emerald-400 border-emerald-800'
+              }`}>
+                {selectedDistrict.nivel_alerta || 'Alerta Moderada'}
+              </span>
+            </div>
+
+            {selectedDistrict.resena_historica && (
+              <p className="text-[11px] text-neutral-300 leading-snug bg-neutral-900/60 p-2 rounded-lg border border-neutral-800">
+                {selectedDistrict.resena_historica}
+              </p>
+            )}
+
+            {selectedDistrict.hito_urbano && (
+              <div className="text-[10px] text-neutral-400 bg-neutral-900/80 px-2 py-1 rounded border border-neutral-800">
+                🏛️ <strong className="text-neutral-300">Hitos urbanos:</strong> {selectedDistrict.hito_urbano}
+              </div>
+            )}
+
+            {/* Grid 4 Métricas Oficiales NASA */}
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="rounded-lg bg-neutral-900/90 p-2 border border-neutral-800">
+                <span className="text-[10px] text-neutral-400 flex items-center gap-1">
+                  <Thermometer className="h-3 w-3 text-red-400" />
+                  LST Superficie (NASA):
+                </span>
+                <span className="text-base font-black text-red-400 font-mono">
+                  {selectedDistrict.lst_nasa_promedio_c || 28.0} °C
+                </span>
+                <span className="text-[9px] text-neutral-500 block">
+                  Pico Máx: {selectedDistrict.lst_nasa_max_c || 32.0} °C
+                </span>
+              </div>
+
+              <div className="rounded-lg bg-neutral-900/90 p-2 border border-neutral-800">
+                <span className="text-[10px] text-neutral-400 flex items-center gap-1">
+                  <TreePine className="h-3 w-3 text-emerald-400" />
+                  Vegetación (NDVI 30m):
+                </span>
+                <span className="text-base font-black text-emerald-400 font-mono">
+                  {selectedDistrict.ndvi_promedio || 0.25}
+                </span>
+                <span className="text-[9px] text-neutral-500 block">
+                  Déficit Árboles: {selectedDistrict.deficit_arbolado_pct || 40}%
+                </span>
+              </div>
+
+              <div className="rounded-lg bg-neutral-900/90 p-2 border border-neutral-800">
+                <span className="text-[10px] text-neutral-400 flex items-center gap-1">
+                  <Wind className="h-3 w-3 text-cyan-400" />
+                  Temp. Aire (T2M):
+                </span>
+                <span className="text-sm font-bold text-cyan-300 font-mono">
+                  {selectedDistrict.temp_aire_pred_c || 26.5} °C
+                </span>
+                <span className="text-[9px] text-neutral-500 block">
+                  Altitud: {selectedDistrict.cota_media_msnm || 2560} msnm
+                </span>
+              </div>
+
+              <div className="rounded-lg bg-neutral-900/90 p-2 border border-neutral-800">
+                <span className="text-[10px] text-neutral-400 flex items-center gap-1">
+                  <Activity className="h-3 w-3 text-purple-400" />
+                  Estrés Térmico (PET):
+                </span>
+                <span className={`text-sm font-bold font-mono ${
+                  (selectedDistrict.pet_pred_c || 0) > 35 ? 'text-red-400' : 'text-emerald-400'
+                }`}>
+                  {selectedDistrict.pet_pred_c || 28.0} °C
+                </span>
+                <span className="text-[9px] text-neutral-500 block">
+                  Población: {Number(selectedDistrict.poblacion_total || 40000).toLocaleString()} hab.
+                </span>
+              </div>
+            </div>
+
+            {selectedDistrict.estrategia_recomendada && (
+              <div className="text-[10px] text-emerald-300 bg-emerald-950/40 p-2 rounded-lg border border-emerald-900/50">
+                🌱 <strong>Estrategia GAMC:</strong> {selectedDistrict.estrategia_recomendada}
+              </div>
+            )}
+          </div>
+
+          {/* Filtros de Distritos */}
+          <div className="flex items-center justify-between text-xs font-bold text-neutral-300">
+            <span>Explorar Distritos ({filteredDistritos.length} de {distritosList.length}):</span>
+            <span className="text-[10px] text-amber-400 font-mono">Cercado 15 Dist.</span>
+          </div>
+
+          <div className="flex items-center gap-1 text-[10px]">
+            <button
+              onClick={() => setDistrictFilter('ALL')}
+              className={`px-2 py-0.5 rounded-lg font-semibold transition ${districtFilter === 'ALL' ? 'bg-amber-600 text-white' : 'bg-neutral-900 text-neutral-400 border border-neutral-800'}`}
+            >
+              Todos (15)
+            </button>
+            <button
+              onClick={() => setDistrictFilter('CRITICO')}
+              className={`px-2 py-0.5 rounded-lg font-semibold transition ${districtFilter === 'CRITICO' ? 'bg-red-600 text-white' : 'bg-neutral-900 text-neutral-400 border border-neutral-800'}`}
+            >
+              Islas de Calor (&gt;30°C)
+            </button>
+            <button
+              onClick={() => setDistrictFilter('MODERADO')}
+              className={`px-2 py-0.5 rounded-lg font-semibold transition ${districtFilter === 'MODERADO' ? 'bg-emerald-600 text-white' : 'bg-neutral-900 text-neutral-400 border border-neutral-800'}`}
+            >
+              Frescos / Verdes (&lt;30°C)
+            </button>
+          </div>
+
+          {/* Lista de Distritos */}
+          <div className="max-h-64 space-y-1.5 overflow-y-auto pr-1">
+            {filteredDistritos.map((dist) => {
+              const isSelected = selectedDistrictId === dist.distrito_id;
+              const lstVal = dist.lst_nasa_promedio_c || 28.0;
+              const color = lstVal > 35 ? '#ef4444' :
+                            lstVal > 30 ? '#f59e0b' :
+                            lstVal > 26 ? '#3b82f6' : '#10b981';
+              return (
+                <div
+                  key={dist.distrito_id}
+                  onClick={() => {
+                    setSelectedDistrictId(dist.distrito_id);
+                    if (onSelectPoint) {
+                      onSelectPoint({
+                        type: 'district',
+                        id: dist.distrito_id,
+                        distrito_id: dist.distrito_id,
+                        lat: dist.centroide ? dist.centroide[0] : -17.39,
+                        lon: dist.centroide ? dist.centroide[1] : -66.15,
+                        ...dist
+                      });
+                    }
+                  }}
+                  className={`cursor-pointer rounded-xl border p-2.5 transition ${
+                    isSelected
+                      ? 'border-amber-500 bg-amber-950/40 shadow-lg ring-1 ring-amber-500/40'
+                      : 'border-neutral-800 bg-neutral-950 hover:border-neutral-700 hover:bg-neutral-900'
+                  }`}
+                >
+                  <div className="flex items-center justify-between text-xs font-bold">
+                    <span className="text-neutral-100 flex items-center gap-1.5 truncate mr-2">
+                      <span 
+                        style={{ backgroundColor: color }} 
+                        className="text-white text-[9px] px-1.5 py-0.5 rounded font-black shrink-0"
+                      >
+                        {dist.distrito_id}
+                      </span>
+                      <span className="truncate">{dist.nombre}</span>
+                    </span>
+                    <span style={{ color }} className="font-mono shrink-0">{lstVal} °C</span>
+                  </div>
+
+                  <div className="mt-1 flex items-center justify-between text-[10px] text-neutral-400">
+                    <span className="truncate max-w-[200px] text-[9px] text-neutral-400">
+                      {dist.hito_urbano?.split('•')[0] || dist.zona_geografica}
+                    </span>
+                    <span className="text-neutral-400 text-[9px]">
+                      {Number(dist.poblacion_total || 0).toLocaleString()} hab.
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* 3B. SUB-TAB 1: LISTA DE ESTACIONES FÍSICAS Y SENSORES VIRTUALES IA */}
       {activeSubTab === 'sensors' && (
         <div className="space-y-3">
           {/* Ficha Detalle del Sensor Seleccionado */}
@@ -256,11 +490,20 @@ export default function MicroclimateAITab({ onSelectPoint, onNavigateToFires }) 
                   key={s.id}
                   onClick={() => {
                     setSelectedSensorId(s.id);
-                    if (onSelectPoint) onSelectPoint(s);
+                    if (onSelectPoint) {
+                      onSelectPoint({
+                        type: 'sensor',
+                        id: s.id,
+                        distrito_id: s.distrito,
+                        lat: s.lat,
+                        lon: s.lon,
+                        ...s
+                      });
+                    }
                   }}
                   className={`cursor-pointer rounded-xl border p-2.5 transition ${
                     selectedSensorId === s.id
-                      ? 'border-blue-500 bg-blue-950/40 shadow-md'
+                      ? 'border-blue-500 bg-blue-950/50 shadow-md ring-1 ring-blue-500/50'
                       : 'border-neutral-800 bg-neutral-950 hover:border-neutral-700 hover:bg-neutral-900'
                   }`}
                 >

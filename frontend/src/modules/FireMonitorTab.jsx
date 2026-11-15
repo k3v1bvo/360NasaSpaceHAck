@@ -21,6 +21,7 @@ import harmonizedData from '../../../data/nasa/firms_tunari_harmonized.geojson';
 import metricsData from '../../../data/nasa/metricas_anomalias_tunari.json';
 
 export default function FireMonitorTab({ 
+  selectedPoint,
   onSelectFoco,
   sensorMode = 'HARMONIZED',
   onSensorModeChange,
@@ -39,6 +40,15 @@ export default function FireMonitorTab({
   const [filterSeverity, setFilterSeverity] = useState('ALL');
   const [filterZone, setFilterZone] = useState('ALL');
   const [activeSubTab, setActiveSubTab] = useState('list'); // 'list' | 'simulation' | 'layers' | 'metrics'
+  const [selectedFocoId, setSelectedFocoId] = useState(null);
+
+  // Sincronizar foco seleccionado cuando se hace clic en el mapa
+  useEffect(() => {
+    if (!selectedPoint) return;
+    if (selectedPoint.type === 'foco' || selectedPoint.frp_total_mw) {
+      setSelectedFocoId(selectedPoint.id || selectedPoint.properties?.id);
+    }
+  }, [selectedPoint]);
 
   // Parámetros de simulación de viento
   const [windSpeed, setWindSpeed] = useState(25); // km/h
@@ -264,11 +274,27 @@ export default function FireMonitorTab({
           <div className="max-h-72 space-y-2 overflow-y-auto pr-1">
             {filteredFeatures.map((foco) => {
               const p = foco.properties;
+              const isSelected = selectedFocoId === p.id;
               return (
                 <div
                   key={p.id}
-                  onClick={() => onSelectFoco && onSelectFoco(foco)}
-                  className="cursor-pointer rounded-xl border border-neutral-800 bg-neutral-950 p-3 transition hover:border-red-600/60 hover:bg-neutral-900"
+                  onClick={() => {
+                    setSelectedFocoId(p.id);
+                    if (onSelectFoco) {
+                      onSelectFoco({
+                        type: 'foco',
+                        id: p.id,
+                        lat: foco.geometry.coordinates[1],
+                        lon: foco.geometry.coordinates[0],
+                        ...p
+                      });
+                    }
+                  }}
+                  className={`cursor-pointer rounded-xl border p-3 transition ${
+                    isSelected
+                      ? 'border-red-500 bg-red-950/50 shadow-lg ring-1 ring-red-500/50'
+                      : 'border-neutral-800 bg-neutral-950 hover:border-red-600/60 hover:bg-neutral-900'
+                  }`}
                 >
                   <div className="flex items-center justify-between text-xs font-bold">
                     <span className="text-neutral-100 flex items-center gap-1.5">

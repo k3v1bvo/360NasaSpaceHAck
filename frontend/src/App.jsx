@@ -135,6 +135,7 @@ export default function App() {
 
           {activeTab === 'microclimas' && (
             <MicroclimateAITab
+              selectedPoint={selectedPoint}
               onSelectPoint={(point) => {
                 setSelectedPoint(point);
                 setMobileView('map');
@@ -145,6 +146,7 @@ export default function App() {
 
           {activeTab === 'incendios' && (
             <FireMonitorTab
+              selectedPoint={selectedPoint}
               onSelectFoco={(foco) => {
                 setSelectedPoint(foco);
                 setMobileView('map');

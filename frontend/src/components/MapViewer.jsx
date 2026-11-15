@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Info, ChevronDown, Crosshair } from 'lucide-react';
+import { Info, ChevronDown, Crosshair, X } from 'lucide-react';
 import tunariPolygonData from '../../../data/gamc/parque_nacional_tunari.geojson';
 import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
@@ -34,13 +34,26 @@ export default function MapViewer({
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const layersGroupRef = useRef(null);
+  const highlightGroupRef = useRef(null);
+  const layerRegistryRef = useRef({
+    districts: {},
+    sensors: {},
+    focos: {},
+    globals: {}
+  });
+  const leafletRef = useRef(null);
+  const selectedPointRef = useRef(selectedPoint);
   const baseLayersRef = useRef({});
   const activeTabRef = useRef(activeTab);
   const renderLayersRef = useRef(null);
   const [baseMapType, setBaseMapType] = useState('satellite'); // 'satellite' | 'streets' | 'dark'
   const [isLegendOpen, setIsLegendOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
 
-  // Mantener activeTab siempre actualizado en activeTabRef para evitar stale closures en eventos de Leaflet
+  // Mantener selectedPointRef y activeTab sincronizados
+  useEffect(() => {
+    selectedPointRef.current = selectedPoint;
+  }, [selectedPoint]);
+
   useEffect(() => {
     activeTabRef.current = activeTab;
   }, [activeTab]);
@@ -144,6 +157,8 @@ export default function MapViewer({
 
       mapInstanceRef.current = map;
       layersGroupRef.current = L.layerGroup().addTo(map);
+      highlightGroupRef.current = L.layerGroup().addTo(map);
+      leafletRef.current = L;
       renderLayers(L, map);
 
       setTimeout(() => {
@@ -264,6 +279,15 @@ export default function MapViewer({
         `);
 
         marker.on('click', () => {
+          if (setSelectedPoint) {
+            setSelectedPoint({
+              type: 'global',
+              id: spot.id,
+              lat: spot.lat,
+              lon: spot.lon,
+              ...spot
+            });
+          }
           if (onSelectGlobalLocation) {
             onSelectGlobalLocation(spot);
           }
@@ -279,6 +303,13 @@ export default function MapViewer({
         });
 
         marker.addTo(layersGroupRef.current);
+        if (layerRegistryRef.current) {
+          layerRegistryRef.current.globals[spot.id] = {
+            layer: marker,
+            data: spot,
+            center: [spot.lat, spot.lon]
+          };
+        }
       });
 
       // Downscaling visual automático: Si el usuario hace zoom en Cochabamba (zoom >= 9), muestra polígonos distritales y estaciones
@@ -296,6 +327,14 @@ export default function MapViewer({
           });
           polygon.bindPopup(`<strong>📍 ${p.nombre}</strong><br/>LST NASA: ${lstVal} °C<br/>NDVI: ${p.ndvi_promedio || '0.25'}`);
           polygon.addTo(layersGroupRef.current);
+        if (layerRegistryRef.current) {
+          layerRegistryRef.current.districts[p.distrito_id] = {
+            layer: polygon,
+            defaultColor: color,
+            data: p,
+            center: p.centroide || polyCoords[0]
+          };
+        }
         });
 
         monicaData?.estaciones_fisicas?.forEach((est) => {
@@ -375,11 +414,29 @@ export default function MapViewer({
 
         // Hover dinámico para destacar el distrito seleccionado
         polygon.on('mouseover', () => {
-          polygon.setStyle({ weight: 3, color: '#ffffff', fillOpacity: 0.55 });
+          polygon.setStyle({ weight: 3.5, color: '#ffffff', fillOpacity: 0.55 });
         });
 
         polygon.on('mouseout', () => {
-          polygon.setStyle({ weight: 1.5, color, fillOpacity: 0.30 });
+          const isSelected = selectedPointRef.current?.distrito_id === p.distrito_id || selectedPointRef.current?.id === p.distrito_id;
+          if (isSelected) {
+            polygon.setStyle({ weight: 4.5, color: '#ffffff', fillOpacity: 0.65 });
+          } else {
+            polygon.setStyle({ weight: 1.5, color, fillOpacity: 0.30 });
+          }
+        });
+
+        polygon.on('click', () => {
+          if (setSelectedPoint) {
+            setSelectedPoint({
+              type: 'district',
+              id: p.distrito_id,
+              distrito_id: p.distrito_id,
+              lat: p.centroide ? p.centroide[0] : polyCoords[0][0],
+              lon: p.centroide ? p.centroide[1] : polyCoords[0][1],
+              ...p
+            });
+          }
         });
 
         polygon.bindPopup(`
@@ -431,6 +488,14 @@ export default function MapViewer({
           </div>
         `);
         polygon.addTo(layersGroupRef.current);
+        if (layerRegistryRef.current) {
+          layerRegistryRef.current.districts[p.distrito_id] = {
+            layer: polygon,
+            defaultColor: color,
+            data: p,
+            center: p.centroide || polyCoords[0]
+          };
+        }
       });
 
       // 1.5. Línea Biofísica Oficial Cota 2750 m s.n.m. (Parque Nacional Tunari)
@@ -487,7 +552,28 @@ export default function MapViewer({
             </div>
           </div>
         `);
+
+        marker.on('click', () => {
+          if (setSelectedPoint) {
+            setSelectedPoint({
+              type: 'sensor',
+              id: est.id,
+              distrito_id: est.distrito,
+              lat: est.lat,
+              lon: est.lon,
+              ...est
+            });
+          }
+        });
+
         marker.addTo(layersGroupRef.current);
+        if (layerRegistryRef.current) {
+          layerRegistryRef.current.sensors[est.id] = {
+            layer: marker,
+            data: est,
+            center: [est.lat, est.lon]
+          };
+        }
       });
 
       // 3. Los 13 Sensores Virtuales IA (XGBoost 3.2.0)
@@ -522,7 +608,28 @@ export default function MapViewer({
             </div>
           </div>
         `);
+
+        marker.on('click', () => {
+          if (setSelectedPoint) {
+            setSelectedPoint({
+              type: 'sensor',
+              id: sens.id,
+              distrito_id: sens.distrito,
+              lat: sens.lat,
+              lon: sens.lon,
+              ...sens
+            });
+          }
+        });
+
         marker.addTo(layersGroupRef.current);
+        if (layerRegistryRef.current) {
+          layerRegistryRef.current.sensors[sens.id] = {
+            layer: marker,
+            data: sens,
+            center: [sens.lat, sens.lon]
+          };
+        }
       });
 
       // 4. Los Micro-Nodos Críticos OTB (La Cancha, Alalay, UMSS, Wilstermann, Refinería)
@@ -557,7 +664,28 @@ export default function MapViewer({
             </div>
           </div>
         `);
+
+        marker.on('click', () => {
+          if (setSelectedPoint) {
+            setSelectedPoint({
+              type: 'sensor',
+              id: node.id,
+              distrito_id: node.distrito,
+              lat: node.lat,
+              lon: node.lon,
+              ...node
+            });
+          }
+        });
+
         marker.addTo(layersGroupRef.current);
+        if (layerRegistryRef.current) {
+          layerRegistryRef.current.sensors[node.id] = {
+            layer: marker,
+            data: node,
+            center: [node.lat, node.lon]
+          };
+        }
       });
     }
 
@@ -673,7 +801,27 @@ export default function MapViewer({
             </span>
           </div>
         `);
+
+        circle.on('click', () => {
+          if (setSelectedPoint) {
+            setSelectedPoint({
+              type: 'foco',
+              id: p.id,
+              lat,
+              lon: lng,
+              ...p
+            });
+          }
+        });
+
         circle.addTo(layersGroupRef.current);
+        if (layerRegistryRef.current) {
+          layerRegistryRef.current.focos[p.id] = {
+            layer: circle,
+            data: p,
+            center: [lat, lng]
+          };
+        }
       });
     }
 
@@ -821,10 +969,26 @@ export default function MapViewer({
     }
   }, [activeTab, focosData, sensorMode, reportsData, offlineMode, wmsCota, wmsPeriurbanos, wmsDistritos, nasaGibs, gibsDate]);
 
-  // Centrar en punto seleccionado SOLO si cambia selectedPoint
+  // Efecto Maestro de Selección: Resalta en el mapa, abre popups, activa baliza pulsante y enfoca con animación
   useEffect(() => {
-    if (!selectedPoint || !mapInstanceRef.current) return;
+    if (!mapInstanceRef.current) return;
+    const L = leafletRef.current || window.L;
 
+    // 1. Limpiar balizas y destacados anteriores
+    if (highlightGroupRef.current) {
+      highlightGroupRef.current.clearLayers();
+    }
+
+    // Resetear estilos base de todos los polígonos distritales
+    if (layerRegistryRef.current?.districts) {
+      Object.values(layerRegistryRef.current.districts).forEach(({ layer, defaultColor }) => {
+        layer.setStyle({ weight: 1.5, color: defaultColor, fillOpacity: 0.30 });
+      });
+    }
+
+    if (!selectedPoint) return;
+
+    // 2. Extraer coordenadas del objetivo
     let lat, lng;
     if (selectedPoint.lat !== undefined && selectedPoint.lon !== undefined) {
       lat = selectedPoint.lat;
@@ -832,15 +996,150 @@ export default function MapViewer({
     } else if (selectedPoint.lat !== undefined && selectedPoint.lng !== undefined) {
       lat = selectedPoint.lat;
       lng = selectedPoint.lng;
+    } else if (selectedPoint.centroide) {
+      lat = selectedPoint.centroide[0];
+      lng = selectedPoint.centroide[1];
     } else if (selectedPoint.geometry) {
       const coords = selectedPoint.geometry.type === 'Polygon'
         ? selectedPoint.geometry.coordinates[0][0]
         : selectedPoint.geometry.coordinates;
       [lng, lat] = coords;
     }
+
+    // 3. Identificar qué tipo de elemento fue seleccionado y aplicar feedback visual avanzado
+    const dId = selectedPoint.distrito_id || (selectedPoint.id?.startsWith('D') && selectedPoint.id.length <= 4 ? selectedPoint.id : null);
+    const targetDistrict = dId ? layerRegistryRef.current?.districts?.[dId] : null;
+
+    // Caso A: Selección de Distrito
+    if (selectedPoint.type === 'district' || (targetDistrict && (!selectedPoint.id || selectedPoint.id === dId))) {
+      if (targetDistrict) {
+        targetDistrict.layer.bringToFront();
+        targetDistrict.layer.setStyle({ weight: 4.5, color: '#ffffff', fillOpacity: 0.65 });
+        targetDistrict.layer.openPopup(targetDistrict.center);
+
+        if (L && highlightGroupRef.current) {
+          const beaconIcon = L.divIcon({
+            className: 'map-selection-beacon',
+            html: `
+              <div style="position: relative; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+                <div class="beacon-pulse-ring" style="position: absolute; width: 46px; height: 46px; border-radius: 50%; background: #38bdf8; opacity: 0.5;"></div>
+                <div class="beacon-target-ring" style="position: absolute; width: 22px; height: 22px; border-radius: 50%; border: 3px solid #ffffff; background: rgba(56, 189, 248, 0.45);"></div>
+                <div style="position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #ffffff;"></div>
+              </div>
+            `,
+            iconSize: [48, 48],
+            iconAnchor: [24, 24]
+          });
+          L.marker(targetDistrict.center, { icon: beaconIcon, interactive: false }).addTo(highlightGroupRef.current);
+        }
+
+        mapInstanceRef.current.flyTo(targetDistrict.center, 14.0, { duration: 1.2 });
+      }
+      return;
+    }
+
+    // Caso B: Sensor Virtual o Estación MÓNICA
+    const targetSensor = selectedPoint.id ? layerRegistryRef.current?.sensors?.[selectedPoint.id] : null;
+    if (targetSensor) {
+      targetSensor.layer.openPopup();
+
+      // Si pertenece a un distrito, iluminar también el polígono del distrito
+      if (targetDistrict) {
+        targetDistrict.layer.setStyle({ weight: 3, color: '#ffffff', fillOpacity: 0.45 });
+      }
+
+      if (L && highlightGroupRef.current) {
+        const isFisica = selectedPoint.es_estacion_fisica;
+        const beaconColor = isFisica ? '#06b6d4' : '#a855f7';
+        const beaconIcon = L.divIcon({
+          className: 'map-selection-beacon',
+          html: `
+            <div style="position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+              <div class="beacon-pulse-ring" style="position: absolute; width: 44px; height: 44px; border-radius: 50%; background: ${beaconColor}; opacity: 0.55;"></div>
+              <div class="beacon-target-ring" style="position: absolute; width: 20px; height: 20px; border-radius: 50%; border: 2.5px solid #ffffff; background: ${beaconColor};"></div>
+              <div style="position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #ffffff;"></div>
+            </div>
+          `,
+          iconSize: [44, 44],
+          iconAnchor: [22, 22]
+        });
+        L.marker(targetSensor.center, { icon: beaconIcon, interactive: false }).addTo(highlightGroupRef.current);
+      }
+
+      mapInstanceRef.current.flyTo(targetSensor.center, 15.0, { duration: 1.2 });
+      return;
+    }
+
+    // Caso C: Foco de Incendio Tunari
+    const targetFoco = selectedPoint.id ? layerRegistryRef.current?.focos?.[selectedPoint.id] : null;
+    if (targetFoco) {
+      targetFoco.layer.openPopup();
+
+      if (L && highlightGroupRef.current) {
+        const beaconIcon = L.divIcon({
+          className: 'map-selection-beacon',
+          html: `
+            <div style="position: relative; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+              <div class="beacon-pulse-ring" style="position: absolute; width: 48px; height: 48px; border-radius: 50%; background: #ef4444; opacity: 0.65;"></div>
+              <div class="beacon-fire-ring" style="position: absolute; width: 22px; height: 22px; border-radius: 50%; border: 3px solid #ffedd5; background: #f97316;"></div>
+              <div style="position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #ffffff;"></div>
+            </div>
+          `,
+          iconSize: [48, 48],
+          iconAnchor: [24, 24]
+        });
+        L.marker(targetFoco.center, { icon: beaconIcon, interactive: false }).addTo(highlightGroupRef.current);
+      }
+
+      mapInstanceRef.current.flyTo(targetFoco.center, 14.5, { duration: 1.2 });
+      return;
+    }
+
+    // Caso D: Global Hotspot NASA
+    const targetGlobal = selectedPoint.id ? layerRegistryRef.current?.globals?.[selectedPoint.id] : null;
+    if (targetGlobal) {
+      targetGlobal.layer.openPopup();
+
+      if (L && highlightGroupRef.current) {
+        const beaconIcon = L.divIcon({
+          className: 'map-selection-beacon',
+          html: `
+            <div style="position: relative; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+              <div class="beacon-pulse-ring" style="position: absolute; width: 50px; height: 50px; border-radius: 50%; background: #38bdf8; opacity: 0.55;"></div>
+              <div class="beacon-target-ring" style="position: absolute; width: 24px; height: 24px; border-radius: 50%; border: 3px solid #ffffff; background: rgba(56, 189, 248, 0.6);"></div>
+              <div style="position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #ffffff;"></div>
+            </div>
+          `,
+          iconSize: [52, 52],
+          iconAnchor: [26, 26]
+        });
+        L.marker(targetGlobal.center, { icon: beaconIcon, interactive: false }).addTo(highlightGroupRef.current);
+      }
+
+      const targetZoom = selectedPoint.id === 'cochabamba' ? 12.5 : 5.5;
+      mapInstanceRef.current.flyTo(targetGlobal.center, targetZoom, { duration: 1.4 });
+      return;
+    }
+
+    // Fallback genérico para coordenadas simples
     if (lat !== undefined && lng !== undefined) {
-      const targetZoom = (activeTab === 'global_nasa') ? 5 : 13.5;
-      mapInstanceRef.current.flyTo([lat, lng], targetZoom, { duration: 1.4 });
+      if (L && highlightGroupRef.current) {
+        const beaconIcon = L.divIcon({
+          className: 'map-selection-beacon',
+          html: `
+            <div style="position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+              <div class="beacon-pulse-ring" style="position: absolute; width: 40px; height: 40px; border-radius: 50%; background: #38bdf8; opacity: 0.5;"></div>
+              <div class="beacon-target-ring" style="position: absolute; width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid #ffffff; background: #38bdf8;"></div>
+            </div>
+          `,
+          iconSize: [40, 40],
+          iconAnchor: [20, 20]
+        });
+        L.marker([lat, lng], { icon: beaconIcon, interactive: false }).addTo(highlightGroupRef.current);
+      }
+
+      const targetZoom = activeTab === 'global_nasa' ? 5.5 : 14.0;
+      mapInstanceRef.current.flyTo([lat, lng], targetZoom, { duration: 1.2 });
     }
   }, [selectedPoint]);
 
@@ -870,6 +1169,39 @@ export default function MapViewer({
         className="absolute inset-0 h-full w-full z-0" 
         style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, height: '100%', width: '100%' }}
       />
+      
+      {/* HUD Flotante de Elemento Seleccionado / Enfoque Activo */}
+      {selectedPoint && (
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[450] flex items-center gap-2 rounded-full border border-blue-500/50 bg-[#090d16]/95 px-3.5 py-1.5 shadow-2xl backdrop-blur-md text-xs font-bold text-white transition-all animate-in fade-in slide-in-from-top-2 max-w-[90vw]">
+          <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-pulse shrink-0"></span>
+          <span className="text-cyan-300 font-mono text-[10px] uppercase tracking-wider shrink-0">
+            {selectedPoint.type === 'district' ? 'Distrito' :
+             selectedPoint.type === 'sensor' ? 'Sensor IA' :
+             selectedPoint.type === 'foco' ? 'Foco Tunari' :
+             selectedPoint.type === 'global' ? 'Global NASA' : 'Enfoque'}:
+          </span>
+          <span className="text-white font-bold truncate max-w-[150px] sm:max-w-xs text-xs">
+            {selectedPoint.nombre || selectedPoint.name || selectedPoint.zona || selectedPoint.distrito_id || 'Elemento'}
+          </span>
+          {(selectedPoint.lst_nasa_promedio_c || selectedPoint.lst_nasa_c) && (
+            <span className="rounded bg-red-950/80 px-2 py-0.5 text-[10px] font-mono text-red-300 border border-red-800/60 shrink-0">
+              {selectedPoint.lst_nasa_promedio_c || selectedPoint.lst_nasa_c} °C LST
+            </span>
+          )}
+          {selectedPoint.frp_total_mw && (
+            <span className="rounded bg-orange-950/80 px-2 py-0.5 text-[10px] font-mono text-orange-300 border border-orange-800/60 shrink-0">
+              {selectedPoint.frp_total_mw} MW
+            </span>
+          )}
+          <button
+            onClick={() => setSelectedPoint && setSelectedPoint(null)}
+            className="ml-1 rounded-full p-1 text-neutral-400 hover:text-white hover:bg-neutral-800 transition shrink-0"
+            title="Cerrar enfoque y limpiar selección"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
       
       {/* 1. Selector de Capas Base (Satélite / Callejero / Oscuro) y Recentrar */}
       <div className="absolute top-3 left-3 z-[400] flex items-center gap-1 sm:gap-1.5 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1 text-xs text-white backdrop-blur-xl shadow-2xl">
