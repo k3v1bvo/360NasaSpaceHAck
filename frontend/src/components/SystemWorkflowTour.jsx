@@ -6,11 +6,7 @@ import {
   X, 
   MapPin, 
   Flame, 
-  Waves, 
-  Wheat, 
   Globe2,
-  CheckCircle2,
-  HelpCircle
 } from 'lucide-react';
 
 const STAGES = [
@@ -21,10 +17,10 @@ const STAGES = [
     icon: MapPin,
     badgeColor: 'from-blue-600 to-indigo-600',
     title: '1. Diagnóstico Urbano: Red de 20 Nodos (Cochabamba)',
-    sub: '14 Distritos • 2 Estaciones Físicas GAMC + 13 Nodos Calibrados + 5 Hotspots OTB',
-    whatIsIt: 'El municipio solo cuenta con 2 estaciones físicas de aire y clima (Red MÓNICA). Nuestro modelo calibrado con satélites NASA genera 18 estaciones virtuales de alta resolución para cubrir toda la ciudad.',
-    keyEvidence: 'Brecha térmica comprobada de +5.8 °C entre el Norte arbolado (20.4 °C) y la Zona Sur asfaltada (37.8 °C en superficie). Precisión estadística R² = 0.9457.',
-    actionableDecision: 'Plan Maestro de Reforestación Urbana Municipal: indica los manzanos exactos de los Distritos 8 y 9 donde plantar árboles nativos para mitigar la isla de calor.',
+    sub: '14 Distritos • 2 Estaciones Físicas Red MÓNICA + 13 Nodos IA + 5 Hotspots OTB',
+    whatIsIt: 'El reto central del GAMC: la Alcaldía solo tiene 2 estaciones físicas continuas (Av. 6 de Agosto y SEMAPA). Mediante Machine Learning (XGBoost Regressor), calibramos datos satelitales NASA (MODIS LST, NDVI, AOD, SRTM) para crear 18 estaciones virtuales de alta resolución a costo cero de hardware.',
+    keyEvidence: 'Brecha térmica comprobada de +5.8 °C en temperatura superficial entre el Norte boscoso (Tunari: 20.4 °C) y la Zona Sur asfaltada (K\'ara K\'ara: 37.8 °C). Precisión del modelo: R² = 0.9457, RMSE = 0.55 °C.',
+    actionableDecision: 'Plan Maestro de Reforestación Urbana Municipal: la Alcaldía sabe la coordenada exacta de los Distritos 8 y 9 donde plantar árboles nativos para mitigar la isla de calor extrema.',
   },
   {
     id: 'incendios',
@@ -32,47 +28,23 @@ const STAGES = [
     stepNumber: 2,
     icon: Flame,
     badgeColor: 'from-red-600 to-amber-600',
-    title: '2. Alerta Temprana en Cordillera del Tunari',
+    title: '2. Causa Física: Incendios en el Tunari y Humo AOD',
     sub: 'Línea Cota 2750 • Sensores Infrarrojos NASA FIRMS (VIIRS + MODIS)',
-    whatIsIt: 'Monitoreo continuo de focos de calor satelitales en las laderas del Parque Nacional Tunari sobre la Cota 2750 (frontera con la mancha urbana).',
-    keyEvidence: 'Detección en tiempo casi real de anomalías térmicas y dirección del viento, modelando cómo el humo desciende al valle por inversión térmica.',
-    actionableDecision: 'Despacho preventivo para Bomberos, UGR y SAR-Bolivia antes de que el fuego alcance zonas residenciales o fuentes de agua.',
-  },
-  {
-    id: 'torrenteras',
-    tab: 'torrenteras',
-    stepNumber: 3,
-    icon: Waves,
-    badgeColor: 'from-cyan-600 to-blue-600',
-    title: '3. Red Hidrológica: 60 Torrenteras Críticas GAMC',
-    sub: 'Gestión de Cuencas • Taquiña, Pintumayu, Cantarranas y Aranjuez',
-    whatIsIt: 'Mapeo oficial de las 60 torrenteras y canales de desagüe que bajan de la cordillera hacia los distritos 1, 2 y 3 de la ciudad.',
-    keyEvidence: 'Cruce de la topografía digital (DEM SRTM) con el acumulado de precipitaciones satelitales (NASA GPM) y el semáforo municipal de riesgo de mazamorras.',
-    actionableDecision: 'Obras Públicas y Defensa Civil: programación de maquinaria pesada para limpieza de lechos y cierre preventivo de pasos a desnivel en tormentas.',
-  },
-  {
-    id: 'agrotech',
-    tab: 'agrotech',
-    stepNumber: 4,
-    icon: Wheat,
-    badgeColor: 'from-emerald-600 to-teal-600',
-    title: '4. Resiliencia Agro-Climática & Humedad de Suelo',
-    sub: 'Satélite de Radar NASA SMAP • Cuenca Lechera de La Maica & Valle Bajo',
-    whatIsIt: 'Estimación satelital del contenido de agua en los primeros 5 cm del suelo agrícola mediante radar de microondas de alta penetración.',
-    keyEvidence: 'Detección de déficit hídrico y sequía edáfica con 5 días de anticipación respecto al marchitamiento visible del forraje y cultivos.',
-    actionableDecision: 'Asociaciones de Regantes y Agricultores: optimización de turnos de riego de represas, evitando pérdidas de cosechas y estrés hídrico.',
+    whatIsIt: 'El motor desencadenante del calor y la contaminación: monitoreo en tiempo casi real de quemas e incendios forestales en la cordillera del Tunari sobre la Cota 2750 (frontera con la mancha urbana).',
+    keyEvidence: 'El humo y los aerosoles (variable AOD de la NASA) descienden hacia la cuenca del valle empujados por el viento nocturno y quedan atrapados bajo inversión térmica, disparando el efecto invernadero local.',
+    actionableDecision: 'Despacho preventivo para Bomberos, UGR y SAR-Bolivia antes de que el fuego salte la cota urbanizada, y alerta de salud pública para colegios del valle por material particulado.',
   },
   {
     id: 'global_nasa',
     tab: 'global_nasa',
-    stepNumber: 5,
+    stepNumber: 3,
     icon: Globe2,
     badgeColor: 'from-purple-600 to-indigo-600',
-    title: '5. Reto Oficial NASA: Be An Earth System Trend Detective!',
+    title: '3. Reto Oficial NASA: Be An Earth System Trend Detective!',
     sub: 'Tendencias Globales vs Dinámicas Locales Multi-Decadales (2016-2026)',
-    whatIsIt: 'Cumplimiento de las 4 preguntas científicas de la NASA: qué cambia, dónde cambia, cuánto cambia y si es estadísticamente significativo (p < 0.05).',
-    keyEvidence: 'Conexión entre macro-centinelas planetarios (Amazonía, Chacaltaya, California) y el valle local mediante Downscaling dinámico al hacer zoom.',
-    actionableDecision: 'Validación científica rigurosa: demuestra cómo datos globales de libre acceso de la NASA se transforman en políticas públicas locales aplicables.',
+    whatIsIt: 'Respuesta rigurosa a las 4 preguntas de la NASA: qué cambia, dónde cambia, cuánto cambia y si es estadísticamente significativo (p < 0.05 con regresión OLS y Mann-Kendall).',
+    keyEvidence: 'Conexión multiescalar: centinelas planetarios globales (Amazonía, Chacaltaya, California) que al hacer zoom transicionan automáticamente a la resolución distrital de Cochabamba.',
+    actionableDecision: 'Demostración de impacto: valida cómo los satélites de libre acceso de la NASA resuelven problemas municipales reales ahorrando más de 1.5 millones de dólares en sensores.',
   },
 ];
 
@@ -111,7 +83,7 @@ export default function SystemWorkflowTour({
             <span className="flex h-2.5 w-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
             <div className="flex items-center gap-1.5 text-xs font-black tracking-wider uppercase text-cyan-300">
               <Compass className="h-4 w-4 text-cyan-400" />
-              <span>Guía del Sistema • Etapa {current.stepNumber} de {STAGES.length}</span>
+              <span>Flujo del Reto • Etapa {current.stepNumber} de {STAGES.length}</span>
             </div>
           </div>
 

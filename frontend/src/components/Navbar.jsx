@@ -1,5 +1,5 @@
 import React from 'react';
-import { Globe, Radio, BellRing, Satellite, Compass } from 'lucide-react';
+import { Radio, BellRing, Satellite, Compass } from 'lucide-react';
 
 export default function Navbar({ 
   activeTab, 
@@ -11,11 +11,9 @@ export default function Navbar({
   setIsTourOpen
 }) {
   const tabs = [
-    { id: 'microclimas', label: '📍 1. Diagnóstico Cocha (14 Dist.)', short: '📍 1. Cocha' },
-    { id: 'incendios', label: '🔥 2. Incendios Tunari', short: '🔥 2. Incendios' },
-    { id: 'torrenteras', label: '🌊 3. Torrenteras (60p)', short: '🌊 3. Torrenteras' },
-    { id: 'agrotech', label: '🌾 4. Agrotech SMAP', short: '🌾 4. Agrotech' },
-    { id: 'global_nasa', label: '🌍 5. Reto Global NASA', short: '🌍 5. Global' },
+    { id: 'microclimas', label: '📍 1. Piloto Cochabamba (14 Distritos)', short: '📍 1. Cocha (IA)' },
+    { id: 'incendios', label: '🔥 2. Incendios Tunari (Impacto AOD)', short: '🔥 2. Incendios' },
+    { id: 'global_nasa', label: '🌍 3. Reto Global NASA (Trend Detective)', short: '🌍 3. Global NASA' },
   ];
 
   return (
@@ -45,13 +43,13 @@ export default function Navbar({
           </div>
         </div>
 
-        {/* Tabs Principales en Desktop (md+) con numeración de flujo */}
-        <nav className="hidden md:flex items-center gap-1 rounded-xl border border-neutral-800 bg-neutral-900/90 p-1">
+        {/* Tabs Principales Oficiales del Reto en Desktop (md+) */}
+        <nav className="hidden md:flex items-center gap-1.5 rounded-xl border border-neutral-800 bg-neutral-900/90 p-1">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition whitespace-nowrap ${
+              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                   : 'text-neutral-400 hover:text-white'
@@ -68,15 +66,15 @@ export default function Navbar({
           {/* Botón Guía del Sistema / Presentación */}
           <button
             onClick={() => setIsTourOpen(!isTourOpen)}
-            className={`flex items-center gap-1 sm:gap-1.5 rounded-lg border px-2 sm:px-2.5 py-1 sm:py-1.5 text-xs font-bold transition shadow-sm ${
+            className={`flex items-center gap-1 sm:gap-1.5 rounded-lg border px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs font-bold transition shadow-sm ${
               isTourOpen
                 ? 'border-cyan-500/80 bg-cyan-950/80 text-cyan-300 ring-1 ring-cyan-400/50'
                 : 'border-neutral-700 bg-neutral-900 text-neutral-300 hover:text-white hover:border-neutral-600'
             }`}
-            title="Abrir u ocultar la Guía de Flujo del Sistema"
+            title="Abrir u ocultar la Guía de Flujo del Reto"
           >
             <Compass className={`h-3.5 w-3.5 ${isTourOpen ? 'animate-spin text-cyan-400' : 'text-cyan-400'}`} />
-            <span className="hidden sm:inline">Guía del Sistema</span>
+            <span className="hidden sm:inline">Guía del Reto</span>
             <span className="sm:hidden">Guía</span>
           </button>
 
@@ -109,7 +107,7 @@ export default function Navbar({
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-1 shrink-0 rounded-lg px-2.5 py-1 text-[11px] font-semibold transition ${
+            className={`flex items-center gap-1 shrink-0 rounded-lg px-3 py-1 text-xs font-semibold transition ${
               activeTab === tab.id
                 ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow'
                 : 'bg-neutral-900/80 text-neutral-400 hover:text-white border border-neutral-800'
