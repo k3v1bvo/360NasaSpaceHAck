@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Info, ChevronDown, Crosshair, X } from 'lucide-react';
+import { Info, ChevronDown, Crosshair, X, Eye, EyeOff } from 'lucide-react';
 import tunariPolygonData from '../../../data/gamc/parque_nacional_tunari.geojson';
 import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
@@ -47,6 +47,8 @@ export default function MapViewer({
   const activeTabRef = useRef(activeTab);
   const renderLayersRef = useRef(null);
   const [baseMapType, setBaseMapType] = useState('satellite'); // 'satellite' | 'streets' | 'dark'
+  const [showDistrictLabels, setShowDistrictLabels] = useState(true); // Control para ocultar/mostrar nombres de distritos
+  const [showSensors, setShowSensors] = useState(true); // Control para ocultar/mostrar sensores
   const [isLegendOpen, setIsLegendOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
 
   // Mantener selectedPointRef y activeTab sincronizados
@@ -406,7 +408,7 @@ export default function MapViewer({
             <span style="color: ${color}; font-size: 9px; font-weight: bold;">${lstVal}°</span>
           </div>
         `, {
-          permanent: true,
+          permanent: showDistrictLabels,
           direction: 'center',
           className: 'custom-district-tooltip',
           opacity: 0.95
@@ -522,6 +524,7 @@ export default function MapViewer({
       }
 
       // 2. Las 2 Estaciones Físicas de la Red MÓNICA (GAMC - Ground Truth)
+      if (showSensors) {
       monicaData?.estaciones_fisicas?.forEach((est) => {
         const marker = L.circleMarker([est.lat, est.lon], {
           radius: 12,
@@ -687,6 +690,7 @@ export default function MapViewer({
           };
         }
       });
+      } // Fin if (showSensors)
     }
 
     // =========================================================================
@@ -967,7 +971,7 @@ export default function MapViewer({
     if (mapInstanceRef.current) {
       renderLayers(null, mapInstanceRef.current);
     }
-  }, [activeTab, focosData, sensorMode, reportsData, offlineMode, wmsCota, wmsPeriurbanos, wmsDistritos, nasaGibs, gibsDate]);
+  }, [activeTab, focosData, sensorMode, reportsData, offlineMode, wmsCota, wmsPeriurbanos, wmsDistritos, nasaGibs, gibsDate, showDistrictLabels, showSensors]);
 
   // Efecto Maestro de Selección: Resalta en el mapa, abre popups, activa baliza pulsante y enfoca con animación
   useEffect(() => {
@@ -1166,7 +1170,7 @@ export default function MapViewer({
     >
       <div 
         ref={mapContainerRef} 
-        className="absolute inset-0 h-full w-full z-0" 
+        className={`absolute inset-0 h-full w-full z-0 ${showDistrictLabels ? '' : 'hide-district-labels'}`}
         style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, height: '100%', width: '100%' }}
       />
       
@@ -1240,6 +1244,41 @@ export default function MapViewer({
         >
           <span>🌙 Oscuro</span>
         </button>
+
+        <div className="h-4 w-px bg-white/10 mx-0.5" />
+
+        {/* Botón para alternar etiquetas de distritos a voluntad */}
+        {activeTab === 'microclimas' && (
+          <button
+            onClick={() => setShowDistrictLabels(!showDistrictLabels)}
+            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[11px] font-bold transition shadow-sm ${
+              showDistrictLabels
+                ? 'bg-amber-600/90 text-white shadow-amber-900/40 ring-1 ring-amber-400/50'
+                : 'bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-700/60'
+            }`}
+            title={showDistrictLabels ? "Ocultar nombres y etiquetas de distritos (Vista satelital limpia al alejar)" : "Mostrar nombres permanentes de los 15 distritos"}
+          >
+            {showDistrictLabels ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5 text-neutral-400" />}
+            <span className="hidden sm:inline">{showDistrictLabels ? 'Nombres ON' : 'Nombres OFF'}</span>
+            <span className="sm:hidden">{showDistrictLabels ? 'Nombres' : 'Limpio'}</span>
+          </button>
+        )}
+
+        {/* Botón para alternar sensores a voluntad */}
+        {activeTab === 'microclimas' && (
+          <button
+            onClick={() => setShowSensors(!showSensors)}
+            className={`flex items-center gap-1.5 rounded-lg px-2 py-1 text-[11px] font-bold transition shadow-sm ${
+              showSensors
+                ? 'bg-cyan-600/90 text-white shadow-cyan-900/40 ring-1 ring-cyan-400/50'
+                : 'bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-700/60'
+            }`}
+            title={showSensors ? "Ocultar puntos de sensores MÓNICA e IA" : "Mostrar sensores en el mapa"}
+          >
+            <span className="hidden sm:inline">{showSensors ? '📍 Sensores ON' : '📍 Sensores OFF'}</span>
+            <span className="sm:hidden">{showSensors ? 'Sensores' : 'Sin sensores'}</span>
+          </button>
+        )}
 
         <div className="h-4 w-px bg-white/10 mx-0.5" />
 
