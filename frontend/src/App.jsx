@@ -82,7 +82,7 @@ export default function App() {
             setActiveTab={handleTabChange}
             focosData={currentFocosData}
             sensorMode={sensorMode}
-            reportsData={reports}
+            reportsData={[]}
             selectedPoint={selectedPoint}
             setSelectedPoint={(p) => setSelectedPoint(p)}
             onSelectGlobalLocation={(spot) => {
