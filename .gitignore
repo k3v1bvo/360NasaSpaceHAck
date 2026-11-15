@@ -46,3 +46,9 @@ env/
 MANUAL_MAESTRO_ESTUDIO_PITCH_STEVENS.md
 *ESTUDIO*.md
 *PERSONAL*.md
+
+# Large raw GIS extracts
+data/gamc/lineas/
+data/gamc/lineas_transporte_cochabamba.geojson
+data/gamc/official_distritos_ciudatoslab.geojson
+scripts/*.png

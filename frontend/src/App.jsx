@@ -14,7 +14,7 @@ import MicroclimateAITab from './modules/MicroclimateAITab';
 import FireMonitorTab from './modules/FireMonitorTab';
 
 import SystemWorkflowTour from './components/SystemWorkflowTour';
-import GamcExactMap from './components/GamcExactMap';
+import GamcOfficialMap from './components/GamcOfficialMap';
 
 // Datos satelitales armonizados y crudos
 import focosHarmonized from '../../data/nasa/firms_tunari_harmonized.geojson';
@@ -193,10 +193,10 @@ export default function App() {
         onClose={() => setIsTourOpen(false)}
       />
 
-      {/* Visor Cartográfico GAMC WMS + NASA POWER Directo */}
+      {/* Visor Oficial WMS GAMC (4 Servicios Oficiales + Red MÓNICA + Transporte) */}
       {isGamcExactOpen && (
         <div className="fixed inset-0 z-[1500] flex flex-col bg-slate-950">
-          <GamcExactMap onClose={() => setIsGamcExactOpen(false)} />
+          <GamcOfficialMap onClose={() => setIsGamcExactOpen(false)} />
         </div>
       )}
     </div>
