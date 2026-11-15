@@ -85,7 +85,7 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
               { id: 'fires', label: 'Incendios Anuales', sub: '2020-2026', icon: Flame },
               { id: 'air_quality', label: 'Inversión & PM2.5', sub: 'Red MÓNICA', icon: Wind },
               { id: 'decadal', label: 'Tendencias LST', sub: 'Mann-Kendall', icon: Thermometer },
-              { id: 'protection', label: 'Matriz de Alerta', sub: 'Protección GAMC', icon: ShieldAlert },
+              { id: 'protection', label: 'Predicciones & Alerta', sub: 'Pronóstico de Impacto', icon: ShieldAlert },
               { id: 'sources', label: 'Recursos NASA', sub: '14 Fuentes', icon: BookOpen },
             ].map((tab) => {
               const Icon = tab.icon;
@@ -653,16 +653,16 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
           )}
 
           {/* ========================================================================= */}
-          {/* PESTAÑA 5: MATRIZ DE ALERTA Y PROTECCIÓN FOCALIZADA                         */}
+          {/* PESTAÑA 5: PREDICCIONES & ALERTA PREVENTIVA DE IMPACTO                     */}
           {/* ========================================================================= */}
           {activeTab === 'protection' && (
             <div className="space-y-6 animate-in fade-in duration-200">
               <div className="rounded-2xl border border-emerald-500/20 bg-emerald-950/20 p-4 text-xs text-emerald-200 flex items-start gap-3">
                 <Sparkles className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-white font-bold text-sm">Objetivo de Impacto Real de NASA Space Apps:</strong>
+                  <strong className="text-white font-bold text-sm">Predicciones Territoriales & Alerta Temprana de Impacto:</strong>
                   <p className="mt-1 text-slate-300 leading-relaxed">
-                    Las tendencias históricas y predicciones satelitales no solo deben diagnosticar; deben traducirse en <strong>medidas de protección preventiva para las comunidades más vulnerables</strong> antes de que ocurran los desastres. A continuación se presenta la matriz operativa formulada para la Alcaldía de Cochabamba (GAMC) y las brigadas comunitarias:
+                    Las tendencias históricas y predicciones satelitales no solo deben diagnosticar; deben traducirse en <strong>pronósticos de impacto y medidas preventivas</strong> antes de que ocurran los desastres. A continuación se presentan las predicciones operativas formuladas para la Alcaldía de Cochabamba (GAMC) y las brigadas comunitarias:
                   </p>
                 </div>
               </div>
@@ -686,12 +686,12 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
 
                       <div className="space-y-2 text-xs">
                         <div>
-                          <strong className="text-red-400 font-bold">⚠️ Amenaza Principal:</strong>
+                          <strong className="text-red-400 font-bold">⚠️ Amenaza Pronosticada:</strong>
                           <p className="text-slate-300 mt-0.5">{item.amenaza_principal}</p>
                         </div>
 
                         <div>
-                          <strong className="text-purple-400 font-bold">🤖 Diagnóstico IA:</strong>
+                          <strong className="text-purple-400 font-bold">🤖 Predicción IA de Riesgo:</strong>
                           <p className="text-slate-300 mt-0.5">{item.diagnostico_ia}</p>
                         </div>
 
