@@ -18,7 +18,10 @@ import {
   ShieldCheck,
   BarChart3,
   Layers,
-  FileText
+  FileText,
+  ExternalLink,
+  Database,
+  BookOpen
 } from 'lucide-react';
 import globalHotspots from '../data/global_trend_hotspots.json';
 
@@ -552,6 +555,158 @@ export default function GlobalNasaMode({
               <p className="text-xs sm:text-[13px] text-slate-200 leading-relaxed">
                 Si $p \ge 0.05$, la variación se clasifica como fluctuación meteorológica transitoria, garantizando que el GAMC no tome decisiones basadas en falsas alarmas.
               </p>
+            </div>
+          </div>
+
+          {/* Sección de Recursos Oficiales del Reto NASA & Agencias Socias */}
+          <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-[#0c1324] to-[#070b16] p-4 space-y-3 mt-4">
+            <div className="flex items-center justify-between border-b border-cyan-500/20 pb-2.5">
+              <div className="flex items-center gap-2">
+                <Database className="h-4 w-4 text-cyan-400" />
+                <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                  Recursos Oficiales del Reto NASA & Socios
+                </h4>
+              </div>
+              <span className="rounded bg-cyan-950 px-2 py-0.5 text-[10px] font-mono font-bold text-cyan-300 border border-cyan-800/60">
+                13 Fuentes Espaciales
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              El sistema STEVENS valida sus métricas con las fuentes y misiones oficiales indicadas en el reto <em>"Be An Earth System Trend Detective!"</em>:
+            </p>
+
+            <div className="space-y-2">
+              {/* Bloque 1: Herramientas Oficiales NASA */}
+              <div className="space-y-1.5">
+                <span className="text-[11px] font-bold text-cyan-300 uppercase tracking-wider block">
+                  🛰️ Telemetría y Muestras NASA:
+                </span>
+                
+                <a 
+                  href="https://giovanni.gsfc.nasa.gov/" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-cyan-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-cyan-300 transition">NASA Giovanni (GSFC)</span>
+                    <span className="text-[10px] text-slate-400 block">Series temporales y perfiles de AOD y radiación</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://appeears.earthdatacloud.nasa.gov/" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-cyan-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-cyan-300 transition">NASA AppEEARS (Earthdata Cloud)</span>
+                    <span className="text-[10px] text-slate-400 block">Extracción georreferenciada de MODIS LST, NDVI y SRTM</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://disc.gsfc.nasa.gov/information/tools?title=Hydrology%20Time%20Series" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-cyan-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-cyan-300 transition">NASA GES DISC Hydrology</span>
+                    <span className="text-[10px] text-slate-400 block">Series hidrológicas, humedad edáfica y balances hídricos</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://ntrs.nasa.gov/api/citations/20090042747/downloads/20090042747.pdf" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-purple-800/50 bg-purple-950/20 p-2 text-xs hover:border-purple-400 hover:bg-purple-950/40 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-purple-200 group-hover:text-purple-300 transition">Paper NASA SeaWiFS (NTRS 20090042747)</span>
+                    <span className="text-[10px] text-purple-300/80 block">Metodología canónica: descomposición STL y test de significancia</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-purple-400 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://www.ncei.noaa.gov/cdo-web/" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-cyan-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-cyan-300 transition">NOAA Climate Data Online (CDO)</span>
+                    <span className="text-[10px] text-slate-400 block">Validación con estaciones terrestres globales</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition shrink-0 ml-2" />
+                </a>
+              </div>
+
+              {/* Bloque 2: Agencias Espaciales Socias (CSA & KNMI) */}
+              <div className="space-y-1.5 pt-2 border-t border-neutral-800">
+                <span className="text-[11px] font-bold text-emerald-300 uppercase tracking-wider block">
+                  🍁 Agencia Espacial Canadiense (CSA) & KNMI:
+                </span>
+
+                <a 
+                  href="https://www.asc-csa.gc.ca/eng/satellites/swot/" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-emerald-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-emerald-300 transition">Misión SWOT (NASA / CSA / CNES)</span>
+                    <span className="text-[10px] text-slate-400 block">Topografía y balance hídrico de la Laguna Alalay y embalses</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://donnees-data.asc-csa.gc.ca/en/dataset/rcm" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-emerald-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-emerald-300 transition">CSA Radarsat Constellation (RCM)</span>
+                    <span className="text-[10px] text-slate-400 block">Radar SAR día/noche para atravesar humo y mapear cicatrices</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://github.com/asc-csa/Synthetic_Aperture_Radar_Tutorial" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-emerald-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-emerald-300 transition">CSA SAR Python Tutorial (GitHub)</span>
+                    <span className="text-[10px] text-slate-400 block">Procesamiento de radar para el Módulo de Torrenteras GAMC</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://climexp.knmi.nl/" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-cyan-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-cyan-300 transition">KNMI Climate Explorer</span>
+                    <span className="text-[10px] text-slate-400 block">Correlaciones con oscilaciones oceánicas (El Niño 3.4 / ENSO)</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition shrink-0 ml-2" />
+                </a>
+              </div>
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ import {
   MapPin, 
   Flame, 
   Globe2,
+  Database
 } from 'lucide-react';
 
 const STAGES = [
@@ -46,6 +47,18 @@ const STAGES = [
     keyEvidence: 'Conexión multiescalar: centinelas planetarios globales (Amazonía, Chacaltaya, California) que al hacer zoom transicionan automáticamente a la resolución distrital de Cochabamba.',
     actionableDecision: 'Demostración de impacto: valida cómo los satélites de libre acceso de la NASA resuelven problemas municipales reales ahorrando más de 1.5 millones de dólares en sensores.',
   },
+  {
+    id: 'recursos_nasa',
+    tab: 'global_nasa',
+    stepNumber: 4,
+    icon: Database,
+    badgeColor: 'from-emerald-600 to-teal-600',
+    title: '4. Recursos Oficiales NASA & Agencias Socias (CSA, KNMI, NOAA)',
+    sub: '13 Herramientas Satelitales, Radares SAR (CSA) y Papers Científicos del Reto',
+    whatIsIt: 'Integración y validación cruzada con las 13 plataformas y misiones oficiales indicadas por el reto: telemetría atmosférica de NASA Giovanni y AppEEARS, radar SAR y altimetría hídrica de la Agencia Espacial Canadiense (CSA Radarsat RCM y SWOT), series climáticas de NOAA CDO y KNMI Climate Explorer, y la metodología de significancia del paper SeaWiFS (NTRS 20090042747).',
+    keyEvidence: 'Cruce multiescalar: desde la interferometría radar de la misión SWOT (NASA/CSA) sobre la Laguna Alalay hasta la telemetría diaria de NASA POWER API en los 15 distritos de Cochabamba.',
+    actionableDecision: 'Respaldo institucional de grado espacial: el GAMC y la comunidad acceden a datos satelitales certificados y reproducibles internacionalmente.',
+  }
 ];
 
 export default function SystemWorkflowTour({ 
@@ -54,21 +67,34 @@ export default function SystemWorkflowTour({
   isOpen, 
   onClose 
 }) {
+  const [currentStageIdx, setCurrentStageIdx] = React.useState(0);
+
+  // Cuando cambia activeTab externamente, alinear el tour
+  React.useEffect(() => {
+    const idx = STAGES.findIndex(s => s.tab === activeTab);
+    if (idx >= 0 && currentStageIdx !== idx && currentStageIdx !== 3) {
+      setCurrentStageIdx(idx);
+    }
+  }, [activeTab]);
+
   if (!isOpen) return null;
 
-  // Encontrar la etapa correspondiente según el activeTab actual
-  const currentStageIndex = STAGES.findIndex(s => s.tab === activeTab);
-  const safeIndex = currentStageIndex >= 0 ? currentStageIndex : 0;
-  const current = STAGES[safeIndex];
+  const current = STAGES[currentStageIdx] || STAGES[0];
 
   const handlePrev = () => {
-    const prevIndex = safeIndex > 0 ? safeIndex - 1 : STAGES.length - 1;
-    onSelectTab(STAGES[prevIndex].tab);
+    const prevIndex = currentStageIdx > 0 ? currentStageIdx - 1 : STAGES.length - 1;
+    setCurrentStageIdx(prevIndex);
+    if (onSelectTab && STAGES[prevIndex].tab !== activeTab) {
+      onSelectTab(STAGES[prevIndex].tab);
+    }
   };
 
   const handleNext = () => {
-    const nextIndex = safeIndex < STAGES.length - 1 ? safeIndex + 1 : 0;
-    onSelectTab(STAGES[nextIndex].tab);
+    const nextIndex = currentStageIdx < STAGES.length - 1 ? currentStageIdx + 1 : 0;
+    setCurrentStageIdx(nextIndex);
+    if (onSelectTab && STAGES[nextIndex].tab !== activeTab) {
+      onSelectTab(STAGES[nextIndex].tab);
+    }
   };
 
   const IconComponent = current.icon;
@@ -151,9 +177,14 @@ export default function SystemWorkflowTour({
             {STAGES.map((s, idx) => (
               <button
                 key={s.id}
-                onClick={() => onSelectTab(s.tab)}
+                onClick={() => {
+                  setCurrentStageIdx(idx);
+                  if (onSelectTab && s.tab !== activeTab) {
+                    onSelectTab(s.tab);
+                  }
+                }}
                 className={`h-2 rounded-full transition-all ${
-                  idx === safeIndex 
+                  idx === currentStageIdx 
                     ? 'w-7 bg-cyan-400' 
                     : 'w-2 bg-neutral-700 hover:bg-neutral-500'
                 }`}
@@ -175,7 +206,7 @@ export default function SystemWorkflowTour({
               onClick={handleNext}
               className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 px-3 py-1.5 text-xs font-bold text-white shadow-lg shadow-cyan-900/30 hover:from-cyan-500 hover:to-blue-500 transition"
             >
-              <span>{safeIndex === STAGES.length - 1 ? 'Reiniciar' : 'Siguiente Etapa'}</span>
+              <span>{currentStageIdx === STAGES.length - 1 ? 'Reiniciar' : 'Siguiente Etapa'}</span>
               <ChevronRight className="h-3.5 w-3.5" />
             </button>
           </div>
