@@ -51,56 +51,56 @@ export const RiskPredictor: React.FC<RiskPredictorProps> = ({ atmosphere, atmDat
   const { predictions, prescriptive, drivers } = evaluation;
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Header Banner - Spacious & Legible */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 sm:p-8 bg-[#0f172a] rounded-2xl border border-[#334155] shadow-lg">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in">
+      {/* Header Banner - Balanced & Legible */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 sm:p-6 bg-[#0f172a] rounded-2xl border border-[#334155] shadow-lg">
         <div>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0284c7]/15 text-[#38bdf8] text-xs font-mono font-semibold tracking-wide mb-3 border border-[#0284c7]/30">
-            <Cpu className="w-4 h-4" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0284c7]/15 text-[#38bdf8] text-xs font-mono font-semibold tracking-wide mb-2 border border-[#0284c7]/30">
+            <Cpu className="w-3.5 h-3.5" />
             <span>EVALUADOR ML DE RIESGO TÉRMICO & SUPRESIÓN EN VUELO</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 tracking-tight">Evaluador Predictivo de Inflamabilidad</h2>
-          <details className="mt-2.5">
-            <summary className="text-sm text-sky-400 font-mono cursor-pointer hover:text-sky-300 select-none">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-100 tracking-tight">Evaluador Predictivo de Inflamabilidad</h2>
+          <details className="mt-2">
+            <summary className="text-xs sm:text-sm text-sky-400 font-mono cursor-pointer hover:text-sky-300 select-none">
               ▶ Metodología de Inferencia en Tiempo Real
             </summary>
-            <p className="text-sm text-slate-400 mt-2 max-w-2xl leading-relaxed pl-3 border-l-2 border-sky-500/40">
+            <p className="text-xs sm:text-sm text-slate-400 mt-1.5 max-w-2xl leading-relaxed pl-3 border-l-2 border-sky-500/40">
               Inferencia client-side directa calibrada con datos de vuelo reales de 24 misiones de la NASA (BASS-II, SoFIE, Saffire, FLARE). Predice velocidad de propagación ($V_f$), límite $LOI$ en microgravedad con $R^2 = 0.982$ y prescribe el estándar NFPA 750.
             </p>
           </details>
         </div>
 
         {/* Current Risk Badge - Large, High-Contrast */}
-        <div className={`p-5 rounded-2xl border flex items-center gap-5 flex-shrink-0 shadow-md ${
+        <div className={`p-4 sm:p-5 rounded-xl border flex items-center gap-4 flex-shrink-0 shadow-md ${
           predictions.riskLevel === 'DANGER' 
             ? 'bg-red-950/60 border-red-500/60 text-red-100' 
             : predictions.riskLevel === 'CAUTION'
             ? 'bg-amber-950/60 border-amber-500/60 text-amber-100'
             : 'bg-emerald-950/60 border-emerald-500/60 text-emerald-100'
         }`}>
-          <div className={`w-14 h-14 rounded-xl flex items-center justify-center font-bold text-2xl shadow-inner ${
+          <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-xl shadow-inner ${
             predictions.riskLevel === 'DANGER' ? 'bg-red-500 text-slate-950' :
             predictions.riskLevel === 'CAUTION' ? 'bg-amber-500 text-slate-950' : 'bg-emerald-500 text-slate-950'
           }`}>
-            {predictions.riskLevel === 'DANGER' ? <ShieldAlert className="w-8 h-8" /> :
-             predictions.riskLevel === 'CAUTION' ? <AlertTriangle className="w-8 h-8" /> :
-             <ShieldCheck className="w-8 h-8" />}
+            {predictions.riskLevel === 'DANGER' ? <ShieldAlert className="w-6 h-6" /> :
+             predictions.riskLevel === 'CAUTION' ? <AlertTriangle className="w-6 h-6" /> :
+             <ShieldCheck className="w-6 h-6" />}
           </div>
           <div>
-            <div className="text-xs uppercase tracking-wider font-mono opacity-80 font-bold">Nivel de Riesgo Operacional</div>
-            <div className="text-3xl font-extrabold tracking-tight mt-0.5">{predictions.riskLevel}</div>
+            <div className="text-[11px] uppercase tracking-wider font-mono opacity-80 font-bold">Nivel de Riesgo Operacional</div>
+            <div className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">{predictions.riskLevel}</div>
           </div>
         </div>
       </div>
 
       {/* Main Grid: Controls vs Predictions */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
         
         {/* Left Column: Interactive Parameters (5 cols) */}
-        <div className="lg:col-span-5 space-y-8">
-          <div className="p-6 sm:p-8 bg-[#0f172a] rounded-2xl border border-[#334155] shadow-lg">
-            <div className="flex items-center gap-2.5 mb-6 pb-3 border-b border-slate-800 text-base font-bold text-slate-200">
-              <Sliders className="w-5 h-5 text-[#38bdf8]" />
+        <div className="lg:col-span-5 space-y-6">
+          <div className="p-5 sm:p-6 bg-[#0f172a] rounded-2xl border border-[#334155] shadow-lg">
+            <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-800 text-sm sm:text-base font-bold text-slate-200">
+              <Sliders className="w-4 h-4 text-[#38bdf8]" />
               <span>PARÁMETROS DEL ESCENARIO DE MISIÓN</span>
             </div>
 
@@ -228,16 +228,16 @@ export const RiskPredictor: React.FC<RiskPredictorProps> = ({ atmosphere, atmDat
           </div>
 
           {/* Key Risk Drivers */}
-          <div className="p-6 sm:p-8 bg-[#0f172a] rounded-2xl border border-[#334155] shadow-lg">
+          <div className="p-5 sm:p-6 bg-[#0f172a] rounded-2xl border border-[#334155] shadow-lg">
             <div className="text-sm font-mono uppercase text-slate-300 mb-4 flex items-center gap-2 font-bold">
               <Activity className="w-4 h-4 text-[#38bdf8]" />
               <span>Factores Determinantes de Riesgo</span>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {drivers.map((drv, i) => (
-                <div key={i} className="flex items-center justify-between p-3.5 rounded-xl bg-[#020617]/80 border border-[#1e293b] text-sm">
+                <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-[#020617]/80 border border-[#1e293b] text-xs sm:text-sm">
                   <span className="text-slate-300 font-medium">{drv.feature}</span>
-                  <span className={`font-mono font-bold px-2.5 py-1 rounded-lg text-xs ${
+                  <span className={`font-mono font-bold px-2 py-0.5 rounded-lg text-xs ${
                     drv.impact.startsWith('+') ? 'bg-red-950/80 text-red-300 border border-red-800/60' : 'bg-emerald-950/80 text-emerald-300 border border-emerald-800/60'
                   }`}>
                     {drv.impact}
@@ -249,54 +249,54 @@ export const RiskPredictor: React.FC<RiskPredictorProps> = ({ atmosphere, atmDat
         </div>
 
         {/* Right Column: Model Output & Prescriptive Action (7 cols) */}
-        <div className="lg:col-span-7 space-y-8">
+        <div className="lg:col-span-7 space-y-6">
 
           {/* Predictive Metrics Card */}
-          <div className="p-6 sm:p-8 bg-[#0f172a] rounded-2xl border border-[#334155] shadow-lg">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-800">
-              <div className="text-base font-bold text-slate-100">Predicción de Métricas de Combustión</div>
-              <span className="text-xs font-mono text-emerald-400 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 font-bold self-start sm:self-auto">
+          <div className="p-5 sm:p-6 bg-[#0f172a] rounded-2xl border border-[#334155] shadow-lg">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5 pb-3 border-b border-slate-800">
+              <div className="text-sm sm:text-base font-bold text-slate-100">Predicción de Métricas de Combustión</div>
+              <span className="text-xs font-mono text-emerald-400 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 font-bold self-start sm:self-auto">
                 Modelo Entrenado con Datos Reales NASA PSI (R² = 0.982)
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-              <div className="p-5 rounded-xl bg-[#020617] border border-[#1e293b]">
-                <div className="text-xs font-mono text-slate-400 mb-2 font-semibold">Velocidad de Propagación (Vf)</div>
-                <div className="text-3xl sm:text-4xl font-bold font-mono text-slate-100">
-                  {predictions.flameSpreadVelocity.toFixed(2)} <span className="text-sm font-normal text-slate-400">mm/s</span>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-4 rounded-xl bg-[#020617] border border-[#1e293b]">
+                <div className="text-xs font-mono text-slate-400 mb-1.5 font-semibold">Velocidad Propagación (Vf)</div>
+                <div className="text-2xl sm:text-3xl font-bold font-mono text-slate-100">
+                  {predictions.flameSpreadVelocity.toFixed(2)} <span className="text-xs font-normal text-slate-400">mm/s</span>
                 </div>
-                <div className="text-xs font-mono text-slate-400 mt-2">
+                <div className="text-[11px] font-mono text-slate-400 mt-1.5">
                   IC 95%: [{predictions.ci95[0]} - {predictions.ci95[1]}] mm/s
                 </div>
               </div>
 
-              <div className="p-5 rounded-xl bg-[#020617] border border-[#1e293b]">
-                <div className="text-xs font-mono text-slate-400 mb-2 font-semibold">Límite LOI en Microgravedad</div>
-                <div className="text-3xl sm:text-4xl font-bold font-mono text-amber-400">
-                  {predictions.loiShift.loiMicrog.toFixed(1)}% <span className="text-sm font-normal text-slate-400">O₂</span>
+              <div className="p-4 rounded-xl bg-[#020617] border border-[#1e293b]">
+                <div className="text-xs font-mono text-slate-400 mb-1.5 font-semibold">Límite LOI en Microgravedad</div>
+                <div className="text-2xl sm:text-3xl font-bold font-mono text-amber-400">
+                  {predictions.loiShift.loiMicrog.toFixed(1)}% <span className="text-xs font-normal text-slate-400">O₂</span>
                 </div>
-                <div className="text-xs font-mono text-slate-400 mt-2">
-                  En Tierra: {predictions.loiShift.loi1g}% O₂ (Reducción {predictions.loiShift.shiftPercent.toFixed(1)}%)
+                <div className="text-[11px] font-mono text-slate-400 mt-1.5">
+                  En Tierra: {predictions.loiShift.loi1g}% O₂ (Δ {predictions.loiShift.shiftPercent.toFixed(1)}%)
                 </div>
               </div>
 
-              <div className="p-5 rounded-xl bg-[#020617] border border-[#1e293b]">
-                <div className="text-xs font-mono text-slate-400 mb-2 font-semibold">Riesgo Llama Fría (LTC)</div>
-                <div className={`text-2xl sm:text-3xl font-bold font-mono ${
+              <div className="p-4 rounded-xl bg-[#020617] border border-[#1e293b]">
+                <div className="text-xs font-mono text-slate-400 mb-1.5 font-semibold">Riesgo Llama Fría (LTC)</div>
+                <div className={`text-xl sm:text-2xl font-bold font-mono ${
                   predictions.coolFlameRisk.startsWith('ALTO') ? 'text-red-400' : 'text-emerald-400'
                 }`}>
                   {predictions.coolFlameRisk.startsWith('ALTO') ? 'ALTO RIESGO' : 'BAJO'}
                 </div>
-                <div className="text-xs font-mono text-slate-400 mt-2">
+                <div className="text-[11px] font-mono text-slate-400 mt-1.5">
                   {predictions.coolFlameRisk.startsWith('ALTO') ? 'Combustión latente 600-800 K' : 'Cinética cuasi-estacionaria'}
                 </div>
               </div>
             </div>
 
             {/* Probability Distribution Bar */}
-            <div className="mt-6 pt-5 border-t border-[#1e293b]">
-              <div className="flex justify-between text-xs sm:text-sm font-mono mb-2.5">
+            <div className="mt-5 pt-4 border-t border-[#1e293b]">
+              <div className="flex justify-between text-xs font-mono mb-2">
                 <span className="text-slate-300 font-semibold">Distribución de Probabilidad del Modelo:</span>
                 <span className="text-slate-200 font-bold">
                   SAFE: {(predictions.probabilities.SAFE * 100).toFixed(0)}% | 
@@ -304,7 +304,7 @@ export const RiskPredictor: React.FC<RiskPredictorProps> = ({ atmosphere, atmDat
                   DANGER: {(predictions.probabilities.DANGER * 100).toFixed(0)}%
                 </span>
               </div>
-              <div className="w-full h-3.5 bg-[#1e293b] rounded-full overflow-hidden flex border border-slate-800">
+              <div className="w-full h-3 bg-[#1e293b] rounded-full overflow-hidden flex border border-slate-800">
                 <div style={{ width: `${predictions.probabilities.SAFE * 100}%` }} className="bg-emerald-500 transition-all duration-300" />
                 <div style={{ width: `${predictions.probabilities.CAUTION * 100}%` }} className="bg-amber-500 transition-all duration-300" />
                 <div style={{ width: `${predictions.probabilities.DANGER * 100}%` }} className="bg-red-500 transition-all duration-300" />
@@ -313,28 +313,28 @@ export const RiskPredictor: React.FC<RiskPredictorProps> = ({ atmosphere, atmDat
           </div>
 
           {/* Prescriptive Suppression Protocol (NFPA 750) */}
-          <div className="p-6 sm:p-8 bg-[#0f172a] rounded-2xl border border-sky-900/70 relative overflow-hidden shadow-lg">
-            <div className="flex items-center gap-3 mb-5 pb-3 border-b border-slate-800">
-              <Droplets className="w-6 h-6 text-[#38bdf8]" />
-              <h3 className="text-xl font-bold text-slate-100">Prescripción de Supresión Activa (NFPA 750)</h3>
+          <div className="p-5 sm:p-6 bg-[#0f172a] rounded-2xl border border-sky-900/70 relative overflow-hidden shadow-lg">
+            <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-slate-800">
+              <Droplets className="w-5 h-5 text-[#38bdf8]" />
+              <h3 className="text-lg font-bold text-slate-100">Prescripción de Supresión Activa (NFPA 750)</h3>
             </div>
 
-            <div className="p-5 rounded-xl bg-[#020617]/90 border border-[#1e293b] space-y-4 mb-5">
-              <div className="text-base font-bold text-sky-300">
+            <div className="p-4 rounded-xl bg-[#020617]/90 border border-[#1e293b] space-y-3 mb-4">
+              <div className="text-sm sm:text-base font-bold text-sky-300">
                 {prescriptive.extinguisherType}
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm font-mono">
-                <div className="p-3.5 rounded-xl bg-[#0f172a] border border-[#334155]">
-                  <span className="text-slate-400 block mb-1 text-xs">Masa Requerida:</span>
-                  <span className="text-slate-100 font-bold text-lg">{prescriptive.requiredMassKg} kg</span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm font-mono">
+                <div className="p-3 rounded-xl bg-[#0f172a] border border-[#334155]">
+                  <span className="text-slate-400 block mb-1 text-[11px]">Masa Requerida:</span>
+                  <span className="text-slate-100 font-bold text-base">{prescriptive.requiredMassKg} kg</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-[#0f172a] border border-[#334155]">
-                  <span className="text-slate-400 block mb-1 text-xs">Tiempo de Descarga:</span>
-                  <span className="text-slate-100 font-bold text-lg">{prescriptive.durationSec} s</span>
+                <div className="p-3 rounded-xl bg-[#0f172a] border border-[#334155]">
+                  <span className="text-slate-400 block mb-1 text-[11px]">Tiempo Descarga:</span>
+                  <span className="text-slate-100 font-bold text-base">{prescriptive.durationSec} s</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-[#0f172a] border border-[#334155]">
-                  <span className="text-slate-400 block mb-1 text-xs">Potencia Enfriamiento:</span>
-                  <span className="text-[#38bdf8] font-bold text-lg">{prescriptive.coolingPowerKw} kW</span>
+                <div className="p-3 rounded-xl bg-[#0f172a] border border-[#334155]">
+                  <span className="text-slate-400 block mb-1 text-[11px]">Potencia Enfriamiento:</span>
+                  <span className="text-[#38bdf8] font-bold text-base">{prescriptive.coolingPowerKw} kW</span>
                 </div>
               </div>
             </div>

@@ -136,34 +136,34 @@ Puedo responder de forma autónoma a cualquier pregunta que redactes en lenguaje
   });
 
   return (
-    <div className="space-y-10 sm:space-y-12 animate-fade-in">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in">
 
-      {/* ── Top Header Banner: Spacious, Aerospace Styling ── */}
-      <div className="p-7 sm:p-9 bg-slate-900/90 rounded-3xl border border-slate-700/80 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-2xl backdrop-blur-md">
+      {/* ── Top Header Banner: Balanced Aerospace Styling ── */}
+      <div className="p-5 sm:p-6 bg-slate-900/90 rounded-2xl border border-slate-700/80 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl backdrop-blur-md">
         <div>
-          <div className="flex items-center gap-3 flex-wrap mb-2">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/15 text-sky-400 text-xs font-mono font-bold tracking-wide border border-sky-500/30">
-              <Bot className="w-4 h-4 text-sky-400" />
+          <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/15 text-sky-400 text-xs font-mono font-bold tracking-wide border border-sky-500/30">
+              <Bot className="w-3.5 h-3.5 text-sky-400" />
               <span>ASISTENTE IA AUTÓNOMO & PERITAJES FORENSES NASA</span>
             </div>
-            <span className="text-xs font-mono text-emerald-400 font-bold px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-800/50">
+            <span className="text-xs font-mono text-emerald-400 font-bold px-2.5 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-800/50">
               100% Citas Oficiales NASA PSI
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-100 tracking-tight mt-2">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-100 tracking-tight mt-1">
             Copiloto IA de Seguridad Térmica en Cabina
           </h2>
-          <p className="text-sm sm:text-base text-slate-400 mt-2 max-w-3xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-3xl leading-relaxed">
             Inferencia semántica en lenguaje natural sobre 43 investigaciones forenses de vuelo (Apollo 1, Mir 1997, Saffire), 24 misiones espaciales PSI y estándares de supresión NFPA 750.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row md:flex-col gap-3 flex-shrink-0">
-          <details className="text-xs font-mono text-sky-400 bg-slate-950/70 p-3 rounded-xl border border-slate-800">
+        <div className="flex flex-col sm:flex-row md:flex-col gap-2 flex-shrink-0">
+          <details className="text-xs font-mono text-sky-400 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
             <summary className="cursor-pointer hover:text-sky-300 font-bold select-none">
               ▶ Metodología RAG Local
             </summary>
-            <p className="mt-2 text-slate-400 leading-relaxed font-sans max-w-xs">
+            <p className="mt-1.5 text-slate-400 leading-relaxed font-sans max-w-xs text-[11px]">
               Tokenización TF-IDF con base vectorial en memoria. Zero-latency, 100% funcional sin conexión a internet en misiones de espacio profundo.
             </p>
           </details>
@@ -171,26 +171,26 @@ Puedo responder de forma autónoma a cualquier pregunta que redactes en lenguaje
       </div>
 
       {/* ── Segmented Mode Switcher (Internal Navbar): Roomy & Striking ── */}
-      <div className="p-2 sm:p-2.5 rounded-2xl bg-slate-950/80 border-2 border-slate-800 shadow-xl flex flex-col sm:flex-row gap-3 sm:gap-4">
+      <div className="p-1.5 rounded-xl bg-slate-950/80 border border-slate-800 shadow-lg flex flex-col sm:flex-row gap-2">
         <button
           onClick={() => setActiveSubTab('chat')}
-          className={`flex items-center justify-center space-x-3 px-6 sm:px-8 py-4 rounded-xl text-base sm:text-lg font-bold transition-all duration-300 cursor-pointer flex-1 ${activeSubTab === 'chat'
-              ? 'bg-gradient-to-r from-sky-500/25 to-sky-600/15 text-sky-200 border-2 border-sky-400/60 shadow-lg shadow-sky-500/20 scale-[1.01]'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border-2 border-transparent'
+          className={`flex items-center justify-center space-x-2.5 px-5 py-3 rounded-lg text-sm sm:text-base font-bold transition-all duration-200 cursor-pointer flex-1 ${activeSubTab === 'chat'
+              ? 'bg-gradient-to-r from-sky-500/25 to-sky-600/15 text-sky-200 border border-sky-400/60 shadow-md shadow-sky-500/20'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent'
             }`}
         >
-          <MessageSquare className={`w-5 h-5 ${activeSubTab === 'chat' ? 'text-sky-400' : 'text-slate-500'}`} />
+          <MessageSquare className={`w-4 h-4 ${activeSubTab === 'chat' ? 'text-sky-400' : 'text-slate-500'}`} />
           <span>Chat de Operaciones & Consejos IA (Autónomo)</span>
         </button>
 
         <button
           onClick={() => setActiveSubTab('library')}
-          className={`flex items-center justify-center space-x-3 px-6 sm:px-8 py-4 rounded-xl text-base sm:text-lg font-bold transition-all duration-300 cursor-pointer flex-1 ${activeSubTab === 'library'
-              ? 'bg-gradient-to-r from-amber-500/25 to-amber-600/15 text-amber-200 border-2 border-amber-400/60 shadow-lg shadow-amber-500/20 scale-[1.01]'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border-2 border-transparent'
+          className={`flex items-center justify-center space-x-2.5 px-5 py-3 rounded-lg text-sm sm:text-base font-bold transition-all duration-200 cursor-pointer flex-1 ${activeSubTab === 'library'
+              ? 'bg-gradient-to-r from-amber-500/25 to-amber-600/15 text-amber-200 border border-amber-400/60 shadow-md shadow-amber-500/20'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent'
             }`}
         >
-          <BookOpen className={`w-5 h-5 ${activeSubTab === 'library' ? 'text-amber-400' : 'text-slate-500'}`} />
+          <BookOpen className={`w-4 h-4 ${activeSubTab === 'library' ? 'text-amber-400' : 'text-slate-500'}`} />
           <span>Biblioteca de Casos Forenses ({FLIGHT_EXPERIENCES.length})</span>
         </button>
       </div>
@@ -199,31 +199,31 @@ Puedo responder de forma autónoma a cualquier pregunta que redactes en lenguaje
       {/* TAB 1: INTERACTIVE AI CHAT                                          */}
       {/* ─────────────────────────────────────────────────────────────────── */}
       {activeSubTab === 'chat' && (
-        <div className="card-aerospace p-6 sm:p-9 flex flex-col h-[860px] shadow-2xl">
+        <div className="card-aerospace p-4 sm:p-6 flex flex-col h-[calc(100vh-270px)] min-h-[560px] max-h-[760px] shadow-2xl">
 
           {/* Chat Toolbar: Generous margins */}
-          <div className="flex items-center justify-between pb-5 mb-5 border-b border-slate-800 text-xs sm:text-sm">
-            <div className="flex items-center gap-3 font-mono text-slate-300 font-semibold">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800 text-xs sm:text-sm">
+            <div className="flex items-center gap-2 font-mono text-slate-300 font-semibold text-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>MOTOR AUTÓNOMO EN LÍNEA // PROCESAMIENTO DE LENGUAJE NATURAL ACTIVO</span>
             </div>
             <button
               onClick={clearChat}
-              className="text-slate-400 hover:text-rose-300 flex items-center gap-2 font-mono transition-all text-xs font-semibold px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-rose-500/40 cursor-pointer"
+              className="text-slate-400 hover:text-rose-300 flex items-center gap-1.5 font-mono transition-all text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-900/90 border border-slate-800 hover:border-rose-500/40 cursor-pointer"
               title="Reiniciar conversación"
             >
-              <Trash2 className="w-4 h-4 text-slate-400" />
+              <Trash2 className="w-3.5 h-3.5 text-slate-400" />
               <span>Limpiar chat</span>
             </button>
           </div>
 
           {/* Quick Prompt Chips: Generous space & comfortable badges */}
-          <div className="mb-6 p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80">
-            <div className="text-xs font-mono uppercase font-bold text-slate-400 mb-3 flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-sky-400" />
+          <div className="mb-3 p-3 rounded-xl bg-slate-950/70 border border-slate-800/80">
+            <div className="text-[11px] font-mono uppercase font-bold text-slate-400 mb-2 flex items-center space-x-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-sky-400" />
               <span>Consultas Rápidas Sugeridas:</span>
             </div>
-            <div className="flex items-center gap-3 overflow-x-auto pb-1 no-scrollbar">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
               {[
                 'Guíame paso a paso por los módulos',
                 '¿Qué procedimiento de emergencia seguir ante fuego?',
@@ -234,7 +234,7 @@ Puedo responder de forma autónoma a cualquier pregunta que redactes en lenguaje
                 <button
                   key={idx}
                   onClick={() => handleSendMessage(chip)}
-                  className="px-4.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-slate-300 hover:border-sky-400 hover:text-sky-300 hover:bg-slate-800 whitespace-nowrap transition-all font-mono text-xs font-semibold shadow-sm cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:border-sky-400 hover:text-sky-300 hover:bg-slate-800 whitespace-nowrap transition-all font-mono text-xs font-semibold shadow-sm cursor-pointer"
                 >
                   {chip}
                 </button>
@@ -243,7 +243,7 @@ Puedo responder de forma autónoma a cualquier pregunta que redactes en lenguaje
           </div>
 
           {/* Messages Thread: Spacious Bubbles & Large Font */}
-          <div className="flex-1 overflow-y-auto space-y-7 pr-3 mb-6">
+          <div className="flex-1 overflow-y-auto space-y-4 pr-2 mb-3">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -342,23 +342,23 @@ Puedo responder de forma autónoma a cualquier pregunta que redactes en lenguaje
             <div ref={chatBottomRef} />
           </div>
 
-          {/* Input Box: Spacious, Generous Targets */}
-          <div className="pt-5 mt-2 border-t border-slate-800/90 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          {/* Input Box: Clean, Responsive Target */}
+          <div className="pt-3 border-t border-slate-800/90 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <input
               type="text"
               placeholder="Escribe tu consulta en lenguaje natural (ej.: ¿Por qué un cable fino arde más rápido?, ¿Cómo uso el simulador?)..."
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="flex-1 bg-slate-950 border border-slate-700/80 rounded-2xl px-6 py-4.5 text-sm sm:text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-400 font-sans shadow-inner"
+              className="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-400 font-sans shadow-inner"
             />
             <button
               onClick={() => handleSendMessage()}
               disabled={!inputQuery.trim() || isTyping}
-              className="btn-primary py-4.5 px-8 rounded-2xl flex items-center justify-center text-base font-bold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg cursor-pointer"
+              className="btn-primary py-3 px-6 rounded-xl flex items-center justify-center text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed shadow-md cursor-pointer shrink-0"
               title="Enviar consulta"
             >
-              <Send className="w-5 h-5 mr-2" />
+              <Send className="w-4 h-4 mr-1.5" />
               <span>Consultar</span>
             </button>
           </div>
@@ -369,29 +369,29 @@ Puedo responder de forma autónoma a cualquier pregunta que redactes en lenguaje
       {/* TAB 2: HISTORICAL FORENSIC EXPERIENCES LIBRARY                      */}
       {/* ─────────────────────────────────────────────────────────────────── */}
       {activeSubTab === 'library' && (
-        <div className="space-y-10">
+        <div className="space-y-6">
 
           {/* Category Pills & Search */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-5">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <div className="relative flex-1">
-              <Search className="w-5 h-5 absolute left-5 top-4.5 text-slate-400" />
+              <Search className="w-4 h-4 absolute left-4 top-3.5 text-slate-400" />
               <input
                 type="text"
                 placeholder="Buscar por caso, material (teflón, PMMA), misión (Apollo, Mir, Saffire) o fenómeno..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-14 pr-5 py-4 bg-slate-950 border border-slate-700/80 rounded-2xl text-slate-100 text-sm sm:text-base placeholder-slate-500 focus:outline-none focus:border-sky-400 shadow-inner"
+                className="w-full pl-11 pr-4 py-2.5 bg-slate-950 border border-slate-700/80 rounded-xl text-slate-100 text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-sky-400 shadow-inner"
               />
             </div>
 
             {/* Category Filter Pills */}
-            <div className="flex items-center gap-3 overflow-x-auto pb-1 sm:pb-0 no-scrollbar">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 no-scrollbar">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-mono transition-all whitespace-nowrap font-bold cursor-pointer ${selectedCategory === cat
-                      ? 'bg-sky-400 text-slate-950 shadow-lg shadow-sky-500/20'
+                  className={`px-3.5 py-2 rounded-xl text-xs font-mono transition-all whitespace-nowrap font-bold cursor-pointer ${selectedCategory === cat
+                      ? 'bg-sky-400 text-slate-950 shadow-md shadow-sky-500/20'
                       : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
                     }`}
                 >
@@ -401,12 +401,12 @@ Puedo responder de forma autónoma a cualquier pregunta que redactes en lenguaje
             </div>
           </div>
 
-          {/* Main Grid: Experience Selector + Deep Reasoning Viewer (Spacious gap-10) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* Main Grid: Experience Selector + Deep Reasoning Viewer */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             {/* Left Column: List of Questions / Scenarios (5 cols) */}
-            <div className="lg:col-span-5 space-y-4 max-h-[800px] overflow-y-auto pr-3">
-              <div className="text-xs font-mono uppercase text-slate-400 px-1 mb-2 font-bold flex items-center justify-between">
+            <div className="lg:col-span-5 space-y-3 max-h-[680px] overflow-y-auto pr-2">
+              <div className="text-xs font-mono uppercase text-slate-400 px-1 mb-1 font-bold flex items-center justify-between">
                 <span>Casos de Estudio Disponibles</span>
                 <span className="text-sky-400">{filteredExperiences.length} casos</span>
               </div>
@@ -417,7 +417,7 @@ Puedo responder de forma autónoma a cualquier pregunta que redactes en lenguaje
                   <button
                     key={exp.id}
                     onClick={() => setSelectedExperience(exp)}
-                    className={`w-full text-left p-6 rounded-2xl border transition-all cursor-pointer shadow-sm ${isSelected
+                    className={`w-full text-left p-4 sm:p-5 rounded-xl border transition-all cursor-pointer shadow-sm ${isSelected
                         ? 'bg-sky-500/20 border-sky-400 text-white shadow-xl shadow-sky-500/10 scale-[1.01]'
                         : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-600 hover:bg-slate-900'
                       }`}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TrendingDown, Cpu, ShieldCheck, Flame, ArrowRight, AlertTriangle, Clock, Layers, ChevronRight } from 'lucide-react';
+import { TrendingDown, Cpu, ShieldCheck, Flame, ArrowRight, AlertTriangle, Clock, Layers, ChevronRight, Gauge } from 'lucide-react';
 import { MATERIALS, ATMOSPHERES } from '../physics/flameKinetics';
 import { AtmosphereKey, MaterialKey } from '../types';
 import { MaterialRankingChart } from './charts/MaterialRankingChart';
@@ -14,8 +14,16 @@ export const MissionDashboard: React.FC<MissionDashboardProps> = ({ atmosphere, 
   const currentAtm = ATMOSPHERES[atmosphere] || ATMOSPHERES.ISS_Standard;
   const [selectedMaterial, setSelectedMaterial] = useState<MaterialKey | null>(null);
 
-  // Operational combustion KPIs only (Index and volume cards removed as requested)
+  // Operational combustion KPIs: Clean, 4-column balanced telemetry grid
   const operationalKpis = [
+    {
+      title: "Atmósfera Activa en Cabina",
+      value: `${currentAtm.O2_percent}% O₂`,
+      sub: `${currentAtm.name} · ${(currentAtm.P_atm * 14.7).toFixed(1)} psia (${(currentAtm.P_atm * 101.3).toFixed(1)} kPa)`,
+      icon: Gauge,
+      color: currentAtm.O2_percent > 30 ? "text-rose-400" : "text-sky-400",
+      badge: currentAtm.O2_percent > 30 ? "HIPERÓXICA" : "NORMÓXICA"
+    },
     {
       title: "Desplazamiento Crítico LOI",
       value: "-3.5 pp",
@@ -50,23 +58,23 @@ export const MissionDashboard: React.FC<MissionDashboardProps> = ({ atmosphere, 
   });
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in">
 
-      {/* Operational KPI Cards: Focused on Combustion Physics & Safety */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Operational KPI Cards: Balanced 4-Column Aerospace Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {operationalKpis.map((kpi, idx) => {
           const Icon = kpi.icon;
           return (
-            <div key={idx} className="card-aerospace p-6 sm:p-7 flex flex-col justify-between shadow-lg">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-400">{kpi.title}</span>
+            <div key={idx} className="card-aerospace p-5 sm:p-6 flex flex-col justify-between shadow-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">{kpi.title}</span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-bold">
                   {kpi.badge}
                 </span>
               </div>
-              <div className="my-2">
-                <div className={`text-3xl sm:text-4xl font-mono font-bold tracking-tight ${kpi.color}`}>{kpi.value}</div>
-                <div className="text-xs sm:text-sm text-slate-400 mt-2 font-medium leading-relaxed">{kpi.sub}</div>
+              <div className="my-1.5">
+                <div className={`text-2xl sm:text-3xl font-mono font-bold tracking-tight ${kpi.color}`}>{kpi.value}</div>
+                <div className="text-xs text-slate-400 mt-1.5 font-medium leading-relaxed">{kpi.sub}</div>
               </div>
             </div>
           );

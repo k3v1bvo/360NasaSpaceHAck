@@ -165,22 +165,25 @@ export const FlameSimulator: React.FC<FlameSimulatorProps> = ({ atmosphere }) =>
         </div>
       </div>
 
-      {/* ── Chart 1: Interactive Flame-Spread Curve ──────────────── */}
-      <FlameSpreadChart
-        flowVelocity={flowVelocity}
-        diameter={diameter}
-        material={material}
-        currentAtm={currentAtm}
-        vf={vf}
-        onSelectVelocity={setFlowVelocity}
-      />
+      {/* ── Main Physics Visualizers Grid: Interactive Dual-Column On Large Displays ──────────────── */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8">
+        {/* ── Chart 1: Interactive Flame-Spread Curve ──────────────── */}
+        <FlameSpreadChart
+          flowVelocity={flowVelocity}
+          diameter={diameter}
+          material={material}
+          currentAtm={currentAtm}
+          vf={vf}
+          onSelectVelocity={setFlowVelocity}
+        />
 
-      {/* ── Chart 2: Thermal Flame Viewer (Layers + Radial T(r)) ── */}
-      <ThermalFlameViewer
-        flowVelocity={flowVelocity}
-        diameter={diameter}
-        material={material}
-      />
+        {/* ── Chart 2: Thermal Flame Viewer (Layers + Radial T(r)) ── */}
+        <ThermalFlameViewer
+          flowVelocity={flowVelocity}
+          diameter={diameter}
+          material={material}
+        />
+      </div>
 
       {/* ── Chart 3: Safety Envelope Phase Diagram ───────────────── */}
       <SafetyEnvelopeMap

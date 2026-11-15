@@ -28,52 +28,52 @@ export const PSIRepository: React.FC = () => {
   });
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Header Banner - Spacious & Roomy */}
-      <div className="p-6 sm:p-8 bg-[#0f172a] rounded-2xl border border-[#334155] flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-lg">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in">
+      {/* Header Banner - Balanced & Roomy */}
+      <div className="p-5 sm:p-6 bg-[#0f172a] rounded-2xl border border-[#334155] flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-lg">
         <div>
-          <div className="flex items-center gap-3 flex-wrap">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0284c7]/15 text-[#38bdf8] text-xs font-mono font-bold tracking-wide border border-[#0284c7]/30">
-              <Database className="w-4 h-4" />
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0284c7]/15 text-[#38bdf8] text-xs font-mono font-bold tracking-wide border border-[#0284c7]/30">
+              <Database className="w-3.5 h-3.5" />
               <span>REPOSITORIO NASA PSI (PHYSICAL SCIENCES INFORMATICS)</span>
             </div>
             <details>
-              <summary className="text-sm text-sky-400 font-mono cursor-pointer hover:text-sky-300 select-none">
+              <summary className="text-xs sm:text-sm text-sky-400 font-mono cursor-pointer hover:text-sky-300 select-none">
                 ▶ Sobre los Datos Experimentales de Vuelo
               </summary>
-              <p className="text-sm text-slate-400 mt-2 max-w-2xl leading-relaxed pl-3 border-l-2 border-sky-500/40">
+              <p className="text-xs sm:text-sm text-slate-400 mt-1.5 max-w-2xl leading-relaxed pl-3 border-l-2 border-sky-500/40">
                 Catálogo con 12 Terabytes de telemetría y mediciones directas compiladas por la NASA a lo largo de 30 años de investigaciones de combustión espacial en la ISS (CIR/MSG), naves Cygnus y el Transbordador Espacial.
               </p>
             </details>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mt-2.5 tracking-tight">Catálogo de 24 Investigaciones Espaciales</h2>
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-100 mt-2 tracking-tight">Catálogo de 24 Investigaciones Espaciales</h2>
         </div>
 
-        <div className="px-4 py-2 rounded-xl bg-[#020617] border border-[#1e293b] text-xs sm:text-sm font-mono text-slate-300 self-start md:self-auto font-bold shadow-sm">
+        <div className="px-3.5 py-1.5 rounded-xl bg-[#020617] border border-[#1e293b] text-xs sm:text-sm font-mono text-slate-300 self-start md:self-auto font-bold shadow-sm">
           Misiones Oficiales: <strong className="text-[#38bdf8]">{PSI_INVESTIGATIONS.length}</strong> | Open Data
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <div className="relative flex-1">
-          <Search className="w-5 h-5 absolute left-4 top-4 text-slate-400" />
+          <Search className="w-4 h-4 absolute left-4 top-3.5 text-slate-400" />
           <input
             type="text"
             placeholder="Buscar por nombre (FLEX, Saffire, SoFIE), material (heptano, PMMA, Nomex) o categoría..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3.5 bg-[#0f172a] border border-[#334155] rounded-xl text-slate-100 text-sm sm:text-base placeholder-slate-500 focus:outline-none focus:border-[#38bdf8]"
+            className="w-full pl-11 pr-4 py-2.5 bg-[#0f172a] border border-[#334155] rounded-xl text-slate-100 text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-[#38bdf8]"
           />
         </div>
 
         {/* Platform Buttons */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 no-scrollbar">
           {platforms.map((plat) => (
             <button
               key={plat}
               onClick={() => setPlatformFilter(plat)}
-              className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-mono transition-all whitespace-nowrap font-bold ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-mono transition-all whitespace-nowrap font-bold ${
                 platformFilter === plat
                   ? 'bg-[#38bdf8] text-slate-950 shadow-md'
                   : 'bg-[#0f172a] text-slate-400 hover:text-slate-200 border border-[#334155]'
@@ -86,7 +86,7 @@ export const PSIRepository: React.FC = () => {
       </div>
 
       {/* Main Grid: Split List and Details */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Cards List (5 cols) */}
         <div className="lg:col-span-5 space-y-4 max-h-[750px] overflow-y-auto pr-2">
           <div className="text-xs font-mono uppercase text-slate-400 px-1 mb-2 font-bold">

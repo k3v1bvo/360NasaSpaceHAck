@@ -51,8 +51,8 @@ export default function App() {
         setAtmosphere={setAtmosphere} 
       />
 
-      {/* Main Mission Content Container: Generous top separation from navbar */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-16 sm:pb-24">
+      {/* Main Mission Content Container: Balanced, High-Density Aerospace Scale */}
+      <main className="flex-1 max-w-[1536px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-14 sm:pb-16">
         {activeTab === 'dashboard' && (
           <ModuleErrorBoundary moduleName="Centro de Mando">
             <MissionDashboard atmosphere={atmosphere} onNavigate={setActiveTab} />
@@ -85,15 +85,15 @@ export default function App() {
       </main>
 
       {/* Clean Engineering Footer */}
-      <footer className="border-t border-[#1e293b] bg-[#020617] py-6 px-4 sm:px-6 lg:px-8 mt-12 text-xs text-slate-500 font-mono">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-[#1e293b] bg-[#020617] py-5 px-4 sm:px-6 lg:px-8 mt-8 text-xs text-slate-500 font-mono">
+        <div className="max-w-[1536px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center space-x-2">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>NASA Physical Sciences Informatics (PSI) Database · Combustion Science Discipline</span>
           </div>
 
           <div className="flex items-center space-x-4">
-            <span className="text-slate-400">Microgravity Fire Safety Architecture</span>
+            <span className="text-slate-400">FireLock // Microgravity Fire Safety Suite</span>
             <span className="text-slate-600">|</span>
             <span className="text-[#38bdf8]">Vercel Production Ready</span>
           </div>
