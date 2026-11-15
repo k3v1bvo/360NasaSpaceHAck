@@ -14,6 +14,7 @@ import MicroclimateAITab from './modules/MicroclimateAITab';
 import FireMonitorTab from './modules/FireMonitorTab';
 
 import SystemWorkflowTour from './components/SystemWorkflowTour';
+import GamcExactMap from './components/GamcExactMap';
 
 // Datos satelitales armonizados y crudos
 import focosHarmonized from '../../data/nasa/firms_tunari_harmonized.geojson';
@@ -26,6 +27,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('microclimas');
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isTemporalModalOpen, setIsTemporalModalOpen] = useState(false);
+  const [isGamcExactOpen, setIsGamcExactOpen] = useState(false);
   const [mobileView, setMobileView] = useState('map'); // 'map' | 'panel' para vista móvil responsive
   const [offlineMode, setOfflineMode] = useState(false); // Online por defecto para consumir NASA POWER & WMS
   const [selectedPoint, setSelectedPoint] = useState(null);
@@ -68,6 +70,7 @@ export default function App() {
         isTourOpen={isTourOpen}
         setIsTourOpen={setIsTourOpen}
         onOpenTemporalAnalytics={() => setIsTemporalModalOpen(true)}
+        onOpenGamcExact={() => setIsGamcExactOpen(true)}
       />
 
       {/* 2. Barra Científica de Métricas IA Obligatorias (R²=0.9457, RMSE=0.55°C, p < 0.05) */}
@@ -189,6 +192,13 @@ export default function App() {
         isOpen={isTourOpen}
         onClose={() => setIsTourOpen(false)}
       />
+
+      {/* Visor Cartográfico GAMC WMS + NASA POWER Directo */}
+      {isGamcExactOpen && (
+        <div className="fixed inset-0 z-[1500] flex flex-col bg-slate-950">
+          <GamcExactMap onClose={() => setIsGamcExactOpen(false)} />
+        </div>
+      )}
     </div>
   );
 }

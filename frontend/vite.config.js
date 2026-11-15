@@ -4,6 +4,15 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api/gamc-proxy': {
+        target: 'https://recursosgamc.cochabamba.bo/proxy',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/gamc-proxy/, ''),
+      },
+    },
+  },
   plugins: [
     tailwindcss(),
     react(),

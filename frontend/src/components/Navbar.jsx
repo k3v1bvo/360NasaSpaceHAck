@@ -8,7 +8,8 @@ export default function Navbar({
   setOfflineMode, 
   isTourOpen,
   setIsTourOpen,
-  onOpenTemporalAnalytics
+  onOpenTemporalAnalytics,
+  onOpenGamcExact
 }) {
   const tabs = [
     { id: 'microclimas', label: '📍 1. Piloto Cochabamba (15 Distritos)', short: '📍 1. Cocha (15 Dist.)' },
@@ -63,6 +64,15 @@ export default function Navbar({
 
         {/* Acciones Rápidas & Guía del Sistema */}
         <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Botón Visor WMS Exacto GAMC + Regresión NASA */}
+          <button
+            onClick={onOpenGamcExact}
+            className="flex items-center gap-1.5 sm:gap-2 rounded-lg border border-indigo-500/60 bg-indigo-950/70 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-bold text-indigo-200 hover:text-white hover:border-indigo-400 hover:bg-indigo-900/80 transition shadow-sm"
+            title="Abrir Visor Cartográfico GAMC WMS + Tendencia Superficial NASA en tiempo real"
+          >
+            <span>🏛️ WMS GAMC</span>
+          </button>
+
           {/* Botón Tendencias & Predicción IA */}
           <button
             onClick={onOpenTemporalAnalytics}

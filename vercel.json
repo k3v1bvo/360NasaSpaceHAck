@@ -4,6 +4,14 @@
   "framework": "vite",
   "rewrites": [
     {
+      "source": "/api/gamc-proxy/(.*)",
+      "destination": "https://recursosgamc.cochabamba.bo/proxy/$1"
+    },
+    {
+      "source": "/api/gamc-proxy",
+      "destination": "https://recursosgamc.cochabamba.bo/proxy"
+    },
+    {
       "source": "/api/gamc-mapcache/(.*)",
       "destination": "http://mapadigital.cochabamba.bo/mapcache/$1"
     },
