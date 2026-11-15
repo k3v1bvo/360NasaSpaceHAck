@@ -1545,35 +1545,35 @@ export default function MapViewer({
         style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, height: '100%', width: '100%' }}
       />
       
-      {/* HUD Flotante de Elemento Seleccionado / Enfoque Activo */}
+      {/* HUD Flotante de Elemento Seleccionado / Enfoque Activo (Posicionado limpiamente debajo de la barra de controles para evitar colisiones) */}
       {selectedPoint && (
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[450] flex items-center gap-2.5 rounded-full border border-blue-500/60 bg-[#090d16]/95 px-4 py-2 shadow-2xl backdrop-blur-md text-xs sm:text-sm font-bold text-white transition-all animate-in fade-in slide-in-from-top-2 max-w-[92vw]">
-          <span className="flex h-2.5 w-2.5 rounded-full bg-cyan-400 animate-pulse shrink-0"></span>
-          <span className="text-cyan-300 font-mono text-xs uppercase tracking-wider shrink-0 font-bold">
+        <div className="absolute top-14 left-3 z-[410] flex items-center gap-2 rounded-xl border border-blue-500/50 bg-[#090d16]/95 px-3 py-1.5 shadow-xl backdrop-blur-md text-xs font-semibold text-white transition-all animate-in fade-in slide-in-from-top-1 max-w-[92vw] sm:max-w-md">
+          <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-pulse shrink-0"></span>
+          <span className="text-cyan-300 font-mono text-[11px] uppercase tracking-wider shrink-0 font-bold">
             {selectedPoint.type === 'district' ? 'Distrito' :
              selectedPoint.type === 'sensor' ? 'Sensor IA' :
              selectedPoint.type === 'foco' ? 'Foco Tunari' :
              selectedPoint.type === 'global' ? 'Global NASA' : 'Enfoque'}:
           </span>
-          <span className="text-white font-black truncate max-w-[180px] sm:max-w-xs text-xs sm:text-sm">
+          <span className="text-white font-bold truncate max-w-[150px] sm:max-w-[200px] text-xs">
             {selectedPoint.nombre || selectedPoint.name || selectedPoint.zona || selectedPoint.distrito_id || 'Elemento'}
           </span>
           {(selectedPoint.lst_nasa_promedio_c || selectedPoint.lst_nasa_c) && (
-            <span className="rounded bg-red-950 px-2.5 py-0.5 text-xs font-mono font-bold text-red-300 border border-red-800/80 shrink-0">
-              {selectedPoint.lst_nasa_promedio_c || selectedPoint.lst_nasa_c} °C LST
+            <span className="rounded bg-red-950/80 px-2 py-0.5 text-[11px] font-mono font-bold text-red-300 border border-red-800/80 shrink-0">
+              {selectedPoint.lst_nasa_promedio_c || selectedPoint.lst_nasa_c} °C
             </span>
           )}
           {selectedPoint.frp_total_mw && (
-            <span className="rounded bg-orange-950 px-2.5 py-0.5 text-xs font-mono font-bold text-orange-300 border border-orange-800/80 shrink-0">
+            <span className="rounded bg-orange-950/80 px-2 py-0.5 text-[11px] font-mono font-bold text-orange-300 border border-orange-800/80 shrink-0">
               {selectedPoint.frp_total_mw} MW
             </span>
           )}
           <button
             onClick={() => setSelectedPoint && setSelectedPoint(null)}
-            className="ml-1 rounded-full p-1 text-slate-400 hover:text-white hover:bg-neutral-800 transition shrink-0"
+            className="ml-1 rounded-full p-0.5 text-slate-400 hover:text-white hover:bg-neutral-800 transition shrink-0"
             title="Cerrar enfoque y limpiar selección"
           >
-            <X className="h-4 w-4" />
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
       )}
@@ -1891,20 +1891,20 @@ export default function MapViewer({
         </div>
       )}
 
-      {/* 2. Leyenda Flotante Dinámica (Colapsable en Móvil) */}
-      <div className="absolute bottom-16 sm:bottom-4 left-2 sm:left-4 z-[400] transition-all duration-200">
+      {/* 2. Leyenda Flotante Dinámica (Posicionada arriba de la barra de tiempo para evitar colisiones) */}
+      <div className="absolute bottom-20 left-3 z-[410] transition-all duration-200">
         {!isLegendOpen ? (
           <button
             onClick={() => setIsLegendOpen(true)}
-            className="flex items-center gap-1.5 rounded-xl border border-white/15 bg-[#0f172a]/95 px-3.5 py-2 text-xs sm:text-sm font-bold text-cyan-300 shadow-2xl backdrop-blur-xl hover:bg-neutral-800 transition"
+            className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-[#0f172a]/95 px-3 py-1.5 text-xs font-semibold text-cyan-300 shadow-xl backdrop-blur-md hover:bg-neutral-800 transition"
           >
-            <Info className="h-4 w-4" />
+            <Info className="h-3.5 w-3.5" />
             <span>Leyenda</span>
           </button>
         ) : (
-          <div className="rounded-2xl border border-white/10 bg-[#0f172a]/95 p-3.5 sm:p-4 text-xs sm:text-[13px] text-white backdrop-blur-xl shadow-2xl max-w-[290px] sm:max-w-xs">
-            <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2.5">
-              <span className="font-bold text-xs text-cyan-400 uppercase tracking-wider truncate mr-2">
+          <div className="rounded-xl border border-white/10 bg-[#0f172a]/95 p-3 text-xs text-white backdrop-blur-xl shadow-2xl max-w-[280px]">
+            <div className="flex items-center justify-between border-b border-white/10 pb-1.5 mb-2">
+              <span className="font-bold text-[11px] text-cyan-400 uppercase tracking-wider truncate mr-2">
                 {activeTab === 'global_nasa' && 'EARTH DETECTIVE'}
                 {activeTab === 'microclimas' && 'PILOTO COCHABAMBA'}
                 {activeTab === 'incendios' && 'HUMO & CALOR TUNARI'}
@@ -1916,7 +1916,7 @@ export default function MapViewer({
                 className="text-neutral-400 hover:text-white p-0.5 rounded transition"
                 title="Cerrar Leyenda"
               >
-                <ChevronDown className="h-4 w-4" />
+                <ChevronDown className="h-3.5 w-3.5" />
               </button>
             </div>
 
@@ -2057,7 +2057,7 @@ export default function MapViewer({
 
       {/* 3. Barra Flotante de Línea de Tiempo Satelital & Predicción IA (Visible en Incendios y Microclimas) */}
       {(activeTab === 'incendios' || activeTab === 'microclimas') && (
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[420] w-[96%] max-w-4xl rounded-2xl border border-white/15 bg-[#0a0f1d]/95 p-2.5 sm:p-3 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[420] w-[92%] sm:w-auto max-w-3xl rounded-xl border border-white/10 bg-[#090d16]/95 p-2 sm:p-2.5 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2">
           {/* Fila Superior: Controles, Estado y Botón de Análisis */}
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2 mb-2">
             <div className="flex items-center gap-2 flex-wrap">

@@ -130,151 +130,116 @@ export default function MicroclimateAITab({ selectedPoint, onSelectPoint, onNavi
   const lst2050Mitigado = Number((lst2050Inercial - mit2050).toFixed(1));
 
   return (
-    <div className="space-y-3.5 p-4 text-white">
-      {/* 1. Header del Módulo de Microclimas */}
-      <div className="flex items-center justify-between border-b border-blue-900/50 pb-3">
-        <div className="flex items-center gap-2.5">
-          <div className="rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 p-2 text-white shadow-lg shadow-blue-900/30">
-            <Cpu className="h-6 w-6 animate-pulse" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <h2 className="text-base sm:text-lg font-black tracking-wide text-blue-400">
-                MICROCLIMAS & RED MÓNICA IA
-              </h2>
-              <span className="rounded bg-blue-950 px-2 py-0.5 text-xs font-bold text-blue-300 border border-blue-800/80">
-                GAMC 01/05
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-300 font-medium">
-              Sensado Virtual • 2 Estaciones Físicas + 13 Sensores IA
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* 1.5. Contraste Territorial Oficial GAMC (Cota 2750 Tunari vs Asfalto Zona Sur) */}
-      <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-r from-emerald-950/40 via-neutral-900/60 to-red-950/40 p-3.5 text-xs sm:text-[13px]">
-        <div className="flex justify-between items-center mb-1.5">
-          <span className="font-bold text-xs sm:text-[13px] text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-            <ShieldCheck className="h-4 w-4 text-emerald-400" />
-            Contraste Territorial Oficial GAMC
-          </span>
-          <span className="text-xs bg-red-950 text-red-400 border border-red-800/60 px-2 py-0.5 rounded font-mono font-bold">
-            Brecha: +17.4 °C
-          </span>
-        </div>
-        <div className="grid grid-cols-2 gap-2 text-xs sm:text-[13px] pt-1.5 border-t border-neutral-800">
-          <div>
-            <span className="text-emerald-400 font-bold block text-xs">🌲 Tunari D13 (Cota &gt; 2750m):</span>
-            <span className="text-white font-black text-sm">20.4 °C LST • PET 21.8 °C</span>
-          </div>
-          <div>
-            <span className="text-red-400 font-bold block text-xs">🏙️ Zona Sur D9 (Asfalto):</span>
-            <span className="text-white font-black text-sm">37.8 °C LST • PET 39.5 °C</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 1.6. Certificación Científica de Calibración Terrestre (Red MÓNICA GAMC - 125.865 Mediciones Reales) */}
-      <div className="rounded-xl border border-blue-500/30 bg-blue-950/30 p-3 text-xs">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-1.5">
-            <Activity className="h-4 w-4 text-cyan-400" />
-            <span className="font-bold text-white text-xs sm:text-[13px]">
-              Ground-Truth Oficial: Red MÓNICA GAMC
+    <div className="space-y-3 p-3.5 text-zinc-100">
+      {/* 1. Header Minimalista & Profesional */}
+      <div className="flex items-center justify-between border-b border-zinc-800/80 pb-2.5">
+        <div>
+          <div className="flex items-center gap-2">
+            <h2 className="text-sm sm:text-base font-bold text-zinc-100 tracking-tight">
+              Microclimas Urbanos &amp; Red MÓNICA
+            </h2>
+            <span className="rounded bg-indigo-500/10 px-2 py-0.5 text-[11px] font-semibold text-indigo-400 border border-indigo-500/20 font-mono">
+              GAMC 01/05
             </span>
           </div>
-          <span className="text-[10px] bg-cyan-950 text-cyan-300 border border-cyan-800 px-2 py-0.5 rounded font-mono font-bold">
-            125.865 Registros Físicos
-          </span>
+          <p className="text-xs text-zinc-400 mt-0.5 font-medium">
+            15 Distritos • 2 Estaciones Físicas • 13 Sensores IA
+          </p>
         </div>
-        <div className="grid grid-cols-2 gap-2 text-[11px] bg-neutral-900/70 p-2.5 rounded-lg border border-neutral-800/80 mb-2">
-          <div>
-            <span className="text-cyan-400 font-bold block">📍 Estación Kanata (Zona Sur):</span>
-            <span className="text-slate-200">54.711 mediciones continuas</span>
-            <span className="block text-amber-300 font-mono">PM10 medio: 67.1 µg/m³</span>
-          </div>
-          <div>
-            <span className="text-cyan-400 font-bold block">📍 Estación SEMAPA (Zona Norte):</span>
-            <span className="text-slate-200">71.154 mediciones continuas</span>
-            <span className="block text-emerald-300 font-mono">PM10 medio: 49.3 µg/m³</span>
-          </div>
-        </div>
-        <p className="text-[10px] text-slate-300 leading-tight">
-          🔬 <strong className="text-white">Hallazgo Físico Validado:</strong> La estación Kanata registra un <strong className="text-red-400">+36% mayor polución</strong> que SEMAPA debido a la trampa de inversión térmica del valle. Los 13 sensores virtuales de IA fueron entrenados y calibrados contra esta serie temporal real (2022–2026).
-        </p>
       </div>
 
-      {/* 2. Sub-Navegación del Módulo */}
-      <div className="flex items-center gap-1 border-b border-neutral-800 pb-2 text-xs sm:text-[13px] overflow-x-auto no-scrollbar">
+      {/* 2. Sub-Navegación Segmentada Limpia (Estilo Linear / Apple) */}
+      <div className="flex items-center gap-1 rounded-xl bg-zinc-900/90 p-1 border border-zinc-800 text-xs overflow-x-auto no-scrollbar">
         <button
           onClick={() => setActiveSubTab('distritos')}
-          className={`flex-1 min-w-[70px] py-2 px-1 rounded-lg font-bold text-center transition ${
+          className={`flex-1 min-w-[70px] py-1.5 px-2 rounded-lg font-semibold text-center transition ${
             activeSubTab === 'distritos'
-              ? 'bg-neutral-800 text-amber-300 shadow'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-zinc-800 text-white shadow-sm'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
-          15 Distritos
+          Distritos
         </button>
         <button
           onClick={() => setActiveSubTab('sensors')}
-          className={`flex-1 min-w-[70px] py-2 px-1 rounded-lg font-bold text-center transition ${
+          className={`flex-1 min-w-[70px] py-1.5 px-2 rounded-lg font-semibold text-center transition ${
             activeSubTab === 'sensors'
-              ? 'bg-neutral-800 text-white shadow'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-zinc-800 text-white shadow-sm'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
-          15 Sensores
+          Sensores
         </button>
         <button
           onClick={() => setActiveSubTab('predictions')}
-          className={`flex-1 min-w-[85px] py-2 px-1 rounded-lg font-bold text-center transition ${
+          className={`flex-1 min-w-[85px] py-1.5 px-2 rounded-lg font-semibold text-center transition ${
             activeSubTab === 'predictions'
-              ? 'bg-neutral-800 text-purple-300 shadow border border-purple-500/40'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
-          🔮 Predicciones
+          Predicciones
         </button>
         <button
           onClick={() => setActiveSubTab('simulator')}
-          className={`flex-1 min-w-[70px] py-2 px-1 rounded-lg font-bold text-center transition ${
+          className={`flex-1 min-w-[70px] py-1.5 px-2 rounded-lg font-semibold text-center transition ${
             activeSubTab === 'simulator'
-              ? 'bg-neutral-800 text-emerald-300 shadow'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-zinc-800 text-white shadow-sm'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
           Simulador
         </button>
         <button
           onClick={() => setActiveSubTab('divergence')}
-          className={`flex-1 min-w-[75px] py-2 px-1 rounded-lg font-bold text-center transition ${
+          className={`flex-1 min-w-[75px] py-1.5 px-2 rounded-lg font-semibold text-center transition ${
             activeSubTab === 'divergence'
-              ? 'bg-neutral-800 text-cyan-300 shadow'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-zinc-800 text-white shadow-sm'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
           Divergencia
         </button>
         <button
           onClick={() => setActiveSubTab('impact_fire')}
-          className={`flex-1 min-w-[75px] py-2 px-1 rounded-lg font-bold text-center transition ${
+          className={`flex-1 min-w-[75px] py-1.5 px-2 rounded-lg font-semibold text-center transition ${
             activeSubTab === 'impact_fire'
-              ? 'bg-neutral-800 text-red-300 shadow'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-zinc-800 text-white shadow-sm'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
-          Nexo Fuego
+          Aerosoles
         </button>
       </div>
 
       {/* 3A. SUB-TAB 0: EXPLORADOR DE LOS 15 DISTRITOS DE CERCADO */}
       {activeSubTab === 'distritos' && (
         <div className="space-y-3">
+          {/* Contraste Territorial Oficial GAMC (Ubicado orgánicamente dentro de Distritos) */}
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-3 text-xs">
+            <div className="flex justify-between items-center mb-1.5">
+              <span className="font-semibold text-zinc-300 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+                Contraste Territorial Oficial GAMC
+              </span>
+              <span className="text-[11px] bg-rose-950/60 text-rose-300 border border-rose-800/60 px-2 py-0.5 rounded font-mono font-bold">
+                Brecha: +17.4 °C
+              </span>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-xs pt-1.5 border-t border-zinc-800/80">
+              <div>
+                <span className="text-emerald-400 font-semibold block text-[11px]">🌲 Tunari D13 (Cota &gt; 2750m):</span>
+                <span className="text-white font-bold text-xs font-mono">20.4 °C LST • PET 21.8 °C</span>
+              </div>
+              <div>
+                <span className="text-rose-400 font-semibold block text-[11px]">🏙️ Zona Sur D9 (Asfalto):</span>
+                <span className="text-white font-bold text-xs font-mono">37.8 °C LST • PET 39.5 °C</span>
+              </div>
+            </div>
+          </div>
+
           {/* Ficha Detalle del Distrito Seleccionado */}
-          <div className="rounded-xl border border-amber-900/60 bg-gradient-to-b from-amber-950/30 to-neutral-950 p-3.5 space-y-2.5">
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-3.5 space-y-2.5">
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-xs text-amber-400 font-mono font-bold block">
@@ -460,8 +425,38 @@ export default function MicroclimateAITab({ selectedPoint, onSelectPoint, onNavi
       {/* 3B. SUB-TAB 1: LISTA DE ESTACIONES FÍSICAS Y SENSORES VIRTUALES IA */}
       {activeSubTab === 'sensors' && (
         <div className="space-y-3">
+          {/* Certificación Científica de Calibración Terrestre (Red MÓNICA GAMC - 125.865 Mediciones Reales) */}
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-3 text-xs">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <Activity className="h-4 w-4 text-cyan-400" />
+                <span className="font-semibold text-zinc-200 text-xs">
+                  Ground-Truth Oficial: Red MÓNICA GAMC
+                </span>
+              </div>
+              <span className="text-[10px] bg-cyan-950/60 text-cyan-300 border border-cyan-800/80 px-2 py-0.5 rounded font-mono font-bold">
+                125.865 Registros Físicos
+              </span>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-[11px] bg-zinc-950/60 p-2.5 rounded-lg border border-zinc-800/80 mb-2">
+              <div>
+                <span className="text-cyan-400 font-semibold block">📍 Estación Kanata (Zona Sur):</span>
+                <span className="text-zinc-300">54.711 mediciones continuas</span>
+                <span className="block text-amber-300 font-mono">PM10 medio: 67.1 µg/m³</span>
+              </div>
+              <div>
+                <span className="text-cyan-400 font-semibold block">📍 Estación SEMAPA (Zona Norte):</span>
+                <span className="text-zinc-300">71.154 mediciones continuas</span>
+                <span className="block text-emerald-300 font-mono">PM10 medio: 49.3 µg/m³</span>
+              </div>
+            </div>
+            <p className="text-[11px] text-zinc-400 leading-tight">
+              🔬 <strong className="text-zinc-200">Hallazgo Físico Validado:</strong> La estación Kanata registra un <strong className="text-rose-400">+36% mayor polución</strong> que SEMAPA debido a la trampa de inversión térmica del valle. Los 13 sensores virtuales de IA fueron calibrados contra esta serie temporal real (2022–2026).
+            </p>
+          </div>
+
           {/* Ficha Detalle del Sensor Seleccionado */}
-          <div className="rounded-xl border border-blue-900/60 bg-gradient-to-b from-blue-950/40 to-neutral-950 p-3.5 space-y-2.5">
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-3.5 space-y-2.5">
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-xs text-cyan-400 font-mono font-bold block">
@@ -662,25 +657,25 @@ export default function MicroclimateAITab({ selectedPoint, onSelectPoint, onNavi
         </div>
       )}
 
-      {/* 3B. SUB-TAB 2: MOTOR PREDICTIVO 2030-2050 Y ALERTA TEMPRANA 24H */}
+      {/* 3C. SUB-TAB 2: MOTOR PREDICTIVO 2030-2050 Y ALERTA TEMPRANA 24H */}
       {activeSubTab === 'predictions' && (
-        <div className="space-y-4 rounded-xl border border-purple-900/50 bg-gradient-to-b from-purple-950/20 via-neutral-950 to-neutral-950 p-4">
+        <div className="space-y-3.5 rounded-xl border border-zinc-800 bg-zinc-900/60 p-3.5">
           {/* Header */}
-          <div className="border-b border-purple-900/40 pb-3 flex items-start justify-between">
+          <div className="border-b border-zinc-800 pb-2.5 flex items-start justify-between">
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="rounded bg-purple-950 px-2 py-0.5 text-xs font-mono font-bold text-purple-300 border border-purple-800">
+                <span className="rounded bg-zinc-800 px-2 py-0.5 text-[10px] font-mono font-semibold text-zinc-300 border border-zinc-700">
                   SCIENTIFIC ML &amp; STATS
                 </span>
-                <span className="rounded bg-emerald-950 px-2 py-0.5 text-xs font-mono font-bold text-emerald-300 border border-emerald-800">
+                <span className="rounded bg-emerald-950/60 px-2 py-0.5 text-[10px] font-mono font-semibold text-emerald-400 border border-emerald-800/60">
                   p &lt; 0.05
                 </span>
               </div>
-              <h3 className="text-base font-black text-purple-300 mt-1 flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-purple-400" />
+              <h3 className="text-sm sm:text-base font-bold text-zinc-100 mt-1 flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-indigo-400" />
                 Motor Predictivo: Cochabamba 2030 - 2050
               </h3>
-              <p className="text-xs text-slate-300 mt-0.5">
+              <p className="text-xs text-zinc-400 mt-0.5">
                 Regresión de Sen + Mann-Kendall + XGBoost calibrado con 25 años NASA POWER &amp; Red MÓNICA.
               </p>
             </div>
@@ -688,14 +683,14 @@ export default function MicroclimateAITab({ selectedPoint, onSelectPoint, onNavi
 
           {/* Selector Rápido de Distritos */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-slate-300 flex items-center justify-between">
-              <span>Selecciona un Distrito para Proyectar:</span>
-              <span className="text-purple-400 font-mono text-[11px] font-bold">15 Distritos Oficiales</span>
+            <label className="text-xs font-semibold text-zinc-300 flex items-center justify-between">
+              <span>Distrito a Proyectar:</span>
+              <span className="text-zinc-500 font-mono text-[11px]">15 Distritos Oficiales</span>
             </label>
             <select
               value={selectedDistrictId}
               onChange={(e) => setSelectedDistrictId(e.target.value)}
-              className="w-full bg-neutral-900 border border-purple-900/60 rounded-lg px-3 py-2 text-xs sm:text-sm font-semibold text-white focus:outline-none focus:border-purple-500"
+              className="w-full bg-zinc-950 border border-zinc-700/80 rounded-lg px-3 py-2 text-xs sm:text-sm font-medium text-zinc-100 focus:outline-none focus:border-indigo-500"
             >
               {distritosList.map((d) => (
                 <option key={d.distrito_id} value={d.distrito_id}>
@@ -706,90 +701,90 @@ export default function MicroclimateAITab({ selectedPoint, onSelectPoint, onNavi
           </div>
 
           {/* Tarjeta de Métricas Estadísticas del Distrito Seleccionado */}
-          <div className="rounded-xl bg-neutral-900/90 border border-neutral-800 p-3 space-y-2">
+          <div className="rounded-xl bg-zinc-950/70 border border-zinc-800/80 p-3 space-y-2">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-[10px] text-purple-400 font-mono font-bold uppercase block">
+                <span className="text-[10px] text-zinc-400 font-mono font-bold uppercase block">
                   {selectedDistrictDecadal.distrito_id} • {selectedDistrictDecadal.nombre}
                 </span>
-                <span className="text-xs font-bold text-white">
-                  Tasa Decadal: <strong className="text-amber-400 font-mono">+{decadalRate} °C/década</strong>
+                <span className="text-xs font-medium text-zinc-200">
+                  Tasa Decadal: <strong className="text-amber-400 font-mono font-bold">+{decadalRate} °C/década</strong>
                 </span>
               </div>
-              <span className={`text-[11px] font-bold px-2 py-0.5 rounded border ${
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
                 selectedDistrictDecadal.nivel_riesgo_calor === 'Extremo' 
-                  ? 'bg-red-950 text-red-300 border-red-800'
+                  ? 'bg-rose-950/60 text-rose-300 border-rose-800/60'
                   : selectedDistrictDecadal.nivel_riesgo_calor === 'Muy Alto' || selectedDistrictDecadal.nivel_riesgo_calor === 'Alto'
-                  ? 'bg-amber-950 text-amber-300 border-amber-800'
-                  : 'bg-emerald-950 text-emerald-300 border-emerald-800'
+                  ? 'bg-amber-950/60 text-amber-300 border-amber-800/60'
+                  : 'bg-emerald-950/60 text-emerald-300 border-emerald-800/60'
               }`}>
-                Riesgo: {selectedDistrictDecadal.nivel_riesgo_calor}
+                {selectedDistrictDecadal.nivel_riesgo_calor}
               </span>
             </div>
-            <p className="text-xs text-slate-300 leading-relaxed border-t border-neutral-800 pt-1.5">
-              🔍 <strong className="text-slate-100">Diagnóstico Biofísico:</strong> {selectedDistrictDecadal.causa_principal}
+            <p className="text-[11px] text-zinc-300 leading-relaxed border-t border-zinc-800/80 pt-1.5">
+              🔍 <strong className="text-zinc-100">Causa Biofísica:</strong> {selectedDistrictDecadal.causa_principal}
             </p>
-            <div className="flex items-center gap-3 text-[11px] text-slate-400 font-mono">
-              <span>Z-Score: <strong className="text-slate-200">{selectedDistrictDecadal.z_score}</strong></span>
+            <div className="flex items-center gap-3 text-[11px] text-zinc-400 font-mono">
+              <span>Z-Score: <strong className="text-zinc-200">{selectedDistrictDecadal.z_score}</strong></span>
               <span>p-value: <strong className="text-emerald-400">{selectedDistrictDecadal.p_value}</strong></span>
-              <span className="text-emerald-400 font-semibold">✓ Significativo al 95%</span>
+              <span className="text-emerald-400 font-semibold">✓ p &lt; 0.05</span>
             </div>
           </div>
 
           {/* Contraste de Proyección Decadal: Inercial vs Mitigado GAMC */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5 text-purple-400" />
+              <span className="text-xs font-semibold text-zinc-300 flex items-center gap-1.5">
+                <Calendar className="h-3.5 w-3.5 text-indigo-400" />
                 Proyección Multidecadal (LST Superficie)
               </span>
               <span className="text-[11px] text-emerald-400 font-mono font-bold">
-                Ahorro Térmico: Hasta -{mit2050} °C
+                Ahorro: -{mit2050} °C
               </span>
             </div>
 
             <div className="grid grid-cols-4 gap-1.5 text-xs">
               {/* 2026 */}
-              <div className="rounded-lg bg-neutral-900 border border-neutral-800 p-2 text-center">
-                <span className="text-[10px] text-slate-400 font-mono block">2026 (Base)</span>
-                <span className="text-sm font-black text-white font-mono block my-0.5">{lst2026Inercial} °C</span>
-                <span className="text-[9px] text-slate-400 block">Actual</span>
+              <div className="rounded-lg bg-zinc-950/80 border border-zinc-800 p-2 text-center">
+                <span className="text-[10px] text-zinc-400 font-mono block">2026 (Base)</span>
+                <span className="text-sm font-bold text-zinc-100 font-mono block my-0.5">{lst2026Inercial} °C</span>
+                <span className="text-[9px] text-zinc-500 block">Actual</span>
               </div>
 
               {/* 2030 */}
-              <div className="rounded-lg bg-neutral-900 border border-neutral-800 p-2 text-center">
-                <span className="text-[10px] text-purple-400 font-mono block">2030</span>
+              <div className="rounded-lg bg-zinc-950/80 border border-zinc-800 p-2 text-center">
+                <span className="text-[10px] text-zinc-400 font-mono block">2030</span>
                 <div className="my-0.5 font-mono">
-                  <span className="text-xs font-bold text-red-400 block">{lst2030Inercial} °C</span>
+                  <span className="text-xs font-bold text-rose-400 block">{lst2030Inercial} °C</span>
                   <span className="text-xs font-bold text-emerald-400 block">{lst2030Mitigado} °C</span>
                 </div>
-                <span className="text-[9px] text-emerald-300 font-bold block">-{mit2030} °C</span>
+                <span className="text-[9px] text-emerald-400 font-bold block">-{mit2030} °C</span>
               </div>
 
               {/* 2040 */}
-              <div className="rounded-lg bg-neutral-900 border border-neutral-800 p-2 text-center">
-                <span className="text-[10px] text-purple-400 font-mono block">2040</span>
+              <div className="rounded-lg bg-zinc-950/80 border border-zinc-800 p-2 text-center">
+                <span className="text-[10px] text-zinc-400 font-mono block">2040</span>
                 <div className="my-0.5 font-mono">
-                  <span className="text-xs font-bold text-red-400 block">{lst2040Inercial} °C</span>
+                  <span className="text-xs font-bold text-rose-400 block">{lst2040Inercial} °C</span>
                   <span className="text-xs font-bold text-emerald-400 block">{lst2040Mitigado} °C</span>
                 </div>
-                <span className="text-[9px] text-emerald-300 font-bold block">-{mit2040} °C</span>
+                <span className="text-[9px] text-emerald-400 font-bold block">-{mit2040} °C</span>
               </div>
 
               {/* 2050 */}
-              <div className="rounded-lg bg-purple-950/30 border border-purple-800/60 p-2 text-center">
-                <span className="text-[10px] text-purple-300 font-mono block font-bold">2050</span>
+              <div className="rounded-lg bg-zinc-950/80 border border-zinc-800 p-2 text-center">
+                <span className="text-[10px] text-zinc-400 font-mono block font-bold">2050</span>
                 <div className="my-0.5 font-mono">
-                  <span className="text-xs font-black text-red-400 block">{lst2050Inercial} °C</span>
+                  <span className="text-xs font-black text-rose-400 block">{lst2050Inercial} °C</span>
                   <span className="text-xs font-black text-emerald-400 block">{lst2050Mitigado} °C</span>
                 </div>
-                <span className="text-[9px] text-emerald-300 font-black block">-{mit2050} °C</span>
+                <span className="text-[9px] text-emerald-400 font-black block">-{mit2050} °C</span>
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-[11px] px-2 py-1 bg-neutral-900/60 rounded border border-neutral-800 text-slate-300">
+            <div className="flex items-center justify-between text-[11px] px-2.5 py-1.5 bg-zinc-950/60 rounded-lg border border-zinc-800/80 text-zinc-300">
               <span className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-red-400 inline-block"></span>
+                <span className="h-2 w-2 rounded-full bg-rose-400 inline-block"></span>
                 Inercial (Sin políticas)
               </span>
               <span className="flex items-center gap-1.5">
@@ -800,86 +795,84 @@ export default function MicroclimateAITab({ selectedPoint, onSelectPoint, onNavi
           </div>
 
           {/* Sistema de Alerta Temprana 24 Horas: Inversión Térmica & PM10 */}
-          <div className="rounded-xl border border-amber-900/50 bg-amber-950/20 p-3.5 space-y-2.5">
+          <div className="rounded-xl border border-zinc-800 bg-zinc-950/70 p-3 space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
                 <Clock className="h-4 w-4 text-amber-400" />
-                <h4 className="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-wide">
+                <h4 className="text-xs font-bold text-zinc-200 uppercase tracking-wide">
                   Pronóstico Operativo 24h: Trampa de Inversión Térmica
                 </h4>
               </div>
-              <span className="bg-amber-950 text-amber-300 border border-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">
-                Alerta Temprana UGR
+              <span className="bg-amber-950/60 text-amber-300 border border-amber-800/60 text-[10px] font-bold px-2 py-0.5 rounded">
+                Alerta UGR
               </span>
             </div>
 
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Combinación física de vientos nocturnos calmos (&lt; 2.5 m/s) y humo de estiaje atrapado bajo la Cota 2750.
+            <p className="text-[11px] text-zinc-400 leading-relaxed">
+              Vientos nocturnos calmos (&lt; 2.5 m/s) y humo estancado bajo Cota 2750.
             </p>
 
             <div className="grid grid-cols-4 gap-1.5 text-center text-xs font-mono">
-              <div className="rounded bg-neutral-900 p-2 border border-neutral-800">
-                <span className="text-[10px] text-slate-400 block">02:00 - 06:00</span>
+              <div className="rounded-lg bg-zinc-900/80 p-1.5 border border-zinc-800">
+                <span className="text-[10px] text-zinc-400 block">02:00 - 06:00</span>
                 <span className="text-xs font-bold text-amber-300 block my-0.5">85 µg/m³</span>
-                <span className="text-[9px] text-slate-400 block">Inversión Fuerte</span>
+                <span className="text-[9px] text-zinc-500 block">Inversión</span>
               </div>
-              <div className="rounded bg-red-950/60 p-2 border border-red-800/80">
-                <span className="text-[10px] text-red-300 font-bold block">07:00 - 10:30</span>
-                <span className="text-sm font-black text-red-400 block my-0.5">142 µg/m³</span>
-                <span className="text-[9px] text-red-200 font-bold block">🚨 PICO ESCOLAR</span>
+              <div className="rounded-lg bg-rose-950/50 p-1.5 border border-rose-800/60">
+                <span className="text-[10px] text-rose-300 font-bold block">07:00 - 10:30</span>
+                <span className="text-xs font-black text-rose-400 block my-0.5">142 µg/m³</span>
+                <span className="text-[9px] text-rose-300 font-bold block">🚨 PICO</span>
               </div>
-              <div className="rounded bg-neutral-900 p-2 border border-neutral-800">
-                <span className="text-[10px] text-slate-400 block">12:00 - 16:00</span>
+              <div className="rounded-lg bg-zinc-900/80 p-1.5 border border-zinc-800">
+                <span className="text-[10px] text-zinc-400 block">12:00 - 16:00</span>
                 <span className="text-xs font-bold text-emerald-400 block my-0.5">48 µg/m³</span>
-                <span className="text-[9px] text-slate-400 block">Rompimiento</span>
+                <span className="text-[9px] text-zinc-500 block">Limpio</span>
               </div>
-              <div className="rounded bg-neutral-900 p-2 border border-neutral-800">
-                <span className="text-[10px] text-slate-400 block">18:00 - 22:00</span>
+              <div className="rounded-lg bg-zinc-900/80 p-1.5 border border-zinc-800">
+                <span className="text-[10px] text-zinc-400 block">18:00 - 22:00</span>
                 <span className="text-xs font-bold text-amber-400 block my-0.5">72 µg/m³</span>
-                <span className="text-[9px] text-slate-400 block">Tráfico Nocturno</span>
+                <span className="text-[9px] text-zinc-500 block">Tráfico</span>
               </div>
             </div>
 
             {/* Recomendación Oficial GAMC */}
-            <div className="rounded-lg bg-neutral-900/90 border border-amber-800/70 p-2.5 text-xs text-slate-200 flex items-start gap-2">
+            <div className="rounded-lg bg-zinc-900/90 border border-zinc-800 p-2.5 text-xs text-zinc-300 flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-amber-300 block font-bold">Directriz Municipal Preventiva (D5, D8, D9, D14, D15):</strong>
-                <span>
-                  Suspender formación matutina y deportes al aire libre en unidades educativas del sur entre 07:00 y 10:30 AM para evitar crisis de asma e infecciones respiratorias agudas en escolares.
+                <strong className="text-amber-300 block font-semibold text-xs">Directriz Preventiva (D5, D8, D9, D14, D15):</strong>
+                <span className="text-[11px] text-zinc-300">
+                  Suspender formación y deportes matutinos al aire libre en colegios entre 07:00 y 10:30 AM para evitar crisis respiratorias infantiles.
                 </span>
               </div>
             </div>
           </div>
 
           {/* Tarjeta de Contraste Económico: Hardware Tradicional vs IA NASA */}
-          <div className="rounded-xl border border-emerald-900/60 bg-gradient-to-r from-emerald-950/30 to-neutral-950 p-3.5 space-y-2">
+          <div className="rounded-xl border border-zinc-800 bg-zinc-950/70 p-3 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-emerald-400 flex items-center gap-1.5 uppercase tracking-wider">
-                <DollarSign className="h-4 w-4" />
-                Contraste de Costo Municipal: Retorno de Inversión (ROI)
+              <span className="text-xs font-bold text-zinc-200 flex items-center gap-1.5 uppercase tracking-wider">
+                <DollarSign className="h-4 w-4 text-emerald-400" />
+                Retorno de Inversión Municipal (ROI)
               </span>
-              <span className="text-xs bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded font-mono font-bold">
+              <span className="text-[11px] bg-emerald-950/60 text-emerald-300 border border-emerald-800/60 px-2 py-0.5 rounded font-mono font-bold">
                 $1.070.000 USD Ahorro
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs pt-1">
-              <div className="rounded-lg bg-neutral-900 p-2.5 border border-neutral-800 space-y-1">
-                <span className="text-red-400 font-bold block text-[11px]">❌ 13 Estaciones Físicas:</span>
-                <div className="text-slate-300 space-y-0.5 text-[11px]">
-                  <div>• CAPEX: <strong>$520.000 USD</strong> ($40k c/u)</div>
-                  <div>• OPEX: <strong>$110.000 USD/año</strong></div>
-                  <div>• Retraso: 18 meses de licitación</div>
+              <div className="rounded-lg bg-zinc-900/70 p-2 border border-zinc-800/80 space-y-0.5">
+                <span className="text-rose-400 font-semibold block text-[11px]">❌ 13 Estaciones Físicas:</span>
+                <div className="text-zinc-400 text-[11px]">
+                  <div>• CAPEX: $520.000 USD</div>
+                  <div>• OPEX: $110.000 USD/año</div>
                 </div>
               </div>
 
-              <div className="rounded-lg bg-neutral-900 p-2.5 border border-emerald-800/60 space-y-1">
-                <span className="text-emerald-400 font-bold block text-[11px]">✅ Red MÓNICA Virtual NASA:</span>
-                <div className="text-slate-300 space-y-0.5 text-[11px]">
-                  <div>• Hardware: <strong>$0 USD</strong></div>
-                  <div>• Cobertura: <strong>100% (15 Distritos)</strong></div>
-                  <div>• Calibración: <strong>R² = 0.946</strong></div>
+              <div className="rounded-lg bg-zinc-900/70 p-2 border border-zinc-800/80 space-y-0.5">
+                <span className="text-emerald-400 font-semibold block text-[11px]">✅ Red MÓNICA Virtual IA:</span>
+                <div className="text-zinc-400 text-[11px]">
+                  <div>• Hardware: $0 USD</div>
+                  <div>• Cobertura: 15 Distritos</div>
                 </div>
               </div>
             </div>

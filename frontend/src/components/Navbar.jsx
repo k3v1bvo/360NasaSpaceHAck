@@ -46,15 +46,15 @@ export default function Navbar({
         </div>
 
         {/* Tabs Principales Oficiales del Reto en Desktop (md+) */}
-        <nav className="hidden md:flex items-center gap-2 rounded-xl border border-neutral-800 bg-neutral-900/90 p-1.5">
+        <nav className="hidden md:flex items-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-900/80 p-1">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`rounded-lg px-3.5 py-2 text-xs sm:text-sm font-bold transition whitespace-nowrap ${
+              className={`rounded-lg px-3.5 py-1.5 text-xs sm:text-[13px] font-semibold transition whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
-                  : 'text-slate-300 hover:text-white hover:bg-neutral-800/80'
+                  ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700/80'
+                  : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
               }`}
             >
               <span className="hidden xl:inline">{tab.label}</span>
@@ -64,11 +64,11 @@ export default function Navbar({
         </nav>
 
         {/* Acciones Rápidas & Guía del Sistema */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {/* Botón Visor WMS Exacto GAMC + Regresión NASA */}
           <button
             onClick={onOpenGamcExact}
-            className="flex items-center gap-1.5 sm:gap-2 rounded-lg border border-indigo-500/60 bg-indigo-950/70 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-bold text-indigo-200 hover:text-white hover:border-indigo-400 hover:bg-indigo-900/80 transition shadow-sm"
+            className="flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/90 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-700 hover:bg-zinc-800 transition shadow-sm"
             title="Abrir Visor Cartográfico GAMC WMS + Tendencia Superficial NASA en tiempo real"
           >
             <span>🏛️ WMS GAMC</span>
@@ -77,51 +77,49 @@ export default function Navbar({
           {/* Botón Rúbrica Oficial NASA */}
           <button
             onClick={onOpenRubric}
-            className="flex items-center gap-1.5 sm:gap-2 rounded-lg border border-amber-500/60 bg-amber-950/70 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-bold text-amber-200 hover:text-white hover:border-amber-400 hover:bg-amber-900/80 transition shadow-sm"
+            className="flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/90 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-700 hover:bg-zinc-800 transition shadow-sm"
             title="Ver Matriz de Cumplimiento de los 5 Criterios Oficiales de Evaluación NASA"
           >
-            <Award className="h-4 w-4 text-amber-400" />
-            <span className="hidden sm:inline">Rúbrica NASA</span>
-            <span className="sm:hidden">Rúbrica</span>
+            <Award className="h-3.5 w-3.5 text-amber-400" />
+            <span className="hidden sm:inline">Rúbrica</span>
           </button>
 
           {/* Botón Tendencias & Predicción IA */}
           <button
             onClick={onOpenTemporalAnalytics}
-            className="flex items-center gap-1.5 sm:gap-2 rounded-lg border border-purple-500/60 bg-purple-950/70 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-bold text-purple-200 hover:text-white hover:border-purple-400 hover:bg-purple-900/80 transition shadow-sm"
+            className="flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/90 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-700 hover:bg-zinc-800 transition shadow-sm"
             title="Ver Análisis Multitemporal, Ciclo Estacional y Predicción IA 2026"
           >
-            <TrendingUp className="h-4 w-4 text-purple-400" />
-            <span className="hidden sm:inline">Tendencias & IA</span>
-            <span className="sm:hidden">Tendencias</span>
+            <TrendingUp className="h-3.5 w-3.5 text-indigo-400" />
+            <span className="hidden sm:inline">Tendencias</span>
           </button>
 
           {/* Botón Guía del Sistema / Presentación */}
           <button
             onClick={() => setIsTourOpen(!isTourOpen)}
-            className={`flex items-center gap-1.5 sm:gap-2 rounded-lg border px-3 sm:px-3.5 py-1.5 text-xs sm:text-sm font-bold transition shadow-sm ${
+            className={`flex items-center gap-1.5 rounded-lg border px-2.5 sm:px-3 py-1.5 text-xs font-medium transition shadow-sm ${
               isTourOpen
-                ? 'border-cyan-500/80 bg-cyan-950/80 text-cyan-300 ring-1 ring-cyan-400/50'
-                : 'border-neutral-700 bg-neutral-900 text-slate-200 hover:text-white hover:border-neutral-500'
+                ? 'border-indigo-500/80 bg-indigo-950/60 text-indigo-300'
+                : 'border-zinc-800 bg-zinc-900/90 text-zinc-300 hover:text-white hover:border-zinc-700 hover:bg-zinc-800'
             }`}
             title="Abrir u ocultar la Guía de Flujo del Reto"
           >
-            <Compass className={`h-4 w-4 ${isTourOpen ? 'animate-spin text-cyan-400' : 'text-cyan-400'}`} />
-            <span className="hidden sm:inline">Guía del Reto</span>
+            <Compass className="h-3.5 w-3.5 text-indigo-400" />
+            <span className="hidden sm:inline">Guía</span>
             <span className="sm:hidden">Guía</span>
           </button>
 
           <button
             onClick={() => setOfflineMode(!offlineMode)}
-            className={`flex items-center gap-1.5 sm:gap-2 rounded-lg border px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-semibold transition ${
+            className={`flex items-center gap-1.5 rounded-lg border px-2.5 sm:px-3 py-1.5 text-xs font-medium transition ${
               offlineMode
                 ? 'border-emerald-500/60 bg-emerald-950/70 text-emerald-300'
-                : 'border-neutral-800 bg-neutral-900 text-slate-300 hover:text-white'
+                : 'border-zinc-800 bg-zinc-900/90 text-zinc-400 hover:text-white'
             }`}
             title="Modo Respaldo Local sin Internet"
           >
-            <Radio className={`h-4 w-4 ${offlineMode ? 'animate-pulse text-emerald-400' : ''}`} />
-            <span className="hidden sm:inline">{offlineMode ? 'Caché Local' : 'NASA Stream'}</span>
+            <Radio className={`h-3.5 w-3.5 ${offlineMode ? 'animate-pulse text-emerald-400' : ''}`} />
+            <span className="hidden sm:inline">{offlineMode ? 'Caché' : 'Stream'}</span>
           </button>
         </div>
       </div>
