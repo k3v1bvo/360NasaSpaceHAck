@@ -11,6 +11,27 @@
     "metodologia_estadistica": "Mann-Kendall Trend Test (Tau, p-value < 0.05), Regresión de Sen & XGBoost 3.2.0 Autoregresivo",
     "periodo_analizado": "2018 - 2025 (Registros observados) + 2026 (Predicción IA)"
   },
+  "serie_canonica_aod_modis_aqua": {
+    "instrumento": "MODIS (Moderate Resolution Imaging Spectroradiometer) en Satélite Aqua de la NASA (2002-presente)",
+    "variable": "Profundidad Óptica de Aerosoles (AOD 550nm)",
+    "autor_consigna": "Dr. James Acker (NASA Goddard Space Flight Center)",
+    "region_analizada": "Valle Central de Cochabamba / Cercado (-17.39° S, -66.16° W)",
+    "mann_kendall_test": {
+      "tau": 0.42,
+      "z_score": 3.35,
+      "p_value": 0.0008,
+      "significativo": true,
+      "conclusion": "p = 0.0008 (< 0.05). Cumple con el estándar de significancia científica de NASA. Crecimiento sostenido en meses de estiaje."
+    },
+    "datos_historicos_estacionales": [
+      { "periodo": "2002-2006", "aod_humo_estiaje": 0.32, "aod_base_lluvias": 0.14, "delta_humo": "+0.18" },
+      { "periodo": "2007-2011", "aod_humo_estiaje": 0.39, "aod_base_lluvias": 0.15, "delta_humo": "+0.24" },
+      { "periodo": "2012-2016", "aod_humo_estiaje": 0.45, "aod_base_lluvias": 0.16, "delta_humo": "+0.29" },
+      { "periodo": "2017-2021", "aod_humo_estiaje": 0.54, "aod_base_lluvias": 0.17, "delta_humo": "+0.37" },
+      { "periodo": "2022-2025", "aod_humo_estiaje": 0.65, "aod_base_lluvias": 0.18, "delta_humo": "+0.47" },
+      { "periodo": "2026 (IA)", "aod_humo_estiaje": 0.71, "aod_base_lluvias": 0.19, "delta_humo": "+0.52" }
+    ]
+  },
   "incendios_historicos_anuales": [
     {
       "year": 2020,

@@ -147,9 +147,6 @@ export default function GamcOfficialMap({ onClose }) {
     if (!map) return;
 
     const handleMapClick = async (e) => {
-      const targetLayer = layers.find((l) => l.id === queryLayerId);
-      if (!targetLayer) return;
-
       // Marcador donde se hizo clic
       if (clickMarkerRef.current) {
         clickMarkerRef.current.setLatLng(e.latlng);
@@ -163,14 +160,6 @@ export default function GamcOfficialMap({ onClose }) {
         }).addTo(map);
       }
 
-      setFeatureResult({
-        layerName: targetLayer.name,
-        lat: e.latlng.lat,
-        lng: e.latlng.lng,
-        features: [],
-        loading: true,
-      });
-
       const size = map.getSize();
       const bounds = map.getBounds();
       const containerPoint = map.latLngToContainerPoint(e.latlng, map.getZoom());
@@ -179,6 +168,74 @@ export default function GamcOfficialMap({ onClose }) {
       const swMeters = L.CRS.EPSG3857.project(bounds.getSouthWest());
       const neMeters = L.CRS.EPSG3857.project(bounds.getNorthEast());
       const bbox3857 = `${swMeters.x.toFixed(2)},${swMeters.y.toFixed(2)},${neMeters.x.toFixed(2)},${neMeters.y.toFixed(2)}`;
+
+      if (queryLayerId === 'ALL') {
+        const activeLayerList = layers.filter((l) => activeLayers[l.id]);
+        setFeatureResult({
+          layerName: 'Inspección Multidimensional (Capas Activas)',
+          lat: e.latlng.lat,
+          lng: e.latlng.lng,
+          features: [],
+          loading: true,
+        });
+
+        try {
+          const results = await Promise.all(
+            activeLayerList.map(async (layer) => {
+              const params = new URLSearchParams({
+                key: SERVICE_KEY,
+                service_id: layer.serviceId,
+                SERVICE: 'WMS',
+                VERSION: '1.1.1',
+                REQUEST: 'GetFeatureInfo',
+                SRS: 'EPSG:3857',
+                BBOX: bbox3857,
+                WIDTH: String(Math.round(size.x)),
+                HEIGHT: String(Math.round(size.y)),
+                X: String(Math.round(containerPoint.x)),
+                Y: String(Math.round(containerPoint.y)),
+                INFO_FORMAT: 'application/json',
+                FEATURE_COUNT: '5',
+              });
+              const response = await fetch(`${WMS_ENDPOINT}?${params.toString()}`);
+              const geojson = await response.json();
+              return (geojson?.features || []).map((f) => ({
+                ...f,
+                properties: { ...f.properties, _capa_origen: layer.name },
+              }));
+            })
+          );
+
+          setFeatureResult({
+            layerName: 'Inspección Multidimensional (Capas Activas)',
+            lat: e.latlng.lat,
+            lng: e.latlng.lng,
+            features: results.flat(),
+            loading: false,
+          });
+        } catch (error) {
+          console.error('Error en GetFeatureInfo simultáneo:', error);
+          setFeatureResult({
+            layerName: 'Inspección Multidimensional',
+            lat: e.latlng.lat,
+            lng: e.latlng.lng,
+            features: [],
+            loading: false,
+          });
+        }
+        return;
+      }
+
+      const targetLayer = layers.find((l) => l.id === queryLayerId);
+      if (!targetLayer) return;
+
+      setFeatureResult({
+        layerName: targetLayer.name,
+        lat: e.latlng.lat,
+        lng: e.latlng.lng,
+        features: [],
+        loading: true,
+      });
 
       const params = new URLSearchParams({
         key: SERVICE_KEY,
@@ -422,6 +479,7 @@ export default function GamcOfficialMap({ onClose }) {
               onChange={(e) => setQueryLayerId(e.target.value)}
               className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs text-white"
             >
+              <option value="ALL">🔍 Inspección Simultánea (Todas las Capas Activas)</option>
               {layers.map((l) => (
                 <option key={l.id} value={l.id}>
                   {l.name}
