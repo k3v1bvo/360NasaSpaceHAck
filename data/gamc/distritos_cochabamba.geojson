@@ -1,61 +1,20 @@
 {
   "type": "FeatureCollection",
-  "metadata": {
-    "municipio": "Cochabamba Cercado",
-    "departamento": "Cochabamba, Bolivia",
-    "fuente_datos_espaciales": "GAMC (Gobierno Autónomo Municipal de Cochabamba) - Cartografía Oficial Continua",
-    "fuente_satelital": "NASA Earthdata (MODIS MYD11A1, Landsat 8/9 TIRS, SRTM 30m)",
-    "proyecto": "GEO-COCHABAMBA 360 - Microclimas Urbanos con IA",
-    "total_distritos": 15,
-    "topologia": "Continua sin solapamiento (Shared Boundary Tessellation)"
+  "name": "distritos_cochabamba_gamc_oficial",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
   },
   "features": [
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -66.155,
-              -17.357
-            ],
-            [
-              -66.105,
-              -17.368
-            ],
-            [
-              -66.104,
-              -17.375
-            ],
-            [
-              -66.108,
-              -17.382
-            ],
-            [
-              -66.142,
-              -17.389
-            ],
-            [
-              -66.158,
-              -17.385
-            ],
-            [
-              -66.156,
-              -17.37
-            ],
-            [
-              -66.155,
-              -17.357
-            ]
-          ]
-        ]
-      },
       "properties": {
         "distrito_id": "D1",
         "numero": 1,
-        "nombre": "Distrito 1 - Queru Queru / Mayorazgo",
-        "zona_geografica": "Norte",
+        "nombre": "Distrito 1 - Queru Queru / Pacata / Mayorazgo",
+        "zona_geografica": "Noreste",
         "cota_media_msnm": 2680,
         "poblacion_total": 42500,
         "area_km2": 8.4,
@@ -67,57 +26,345 @@
         "temp_aire_pred_c": 27.4,
         "pet_pred_c": 25.8,
         "nivel_alerta": "Bajo",
-        "estrategia_recomendada": "Conservación de masa arbórea",
+        "hito_urbano": "Plaza de las Banderas, Palacio Portales (Patiño), Av. América Este, Campus UPB Pacata",
+        "resena_historica": "Zona residencial tradicional y campus universitario con alta cobertura de molle y eucaliptos. Recibe brisas catabáticas nocturnas desde la Cordillera Tunari.",
+        "tendencia_detectada": "Enfriamiento moderado relativo (-0.12°C/década LST) por reforestación residencial y retención hídrica de quebradas.",
+        "estrategia_recomendada": "Conservación estricta de quebradas vivas y mantenimiento del dosel forestal en laderas este.",
         "centroide": [
-          -17.3751,
-          -66.1326
-        ],
-        "resena_historica": "Zona residencial y boscosa del norte (Queru Queru y Aranjuez). Cuenta con quebradas naturales que descienden del Tunari, manteniendo microclimas frescos y buena cobertura de eucaliptos y molles.",
-        "hito_urbano": "Av. América Este • Jardín Botánico Martín Cárdenas • Ciclovía del Norte",
-        "tendencia_detectada": "Microclima estable y fresco regulado por la cercanía a la Serranía de San Pedro."
-      }
-    },
-    {
-      "type": "Feature",
+          -17.374149,
+          -66.132813
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.178,
-              -17.352
+              -66.152,
+              -17.358
             ],
             [
-              -66.155,
-              -17.357
+              -66.150729,
+              -17.358326
             ],
             [
-              -66.156,
-              -17.37
+              -66.149,
+              -17.358778
             ],
             [
-              -66.158,
-              -17.385
+              -66.146938,
+              -17.359313
             ],
             [
-              -66.168,
-              -17.379
+              -66.144667,
+              -17.359889
             ],
             [
-              -66.182,
-              -17.38
+              -66.142313,
+              -17.360465
             ],
             [
-              -66.18,
+              -66.14,
+              -17.361
+            ],
+            [
+              -66.137616,
+              -17.361512
+            ],
+            [
+              -66.135037,
+              -17.362037
+            ],
+            [
+              -66.132375,
+              -17.362563
+            ],
+            [
+              -66.129741,
+              -17.363074
+            ],
+            [
+              -66.127245,
+              -17.363558
+            ],
+            [
+              -66.125,
+              -17.364
+            ],
+            [
+              -66.123044,
+              -17.364391
+            ],
+            [
+              -66.121296,
+              -17.364741
+            ],
+            [
+              -66.119688,
+              -17.365062
+            ],
+            [
+              -66.118148,
+              -17.36537
+            ],
+            [
+              -66.116609,
+              -17.365678
+            ],
+            [
+              -66.115,
+              -17.366
+            ],
+            [
+              -66.11284,
+              -17.366432
+            ],
+            [
+              -66.11052,
+              -17.366896
+            ],
+            [
+              -66.10828,
+              -17.367344
+            ],
+            [
+              -66.10636,
+              -17.367728
+            ],
+            [
+              -66.105,
               -17.368
             ],
             [
-              -66.178,
-              -17.352
+              -66.105097,
+              -17.368762
+            ],
+            [
+              -66.105222,
+              -17.369815
+            ],
+            [
+              -66.105375,
+              -17.371063
+            ],
+            [
+              -66.105556,
+              -17.372407
+            ],
+            [
+              -66.105764,
+              -17.373752
+            ],
+            [
+              -66.106,
+              -17.375
+            ],
+            [
+              -66.106368,
+              -17.376512
+            ],
+            [
+              -66.106824,
+              -17.378136
+            ],
+            [
+              -66.107296,
+              -17.379704
+            ],
+            [
+              -66.107712,
+              -17.381048
+            ],
+            [
+              -66.108,
+              -17.382
+            ],
+            [
+              -66.10936,
+              -17.382272
+            ],
+            [
+              -66.11128,
+              -17.382656
+            ],
+            [
+              -66.11352,
+              -17.383104
+            ],
+            [
+              -66.11584,
+              -17.383568
+            ],
+            [
+              -66.118,
+              -17.384
+            ],
+            [
+              -66.119644,
+              -17.384333
+            ],
+            [
+              -66.121259,
+              -17.384667
+            ],
+            [
+              -66.122875,
+              -17.385
+            ],
+            [
+              -66.124519,
+              -17.385333
+            ],
+            [
+              -66.126218,
+              -17.385667
+            ],
+            [
+              -66.128,
+              -17.386
+            ],
+            [
+              -66.130023,
+              -17.386356
+            ],
+            [
+              -66.132296,
+              -17.386741
+            ],
+            [
+              -66.134625,
+              -17.387125
+            ],
+            [
+              -66.136815,
+              -17.387481
+            ],
+            [
+              -66.138671,
+              -17.387782
+            ],
+            [
+              -66.14,
+              -17.388
+            ],
+            [
+              -66.141088,
+              -17.387728
+            ],
+            [
+              -66.142624,
+              -17.387344
+            ],
+            [
+              -66.144416,
+              -17.386896
+            ],
+            [
+              -66.146272,
+              -17.386432
+            ],
+            [
+              -66.148,
+              -17.386
+            ],
+            [
+              -66.149426,
+              -17.385644
+            ],
+            [
+              -66.150963,
+              -17.385259
+            ],
+            [
+              -66.1525,
+              -17.384875
+            ],
+            [
+              -66.153926,
+              -17.384519
+            ],
+            [
+              -66.15513,
+              -17.384218
+            ],
+            [
+              -66.156,
+              -17.384
+            ],
+            [
+              -66.155864,
+              -17.382912
+            ],
+            [
+              -66.155672,
+              -17.381376
+            ],
+            [
+              -66.155448,
+              -17.379584
+            ],
+            [
+              -66.155216,
+              -17.377728
+            ],
+            [
+              -66.155,
+              -17.376
+            ],
+            [
+              -66.154845,
+              -17.37469
+            ],
+            [
+              -66.154704,
+              -17.373407
+            ],
+            [
+              -66.154562,
+              -17.372125
+            ],
+            [
+              -66.154407,
+              -17.370815
+            ],
+            [
+              -66.154225,
+              -17.369449
+            ],
+            [
+              -66.154,
+              -17.368
+            ],
+            [
+              -66.153701,
+              -17.366333
+            ],
+            [
+              -66.153333,
+              -17.364444
+            ],
+            [
+              -66.152938,
+              -17.3625
+            ],
+            [
+              -66.152556,
+              -17.360667
+            ],
+            [
+              -66.152229,
+              -17.359111
+            ],
+            [
+              -66.152,
+              -17.358
             ]
           ]
         ]
-      },
+      }
+    },
+    {
+      "type": "Feature",
       "properties": {
         "distrito_id": "D2",
         "numero": 2,
@@ -134,57 +381,321 @@
         "temp_aire_pred_c": 26.8,
         "pet_pred_c": 24.5,
         "nivel_alerta": "Bajo",
-        "estrategia_recomendada": "Sede Estación SEMAPA (Red MÓNICA)",
+        "hito_urbano": "SEMAPA Central (Circunvalación), Parque del Arquitecto, Estadio Félix Capriles, Balneario Cala Cala",
+        "resena_historica": "Corazón de la zona norte de Cochabamba, sede de la estación SEMAPA de la Red MÓNICA. Posee el mayor índice de áreas verdes públicas por habitante del municipio.",
+        "tendencia_detectada": "Estabilidad térmica NASA MODIS/VIIRS con confort bioclimático diurno óptimo.",
+        "estrategia_recomendada": "Fortalecimiento de la red de pozos de recarga acuífera y protección de escorrentías de torrenteras.",
         "centroide": [
-          -17.3701,
-          -66.1681
-        ],
-        "resena_historica": "Cala Cala y Tupuraya, tradicional zona de quintas hoy consolidada. Alberga la sede central de SEMAPA y la Estación Norte de la Red MÓNICA (Ground Truth).",
-        "hito_urbano": "SEMAPA • Parque Fidel Anze • Av. Circunvalación Norte",
-        "tendencia_detectada": "Excelente amortiguamiento térmico natural gracias al arbolado de parques lineales."
-      }
-    },
-    {
-      "type": "Feature",
+          -17.367944,
+          -66.166512
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.205,
-              -17.348
+              -66.176,
+              -17.353
             ],
             [
-              -66.178,
-              -17.352
+              -66.17513,
+              -17.353229
             ],
             [
-              -66.18,
+              -66.173926,
+              -17.353556
+            ],
+            [
+              -66.1725,
+              -17.353938
+            ],
+            [
+              -66.170963,
+              -17.354333
+            ],
+            [
+              -66.169426,
+              -17.354701
+            ],
+            [
+              -66.168,
+              -17.355
+            ],
+            [
+              -66.166667,
+              -17.355213
+            ],
+            [
+              -66.165333,
+              -17.35537
+            ],
+            [
+              -66.164,
+              -17.3555
+            ],
+            [
+              -66.162667,
+              -17.35563
+            ],
+            [
+              -66.161333,
+              -17.355787
+            ],
+            [
+              -66.16,
+              -17.356
+            ],
+            [
+              -66.158272,
+              -17.356368
+            ],
+            [
+              -66.156416,
+              -17.356824
+            ],
+            [
+              -66.154624,
+              -17.357296
+            ],
+            [
+              -66.153088,
+              -17.357712
+            ],
+            [
+              -66.152,
+              -17.358
+            ],
+            [
+              -66.152229,
+              -17.359111
+            ],
+            [
+              -66.152556,
+              -17.360667
+            ],
+            [
+              -66.152938,
+              -17.3625
+            ],
+            [
+              -66.153333,
+              -17.364444
+            ],
+            [
+              -66.153701,
+              -17.366333
+            ],
+            [
+              -66.154,
               -17.368
+            ],
+            [
+              -66.154225,
+              -17.369449
+            ],
+            [
+              -66.154407,
+              -17.370815
+            ],
+            [
+              -66.154562,
+              -17.372125
+            ],
+            [
+              -66.154704,
+              -17.373407
+            ],
+            [
+              -66.154845,
+              -17.37469
+            ],
+            [
+              -66.155,
+              -17.376
+            ],
+            [
+              -66.155216,
+              -17.377728
+            ],
+            [
+              -66.155448,
+              -17.379584
+            ],
+            [
+              -66.155672,
+              -17.381376
+            ],
+            [
+              -66.155864,
+              -17.382912
+            ],
+            [
+              -66.156,
+              -17.384
+            ],
+            [
+              -66.156816,
+              -17.383576
+            ],
+            [
+              -66.157968,
+              -17.382968
+            ],
+            [
+              -66.159312,
+              -17.382272
+            ],
+            [
+              -66.160704,
+              -17.381584
+            ],
+            [
+              -66.162,
+              -17.381
+            ],
+            [
+              -66.163069,
+              -17.380586
+            ],
+            [
+              -66.164222,
+              -17.380185
+            ],
+            [
+              -66.165375,
+              -17.379812
+            ],
+            [
+              -66.166444,
+              -17.379481
+            ],
+            [
+              -66.167347,
+              -17.379206
+            ],
+            [
+              -66.168,
+              -17.379
+            ],
+            [
+              -66.168952,
+              -17.378984
+            ],
+            [
+              -66.170296,
+              -17.378952
+            ],
+            [
+              -66.171864,
+              -17.378928
+            ],
+            [
+              -66.173488,
+              -17.378936
+            ],
+            [
+              -66.175,
+              -17.379
+            ],
+            [
+              -66.176248,
+              -17.37912
+            ],
+            [
+              -66.177593,
+              -17.379296
+            ],
+            [
+              -66.178938,
+              -17.3795
+            ],
+            [
+              -66.180185,
+              -17.379704
+            ],
+            [
+              -66.181238,
+              -17.37988
             ],
             [
               -66.182,
               -17.38
             ],
             [
-              -66.19,
-              -17.381
+              -66.181728,
+              -17.378944
             ],
             [
-              -66.2,
-              -17.382
+              -66.181344,
+              -17.377472
             ],
             [
-              -66.202,
-              -17.365
+              -66.180896,
+              -17.375728
             ],
             [
-              -66.205,
-              -17.348
+              -66.180432,
+              -17.373856
+            ],
+            [
+              -66.18,
+              -17.372
+            ],
+            [
+              -66.179667,
+              -17.370438
+            ],
+            [
+              -66.179333,
+              -17.368778
+            ],
+            [
+              -66.179,
+              -17.367062
+            ],
+            [
+              -66.178667,
+              -17.365333
+            ],
+            [
+              -66.178333,
+              -17.363632
+            ],
+            [
+              -66.178,
+              -17.362
+            ],
+            [
+              -66.177644,
+              -17.360338
+            ],
+            [
+              -66.177259,
+              -17.358593
+            ],
+            [
+              -66.176875,
+              -17.356875
+            ],
+            [
+              -66.176519,
+              -17.355296
+            ],
+            [
+              -66.176218,
+              -17.353968
+            ],
+            [
+              -66.176,
+              -17.353
             ]
           ]
         ]
-      },
+      }
+    },
+    {
+      "type": "Feature",
       "properties": {
         "distrito_id": "D3",
         "numero": 3,
@@ -201,57 +712,277 @@
         "temp_aire_pred_c": 27.9,
         "pet_pred_c": 27.2,
         "nivel_alerta": "Bajo-Medio",
-        "estrategia_recomendada": "Arborización en torrenteras secundarias",
+        "hito_urbano": "Av. Melchor Pérez, Parque Bicentenario, Torrentera Pintumayu, Cruce Taquiña",
+        "resena_historica": "Distrito de transición entre la planicie y el cono de deyección de la cuenca Taquiña. Alta dinámica de escorrentía estacional monitoreada por sensores UGR GAMC.",
+        "tendencia_detectada": "Incremento moderado de impermeabilización superficial (+0.35°C LST decadal).",
+        "estrategia_recomendada": "Implementación de pavimentos permeables y parques lineales de amortiguación en márgenes torrenciales.",
         "centroide": [
-          -17.368,
-          -66.191
-        ],
-        "resena_historica": "Sarco y Temporal, área de transición con Tiquipaya. Cruce de varias torrenteras menores que bajan de la cordillera hacia el cauce del Río Rocha.",
-        "hito_urbano": "Av. Beijing Norte • Parque de la Familia Sarco • Límite Tiquipaya",
-        "tendencia_detectada": "Calentamiento moderado por impermeabilización progresiva del suelo en urbanizaciones."
-      }
-    },
-    {
-      "type": "Feature",
+          -17.364271,
+          -66.191368
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.2,
-              -17.382
+              -66.205,
+              -17.348
             ],
             [
-              -66.19,
-              -17.381
+              -66.203912,
+              -17.348097
+            ],
+            [
+              -66.202407,
+              -17.348222
+            ],
+            [
+              -66.200625,
+              -17.348375
+            ],
+            [
+              -66.198704,
+              -17.348556
+            ],
+            [
+              -66.196782,
+              -17.348764
+            ],
+            [
+              -66.195,
+              -17.349
+            ],
+            [
+              -66.193322,
+              -17.349275
+            ],
+            [
+              -66.19163,
+              -17.349593
+            ],
+            [
+              -66.189937,
+              -17.349937
+            ],
+            [
+              -66.188259,
+              -17.350296
+            ],
+            [
+              -66.186609,
+              -17.350655
             ],
             [
               -66.185,
-              -17.392
+              -17.351
+            ],
+            [
+              -66.182992,
+              -17.351432
+            ],
+            [
+              -66.180896,
+              -17.351896
+            ],
+            [
+              -66.178904,
+              -17.352344
+            ],
+            [
+              -66.177208,
+              -17.352728
+            ],
+            [
+              -66.176,
+              -17.353
+            ],
+            [
+              -66.176218,
+              -17.353968
+            ],
+            [
+              -66.176519,
+              -17.355296
+            ],
+            [
+              -66.176875,
+              -17.356875
+            ],
+            [
+              -66.177259,
+              -17.358593
+            ],
+            [
+              -66.177644,
+              -17.360338
             ],
             [
               -66.178,
-              -17.404
+              -17.362
             ],
             [
-              -66.19,
-              -17.406
+              -66.178333,
+              -17.363632
             ],
             [
-              -66.202,
-              -17.408
+              -66.178667,
+              -17.365333
             ],
             [
-              -66.201,
-              -17.395
+              -66.179,
+              -17.367062
+            ],
+            [
+              -66.179333,
+              -17.368778
+            ],
+            [
+              -66.179667,
+              -17.370438
+            ],
+            [
+              -66.18,
+              -17.372
+            ],
+            [
+              -66.180432,
+              -17.373856
+            ],
+            [
+              -66.180896,
+              -17.375728
+            ],
+            [
+              -66.181344,
+              -17.377472
+            ],
+            [
+              -66.181728,
+              -17.378944
+            ],
+            [
+              -66.182,
+              -17.38
+            ],
+            [
+              -66.183392,
+              -17.380136
+            ],
+            [
+              -66.185376,
+              -17.380328
+            ],
+            [
+              -66.187664,
+              -17.380552
+            ],
+            [
+              -66.189968,
+              -17.380784
+            ],
+            [
+              -66.192,
+              -17.381
+            ],
+            [
+              -66.193542,
+              -17.381178
+            ],
+            [
+              -66.195111,
+              -17.38137
+            ],
+            [
+              -66.196625,
+              -17.381562
+            ],
+            [
+              -66.198,
+              -17.381741
+            ],
+            [
+              -66.199153,
+              -17.381891
             ],
             [
               -66.2,
               -17.382
+            ],
+            [
+              -66.200272,
+              -17.380672
+            ],
+            [
+              -66.200656,
+              -17.378816
+            ],
+            [
+              -66.201104,
+              -17.376624
+            ],
+            [
+              -66.201568,
+              -17.374288
+            ],
+            [
+              -66.202,
+              -17.372
+            ],
+            [
+              -66.202345,
+              -17.370116
+            ],
+            [
+              -66.202704,
+              -17.368148
+            ],
+            [
+              -66.203063,
+              -17.366125
+            ],
+            [
+              -66.203407,
+              -17.364074
+            ],
+            [
+              -66.203725,
+              -17.362023
+            ],
+            [
+              -66.204,
+              -17.36
+            ],
+            [
+              -66.204236,
+              -17.357861
+            ],
+            [
+              -66.204444,
+              -17.355556
+            ],
+            [
+              -66.204625,
+              -17.35325
+            ],
+            [
+              -66.204778,
+              -17.351111
+            ],
+            [
+              -66.204903,
+              -17.349306
+            ],
+            [
+              -66.205,
+              -17.348
             ]
           ]
         ]
-      },
+      }
+    },
+    {
+      "type": "Feature",
       "properties": {
         "distrito_id": "D4",
         "numero": 4,
@@ -268,69 +999,281 @@
         "temp_aire_pred_c": 29.5,
         "pet_pred_c": 30.1,
         "nivel_alerta": "Medio",
-        "estrategia_recomendada": "Protección de humedal Coña Coña",
+        "hito_urbano": "Humedal y Laguna Coña Coña, Av. Blanco Galindo km 3 a 5, Mercado Coraca",
+        "resena_historica": "Antigua vega agrícola occidental y conector metropolitano con Quillacollo. El vaso regulador de Coña Coña actúa como amortiguador hídrico frente a desbordes del Río Rocha.",
+        "tendencia_detectada": "Pérdida de humedad edáfica según NASA SMAP y calentamiento periurbano por asfalto denso.",
+        "estrategia_recomendada": "Restauración ecológica del espejo de agua de Coña Coña y reforestación con molles y acacias.",
         "centroide": [
-          -17.3954,
-          -66.1923
-        ],
-        "resena_historica": "La Chimba y Coña Coña, sector oeste del valle atravesado por la Av. Blanco Galindo. Alberga el humedal regulador de la Laguna Coña Coña.",
-        "hito_urbano": "Laguna Coña Coña • Av. Blanco Galindo km 4-6 • Colcapirhua límite",
-        "tendencia_detectada": "Pérdida histórica del espejo de agua de Coña Coña elevó la temperatura local en +1.9 °C."
-      }
-    },
-    {
-      "type": "Feature",
+          -17.394347,
+          -66.192302
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.202,
-              -17.408
+              -66.2,
+              -17.382
             ],
             [
-              -66.178,
-              -17.404
+              -66.199153,
+              -17.381891
             ],
             [
-              -66.165,
-              -17.402
+              -66.198,
+              -17.381741
             ],
             [
-              -66.152,
-              -17.403
+              -66.196625,
+              -17.381562
             ],
             [
-              -66.155,
-              -17.42
+              -66.195111,
+              -17.38137
             ],
             [
-              -66.168,
-              -17.438
+              -66.193542,
+              -17.381178
             ],
             [
-              -66.185,
-              -17.44
+              -66.192,
+              -17.381
             ],
             [
-              -66.205,
-              -17.442
+              -66.189968,
+              -17.380784
+            ],
+            [
+              -66.187664,
+              -17.380552
+            ],
+            [
+              -66.185376,
+              -17.380328
+            ],
+            [
+              -66.183392,
+              -17.380136
+            ],
+            [
+              -66.182,
+              -17.38
+            ],
+            [
+              -66.181891,
+              -17.3811
+            ],
+            [
+              -66.181741,
+              -17.38263
+            ],
+            [
+              -66.181562,
+              -17.384438
+            ],
+            [
+              -66.18137,
+              -17.38637
+            ],
+            [
+              -66.181178,
+              -17.388275
+            ],
+            [
+              -66.181,
+              -17.39
+            ],
+            [
+              -66.180833,
+              -17.391581
+            ],
+            [
+              -66.180667,
+              -17.393148
+            ],
+            [
+              -66.1805,
+              -17.394688
+            ],
+            [
+              -66.180333,
+              -17.396185
+            ],
+            [
+              -66.180167,
+              -17.397627
+            ],
+            [
+              -66.18,
+              -17.399
+            ],
+            [
+              -66.179784,
+              -17.40064
+            ],
+            [
+              -66.179552,
+              -17.40228
+            ],
+            [
+              -66.179328,
+              -17.4038
+            ],
+            [
+              -66.179136,
+              -17.40508
+            ],
+            [
+              -66.179,
+              -17.406
+            ],
+            [
+              -66.180088,
+              -17.405984
+            ],
+            [
+              -66.181624,
+              -17.405952
+            ],
+            [
+              -66.183416,
+              -17.405928
+            ],
+            [
+              -66.185272,
+              -17.405936
+            ],
+            [
+              -66.187,
+              -17.406
+            ],
+            [
+              -66.188333,
+              -17.406109
+            ],
+            [
+              -66.189667,
+              -17.406259
+            ],
+            [
+              -66.191,
+              -17.406438
+            ],
+            [
+              -66.192333,
+              -17.40663
+            ],
+            [
+              -66.193667,
+              -17.406822
+            ],
+            [
+              -66.195,
+              -17.407
+            ],
+            [
+              -66.196426,
+              -17.407178
+            ],
+            [
+              -66.197963,
+              -17.40737
+            ],
+            [
+              -66.1995,
+              -17.407562
+            ],
+            [
+              -66.200926,
+              -17.407741
+            ],
+            [
+              -66.20213,
+              -17.407891
             ],
             [
               -66.203,
-              -17.425
+              -17.408
             ],
             [
-              -66.202,
-              -17.408
+              -66.20332,
+              -17.40664
+            ],
+            [
+              -66.2038,
+              -17.40472
+            ],
+            [
+              -66.20432,
+              -17.40248
+            ],
+            [
+              -66.20476,
+              -17.40016
+            ],
+            [
+              -66.205,
+              -17.398
+            ],
+            [
+              -66.205042,
+              -17.396287
+            ],
+            [
+              -66.205,
+              -17.394519
+            ],
+            [
+              -66.204875,
+              -17.39275
+            ],
+            [
+              -66.204667,
+              -17.391037
+            ],
+            [
+              -66.204375,
+              -17.389435
+            ],
+            [
+              -66.204,
+              -17.388
+            ],
+            [
+              -66.203461,
+              -17.386699
+            ],
+            [
+              -66.202741,
+              -17.385481
+            ],
+            [
+              -66.201937,
+              -17.384375
+            ],
+            [
+              -66.201148,
+              -17.383407
+            ],
+            [
+              -66.20047,
+              -17.382606
+            ],
+            [
+              -66.2,
+              -17.382
             ]
           ]
         ]
-      },
+      }
+    },
+    {
+      "type": "Feature",
       "properties": {
         "distrito_id": "D5",
         "numero": 5,
-        "nombre": "Distrito 5 - Jaihuayco / Parque Kanata / La Maica",
+        "nombre": "Distrito 5 - Jaihuayco / Aeropuerto / La Maica",
         "zona_geografica": "Suroeste",
         "cota_media_msnm": 2550,
         "poblacion_total": 78900,
@@ -343,65 +1286,437 @@
         "temp_aire_pred_c": 32.1,
         "pet_pred_c": 34.6,
         "nivel_alerta": "Alto",
-        "estrategia_recomendada": "Sede Estación 6 de Agosto + Cinturón verde Maica",
+        "hito_urbano": "Aeropuerto Internacional Jorge Wilstermann, Parque Kanata, Estación MÓNICA 6 de Agosto, Campo Lechero La Maica",
+        "resena_historica": "Sede de la estación oficial sur de la Red MÓNICA. Alberga la pista aérea y los últimos reductos de lechería tradicional de La Maica bajo intensa presión de urbanización.",
+        "tendencia_detectada": "Isla de calor urbana diurna persistente (>33°C LST) por asfalto de pistas y coberturas de galpones industriales.",
+        "estrategia_recomendada": "Cinturón de amortiguación verde en el perímetro aeroportuario y protección estricta del suelo agrícola de La Maica.",
         "centroide": [
-          -17.4202,
-          -66.1792
-        ],
-        "resena_historica": "Jaihuayco y La Maica, zona suroeste con vocación lechera y agropecuaria. Contiene el Aeropuerto Internacional Jorge Wilstermann y la Estación Sur de la Red MÓNICA.",
-        "hito_urbano": "Aeropuerto Wilstermann • Mercado Jaihuayco • Cuenca Lechera Maica",
-        "tendencia_detectada": "Fuerte contraste: campiña húmeda al oeste frente a pista de asfalto y cemento caliente al este."
-      }
-    },
-    {
-      "type": "Feature",
+          -17.422062,
+          -66.180767
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.152,
-              -17.403
+              -66.203,
+              -17.408
             ],
             [
-              -66.142,
-              -17.405
+              -66.20213,
+              -17.407891
             ],
             [
-              -66.13,
+              -66.200926,
+              -17.407741
+            ],
+            [
+              -66.1995,
+              -17.407562
+            ],
+            [
+              -66.197963,
+              -17.40737
+            ],
+            [
+              -66.196426,
+              -17.407178
+            ],
+            [
+              -66.195,
               -17.407
             ],
             [
-              -66.126,
-              -17.42
+              -66.193667,
+              -17.406822
             ],
             [
-              -66.132,
-              -17.435
+              -66.192333,
+              -17.40663
             ],
             [
-              -66.145,
-              -17.436
+              -66.191,
+              -17.406438
+            ],
+            [
+              -66.189667,
+              -17.406259
+            ],
+            [
+              -66.188333,
+              -17.406109
+            ],
+            [
+              -66.187,
+              -17.406
+            ],
+            [
+              -66.185272,
+              -17.405936
+            ],
+            [
+              -66.183416,
+              -17.405928
+            ],
+            [
+              -66.181624,
+              -17.405952
+            ],
+            [
+              -66.180088,
+              -17.405984
+            ],
+            [
+              -66.179,
+              -17.406
+            ],
+            [
+              -66.178456,
+              -17.405891
+            ],
+            [
+              -66.177704,
+              -17.405741
+            ],
+            [
+              -66.176812,
+              -17.405562
+            ],
+            [
+              -66.175852,
+              -17.40537
+            ],
+            [
+              -66.174891,
+              -17.405178
+            ],
+            [
+              -66.174,
+              -17.405
+            ],
+            [
+              -66.173167,
+              -17.404822
+            ],
+            [
+              -66.172333,
+              -17.40463
+            ],
+            [
+              -66.1715,
+              -17.404438
+            ],
+            [
+              -66.170667,
+              -17.404259
+            ],
+            [
+              -66.169833,
+              -17.404109
+            ],
+            [
+              -66.169,
+              -17.404
+            ],
+            [
+              -66.16792,
+              -17.403936
+            ],
+            [
+              -66.16676,
+              -17.403928
+            ],
+            [
+              -66.16564,
+              -17.403952
+            ],
+            [
+              -66.16468,
+              -17.403984
+            ],
+            [
+              -66.164,
+              -17.404
+            ],
+            [
+              -66.163576,
+              -17.403988
+            ],
+            [
+              -66.163,
+              -17.403963
+            ],
+            [
+              -66.162313,
+              -17.403937
+            ],
+            [
+              -66.161556,
+              -17.403926
+            ],
+            [
+              -66.160771,
+              -17.403942
+            ],
+            [
+              -66.16,
+              -17.404
+            ],
+            [
+              -66.159201,
+              -17.40412
+            ],
+            [
+              -66.158333,
+              -17.404296
+            ],
+            [
+              -66.157438,
+              -17.4045
+            ],
+            [
+              -66.156556,
+              -17.404704
+            ],
+            [
+              -66.155729,
+              -17.40488
             ],
             [
               -66.155,
-              -17.437
+              -17.405
             ],
             [
-              -66.168,
-              -17.438
+              -66.154224,
+              -17.405064
             ],
             [
-              -66.155,
-              -17.42
+              -66.153512,
+              -17.405072
+            ],
+            [
+              -66.152888,
+              -17.405048
+            ],
+            [
+              -66.152376,
+              -17.405016
             ],
             [
               -66.152,
-              -17.403
+              -17.405
+            ],
+            [
+              -66.152218,
+              -17.406088
+            ],
+            [
+              -66.152519,
+              -17.407593
+            ],
+            [
+              -66.152875,
+              -17.409375
+            ],
+            [
+              -66.153259,
+              -17.411296
+            ],
+            [
+              -66.153644,
+              -17.413218
+            ],
+            [
+              -66.154,
+              -17.415
+            ],
+            [
+              -66.154333,
+              -17.416667
+            ],
+            [
+              -66.154667,
+              -17.418333
+            ],
+            [
+              -66.155,
+              -17.42
+            ],
+            [
+              -66.155333,
+              -17.421667
+            ],
+            [
+              -66.155667,
+              -17.423333
+            ],
+            [
+              -66.156,
+              -17.425
+            ],
+            [
+              -66.156432,
+              -17.42716
+            ],
+            [
+              -66.156896,
+              -17.42948
+            ],
+            [
+              -66.157344,
+              -17.43172
+            ],
+            [
+              -66.157728,
+              -17.43364
+            ],
+            [
+              -66.158,
+              -17.435
+            ],
+            [
+              -66.160344,
+              -17.435424
+            ],
+            [
+              -66.163672,
+              -17.436032
+            ],
+            [
+              -66.167528,
+              -17.436728
+            ],
+            [
+              -66.171456,
+              -17.437416
+            ],
+            [
+              -66.175,
+              -17.438
+            ],
+            [
+              -66.177616,
+              -17.438391
+            ],
+            [
+              -66.180148,
+              -17.438741
+            ],
+            [
+              -66.182625,
+              -17.439063
+            ],
+            [
+              -66.185074,
+              -17.43937
+            ],
+            [
+              -66.187523,
+              -17.439678
+            ],
+            [
+              -66.19,
+              -17.44
+            ],
+            [
+              -66.192674,
+              -17.440356
+            ],
+            [
+              -66.195556,
+              -17.440741
+            ],
+            [
+              -66.198438,
+              -17.441125
+            ],
+            [
+              -66.201111,
+              -17.441481
+            ],
+            [
+              -66.203368,
+              -17.441782
+            ],
+            [
+              -66.205,
+              -17.442
+            ],
+            [
+              -66.20532,
+              -17.440672
+            ],
+            [
+              -66.2058,
+              -17.438816
+            ],
+            [
+              -66.20632,
+              -17.436624
+            ],
+            [
+              -66.20676,
+              -17.434288
+            ],
+            [
+              -66.207,
+              -17.432
+            ],
+            [
+              -66.20703,
+              -17.430116
+            ],
+            [
+              -66.206963,
+              -17.428148
+            ],
+            [
+              -66.206812,
+              -17.426125
+            ],
+            [
+              -66.206593,
+              -17.424074
+            ],
+            [
+              -66.206317,
+              -17.422023
+            ],
+            [
+              -66.206,
+              -17.42
+            ],
+            [
+              -66.205581,
+              -17.417861
+            ],
+            [
+              -66.205037,
+              -17.415556
+            ],
+            [
+              -66.204438,
+              -17.41325
+            ],
+            [
+              -66.203852,
+              -17.411111
+            ],
+            [
+              -66.20335,
+              -17.409306
+            ],
+            [
+              -66.203,
+              -17.408
             ]
           ]
         ]
-      },
+      }
+    },
+    {
+      "type": "Feature",
       "properties": {
         "distrito_id": "D6",
         "numero": 6,
@@ -418,57 +1733,345 @@
         "temp_aire_pred_c": 28.2,
         "pet_pred_c": 26.9,
         "nivel_alerta": "Moderado",
-        "estrategia_recomendada": "Isla Fría Bioclimática (-1.8 °C de amortiguamiento)",
+        "hito_urbano": "Laguna Alalay, Recinto Ferial FEXCO, Club Wilstermann, Cerro Verde, Circuito Bolivia",
+        "resena_historica": "Custodio del mayor pulmón hídrico urbano de Cochabamba. La laguna Alalay provee un efecto de amortiguamiento bioclimático de hasta -2.1°C respecto al asfalto circundante.",
+        "tendencia_detectada": "Recuperación de la isla fría tras dragado y llenado hídrico municipal GAMC 2024-2026.",
+        "estrategia_recomendada": "Monitoreo continuo de bloom de cianobacterias con NASA Aqua/Terra y oxigenación mecánica.",
         "centroide": [
-          -17.4223,
-          -66.145
-        ],
-        "resena_historica": "Entorno de la Laguna Alalay y Cerro Verde. Actúa como el principal pulmón bioclimático del sur, generando un efecto de 'Isla Fría' que amortigua el calor del valle.",
-        "hito_urbano": "Laguna Alalay • Recinto Ferial FEXCO • Country Club Cochabamba",
-        "tendencia_detectada": "Isla fría comprobada: reduce -1.8 °C en su área de influencia inmediata cuando el espejo tiene agua."
-      }
-    },
-    {
-      "type": "Feature",
+          -17.42168,
+          -66.141147
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.13,
+              -66.152,
+              -17.405
+            ],
+            [
+              -66.15182,
+              -17.405
+            ],
+            [
+              -66.151562,
+              -17.405
+            ],
+            [
+              -66.151273,
+              -17.405
+            ],
+            [
+              -66.151,
+              -17.405
+            ],
+            [
+              -66.15063,
+              -17.405
+            ],
+            [
+              -66.150259,
+              -17.405
+            ],
+            [
+              -66.15,
+              -17.405
+            ],
+            [
+              -66.149118,
+              -17.405109
+            ],
+            [
+              -66.147889,
+              -17.405259
+            ],
+            [
+              -66.146437,
+              -17.405438
+            ],
+            [
+              -66.144889,
+              -17.40563
+            ],
+            [
+              -66.143368,
+              -17.405822
+            ],
+            [
+              -66.142,
+              -17.406
+            ],
+            [
+              -66.140775,
+              -17.406167
+            ],
+            [
+              -66.139593,
+              -17.406333
+            ],
+            [
+              -66.138438,
+              -17.4065
+            ],
+            [
+              -66.137296,
+              -17.406667
+            ],
+            [
+              -66.136155,
+              -17.406833
+            ],
+            [
+              -66.135,
               -17.407
             ],
             [
-              -66.11,
-              -17.41
+              -66.133488,
+              -17.407216
             ],
             [
-              -66.11,
-              -17.425
+              -66.131864,
+              -17.407448
             ],
             [
-              -66.105,
-              -17.442
+              -66.130296,
+              -17.407672
             ],
             [
-              -66.118,
-              -17.438
+              -66.128952,
+              -17.407864
             ],
             [
-              -66.132,
-              -17.435
+              -66.128,
+              -17.408
+            ],
+            [
+              -66.127891,
+              -17.409111
+            ],
+            [
+              -66.127741,
+              -17.410667
+            ],
+            [
+              -66.127562,
+              -17.4125
+            ],
+            [
+              -66.12737,
+              -17.414444
+            ],
+            [
+              -66.127178,
+              -17.416333
+            ],
+            [
+              -66.127,
+              -17.418
+            ],
+            [
+              -66.126833,
+              -17.419437
+            ],
+            [
+              -66.126667,
+              -17.420778
+            ],
+            [
+              -66.1265,
+              -17.422062
+            ],
+            [
+              -66.126333,
+              -17.423333
+            ],
+            [
+              -66.126167,
+              -17.424632
             ],
             [
               -66.126,
+              -17.426
+            ],
+            [
+              -66.125784,
+              -17.42788
+            ],
+            [
+              -66.125552,
+              -17.42996
+            ],
+            [
+              -66.125328,
+              -17.432
+            ],
+            [
+              -66.125136,
+              -17.43376
+            ],
+            [
+              -66.125,
+              -17.435
+            ],
+            [
+              -66.126519,
+              -17.434963
+            ],
+            [
+              -66.128704,
+              -17.434926
+            ],
+            [
+              -66.131,
+              -17.435
+            ],
+            [
+              -66.132844,
+              -17.435203
+            ],
+            [
+              -66.134875,
+              -17.4355
+            ],
+            [
+              -66.136719,
+              -17.435797
+            ],
+            [
+              -66.138,
+              -17.436
+            ],
+            [
+              -66.139556,
+              -17.436
+            ],
+            [
+              -66.141778,
+              -17.436
+            ],
+            [
+              -66.144,
+              -17.436
+            ],
+            [
+              -66.145641,
+              -17.436
+            ],
+            [
+              -66.147375,
+              -17.436
+            ],
+            [
+              -66.148922,
+              -17.436
+            ],
+            [
+              -66.15,
+              -17.436
+            ],
+            [
+              -66.151037,
+              -17.435704
+            ],
+            [
+              -66.152519,
+              -17.435296
+            ],
+            [
+              -66.154,
+              -17.435
+            ],
+            [
+              -66.155094,
+              -17.43493
+            ],
+            [
+              -66.15625,
+              -17.434937
+            ],
+            [
+              -66.157281,
+              -17.434977
+            ],
+            [
+              -66.158,
+              -17.435
+            ],
+            [
+              -66.157728,
+              -17.43364
+            ],
+            [
+              -66.157344,
+              -17.43172
+            ],
+            [
+              -66.156896,
+              -17.42948
+            ],
+            [
+              -66.156432,
+              -17.42716
+            ],
+            [
+              -66.156,
+              -17.425
+            ],
+            [
+              -66.155667,
+              -17.423333
+            ],
+            [
+              -66.155333,
+              -17.421667
+            ],
+            [
+              -66.155,
               -17.42
             ],
             [
-              -66.13,
-              -17.407
+              -66.154667,
+              -17.418333
+            ],
+            [
+              -66.154333,
+              -17.416667
+            ],
+            [
+              -66.154,
+              -17.415
+            ],
+            [
+              -66.153644,
+              -17.413218
+            ],
+            [
+              -66.153259,
+              -17.411296
+            ],
+            [
+              -66.152875,
+              -17.409375
+            ],
+            [
+              -66.152519,
+              -17.407593
+            ],
+            [
+              -66.152218,
+              -17.406088
+            ],
+            [
+              -66.152,
+              -17.405
             ]
           ]
         ]
-      },
+      }
+    },
+    {
+      "type": "Feature",
       "properties": {
         "distrito_id": "D7",
         "numero": 7,
@@ -485,53 +2088,265 @@
         "temp_aire_pred_c": 31.8,
         "pet_pred_c": 33.9,
         "nivel_alerta": "Alto",
-        "estrategia_recomendada": "Parques lineales en laderas San Pedro sur",
+        "hito_urbano": "Plaza Sebastián Pagador, Av. Petrolera km 2 a 4, Cerro San Pedro ladera sur",
+        "resena_historica": "Barrio emblemático fundado por migración minera orureña. Alta cohesión comunitaria en ladera con escasez histórica de redes de agua potable.",
+        "tendencia_detectada": "Calentamiento radiativo rápido por techos de calamina y suelo arcilloso desnudo.",
+        "estrategia_recomendada": "Techos frescos reflectivos, arborización con especies xerofíticas nativas y cosecha de agua pluvial.",
         "centroide": [
-          -17.4253,
-          -66.1187
-        ],
-        "resena_historica": "Valle Hermoso y Villa Sebastián Pagador Norte, ladera este en las faldas de la Serranía de San Pedro. Zona de alta radiación solar sobre pendientes pedregosas.",
-        "hito_urbano": "Refinería Gualberto Villarroel • Mercado Campesino • Ladera San Pedro",
-        "tendencia_detectada": "Almacenamiento térmico en cerros desprovistos de vegetación, irradiando calor nocturno."
-      }
-    },
-    {
-      "type": "Feature",
+          -17.423274,
+          -66.11635
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.118,
-              -17.438
+              -66.128,
+              -17.408
             ],
             [
-              -66.105,
-              -17.442
+              -66.127359,
+              -17.408109
             ],
             [
-              -66.102,
-              -17.455
+              -66.126481,
+              -17.408259
             ],
             [
-              -66.098,
-              -17.465
+              -66.125438,
+              -17.408438
             ],
             [
-              -66.12,
-              -17.485
+              -66.124296,
+              -17.40863
+            ],
+            [
+              -66.123127,
+              -17.408822
             ],
             [
               -66.122,
-              -17.46
+              -17.409
             ],
             [
-              -66.118,
+              -66.120891,
+              -17.409155
+            ],
+            [
+              -66.119741,
+              -17.409296
+            ],
+            [
+              -66.118562,
+              -17.409437
+            ],
+            [
+              -66.11737,
+              -17.409593
+            ],
+            [
+              -66.116178,
+              -17.409775
+            ],
+            [
+              -66.115,
+              -17.41
+            ],
+            [
+              -66.113488,
+              -17.410368
+            ],
+            [
+              -66.111864,
+              -17.410824
+            ],
+            [
+              -66.110296,
+              -17.411296
+            ],
+            [
+              -66.108952,
+              -17.411712
+            ],
+            [
+              -66.108,
+              -17.412
+            ],
+            [
+              -66.107782,
+              -17.413414
+            ],
+            [
+              -66.107481,
+              -17.41537
+            ],
+            [
+              -66.107125,
+              -17.417687
+            ],
+            [
+              -66.106741,
+              -17.420185
+            ],
+            [
+              -66.106356,
+              -17.422683
+            ],
+            [
+              -66.106,
+              -17.425
+            ],
+            [
+              -66.105568,
+              -17.427808
+            ],
+            [
+              -66.105104,
+              -17.430824
+            ],
+            [
+              -66.104656,
+              -17.433736
+            ],
+            [
+              -66.104272,
+              -17.436232
+            ],
+            [
+              -66.104,
               -17.438
+            ],
+            [
+              -66.105593,
+              -17.437704
+            ],
+            [
+              -66.107852,
+              -17.437296
+            ],
+            [
+              -66.11,
+              -17.437
+            ],
+            [
+              -66.111437,
+              -17.43693
+            ],
+            [
+              -66.112875,
+              -17.436937
+            ],
+            [
+              -66.114125,
+              -17.436977
+            ],
+            [
+              -66.115,
+              -17.437
+            ],
+            [
+              -66.116296,
+              -17.436741
+            ],
+            [
+              -66.118148,
+              -17.43637
+            ],
+            [
+              -66.12,
+              -17.436
+            ],
+            [
+              -66.121367,
+              -17.435727
+            ],
+            [
+              -66.122812,
+              -17.435437
+            ],
+            [
+              -66.124102,
+              -17.43518
+            ],
+            [
+              -66.125,
+              -17.435
+            ],
+            [
+              -66.125136,
+              -17.43376
+            ],
+            [
+              -66.125328,
+              -17.432
+            ],
+            [
+              -66.125552,
+              -17.42996
+            ],
+            [
+              -66.125784,
+              -17.42788
+            ],
+            [
+              -66.126,
+              -17.426
+            ],
+            [
+              -66.126167,
+              -17.424632
+            ],
+            [
+              -66.126333,
+              -17.423333
+            ],
+            [
+              -66.1265,
+              -17.422062
+            ],
+            [
+              -66.126667,
+              -17.420778
+            ],
+            [
+              -66.126833,
+              -17.419437
+            ],
+            [
+              -66.127,
+              -17.418
+            ],
+            [
+              -66.127178,
+              -17.416333
+            ],
+            [
+              -66.12737,
+              -17.414444
+            ],
+            [
+              -66.127562,
+              -17.4125
+            ],
+            [
+              -66.127741,
+              -17.410667
+            ],
+            [
+              -66.127891,
+              -17.409111
+            ],
+            [
+              -66.128,
+              -17.408
             ]
           ]
         ]
-      },
+      }
+    },
+    {
+      "type": "Feature",
       "properties": {
         "distrito_id": "D8",
         "numero": 8,
@@ -545,96 +2360,708 @@
         "lst_nasa_max_c": 40.2,
         "ndvi_promedio": 0.09,
         "deficit_arbolado_pct": 82,
-        "temp_aire_pred_c": 34.6,
-        "pet_pred_c": 38.2,
-        "nivel_alerta": "Crítico",
-        "estrategia_recomendada": "Arborización masiva de choque (Molles / Jacarandás)",
+        "temp_aire_pred_c": 34.2,
+        "pet_pred_c": 37.8,
+        "nivel_alerta": "Extremo",
+        "hito_urbano": "Entrada Ushpa Ushpa, Av. Petrolera km 6 a 9, Complejo Refinería Gualberto Villarroel sur",
+        "resena_historica": "Frontera periurbana árida hacia La Angostura. Registra las mayores temperaturas superficiales de la cuenca (LST > 38°C) y déficit arbóreo crítico.",
+        "tendencia_detectada": "Tendencia de calentamiento acelerado (+0.82°C decadal) demostrada por regresión Mann-Kendall.",
+        "estrategia_recomendada": "Reforestación masiva con algarrobos y molles con riego por goteo fotovoltaico y micro-sensores comunitarios.",
         "centroide": [
-          -17.4575,
-          -66.1108
-        ],
-        "resena_historica": "Ushpa Ushpa y Valle Hermoso Sur, sector árido periurbano del sureste. Zona de asentamientos recientes en lomas secas con escasa cobertura vegetal (NDVI < 0.10).",
-        "hito_urbano": "Av. Petrolera km 7 al 10 • Quebrada Ushpa Ushpa • Salida al Valle Alto",
-        "tendencia_detectada": "Isla de calor crítica con déficit de arbolado del 82% y estrés hídrico edáfico sostenido."
-      }
-    },
-    {
-      "type": "Feature",
+          -17.46387,
+          -66.109164
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.205,
-              -17.442
-            ],
-            [
-              -66.185,
-              -17.44
-            ],
-            [
-              -66.168,
-              -17.438
-            ],
-            [
-              -66.155,
+              -66.115,
               -17.437
             ],
             [
-              -66.155,
-              -17.47
+              -66.114125,
+              -17.436977
             ],
             [
-              -66.155,
-              -17.505
+              -66.112875,
+              -17.436937
             ],
             [
-              -66.185,
-              -17.495
+              -66.111437,
+              -17.43693
             ],
             [
-              -66.21,
+              -66.11,
+              -17.437
+            ],
+            [
+              -66.107852,
+              -17.437296
+            ],
+            [
+              -66.105593,
+              -17.437704
+            ],
+            [
+              -66.104,
+              -17.438
+            ],
+            [
+              -66.103806,
+              -17.4395
+            ],
+            [
+              -66.103556,
+              -17.441556
+            ],
+            [
+              -66.10325,
+              -17.444
+            ],
+            [
+              -66.102889,
+              -17.446667
+            ],
+            [
+              -66.102472,
+              -17.449389
+            ],
+            [
+              -66.102,
+              -17.452
+            ],
+            [
+              -66.101438,
+              -17.454574
+            ],
+            [
+              -66.100778,
+              -17.457259
+            ],
+            [
+              -66.100063,
+              -17.46
+            ],
+            [
+              -66.099333,
+              -17.462741
+            ],
+            [
+              -66.098632,
+              -17.465426
+            ],
+            [
+              -66.098,
+              -17.468
+            ],
+            [
+              -66.097288,
+              -17.471152
+            ],
+            [
+              -66.096584,
+              -17.474416
+            ],
+            [
+              -66.095936,
+              -17.477504
+            ],
+            [
+              -66.095392,
+              -17.480128
+            ],
+            [
+              -66.095,
+              -17.482
+            ],
+            [
+              -66.095904,
+              -17.482456
+            ],
+            [
+              -66.097152,
+              -17.483128
+            ],
+            [
+              -66.098648,
+              -17.483872
+            ],
+            [
+              -66.100296,
+              -17.484544
+            ],
+            [
+              -66.102,
               -17.485
             ],
             [
-              -66.207,
+              -66.103493,
+              -17.485255
+            ],
+            [
+              -66.105111,
+              -17.485481
+            ],
+            [
+              -66.106813,
+              -17.485625
+            ],
+            [
+              -66.108556,
+              -17.48563
+            ],
+            [
+              -66.110299,
+              -17.48544
+            ],
+            [
+              -66.112,
+              -17.485
+            ],
+            [
+              -66.113782,
+              -17.484157
+            ],
+            [
+              -66.115704,
+              -17.482926
+            ],
+            [
+              -66.117625,
+              -17.4815
+            ],
+            [
+              -66.119407,
+              -17.480074
+            ],
+            [
+              -66.120912,
+              -17.478843
+            ],
+            [
+              -66.122,
+              -17.478
+            ],
+            [
+              -66.121728,
+              -17.476264
+            ],
+            [
+              -66.121344,
+              -17.473832
+            ],
+            [
+              -66.120896,
+              -17.470968
+            ],
+            [
+              -66.120432,
+              -17.467936
+            ],
+            [
+              -66.12,
               -17.465
             ],
             [
-              -66.205,
-              -17.442
+              -66.119678,
+              -17.462593
+            ],
+            [
+              -66.11937,
+              -17.460074
+            ],
+            [
+              -66.119062,
+              -17.4575
+            ],
+            [
+              -66.118741,
+              -17.454926
+            ],
+            [
+              -66.118391,
+              -17.452407
+            ],
+            [
+              -66.118,
+              -17.45
+            ],
+            [
+              -66.117523,
+              -17.447567
+            ],
+            [
+              -66.116963,
+              -17.445037
+            ],
+            [
+              -66.116375,
+              -17.442563
+            ],
+            [
+              -66.115815,
+              -17.440296
+            ],
+            [
+              -66.115338,
+              -17.438391
+            ],
+            [
+              -66.115,
+              -17.437
             ]
           ]
         ]
-      },
+      }
+    },
+    {
+      "type": "Feature",
       "properties": {
         "distrito_id": "D9",
         "numero": 9,
         "nombre": "Distrito 9 - Itocta / Tamborada / Pucará",
-        "zona_geografica": "Sur Periurbano",
-        "cota_media_msnm": 2545,
-        "poblacion_total": 71200,
-        "area_km2": 18.6,
-        "densidad_hab_km2": 3827.9,
-        "lst_nasa_promedio_c": 35.8,
+        "zona_geografica": "Sur-Suroeste",
+        "cota_media_msnm": 2575,
+        "poblacion_total": 89200,
+        "area_km2": 24.8,
+        "densidad_hab_km2": 3596.8,
+        "lst_nasa_promedio_c": 34.8,
         "lst_nasa_max_c": 39.5,
-        "ndvi_promedio": 0.12,
+        "ndvi_promedio": 0.14,
         "deficit_arbolado_pct": 74,
-        "temp_aire_pred_c": 33.8,
-        "pet_pred_c": 37.1,
+        "temp_aire_pred_c": 33.6,
+        "pet_pred_c": 36.5,
         "nivel_alerta": "Muy Alto",
-        "estrategia_recomendada": "Recuperación de ronda hídrica Río Tamborada",
+        "hito_urbano": "Campus UNVALLE Tamborada, Centro de Alto Rendimiento, Zona Agrícola Pucará, Río Tamborada",
+        "resena_historica": "El distrito de mayor extensión territorial de Cercado. Combina zonas agrarias campesinas tradicionales con una densificación urbana explosiva sin alcantarillado.",
+        "tendencia_detectada": "Aumento severo de estrés térmico (PET > 36°C) en áreas recientemente loteadas.",
+        "estrategia_recomendada": "Delimitación de áreas de recarga acuífera y corredores bioclimáticos ribereños en el Río Tamborada.",
         "centroide": [
-          -17.4641,
-          -66.1806
-        ],
-        "resena_historica": "Itocta, Pucará y cuenca del Río Tamborada. Histórica zona de cultivos del sur hoy en rápida transición urbana hacia barrios residenciales populares.",
-        "hito_urbano": "Río Tamborada • Polideportivo Pucará • Av. Panamericana Sur",
-        "tendencia_detectada": "Calor diurno muy elevado (+35.8 °C LST) atenuado parcialmente por la humedad de parcelas de cultivo."
+          -17.473118,
+          -66.179407
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -66.205,
+              -17.442
+            ],
+            [
+              -66.203368,
+              -17.441782
+            ],
+            [
+              -66.201111,
+              -17.441481
+            ],
+            [
+              -66.198438,
+              -17.441125
+            ],
+            [
+              -66.195556,
+              -17.440741
+            ],
+            [
+              -66.192674,
+              -17.440356
+            ],
+            [
+              -66.19,
+              -17.44
+            ],
+            [
+              -66.187523,
+              -17.439678
+            ],
+            [
+              -66.185074,
+              -17.43937
+            ],
+            [
+              -66.182625,
+              -17.439063
+            ],
+            [
+              -66.180148,
+              -17.438741
+            ],
+            [
+              -66.177616,
+              -17.438391
+            ],
+            [
+              -66.175,
+              -17.438
+            ],
+            [
+              -66.171456,
+              -17.437416
+            ],
+            [
+              -66.167528,
+              -17.436728
+            ],
+            [
+              -66.163672,
+              -17.436032
+            ],
+            [
+              -66.160344,
+              -17.435424
+            ],
+            [
+              -66.158,
+              -17.435
+            ],
+            [
+              -66.157281,
+              -17.434977
+            ],
+            [
+              -66.15625,
+              -17.434937
+            ],
+            [
+              -66.155094,
+              -17.43493
+            ],
+            [
+              -66.154,
+              -17.435
+            ],
+            [
+              -66.152519,
+              -17.435296
+            ],
+            [
+              -66.151037,
+              -17.435704
+            ],
+            [
+              -66.15,
+              -17.436
+            ],
+            [
+              -66.150154,
+              -17.437459
+            ],
+            [
+              -66.150359,
+              -17.439391
+            ],
+            [
+              -66.150604,
+              -17.441689
+            ],
+            [
+              -66.150875,
+              -17.44425
+            ],
+            [
+              -66.151162,
+              -17.446967
+            ],
+            [
+              -66.151453,
+              -17.449734
+            ],
+            [
+              -66.151736,
+              -17.452447
+            ],
+            [
+              -66.152,
+              -17.455
+            ],
+            [
+              -66.152257,
+              -17.457452
+            ],
+            [
+              -66.152523,
+              -17.45993
+            ],
+            [
+              -66.152794,
+              -17.462427
+            ],
+            [
+              -66.153062,
+              -17.464937
+            ],
+            [
+              -66.153323,
+              -17.467456
+            ],
+            [
+              -66.15357,
+              -17.469977
+            ],
+            [
+              -66.153798,
+              -17.472493
+            ],
+            [
+              -66.154,
+              -17.475
+            ],
+            [
+              -66.154173,
+              -17.477521
+            ],
+            [
+              -66.15432,
+              -17.48007
+            ],
+            [
+              -66.154448,
+              -17.482632
+            ],
+            [
+              -66.154562,
+              -17.485188
+            ],
+            [
+              -66.154669,
+              -17.48772
+            ],
+            [
+              -66.154773,
+              -17.490211
+            ],
+            [
+              -66.154882,
+              -17.492644
+            ],
+            [
+              -66.155,
+              -17.495
+            ],
+            [
+              -66.155152,
+              -17.497735
+            ],
+            [
+              -66.155315,
+              -17.500571
+            ],
+            [
+              -66.155481,
+              -17.503388
+            ],
+            [
+              -66.155641,
+              -17.506061
+            ],
+            [
+              -66.155787,
+              -17.508469
+            ],
+            [
+              -66.15591,
+              -17.51049
+            ],
+            [
+              -66.156,
+              -17.512
+            ],
+            [
+              -66.158648,
+              -17.512064
+            ],
+            [
+              -66.162424,
+              -17.512192
+            ],
+            [
+              -66.166776,
+              -17.512288
+            ],
+            [
+              -66.171152,
+              -17.512256
+            ],
+            [
+              -66.175,
+              -17.512
+            ],
+            [
+              -66.177766,
+              -17.511588
+            ],
+            [
+              -66.180407,
+              -17.511037
+            ],
+            [
+              -66.182937,
+              -17.510375
+            ],
+            [
+              -66.18537,
+              -17.50963
+            ],
+            [
+              -66.18772,
+              -17.508829
+            ],
+            [
+              -66.19,
+              -17.508
+            ],
+            [
+              -66.192313,
+              -17.507046
+            ],
+            [
+              -66.194667,
+              -17.505926
+            ],
+            [
+              -66.196938,
+              -17.50475
+            ],
+            [
+              -66.199,
+              -17.50363
+            ],
+            [
+              -66.200729,
+              -17.502676
+            ],
+            [
+              -66.202,
+              -17.502
+            ],
+            [
+              -66.20288,
+              -17.500752
+            ],
+            [
+              -66.20416,
+              -17.499056
+            ],
+            [
+              -66.2056,
+              -17.496984
+            ],
+            [
+              -66.20696,
+              -17.494608
+            ],
+            [
+              -66.208,
+              -17.492
+            ],
+            [
+              -66.208611,
+              -17.489572
+            ],
+            [
+              -66.209111,
+              -17.486852
+            ],
+            [
+              -66.2095,
+              -17.483938
+            ],
+            [
+              -66.209778,
+              -17.480926
+            ],
+            [
+              -66.209944,
+              -17.477914
+            ],
+            [
+              -66.21,
+              -17.475
+            ],
+            [
+              -66.20991,
+              -17.472155
+            ],
+            [
+              -66.209667,
+              -17.469296
+            ],
+            [
+              -66.209312,
+              -17.466437
+            ],
+            [
+              -66.208889,
+              -17.463593
+            ],
+            [
+              -66.208437,
+              -17.460775
+            ],
+            [
+              -66.208,
+              -17.458
+            ],
+            [
+              -66.207523,
+              -17.45509
+            ],
+            [
+              -66.206963,
+              -17.452
+            ],
+            [
+              -66.206375,
+              -17.448937
+            ],
+            [
+              -66.205815,
+              -17.446111
+            ],
+            [
+              -66.205338,
+              -17.443729
+            ],
+            [
+              -66.205,
+              -17.442
+            ]
+          ]
+        ]
       }
     },
     {
       "type": "Feature",
+      "properties": {
+        "distrito_id": "D10",
+        "numero": 10,
+        "nombre": "Distrito 10 - Centro Histórico / Casco Viejo",
+        "zona_geografica": "Centro",
+        "cota_media_msnm": 2570,
+        "poblacion_total": 38100,
+        "area_km2": 4.2,
+        "densidad_hab_km2": 9071.4,
+        "lst_nasa_promedio_c": 31.2,
+        "lst_nasa_max_c": 34.5,
+        "ndvi_promedio": 0.22,
+        "deficit_arbolado_pct": 52,
+        "temp_aire_pred_c": 30.8,
+        "pet_pred_c": 32.1,
+        "nivel_alerta": "Medio-Alto",
+        "hito_urbano": "Plaza 14 de Septiembre, Catedral Metropolitana, Paseo El Prado, Teatro Achá, Mercado La Cancha Norte",
+        "resena_historica": "Núcleo fundacional colonial en cuadrícula española de 1571. Cañones urbanos de edificios retienen calor antropogénico por tráfico vehicular denso.",
+        "tendencia_detectada": "Isla de calor nocturna atrapada en cañones de hormigón y ladrillo.",
+        "estrategia_recomendada": "Peatonalización de calles históricas, fachadas vegetales y arborización de aceras angostas.",
+        "centroide": [
+          -17.392868,
+          -66.157719
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -644,32 +3071,324 @@
               -17.379
             ],
             [
-              -66.158,
-              -17.385
+              -66.167347,
+              -17.379206
             ],
             [
-              -66.142,
-              -17.389
+              -66.166444,
+              -17.379481
+            ],
+            [
+              -66.165375,
+              -17.379812
+            ],
+            [
+              -66.164222,
+              -17.380185
+            ],
+            [
+              -66.163069,
+              -17.380586
+            ],
+            [
+              -66.162,
+              -17.381
+            ],
+            [
+              -66.160704,
+              -17.381584
+            ],
+            [
+              -66.159312,
+              -17.382272
+            ],
+            [
+              -66.157968,
+              -17.382968
+            ],
+            [
+              -66.156816,
+              -17.383576
+            ],
+            [
+              -66.156,
+              -17.384
+            ],
+            [
+              -66.15513,
+              -17.384218
+            ],
+            [
+              -66.153926,
+              -17.384519
+            ],
+            [
+              -66.1525,
+              -17.384875
+            ],
+            [
+              -66.150963,
+              -17.385259
+            ],
+            [
+              -66.149426,
+              -17.385644
             ],
             [
               -66.148,
-              -17.395
+              -17.386
             ],
             [
-              -66.142,
+              -66.146272,
+              -17.386432
+            ],
+            [
+              -66.144416,
+              -17.386896
+            ],
+            [
+              -66.142624,
+              -17.387344
+            ],
+            [
+              -66.141088,
+              -17.387728
+            ],
+            [
+              -66.14,
+              -17.388
+            ],
+            [
+              -66.148,
+              -17.386
+            ],
+            [
+              -66.147988,
+              -17.386773
+            ],
+            [
+              -66.147963,
+              -17.387852
+            ],
+            [
+              -66.147937,
+              -17.389125
+            ],
+            [
+              -66.147926,
+              -17.390481
+            ],
+            [
+              -66.147942,
+              -17.39181
+            ],
+            [
+              -66.148,
+              -17.393
+            ],
+            [
+              -66.148109,
+              -17.394058
+            ],
+            [
+              -66.148259,
+              -17.395074
+            ],
+            [
+              -66.148437,
+              -17.396062
+            ],
+            [
+              -66.14863,
+              -17.397037
+            ],
+            [
+              -66.148822,
+              -17.398012
+            ],
+            [
+              -66.149,
+              -17.399
+            ],
+            [
+              -66.149216,
+              -17.400296
+            ],
+            [
+              -66.149448,
+              -17.401688
+            ],
+            [
+              -66.149672,
+              -17.403032
+            ],
+            [
+              -66.149864,
+              -17.404184
+            ],
+            [
+              -66.15,
+              -17.405
+            ],
+            [
+              -66.150259,
+              -17.405
+            ],
+            [
+              -66.15063,
+              -17.405
+            ],
+            [
+              -66.151,
+              -17.405
+            ],
+            [
+              -66.151273,
+              -17.405
+            ],
+            [
+              -66.151562,
+              -17.405
+            ],
+            [
+              -66.15182,
               -17.405
             ],
             [
               -66.152,
-              -17.403
+              -17.405
+            ],
+            [
+              -66.152376,
+              -17.405016
+            ],
+            [
+              -66.152888,
+              -17.405048
+            ],
+            [
+              -66.153512,
+              -17.405072
+            ],
+            [
+              -66.154224,
+              -17.405064
+            ],
+            [
+              -66.155,
+              -17.405
+            ],
+            [
+              -66.155729,
+              -17.40488
+            ],
+            [
+              -66.156556,
+              -17.404704
+            ],
+            [
+              -66.157438,
+              -17.4045
+            ],
+            [
+              -66.158333,
+              -17.404296
+            ],
+            [
+              -66.159201,
+              -17.40412
+            ],
+            [
+              -66.16,
+              -17.404
+            ],
+            [
+              -66.160771,
+              -17.403942
+            ],
+            [
+              -66.161556,
+              -17.403926
+            ],
+            [
+              -66.162313,
+              -17.403937
+            ],
+            [
+              -66.163,
+              -17.403963
+            ],
+            [
+              -66.163576,
+              -17.403988
+            ],
+            [
+              -66.164,
+              -17.404
+            ],
+            [
+              -66.16412,
+              -17.402912
+            ],
+            [
+              -66.16428,
+              -17.401376
+            ],
+            [
+              -66.16448,
+              -17.399584
+            ],
+            [
+              -66.16472,
+              -17.397728
             ],
             [
               -66.165,
-              -17.402
+              -17.396
+            ],
+            [
+              -66.165287,
+              -17.394678
+            ],
+            [
+              -66.16563,
+              -17.39337
             ],
             [
               -66.166,
-              -17.39
+              -17.392062
+            ],
+            [
+              -66.16637,
+              -17.390741
+            ],
+            [
+              -66.166713,
+              -17.389391
+            ],
+            [
+              -66.167,
+              -17.388
+            ],
+            [
+              -66.167236,
+              -17.386454
+            ],
+            [
+              -66.167444,
+              -17.384741
+            ],
+            [
+              -66.167625,
+              -17.383
+            ],
+            [
+              -66.167778,
+              -17.38137
+            ],
+            [
+              -66.167903,
+              -17.379991
             ],
             [
               -66.168,
@@ -677,102 +3396,394 @@
             ]
           ]
         ]
-      },
-      "properties": {
-        "distrito_id": "D10",
-        "numero": 10,
-        "nombre": "Distrito 10 - Centro Histórico / El Prado / Casco Viejo",
-        "zona_geografica": "Centro",
-        "cota_media_msnm": 2560,
-        "poblacion_total": 38400,
-        "area_km2": 4.2,
-        "densidad_hab_km2": 9142.8,
-        "lst_nasa_promedio_c": 31.9,
-        "lst_nasa_max_c": 36.8,
-        "ndvi_promedio": 0.22,
-        "deficit_arbolado_pct": 52,
-        "temp_aire_pred_c": 31.2,
-        "pet_pred_c": 33.4,
-        "nivel_alerta": "Medio-Alto",
-        "estrategia_recomendada": "Hotspot La Cancha (+8 °C) • Corredores sombreados",
-        "centroide": [
-          -17.3935,
-          -66.1551
-        ],
-        "resena_historica": "Casco Viejo, Centro Histórico y La Coronilla. Corazón comercial de la ciudad que alberga el gran mercado La Cancha, una de las áreas comerciales abiertas más grandes de Sudamérica.",
-        "hito_urbano": "Plaza 14 de Septiembre • El Prado • Mercado La Cancha • Cerro San Sebastián",
-        "tendencia_detectada": "Hotspot urbano extremo en La Cancha (+8.1 °C sobre Tunari) por densidad de calaminas y asfalto."
       }
     },
     {
       "type": "Feature",
+      "properties": {
+        "distrito_id": "D11",
+        "numero": 11,
+        "nombre": "Distrito 11 - Las Cuadras / San Pedro / UMSS",
+        "zona_geografica": "Centro-Este",
+        "cota_media_msnm": 2580,
+        "poblacion_total": 45600,
+        "area_km2": 5.9,
+        "densidad_hab_km2": 7728.8,
+        "lst_nasa_promedio_c": 28.9,
+        "lst_nasa_max_c": 32.1,
+        "ndvi_promedio": 0.33,
+        "deficit_arbolado_pct": 36,
+        "temp_aire_pred_c": 28.6,
+        "pet_pred_c": 28.4,
+        "nivel_alerta": "Moderado",
+        "hito_urbano": "Campus Central UMSS, Monumento Cristo de la Concordia, Teleférico Cochabamba, Parque Infantil",
+        "resena_historica": "Polo universitario y científico con el Cerro de San Pedro como hito orográfico principal. Amortiguado por la vegetación del campus y la ladera del Cristo.",
+        "tendencia_detectada": "Microclima estable con buena ventilación proveniente de la Serranía de San Pedro.",
+        "estrategia_recomendada": "Protección de la masa forestal del Cerro San Pedro frente a conatos de incendios forestales.",
+        "centroide": [
+          -17.396878,
+          -66.126176
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.142,
-              -17.389
+              -66.14,
+              -17.388
+            ],
+            [
+              -66.138671,
+              -17.387782
+            ],
+            [
+              -66.136815,
+              -17.387481
+            ],
+            [
+              -66.134625,
+              -17.387125
+            ],
+            [
+              -66.132296,
+              -17.386741
+            ],
+            [
+              -66.130023,
+              -17.386356
+            ],
+            [
+              -66.128,
+              -17.386
+            ],
+            [
+              -66.126218,
+              -17.385667
+            ],
+            [
+              -66.124519,
+              -17.385333
+            ],
+            [
+              -66.122875,
+              -17.385
+            ],
+            [
+              -66.121259,
+              -17.384667
+            ],
+            [
+              -66.119644,
+              -17.384333
+            ],
+            [
+              -66.118,
+              -17.384
+            ],
+            [
+              -66.11584,
+              -17.383568
+            ],
+            [
+              -66.11352,
+              -17.383104
+            ],
+            [
+              -66.11128,
+              -17.382656
+            ],
+            [
+              -66.10936,
+              -17.382272
             ],
             [
               -66.108,
               -17.382
             ],
             [
-              -66.115,
+              -66.107868,
+              -17.383368
+            ],
+            [
+              -66.107667,
+              -17.385222
+            ],
+            [
+              -66.107438,
+              -17.387437
+            ],
+            [
+              -66.107222,
+              -17.389889
+            ],
+            [
+              -66.107062,
+              -17.392451
+            ],
+            [
+              -66.107,
               -17.395
             ],
             [
-              -66.11,
+              -66.107088,
+              -17.398416
+            ],
+            [
+              -66.107304,
+              -17.402328
+            ],
+            [
+              -66.107576,
+              -17.406232
+            ],
+            [
+              -66.107832,
+              -17.409624
+            ],
+            [
+              -66.108,
+              -17.412
+            ],
+            [
+              -66.108952,
+              -17.411712
+            ],
+            [
+              -66.110296,
+              -17.411296
+            ],
+            [
+              -66.111864,
+              -17.410824
+            ],
+            [
+              -66.113488,
+              -17.410368
+            ],
+            [
+              -66.115,
               -17.41
             ],
             [
-              -66.13,
+              -66.116178,
+              -17.409775
+            ],
+            [
+              -66.11737,
+              -17.409593
+            ],
+            [
+              -66.118562,
+              -17.409437
+            ],
+            [
+              -66.119741,
+              -17.409296
+            ],
+            [
+              -66.120891,
+              -17.409155
+            ],
+            [
+              -66.122,
+              -17.409
+            ],
+            [
+              -66.123127,
+              -17.408822
+            ],
+            [
+              -66.124296,
+              -17.40863
+            ],
+            [
+              -66.125438,
+              -17.408438
+            ],
+            [
+              -66.126481,
+              -17.408259
+            ],
+            [
+              -66.127359,
+              -17.408109
+            ],
+            [
+              -66.128,
+              -17.408
+            ],
+            [
+              -66.128952,
+              -17.407864
+            ],
+            [
+              -66.130296,
+              -17.407672
+            ],
+            [
+              -66.131864,
+              -17.407448
+            ],
+            [
+              -66.133488,
+              -17.407216
+            ],
+            [
+              -66.135,
               -17.407
             ],
             [
+              -66.136155,
+              -17.406833
+            ],
+            [
+              -66.137296,
+              -17.406667
+            ],
+            [
+              -66.138438,
+              -17.4065
+            ],
+            [
+              -66.139593,
+              -17.406333
+            ],
+            [
+              -66.140775,
+              -17.406167
+            ],
+            [
               -66.142,
+              -17.406
+            ],
+            [
+              -66.143368,
+              -17.405822
+            ],
+            [
+              -66.144889,
+              -17.40563
+            ],
+            [
+              -66.146437,
+              -17.405438
+            ],
+            [
+              -66.147889,
+              -17.405259
+            ],
+            [
+              -66.149118,
+              -17.405109
+            ],
+            [
+              -66.15,
               -17.405
             ],
             [
-              -66.148,
-              -17.395
+              -66.149864,
+              -17.404184
             ],
             [
-              -66.142,
-              -17.389
+              -66.149672,
+              -17.403032
+            ],
+            [
+              -66.149448,
+              -17.401688
+            ],
+            [
+              -66.149216,
+              -17.400296
+            ],
+            [
+              -66.149,
+              -17.399
+            ],
+            [
+              -66.148822,
+              -17.398012
+            ],
+            [
+              -66.14863,
+              -17.397037
+            ],
+            [
+              -66.148437,
+              -17.396062
+            ],
+            [
+              -66.148259,
+              -17.395074
+            ],
+            [
+              -66.148109,
+              -17.394058
+            ],
+            [
+              -66.148,
+              -17.393
+            ],
+            [
+              -66.147942,
+              -17.39181
+            ],
+            [
+              -66.147926,
+              -17.390481
+            ],
+            [
+              -66.147937,
+              -17.389125
+            ],
+            [
+              -66.147963,
+              -17.387852
+            ],
+            [
+              -66.147988,
+              -17.386773
+            ],
+            [
+              -66.148,
+              -17.386
+            ],
+            [
+              -66.14,
+              -17.388
             ]
           ]
         ]
-      },
-      "properties": {
-        "distrito_id": "D11",
-        "numero": 11,
-        "nombre": "Distrito 11 - Las Cuadras / San Pedro / Muyurina",
-        "zona_geografica": "Centro-Este",
-        "cota_media_msnm": 2575,
-        "poblacion_total": 41200,
-        "area_km2": 5.4,
-        "densidad_hab_km2": 7629.6,
-        "lst_nasa_promedio_c": 29.4,
-        "lst_nasa_max_c": 32.8,
-        "ndvi_promedio": 0.29,
-        "deficit_arbolado_pct": 39,
-        "temp_aire_pred_c": 29.1,
-        "pet_pred_c": 29.8,
-        "nivel_alerta": "Medio",
-        "estrategia_recomendada": "Isla Verde Campus UMSS • Protección de arbolado",
-        "centroide": [
-          -17.3976,
-          -66.1279
-        ],
-        "resena_historica": "Las Cuadras, San Pedro y Muyurina. Alberga el Campus Central de la Universidad Mayor de San Simón (UMSS) y el monumento del Cristo de la Concordia en la cumbre este.",
-        "hito_urbano": "Campus Central UMSS • Cristo de la Concordia • Hospital Viedma",
-        "tendencia_detectada": "El campus arbolado de la UMSS actúa como 'Isla Verde', bajando hasta 2.5 °C el calor del entorno."
       }
     },
     {
       "type": "Feature",
+      "properties": {
+        "distrito_id": "D12",
+        "numero": 12,
+        "nombre": "Distrito 12 - Hipódromo / Sarco Sur / Villa Galindo",
+        "zona_geografica": "Centro-Oeste",
+        "cota_media_msnm": 2575,
+        "poblacion_total": 41200,
+        "area_km2": 4.8,
+        "densidad_hab_km2": 8583.3,
+        "lst_nasa_promedio_c": 29.4,
+        "lst_nasa_max_c": 32.8,
+        "ndvi_promedio": 0.28,
+        "deficit_arbolado_pct": 44,
+        "temp_aire_pred_c": 29.1,
+        "pet_pred_c": 29.6,
+        "nivel_alerta": "Medio",
+        "hito_urbano": "Parque Ex-Combatientes, Coliseo de la Coronilla, Av. Beijing, Hospital Elizabeth Seton",
+        "resena_historica": "Sector residencial y deportivo intermedio entre el Casco Viejo y La Chimba. Gran densidad de plátanos orientales y jacarandás en sus avenidas principales.",
+        "tendencia_detectada": "Amortiguamiento térmico positivo generado por el arbolado del Parque Ex-Combatientes.",
+        "estrategia_recomendada": "Expansión del corredor biológico de la Av. Melchor Pérez hacia el Río Rocha.",
+        "centroide": [
+          -17.392201,
+          -66.173407
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -780,30 +3791,250 @@
             [
               -66.182,
               -17.38
+            ],
+            [
+              -66.181238,
+              -17.37988
+            ],
+            [
+              -66.180185,
+              -17.379704
+            ],
+            [
+              -66.178938,
+              -17.3795
+            ],
+            [
+              -66.177593,
+              -17.379296
+            ],
+            [
+              -66.176248,
+              -17.37912
+            ],
+            [
+              -66.175,
+              -17.379
+            ],
+            [
+              -66.173488,
+              -17.378936
+            ],
+            [
+              -66.171864,
+              -17.378928
+            ],
+            [
+              -66.170296,
+              -17.378952
+            ],
+            [
+              -66.168952,
+              -17.378984
             ],
             [
               -66.168,
               -17.379
             ],
             [
+              -66.167903,
+              -17.379991
+            ],
+            [
+              -66.167778,
+              -17.38137
+            ],
+            [
+              -66.167625,
+              -17.383
+            ],
+            [
+              -66.167444,
+              -17.384741
+            ],
+            [
+              -66.167236,
+              -17.386454
+            ],
+            [
+              -66.167,
+              -17.388
+            ],
+            [
+              -66.166713,
+              -17.389391
+            ],
+            [
+              -66.16637,
+              -17.390741
+            ],
+            [
               -66.166,
-              -17.39
+              -17.392062
+            ],
+            [
+              -66.16563,
+              -17.39337
+            ],
+            [
+              -66.165287,
+              -17.394678
             ],
             [
               -66.165,
-              -17.402
+              -17.396
             ],
             [
-              -66.178,
+              -66.16472,
+              -17.397728
+            ],
+            [
+              -66.16448,
+              -17.399584
+            ],
+            [
+              -66.16428,
+              -17.401376
+            ],
+            [
+              -66.16412,
+              -17.402912
+            ],
+            [
+              -66.164,
               -17.404
             ],
             [
-              -66.185,
-              -17.392
+              -66.16468,
+              -17.403984
             ],
             [
-              -66.19,
-              -17.381
+              -66.16564,
+              -17.403952
+            ],
+            [
+              -66.16676,
+              -17.403928
+            ],
+            [
+              -66.16792,
+              -17.403936
+            ],
+            [
+              -66.169,
+              -17.404
+            ],
+            [
+              -66.169833,
+              -17.404109
+            ],
+            [
+              -66.170667,
+              -17.404259
+            ],
+            [
+              -66.1715,
+              -17.404438
+            ],
+            [
+              -66.172333,
+              -17.40463
+            ],
+            [
+              -66.173167,
+              -17.404822
+            ],
+            [
+              -66.174,
+              -17.405
+            ],
+            [
+              -66.174891,
+              -17.405178
+            ],
+            [
+              -66.175852,
+              -17.40537
+            ],
+            [
+              -66.176812,
+              -17.405562
+            ],
+            [
+              -66.177704,
+              -17.405741
+            ],
+            [
+              -66.178456,
+              -17.405891
+            ],
+            [
+              -66.179,
+              -17.406
+            ],
+            [
+              -66.179136,
+              -17.40508
+            ],
+            [
+              -66.179328,
+              -17.4038
+            ],
+            [
+              -66.179552,
+              -17.40228
+            ],
+            [
+              -66.179784,
+              -17.40064
+            ],
+            [
+              -66.18,
+              -17.399
+            ],
+            [
+              -66.180167,
+              -17.397627
+            ],
+            [
+              -66.180333,
+              -17.396185
+            ],
+            [
+              -66.1805,
+              -17.394688
+            ],
+            [
+              -66.180667,
+              -17.393148
+            ],
+            [
+              -66.180833,
+              -17.391581
+            ],
+            [
+              -66.181,
+              -17.39
+            ],
+            [
+              -66.181178,
+              -17.388275
+            ],
+            [
+              -66.18137,
+              -17.38637
+            ],
+            [
+              -66.181562,
+              -17.384438
+            ],
+            [
+              -66.181741,
+              -17.38263
+            ],
+            [
+              -66.181891,
+              -17.3811
             ],
             [
               -66.182,
@@ -811,252 +4042,1123 @@
             ]
           ]
         ]
-      },
-      "properties": {
-        "distrito_id": "D12",
-        "numero": 12,
-        "nombre": "Distrito 12 - Hipódromo / Sarco Sur / Villa Galindo",
-        "zona_geografica": "Centro-Oeste",
-        "cota_media_msnm": 2570,
-        "poblacion_total": 45800,
-        "area_km2": 5.1,
-        "densidad_hab_km2": 8980.4,
-        "lst_nasa_promedio_c": 32.1,
-        "lst_nasa_max_c": 35.6,
-        "ndvi_promedio": 0.19,
-        "deficit_arbolado_pct": 55,
-        "temp_aire_pred_c": 30.8,
-        "pet_pred_c": 32.7,
-        "nivel_alerta": "Medio-Alto",
-        "estrategia_recomendada": "Techos reflectivos combinados con árboles",
-        "centroide": [
-          -17.3897,
-          -66.1763
-        ],
-        "resena_historica": "Hipódromo, Sarco Sur y Villa Galindo. Área residencial central delimitada por las avenidas Gabriel René Moreno y Blanco Galindo.",
-        "hito_urbano": "Ex-Hipódromo (Parque Urbano) • Av. Melchor Pérez de Olguín",
-        "tendencia_detectada": "Microclima templado-cálido con alto tráfico vehicular pero arbolado urbano moderado."
       }
     },
     {
       "type": "Feature",
+      "properties": {
+        "distrito_id": "D13",
+        "numero": 13,
+        "nombre": "Distrito 13 - Tunari Alto / Reserva Bioclimática",
+        "zona_geografica": "Norte Extremo",
+        "cota_media_msnm": 3450,
+        "poblacion_total": 12500,
+        "area_km2": 68.5,
+        "densidad_hab_km2": 182.5,
+        "lst_nasa_promedio_c": 16.8,
+        "lst_nasa_max_c": 21.4,
+        "ndvi_promedio": 0.62,
+        "deficit_arbolado_pct": 8,
+        "temp_aire_pred_c": 15.4,
+        "pet_pred_c": 14.8,
+        "nivel_alerta": "Zona de Protección (PNT)",
+        "hito_urbano": "Parque Nacional Tunari (PNT), Cota 2750 Ley 1262, Bosques de Polylepis (Kewiña), Pico Tunari",
+        "resena_historica": "Filtro orográfico y fábrica de agua del Valle Central. Límite innegociable de la mancha urbana fijado por la Ley 1262 de 1991 para proteger las cuencas torrenciales.",
+        "tendencia_detectada": "Monitoreo satelital prioritario FIRMS frente a quemas estacionales y loteamientos ilegales.",
+        "estrategia_recomendada": "Preservación estricta de la Cota 2750 y alerta temprana de conatos de incendio mediante IA y satélites.",
+        "centroide": [
+          -17.324611,
+          -66.157235
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.215,
-              -17.295
+              -66.218,
+              -17.29
             ],
             [
-              -66.19,
+              -66.216239,
+              -17.289469
+            ],
+            [
+              -66.213914,
+              -17.288687
+            ],
+            [
+              -66.211147,
+              -17.28775
+            ],
+            [
+              -66.208062,
+              -17.28675
+            ],
+            [
+              -66.204782,
+              -17.285781
+            ],
+            [
+              -66.20143,
+              -17.284938
+            ],
+            [
+              -66.198128,
+              -17.284312
+            ],
+            [
+              -66.195,
+              -17.284
+            ],
+            [
+              -66.191971,
+              -17.284008
+            ],
+            [
+              -66.188891,
+              -17.28425
+            ],
+            [
+              -66.185771,
+              -17.28468
+            ],
+            [
+              -66.182625,
+              -17.28525
+            ],
+            [
+              -66.179463,
+              -17.285914
+            ],
+            [
+              -66.176297,
+              -17.286625
+            ],
+            [
+              -66.173139,
+              -17.287336
+            ],
+            [
+              -66.17,
               -17.288
             ],
             [
-              -66.16,
-              -17.292
+              -66.166875,
+              -17.28862
             ],
             [
-              -66.13,
-              -17.3
+              -66.16375,
+              -17.289242
+            ],
+            [
+              -66.160625,
+              -17.289884
+            ],
+            [
+              -66.1575,
+              -17.290563
+            ],
+            [
+              -66.154375,
+              -17.291296
+            ],
+            [
+              -66.15125,
+              -17.292102
+            ],
+            [
+              -66.148125,
+              -17.292997
+            ],
+            [
+              -66.145,
+              -17.294
+            ],
+            [
+              -66.141875,
+              -17.295122
+            ],
+            [
+              -66.13875,
+              -17.296352
+            ],
+            [
+              -66.135625,
+              -17.297671
+            ],
+            [
+              -66.1325,
+              -17.299063
+            ],
+            [
+              -66.129375,
+              -17.300509
+            ],
+            [
+              -66.12625,
+              -17.301992
+            ],
+            [
+              -66.123125,
+              -17.303495
+            ],
+            [
+              -66.12,
+              -17.305
+            ],
+            [
+              -66.11621,
+              -17.306866
+            ],
+            [
+              -66.112128,
+              -17.308948
+            ],
+            [
+              -66.107974,
+              -17.311114
+            ],
+            [
+              -66.103965,
+              -17.313233
+            ],
+            [
+              -66.100321,
+              -17.315175
+            ],
+            [
+              -66.097259,
+              -17.316808
             ],
             [
               -66.095,
-              -17.315
+              -17.318
+            ],
+            [
+              -66.095315,
+              -17.31985
+            ],
+            [
+              -66.095741,
+              -17.322407
+            ],
+            [
+              -66.09625,
+              -17.325437
+            ],
+            [
+              -66.096815,
+              -17.328704
+            ],
+            [
+              -66.097407,
+              -17.33197
+            ],
+            [
+              -66.098,
+              -17.335
+            ],
+            [
+              -66.09862,
+              -17.337845
+            ],
+            [
+              -66.099296,
+              -17.340704
+            ],
+            [
+              -66.1,
+              -17.343563
+            ],
+            [
+              -66.100704,
+              -17.346407
+            ],
+            [
+              -66.10138,
+              -17.349225
+            ],
+            [
+              -66.102,
+              -17.352
+            ],
+            [
+              -66.102712,
+              -17.35552
+            ],
+            [
+              -66.103416,
+              -17.35924
+            ],
+            [
+              -66.104064,
+              -17.3628
+            ],
+            [
+              -66.104608,
+              -17.36584
             ],
             [
               -66.105,
               -17.368
             ],
             [
-              -66.128,
-              -17.362
+              -66.10636,
+              -17.367728
             ],
             [
-              -66.142,
-              -17.36
+              -66.10828,
+              -17.367344
             ],
             [
-              -66.155,
-              -17.357
+              -66.11052,
+              -17.366896
             ],
             [
-              -66.165,
+              -66.11284,
+              -17.366432
+            ],
+            [
+              -66.115,
+              -17.366
+            ],
+            [
+              -66.116609,
+              -17.365678
+            ],
+            [
+              -66.118148,
+              -17.36537
+            ],
+            [
+              -66.119688,
+              -17.365062
+            ],
+            [
+              -66.121296,
+              -17.364741
+            ],
+            [
+              -66.123044,
+              -17.364391
+            ],
+            [
+              -66.125,
+              -17.364
+            ],
+            [
+              -66.127245,
+              -17.363558
+            ],
+            [
+              -66.129741,
+              -17.363074
+            ],
+            [
+              -66.132375,
+              -17.362563
+            ],
+            [
+              -66.135037,
+              -17.362037
+            ],
+            [
+              -66.137616,
+              -17.361512
+            ],
+            [
+              -66.14,
+              -17.361
+            ],
+            [
+              -66.142313,
+              -17.360465
+            ],
+            [
+              -66.144667,
+              -17.359889
+            ],
+            [
+              -66.146938,
+              -17.359313
+            ],
+            [
+              -66.149,
+              -17.358778
+            ],
+            [
+              -66.150729,
+              -17.358326
+            ],
+            [
+              -66.152,
+              -17.358
+            ],
+            [
+              -66.153088,
+              -17.357712
+            ],
+            [
+              -66.154624,
+              -17.357296
+            ],
+            [
+              -66.156416,
+              -17.356824
+            ],
+            [
+              -66.158272,
+              -17.356368
+            ],
+            [
+              -66.16,
+              -17.356
+            ],
+            [
+              -66.161333,
+              -17.355787
+            ],
+            [
+              -66.162667,
+              -17.35563
+            ],
+            [
+              -66.164,
+              -17.3555
+            ],
+            [
+              -66.165333,
+              -17.35537
+            ],
+            [
+              -66.166667,
+              -17.355213
+            ],
+            [
+              -66.168,
               -17.355
             ],
             [
-              -66.178,
-              -17.352
+              -66.169426,
+              -17.354701
             ],
             [
-              -66.192,
-              -17.35
+              -66.170963,
+              -17.354333
+            ],
+            [
+              -66.1725,
+              -17.353938
+            ],
+            [
+              -66.173926,
+              -17.353556
+            ],
+            [
+              -66.17513,
+              -17.353229
+            ],
+            [
+              -66.176,
+              -17.353
+            ],
+            [
+              -66.177208,
+              -17.352728
+            ],
+            [
+              -66.178904,
+              -17.352344
+            ],
+            [
+              -66.180896,
+              -17.351896
+            ],
+            [
+              -66.182992,
+              -17.351432
+            ],
+            [
+              -66.185,
+              -17.351
+            ],
+            [
+              -66.186609,
+              -17.350655
+            ],
+            [
+              -66.188259,
+              -17.350296
+            ],
+            [
+              -66.189937,
+              -17.349937
+            ],
+            [
+              -66.19163,
+              -17.349593
+            ],
+            [
+              -66.193322,
+              -17.349275
+            ],
+            [
+              -66.195,
+              -17.349
+            ],
+            [
+              -66.196782,
+              -17.348764
+            ],
+            [
+              -66.198704,
+              -17.348556
+            ],
+            [
+              -66.200625,
+              -17.348375
+            ],
+            [
+              -66.202407,
+              -17.348222
+            ],
+            [
+              -66.203912,
+              -17.348097
             ],
             [
               -66.205,
               -17.348
             ],
             [
-              -66.215,
-              -17.295
+              -66.205556,
+              -17.346306
+            ],
+            [
+              -66.206333,
+              -17.344
+            ],
+            [
+              -66.20725,
+              -17.34125
+            ],
+            [
+              -66.208222,
+              -17.338222
+            ],
+            [
+              -66.209167,
+              -17.335083
+            ],
+            [
+              -66.21,
+              -17.332
+            ],
+            [
+              -66.210725,
+              -17.328921
+            ],
+            [
+              -66.211407,
+              -17.325704
+            ],
+            [
+              -66.212063,
+              -17.322375
+            ],
+            [
+              -66.212704,
+              -17.318963
+            ],
+            [
+              -66.213345,
+              -17.315495
+            ],
+            [
+              -66.214,
+              -17.312
+            ],
+            [
+              -66.214864,
+              -17.307376
+            ],
+            [
+              -66.215792,
+              -17.302288
+            ],
+            [
+              -66.216688,
+              -17.297312
+            ],
+            [
+              -66.217456,
+              -17.293024
+            ],
+            [
+              -66.218,
+              -17.29
             ]
           ]
         ]
-      },
-      "properties": {
-        "distrito_id": "D13",
-        "numero": 13,
-        "nombre": "Distrito 13 - Tunari Alto / Taquiña Norte",
-        "zona_geografica": "Cordillera Tunari",
-        "cota_media_msnm": 3150,
-        "poblacion_total": 14200,
-        "area_km2": 42.0,
-        "densidad_hab_km2": 338.1,
-        "lst_nasa_promedio_c": 20.4,
-        "lst_nasa_max_c": 23.5,
-        "ndvi_promedio": 0.58,
-        "deficit_arbolado_pct": 8,
-        "temp_aire_pred_c": 19.8,
-        "pet_pred_c": 18.2,
-        "nivel_alerta": "Bajo (Reserva Fría)",
-        "estrategia_recomendada": "Límite Cota 2750 • Prevención de Incendios Forestales",
-        "centroide": [
-          -17.334,
-          -66.1585
-        ],
-        "resena_historica": "Parque Nacional Tunari Alto y Taquiña. Reserva forestal y cuenca hídrica del municipio sobre la Cota 2750. Bosques de pinos, eucaliptos, qeñuas y fuentes de vertientes.",
-        "hito_urbano": "Parque Nacional Tunari • Cota 2750 • Cuenca Taquiña • Vertientes Tirani",
-        "tendencia_detectada": "Reserva bioclimática de aire frío (20.4 °C LST) y barrera contra vientos secos del altiplano."
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -66.145,
-              -17.436
-            ],
-            [
-              -66.132,
-              -17.435
-            ],
-            [
-              -66.118,
-              -17.438
-            ],
-            [
-              -66.122,
-              -17.46
-            ],
-            [
-              -66.14,
-              -17.455
-            ],
-            [
-              -66.145,
-              -17.436
-            ]
-          ]
-        ]
-      },
       "properties": {
         "distrito_id": "D14",
         "numero": 14,
         "nombre": "Distrito 14 - Sebastián Pagador Sur / Alto Cochabamba",
         "zona_geografica": "Sureste Medio",
-        "cota_media_msnm": 2630,
-        "poblacion_total": 48900,
-        "area_km2": 6.9,
-        "densidad_hab_km2": 7086.9,
-        "lst_nasa_promedio_c": 35.2,
-        "lst_nasa_max_c": 38.9,
-        "ndvi_promedio": 0.11,
-        "deficit_arbolado_pct": 78,
-        "temp_aire_pred_c": 33.9,
-        "pet_pred_c": 36.8,
+        "cota_media_msnm": 2640,
+        "poblacion_total": 51200,
+        "area_km2": 5.5,
+        "densidad_hab_km2": 9309.1,
+        "lst_nasa_promedio_c": 33.9,
+        "lst_nasa_max_c": 37.8,
+        "ndvi_promedio": 0.12,
+        "deficit_arbolado_pct": 76,
+        "temp_aire_pred_c": 32.8,
+        "pet_pred_c": 35.4,
         "nivel_alerta": "Muy Alto",
-        "estrategia_recomendada": "Estabilización de taludes y cobertura vegetal de secano",
+        "hito_urbano": "Mirador Alto Cochabamba, Complejo Petrolero, Laderas de San Miguel, Tanques SEMAPA Sur",
+        "resena_historica": "Asentamientos en pendientes pronunciadas con alta vulnerabilidad a deslizamientos en época de lluvias y calor extremo diurno.",
+        "tendencia_detectada": "Severo estrés hídrico de vegetación (NDVI < 0.15) y albedo elevado por suelos pedregosos.",
+        "estrategia_recomendada": "Terrazas de bio-ingeniería con vetiver y cactus nativos para estabilización de taludes y sombra.",
         "centroide": [
-          -17.4448,
-          -66.1314
-        ],
-        "resena_historica": "Alto Cochabamba y Sebastián Pagador Sur. Distrito montañoso y árido del este en las serranías que dominan la vista panorámica del valle sur.",
-        "hito_urbano": "Mirador Alto Cochabamba • Tanques de agua SEMAPA • Cerros Sur",
-        "tendencia_detectada": "Alta amplitud térmica (días sofocantes de 35.2 °C y noches frías por viento catabático)."
-      }
-    },
-    {
-      "type": "Feature",
+          -17.450887,
+          -66.126105
+        ]
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              -66.155,
-              -17.437
-            ],
-            [
-              -66.145,
+              -66.138,
               -17.436
             ],
             [
-              -66.14,
-              -17.455
+              -66.136719,
+              -17.435797
             ],
             [
-              -66.122,
-              -17.46
+              -66.134875,
+              -17.4355
+            ],
+            [
+              -66.132844,
+              -17.435203
+            ],
+            [
+              -66.131,
+              -17.435
+            ],
+            [
+              -66.128704,
+              -17.434926
+            ],
+            [
+              -66.126519,
+              -17.434963
+            ],
+            [
+              -66.125,
+              -17.435
+            ],
+            [
+              -66.124102,
+              -17.43518
+            ],
+            [
+              -66.122812,
+              -17.435437
+            ],
+            [
+              -66.121367,
+              -17.435727
             ],
             [
               -66.12,
-              -17.485
+              -17.436
+            ],
+            [
+              -66.118148,
+              -17.43637
+            ],
+            [
+              -66.116296,
+              -17.436741
+            ],
+            [
+              -66.115,
+              -17.437
+            ],
+            [
+              -66.115338,
+              -17.438391
+            ],
+            [
+              -66.115815,
+              -17.440296
+            ],
+            [
+              -66.116375,
+              -17.442563
+            ],
+            [
+              -66.116963,
+              -17.445037
+            ],
+            [
+              -66.117523,
+              -17.447567
+            ],
+            [
+              -66.118,
+              -17.45
+            ],
+            [
+              -66.118391,
+              -17.452407
+            ],
+            [
+              -66.118741,
+              -17.454926
+            ],
+            [
+              -66.119062,
+              -17.4575
+            ],
+            [
+              -66.11937,
+              -17.460074
+            ],
+            [
+              -66.119678,
+              -17.462593
+            ],
+            [
+              -66.12,
+              -17.465
+            ],
+            [
+              -66.120432,
+              -17.467936
+            ],
+            [
+              -66.120896,
+              -17.470968
+            ],
+            [
+              -66.121344,
+              -17.473832
+            ],
+            [
+              -66.121728,
+              -17.476264
+            ],
+            [
+              -66.122,
+              -17.478
+            ],
+            [
+              -66.123136,
+              -17.476264
+            ],
+            [
+              -66.124768,
+              -17.473832
+            ],
+            [
+              -66.126632,
+              -17.470968
+            ],
+            [
+              -66.128464,
+              -17.467936
+            ],
+            [
+              -66.13,
+              -17.465
+            ],
+            [
+              -66.13103,
+              -17.462604
+            ],
+            [
+              -66.131963,
+              -17.460111
+            ],
+            [
+              -66.132813,
+              -17.457562
+            ],
+            [
+              -66.133593,
+              -17.455
+            ],
+            [
+              -66.134317,
+              -17.452465
+            ],
+            [
+              -66.135,
+              -17.45
+            ],
+            [
+              -66.13565,
+              -17.447447
+            ],
+            [
+              -66.136259,
+              -17.444741
+            ],
+            [
+              -66.136813,
+              -17.442062
+            ],
+            [
+              -66.137296,
+              -17.439593
+            ],
+            [
+              -66.137697,
+              -17.437512
             ],
             [
               -66.138,
-              -17.51
-            ],
-            [
-              -66.155,
-              -17.505
-            ],
-            [
-              -66.155,
-              -17.47
-            ],
-            [
-              -66.155,
-              -17.437
+              -17.436
             ]
           ]
         ]
-      },
+      }
+    },
+    {
+      "type": "Feature",
       "properties": {
         "distrito_id": "D15",
         "numero": 15,
         "nombre": "Distrito 15 - K'ara K'ara / Arrumani / Pampa San Miguel",
-        "zona_geografica": "Extremo Sur Periurbano",
-        "cota_media_msnm": 2640,
-        "poblacion_total": 68500,
-        "area_km2": 24.5,
-        "densidad_hab_km2": 2795.9,
-        "lst_nasa_promedio_c": 37.8,
-        "lst_nasa_max_c": 41.5,
-        "ndvi_promedio": 0.07,
+        "zona_geografica": "Sur-Sureste",
+        "cota_media_msnm": 2660,
+        "poblacion_total": 68400,
+        "area_km2": 16.8,
+        "densidad_hab_km2": 4071.4,
+        "lst_nasa_promedio_c": 37.2,
+        "lst_nasa_max_c": 41.8,
+        "ndvi_promedio": 0.08,
         "deficit_arbolado_pct": 88,
-        "temp_aire_pred_c": 35.4,
-        "pet_pred_c": 39.5,
-        "nivel_alerta": "Extremo (Isla de Calor Máxima)",
-        "estrategia_recomendada": "Plan Maestro de Reforestación Prioritaria de la Alcaldía",
+        "temp_aire_pred_c": 35.1,
+        "pet_pred_c": 38.9,
+        "nivel_alerta": "Máxima Prioridad IA",
+        "hito_urbano": "Complejo Ambiental y Relleno Sanitario K'ara K'ara, Quebrada Arrumani, Universidad Policial, Serranía San Miguel",
+        "resena_historica": "Epicentro de la isla de calor urbana de Cochabamba identificada por satélites NASA Terra/Aqua MODIS y VIIRS. Zona de cierre técnico del vertedero municipal.",
+        "tendencia_detectada": "Punto de máxima aceleración térmica superficial del departamento (+1.15°C decadal LST).",
+        "estrategia_recomendada": "Cierre biológico con biorremediación, biogás capturado, cubierta vegetal densa de cactáceas y acacias.",
         "centroide": [
-          -17.4698,
-          -66.1412
-        ],
-        "resena_historica": "K'ara K'ara, Arrumani y Pampa San Miguel. El distrito más austral de Cochabamba, caracterizado por suelos arcillosos erosionados y el histórico relleno sanitario.",
-        "hito_urbano": "Zona K'ara K'ara • Serranía de Canto Grande • Pampa San Miguel",
-        "tendencia_detectada": "Máxima isla de calor urbana de Cochabamba: 37.8 °C en superficie, con una brecha térmica de +17.4 °C respecto al Tunari."
+          -17.478263,
+          -66.141585
+        ]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -66.15,
+              -17.436
+            ],
+            [
+              -66.148922,
+              -17.436
+            ],
+            [
+              -66.147375,
+              -17.436
+            ],
+            [
+              -66.145641,
+              -17.436
+            ],
+            [
+              -66.144,
+              -17.436
+            ],
+            [
+              -66.141778,
+              -17.436
+            ],
+            [
+              -66.139556,
+              -17.436
+            ],
+            [
+              -66.138,
+              -17.436
+            ],
+            [
+              -66.137697,
+              -17.437512
+            ],
+            [
+              -66.137296,
+              -17.439593
+            ],
+            [
+              -66.136813,
+              -17.442062
+            ],
+            [
+              -66.136259,
+              -17.444741
+            ],
+            [
+              -66.13565,
+              -17.447447
+            ],
+            [
+              -66.135,
+              -17.45
+            ],
+            [
+              -66.134317,
+              -17.452465
+            ],
+            [
+              -66.133593,
+              -17.455
+            ],
+            [
+              -66.132813,
+              -17.457562
+            ],
+            [
+              -66.131963,
+              -17.460111
+            ],
+            [
+              -66.13103,
+              -17.462604
+            ],
+            [
+              -66.13,
+              -17.465
+            ],
+            [
+              -66.128464,
+              -17.467936
+            ],
+            [
+              -66.126632,
+              -17.470968
+            ],
+            [
+              -66.124768,
+              -17.473832
+            ],
+            [
+              -66.123136,
+              -17.476264
+            ],
+            [
+              -66.122,
+              -17.478
+            ],
+            [
+              -66.123312,
+              -17.481944
+            ],
+            [
+              -66.125136,
+              -17.487672
+            ],
+            [
+              -66.127304,
+              -17.494128
+            ],
+            [
+              -66.129648,
+              -17.500256
+            ],
+            [
+              -66.132,
+              -17.505
+            ],
+            [
+              -66.134016,
+              -17.507801
+            ],
+            [
+              -66.136185,
+              -17.510074
+            ],
+            [
+              -66.138437,
+              -17.511875
+            ],
+            [
+              -66.140704,
+              -17.513259
+            ],
+            [
+              -66.142914,
+              -17.514282
+            ],
+            [
+              -66.145,
+              -17.515
+            ],
+            [
+              -66.147076,
+              -17.515218
+            ],
+            [
+              -66.149222,
+              -17.514852
+            ],
+            [
+              -66.151312,
+              -17.514125
+            ],
+            [
+              -66.153222,
+              -17.513259
+            ],
+            [
+              -66.154826,
+              -17.512477
+            ],
+            [
+              -66.156,
+              -17.512
+            ],
+            [
+              -66.15591,
+              -17.51049
+            ],
+            [
+              -66.155787,
+              -17.508469
+            ],
+            [
+              -66.155641,
+              -17.506061
+            ],
+            [
+              -66.155481,
+              -17.503388
+            ],
+            [
+              -66.155315,
+              -17.500571
+            ],
+            [
+              -66.155152,
+              -17.497735
+            ],
+            [
+              -66.155,
+              -17.495
+            ],
+            [
+              -66.154882,
+              -17.492644
+            ],
+            [
+              -66.154773,
+              -17.490211
+            ],
+            [
+              -66.154669,
+              -17.48772
+            ],
+            [
+              -66.154562,
+              -17.485188
+            ],
+            [
+              -66.154448,
+              -17.482632
+            ],
+            [
+              -66.15432,
+              -17.48007
+            ],
+            [
+              -66.154173,
+              -17.477521
+            ],
+            [
+              -66.154,
+              -17.475
+            ],
+            [
+              -66.153798,
+              -17.472493
+            ],
+            [
+              -66.15357,
+              -17.469977
+            ],
+            [
+              -66.153323,
+              -17.467456
+            ],
+            [
+              -66.153062,
+              -17.464937
+            ],
+            [
+              -66.152794,
+              -17.462427
+            ],
+            [
+              -66.152523,
+              -17.45993
+            ],
+            [
+              -66.152257,
+              -17.457452
+            ],
+            [
+              -66.152,
+              -17.455
+            ],
+            [
+              -66.151736,
+              -17.452447
+            ],
+            [
+              -66.151453,
+              -17.449734
+            ],
+            [
+              -66.151162,
+              -17.446967
+            ],
+            [
+              -66.150875,
+              -17.44425
+            ],
+            [
+              -66.150604,
+              -17.441689
+            ],
+            [
+              -66.150359,
+              -17.439391
+            ],
+            [
+              -66.150154,
+              -17.437459
+            ],
+            [
+              -66.15,
+              -17.436
+            ]
+          ]
+        ]
       }
     }
   ]

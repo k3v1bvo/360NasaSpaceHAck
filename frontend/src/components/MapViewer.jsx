@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Info, ChevronDown, Crosshair, X, Eye, EyeOff } from 'lucide-react';
+import { Info, ChevronDown, Crosshair, X, Eye, EyeOff, Search, Compass, MapPin } from 'lucide-react';
 import tunariPolygonData from '../../../data/gamc/parque_nacional_tunari.geojson';
 import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
@@ -13,6 +13,24 @@ const COCHABAMBA_CENTER = [-17.3895, -66.1568];
 const COCHABAMBA_ZOOM = 12;
 const GAMC_WMS_ENDPOINT = 'https://serviciosgamc.cochabamba.bo/api/gs/wms';
 const GAMC_PROJECT_03_KEY = '8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32';
+
+const DISTRICTS_CONFIG = [
+  { id: 'D1', num: 1, name: 'Queru Queru / Pacata', zone: 'NORTE', color: '#10b981', lst: 26.2, hito: 'Palacio Portales • UPB', keywords: 'queru queru pacata mayorazgo aranjuez upb palacio portales ciclovia américa este' },
+  { id: 'D2', num: 2, name: 'Cala Cala / Tupuraya', zone: 'NORTE', color: '#10b981', lst: 25.8, hito: 'SEMAPA • Parque Fidel Anze', keywords: 'cala cala tupuraya semapa circunvalación fidel anze estadio capriles balneario' },
+  { id: 'D3', num: 3, name: 'Sarco / Temporal', zone: 'NORTE', color: '#3b82f6', lst: 27.1, hito: 'Parque Bicentenario • Pintumayu', keywords: 'sarco temporal condebamba beijing norte parque familia pintumayu tiquipaya cruce taquiña' },
+  { id: 'D13', num: 13, name: 'Tunari Alto (PNT)', zone: 'NORTE', color: '#059669', lst: 16.8, hito: 'Cota 2750 • Parque Tunari', keywords: 'tunari alto cota 2750 pnt reserva bioclimatica parque nacional bosque kewiña pico cordillera' },
+  { id: 'D10', num: 10, name: 'Centro Histórico / Casco Viejo', zone: 'CENTRO', color: '#f59e0b', lst: 31.2, hito: 'Plaza 14 Septiembre • El Prado', keywords: 'centro historico casco viejo plaza 14 de septiembre catedral el prado teatro acha cancha norte colonial' },
+  { id: 'D11', num: 11, name: 'Las Cuadras / San Pedro', zone: 'CENTRO', color: '#3b82f6', lst: 28.9, hito: 'Cristo Concordia • Campus UMSS', keywords: 'las cuadras san pedro umss campus cristo de la concordia teleferico parque infantil oquendo' },
+  { id: 'D12', num: 12, name: 'Hipódromo / Sarco Sur', zone: 'CENTRO', color: '#3b82f6', lst: 29.4, hito: 'Parque Ex-Combatientes', keywords: 'hipodromo sarco sur villa galindo parque excombatientes beijing coliseo coronilla hospital seton' },
+  { id: 'D4', num: 4, name: 'La Chimba / Coña Coña', zone: 'OESTE', color: '#f59e0b', lst: 29.8, hito: 'Humedal Coña Coña • Coraca', keywords: 'la chimba coña coña blanco galindo humedal mercado coraca colcapirhua vaso regulador' },
+  { id: 'D5', num: 5, name: 'Jaihuayco / Aeropuerto', zone: 'OESTE', color: '#ef4444', lst: 33.4, hito: 'Aeropuerto Wilstermann • La Maica', keywords: 'jaihuayco aeropuerto wilstermann parque kanata estacion monica 6 de agosto la maica lechero pista' },
+  { id: 'D6', num: 6, name: 'Laguna Alalay / Cerro Verde', zone: 'ESTE', color: '#06b6d4', lst: 28.5, hito: 'Laguna Alalay • Recinto FEXCO', keywords: 'laguna alalay fexco feria cerro verde circuito bolivia isla fria club wilstermann' },
+  { id: 'D7', num: 7, name: 'Valle Hermoso / Pagador', zone: 'ESTE', color: '#ef4444', lst: 32.7, hito: 'Ladera San Pedro • Petrolera', keywords: 'valle hermoso villa sebastian pagador petrolera ladera san pedro refineria mercado campesino' },
+  { id: 'D14', num: 14, name: 'Alto Cochabamba / Pagador Sur', zone: 'SUR', color: '#ef4444', lst: 33.9, hito: 'Mirador Alto Cocha • San Miguel', keywords: 'alto cochabamba sebastian pagador sur mirador petrolero laderas san miguel tanques semapa' },
+  { id: 'D15', num: 15, name: "K'ara K'ara / Arrumani", zone: 'SUR', color: '#dc2626', lst: 37.2, hito: 'Relleno K\'ara K\'ara • Máx. Calor', keywords: "k'ara k'ara kara kara arrumani pampa san miguel relleno sanitario vertedero isla de calor policia" },
+  { id: 'D8', num: 8, name: 'Ushpa Ushpa / Sureste', zone: 'SUR', color: '#dc2626', lst: 36.5, hito: 'Av. Petrolera km 8 • Salida Valle Alto', keywords: 'ushpa ushpa valle hermoso sur petrolera angostura refineria arido calor extremo' },
+  { id: 'D9', num: 9, name: 'Itocta / Tamborada', zone: 'SUR', color: '#ef4444', lst: 34.8, hito: 'Campus UNVALLE • Río Tamborada', keywords: 'itocta tamborada pucara rio unvalle campus alto rendimiento panamericana sur agricola' }
+];
 
 export default function MapViewer({ 
   activeTab, 
@@ -46,10 +64,13 @@ export default function MapViewer({
   const baseLayersRef = useRef({});
   const activeTabRef = useRef(activeTab);
   const renderLayersRef = useRef(null);
-  const [baseMapType, setBaseMapType] = useState('satellite'); // 'satellite' | 'streets' | 'dark'
+  const [baseMapType, setBaseMapType] = useState('streets'); // 'streets' (CartoDB Voyager) | 'satellite' (NASA/Esri) | 'dark' (CartoDB Dark Matter)
   const [showDistrictLabels, setShowDistrictLabels] = useState(true); // Control para ocultar/mostrar nombres de distritos
   const [showSensors, setShowSensors] = useState(true); // Control para ocultar/mostrar sensores
   const [isLegendOpen, setIsLegendOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
+  const [districtSearch, setDistrictSearch] = useState('');
+  const [districtZoneFilter, setDistrictZoneFilter] = useState('TODOS');
+  const [isDistrictNavOpen, setIsDistrictNavOpen] = useState(false);
 
   // Mantener selectedPointRef y activeTab sincronizados
   useEffect(() => {
@@ -96,52 +117,44 @@ export default function MapViewer({
         worldCopyJump: true
       });
 
-      // 1. Base Satelital NASA/Esri (con maxNativeZoom 18 para evitar error de teselas grises)
+      // 1. Base Callejero / Topográfico de Alta Definición (CartoDB Voyager)
+      const streetsLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19,
+      });
+
+      // 2. Base Satelital NASA / Esri World Imagery con Etiquetas Viales Claras
       const satTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: '&copy; NASA Earthdata &copy; Esri',
         maxNativeZoom: 18,
         maxZoom: 19,
       });
 
-      const satLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+      const satLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
         attribution: '',
-        maxNativeZoom: 18,
+        subdomains: 'abcd',
         maxZoom: 19,
-        opacity: 0.8,
+        opacity: 0.92,
       });
 
       const satGroup = L.layerGroup([satTiles, satLabels]);
 
-      // 2. Base Callejero OpenStreetMap (100% público, libre, sin API key ni marcas)
-      const streetsLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors',
+      // 3. Base Oscura de Alta Definición (CartoDB Dark Matter) - Calles y avenidas en neón
+      const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+        subdomains: 'abcd',
         maxZoom: 19,
       });
-
-      // 3. Base Oscura Esri Dark Gray Canvas (Público de Esri, sin API key ni marcas)
-      const darkBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '&copy; Esri &copy; OpenStreetMap',
-        maxNativeZoom: 16,
-        maxZoom: 19,
-      });
-
-      const darkLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '',
-        maxNativeZoom: 16,
-        maxZoom: 19,
-        opacity: 0.85,
-      });
-
-      const darkGroup = L.layerGroup([darkBase, darkLabels]);
 
       baseLayersRef.current = {
-        satellite: satGroup,
         streets: streetsLayer,
-        dark: darkGroup,
+        satellite: satGroup,
+        dark: darkLayer,
       };
 
-      // Iniciar con la capa satelital activa
-      satGroup.addTo(map);
+      // Iniciar con la capa callejera/topográfica activa para máxima claridad territorial
+      streetsLayer.addTo(map);
 
       // Listener para clic en cualquier punto del mapa en modo global
       map.on('click', (e) => {
@@ -178,9 +191,9 @@ export default function MapViewer({
     };
   }, []);
 
-  // Conmutador dinámico de capa base (Satélite / Callejero / Oscuro)
+  // Conmutador dinámico de capa base (Callejero / Satélite / Oscuro)
   useEffect(() => {
-    if (!mapInstanceRef.current || !baseLayersRef.current.satellite) return;
+    if (!mapInstanceRef.current || !baseLayersRef.current.streets) return;
     const map = mapInstanceRef.current;
 
     Object.values(baseLayersRef.current).forEach((layer) => {
@@ -192,8 +205,12 @@ export default function MapViewer({
     const currentLayer = baseLayersRef.current[baseMapType];
     if (currentLayer) {
       currentLayer.addTo(map);
-      // Mantener la capa base detrás de los marcadores
-      if (currentLayer.bringToBack) {
+      // Mantener la capa base detrás de los polígonos y marcadores
+      if (currentLayer.eachLayer) {
+        currentLayer.eachLayer((l) => {
+          if (l.bringToBack) l.bringToBack();
+        });
+      } else if (currentLayer.bringToBack) {
         currentLayer.bringToBack();
       }
     }
@@ -394,21 +411,21 @@ export default function MapViewer({
 
         const polygon = L.polygon(polyCoords, {
           color,
-          weight: 1.5,
+          weight: 2,
           fillColor: color,
-          fillOpacity: 0.30,
+          fillOpacity: 0.14, // Relleno translúcido para mantener 100% visible el mapa de calles y avenidas del fondo
         });
 
-        // Nombre ultracorto de 1 o 2 palabras para evitar colisiones en distritos pequeños del centro
+        // Nombre y badge del distrito con legibilidad superior permanente
         const compactName = (p.nombre.split('-')[1]?.trim() || p.nombre).split('/')[0].trim();
         polygon.bindTooltip(`
           <div style="display: flex; align-items: center; gap: 4px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 800; white-space: nowrap;">
             <span style="background: ${color}; color: #ffffff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">${p.distrito_id}</span>
-            <span style="color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.8);">${compactName}</span>
+            <span style="color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.9);">${compactName}</span>
             <span style="color: #fde047; font-size: 11px; font-weight: 800;">${lstVal}°</span>
           </div>
         `, {
-          permanent: showDistrictLabels,
+          permanent: true,
           direction: 'center',
           className: 'custom-district-tooltip',
           opacity: 0.95
@@ -416,15 +433,15 @@ export default function MapViewer({
 
         // Hover dinámico para destacar el distrito seleccionado
         polygon.on('mouseover', () => {
-          polygon.setStyle({ weight: 3.5, color: '#ffffff', fillOpacity: 0.55 });
+          polygon.setStyle({ weight: 3.5, color: '#ffffff', fillOpacity: 0.40 });
         });
 
         polygon.on('mouseout', () => {
           const isSelected = selectedPointRef.current?.distrito_id === p.distrito_id || selectedPointRef.current?.id === p.distrito_id;
           if (isSelected) {
-            polygon.setStyle({ weight: 4.5, color: '#ffffff', fillOpacity: 0.65 });
+            polygon.setStyle({ weight: 4.5, color: '#ffffff', fillOpacity: 0.55 });
           } else {
-            polygon.setStyle({ weight: 1.5, color, fillOpacity: 0.30 });
+            polygon.setStyle({ weight: 2, color, fillOpacity: 0.14 });
           }
         });
 
@@ -500,23 +517,50 @@ export default function MapViewer({
         }
       });
 
-      // 1.5. Línea Biofísica Oficial Cota 2750 m s.n.m. (Parque Nacional Tunari)
+      // 1.5. Línea Biofísica Oficial Cota 2.750 m s.n.m. (Ley 1262 - Parque Nacional Tunari)
       if (cota2750Data?.features?.[0]) {
         const cotaCoords = cota2750Data.features[0].geometry.coordinates.map(([lng, lat]) => [lat, lng]);
+        
+        // Halo de resplandor para contraste en cualquier fondo
+        const cotaHalo = L.polyline(cotaCoords, {
+          color: '#064e3b',
+          weight: 6,
+          opacity: 0.55,
+        });
+        cotaHalo.addTo(layersGroupRef.current);
+
+        // Línea principal discontinua verde esmeralda brillante
         const cotaLine = L.polyline(cotaCoords, {
           color: '#10b981',
           weight: 3.5,
-          dashArray: '8, 8',
-          opacity: 0.95,
+          dashArray: '10, 8',
+          opacity: 1,
         });
+
+        cotaLine.bindTooltip(`
+          <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 800; background: #065f46; color: #ecfdf5; padding: 3px 8px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.4); border: 1px solid #34d399; white-space: nowrap;">
+            🏔️ COTA 2.750 msnm • LEY 1262 (PNT)
+          </div>
+        `, {
+          sticky: true,
+          direction: 'top',
+          className: 'cota-tooltip'
+        });
+
         cotaLine.bindPopup(`
-          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 220px; line-height: 1.4;">
-            <div style="background: #059669; color: white; padding: 4px 8px; border-radius: 4px 4px 0 0; font-weight: bold;">
-              🌲 Cota 2750 m s.n.m.
+          <div style="color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; min-width: 290px; line-height: 1.5;">
+            <div style="background: #059669; color: white; padding: 8px 12px; border-radius: 6px 6px 0 0; font-weight: 800; display: flex; justify-content: space-between; align-items: center;">
+              <span>🌲 Cota 2.750 m s.n.m.</span>
+              <span style="font-size: 10px; background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 4px;">LEY 1262</span>
             </div>
-            <div style="padding: 6px 8px; border: 1px solid #059669; border-top: none; border-radius: 0 0 4px 4px; background: white;">
-              <strong>Parque Nacional Tunari (PNT)</strong><br/>
-              <span style="color: #475569; font-size: 11px;">Frontera biofísica y límite de urbanización del GAMC. Reserva bioclimática de aire frío.</span>
+            <div style="padding: 10px 12px; border: 1px solid #059669; border-top: none; border-radius: 0 0 6px 6px; background: white;">
+              <strong>Límite Oficial del Parque Nacional Tunari (PNT)</strong><br/>
+              <span style="color: #475569; font-size: 12px; display: block; margin-top: 4px;">
+                Frontera biofísica y límite de cese de urbanización del GAMC fijado por la Ley Nacional 1262. Por encima de esta cota rige régimen estricto de protección ambiental, recarga hídrica de acuíferos y generación de brisas catabáticas nocturnas que oxigenan y enfrían el valle.
+              </span>
+              <div style="margin-top: 8px; padding: 6px 8px; background: #ecfdf5; border-left: 3px solid #10b981; font-size: 11px; color: #065f46; border-radius: 0 4px 4px 0;">
+                🛰️ <strong>Modelo Digital de Elevación:</strong> Curva de nivel extraída de modelos de elevación satelital ALOS PALSAR (12.5m) y Copernicus GLO-30 a 2.750 msnm.
+              </div>
             </div>
           </div>
         `);
@@ -971,7 +1015,7 @@ export default function MapViewer({
     if (mapInstanceRef.current) {
       renderLayers(null, mapInstanceRef.current);
     }
-  }, [activeTab, focosData, sensorMode, reportsData, offlineMode, wmsCota, wmsPeriurbanos, wmsDistritos, nasaGibs, gibsDate, showDistrictLabels, showSensors]);
+  }, [activeTab, focosData, sensorMode, reportsData, offlineMode, wmsCota, wmsPeriurbanos, wmsDistritos, nasaGibs, gibsDate, showSensors]);
 
   // Efecto Maestro de Selección: Resalta en el mapa, abre popups, activa baliza pulsante y enfoca con animación
   useEffect(() => {
@@ -983,10 +1027,10 @@ export default function MapViewer({
       highlightGroupRef.current.clearLayers();
     }
 
-    // Resetear estilos base de todos los polígonos distritales
+    // Resetear estilos base de todos los polígonos distritales (ligeros para traslucir el mapa)
     if (layerRegistryRef.current?.districts) {
       Object.values(layerRegistryRef.current.districts).forEach(({ layer, defaultColor }) => {
-        layer.setStyle({ weight: 1.5, color: defaultColor, fillOpacity: 0.30 });
+        layer.setStyle({ weight: 2, color: defaultColor, fillOpacity: 0.14 });
       });
     }
 
@@ -1163,6 +1207,55 @@ export default function MapViewer({
     }
   };
 
+  // Filtrado reactivo de distritos para búsqueda y navegación en vivo
+  const filteredDistricts = DISTRICTS_CONFIG.filter((d) => {
+    const matchesZone = districtZoneFilter === 'TODOS' || d.zone === districtZoneFilter;
+    if (!matchesZone) return false;
+    if (!districtSearch.trim()) return true;
+    const query = districtSearch.toLowerCase().trim();
+    return (
+      d.id.toLowerCase().includes(query) ||
+      d.name.toLowerCase().includes(query) ||
+      d.hito.toLowerCase().includes(query) ||
+      d.keywords.toLowerCase().includes(query) ||
+      String(d.num) === query
+    );
+  });
+
+  const handleSelectDistrict = (distId) => {
+    const targetDistrict = layerRegistryRef.current?.districts?.[distId];
+    const feat = distritosData?.features?.find((f) => f.properties.distrito_id === distId);
+
+    if (feat && setSelectedPoint) {
+      const p = feat.properties;
+      setSelectedPoint({
+        type: 'district',
+        id: p.distrito_id,
+        distrito_id: p.distrito_id,
+        lat: p.centroide ? p.centroide[0] : -17.39,
+        lon: p.centroide ? p.centroide[1] : -66.15,
+        ...p
+      });
+    }
+
+    if (mapInstanceRef.current && targetDistrict) {
+      if (targetDistrict.layer?.getBounds) {
+        mapInstanceRef.current.flyToBounds(targetDistrict.layer.getBounds(), {
+          padding: [80, 80],
+          maxZoom: 14.5,
+          duration: 1.2
+        });
+      } else {
+        mapInstanceRef.current.flyTo(targetDistrict.center, 14.5, { duration: 1.2 });
+      }
+      targetDistrict.layer?.bringToFront();
+      targetDistrict.layer?.setStyle({ weight: 4.5, color: '#ffffff', fillOpacity: 0.55 });
+      setTimeout(() => {
+        targetDistrict.layer?.openPopup(targetDistrict.center);
+      }, 400);
+    }
+  };
+
   return (
     <div 
       className="relative h-full w-full bg-[#080b18] overflow-hidden min-h-0"
@@ -1207,20 +1300,8 @@ export default function MapViewer({
         </div>
       )}
       
-      {/* 1. Selector de Capas Base (Satélite / Callejero / Oscuro) y Recentrar */}
+      {/* 1. Selector de Capas Base (Callejero / Satélite / Oscuro) y Recentrar */}
       <div className="absolute top-3 left-3 z-[400] flex items-center gap-1.5 sm:gap-2 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1.5 text-xs sm:text-sm text-white backdrop-blur-xl shadow-2xl">
-        <button
-          onClick={() => setBaseMapType('satellite')}
-          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition ${
-            baseMapType === 'satellite'
-              ? 'bg-blue-600 text-white shadow'
-              : 'text-slate-300 hover:text-white'
-          }`}
-          title="Vista Satelital NASA (Esri)"
-        >
-          <span>🛰️ Satélite</span>
-        </button>
-
         <button
           onClick={() => setBaseMapType('streets')}
           className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition ${
@@ -1228,9 +1309,21 @@ export default function MapViewer({
               ? 'bg-blue-600 text-white shadow'
               : 'text-slate-300 hover:text-white'
           }`}
-          title="Mapa Callejero y Topográfico (OpenStreetMap Oficial)"
+          title="Mapa Callejero y Topográfico Oficial GAMC (CartoDB Voyager)"
         >
           <span>🗺️ Callejero</span>
+        </button>
+
+        <button
+          onClick={() => setBaseMapType('satellite')}
+          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs sm:text-[13px] font-bold transition ${
+            baseMapType === 'satellite'
+              ? 'bg-blue-600 text-white shadow'
+              : 'text-slate-300 hover:text-white'
+          }`}
+          title="Vista Satelital NASA/Esri con Etiquetas Viales Claras"
+        >
+          <span>🛰️ Satélite</span>
         </button>
 
         <button
@@ -1240,7 +1333,7 @@ export default function MapViewer({
               ? 'bg-blue-600 text-white shadow'
               : 'text-slate-300 hover:text-white'
           }`}
-          title="Modo Oscuro Espacial (Esri Dark Canvas)"
+          title="Modo Oscuro Espacial con Viario en Neón (CartoDB Dark Matter)"
         >
           <span>🌙 Oscuro</span>
         </button>
@@ -1256,7 +1349,7 @@ export default function MapViewer({
                 ? 'bg-amber-600 text-white shadow-amber-900/40 ring-1 ring-amber-400/50'
                 : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
             }`}
-            title={showDistrictLabels ? "Ocultar nombres y etiquetas de distritos (Vista satelital limpia al alejar)" : "Mostrar nombres permanentes de los 15 distritos"}
+            title={showDistrictLabels ? "Ocultar nombres fijos de distritos (Muestra vista limpia de calles)" : "Mostrar nombres y códigos de los 15 distritos"}
           >
             {showDistrictLabels ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4 text-slate-400" />}
             <span className="hidden sm:inline">{showDistrictLabels ? 'Nombres ON' : 'Nombres OFF'}</span>
@@ -1291,6 +1384,124 @@ export default function MapViewer({
           <span className="hidden sm:inline">Recentrar</span>
         </button>
       </div>
+
+      {/* 1.5. Navegador Inteligente & Buscador de Distritos GAMC (15 Distritos) */}
+      {activeTab === 'microclimas' && (
+        <div className="absolute top-16 sm:top-3 right-2 sm:right-3 z-[410] flex flex-col items-end gap-1.5 max-w-[94vw] sm:max-w-xs md:max-w-sm">
+          {/* Barra de Entrada / Toggle */}
+          <div className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1.5 text-xs text-white backdrop-blur-xl shadow-2xl w-full">
+            <div className="relative flex-1 flex items-center">
+              <Search className="absolute left-2.5 h-3.5 w-3.5 text-cyan-400 pointer-events-none" />
+              <input
+                type="text"
+                value={districtSearch}
+                onChange={(e) => {
+                  setDistrictSearch(e.target.value);
+                  if (!isDistrictNavOpen) setIsDistrictNavOpen(true);
+                }}
+                onFocus={() => setIsDistrictNavOpen(true)}
+                placeholder="Buscar distrito (D1-D15, Alalay, Cancha)..."
+                className="w-full bg-neutral-900/90 text-white placeholder-slate-400 pl-8 pr-7 py-1.5 rounded-lg text-xs font-medium border border-neutral-700/60 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+              />
+              {districtSearch && (
+                <button
+                  onClick={() => setDistrictSearch('')}
+                  className="absolute right-2 text-slate-400 hover:text-white p-0.5 rounded"
+                  title="Limpiar búsqueda"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
+            </div>
+
+            <button
+              onClick={() => setIsDistrictNavOpen(!isDistrictNavOpen)}
+              className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition shrink-0 ${
+                isDistrictNavOpen ? 'bg-cyan-600 text-white shadow-cyan-900/50' : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
+              }`}
+              title="Abrir navegador de los 15 distritos"
+            >
+              <Compass className="h-3.5 w-3.5 text-cyan-300" />
+              <span className="hidden sm:inline">15 Distritos</span>
+              <ChevronDown className={`h-3 w-3 transition-transform ${isDistrictNavOpen ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+
+          {/* Panel Desplegable con Zonas y Lista de Distritos */}
+          {isDistrictNavOpen && (
+            <div className="w-full rounded-2xl border border-white/10 bg-[#0f172a]/95 p-3 text-white backdrop-blur-2xl shadow-2xl animate-in fade-in slide-in-from-top-2 max-h-[380px] overflow-y-auto">
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
+                <span className="text-[11px] font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1">
+                  <MapPin className="h-3.5 w-3.5" /> Explorador Distrital GAMC
+                </span>
+                <button
+                  onClick={() => setIsDistrictNavOpen(false)}
+                  className="text-neutral-400 hover:text-white text-xs p-1"
+                >
+                  Cerrar
+                </button>
+              </div>
+
+              {/* Filtros por Zona Geográfica */}
+              <div className="flex items-center gap-1 mb-2.5 pb-1 overflow-x-auto no-scrollbar">
+                {['TODOS', 'NORTE', 'CENTRO', 'OESTE', 'ESTE', 'SUR'].map((zone) => (
+                  <button
+                    key={zone}
+                    onClick={() => setDistrictZoneFilter(zone)}
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition whitespace-nowrap ${
+                      districtZoneFilter === zone
+                        ? 'bg-blue-600 text-white shadow'
+                        : 'bg-neutral-800/80 text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    {zone}
+                  </button>
+                ))}
+              </div>
+
+              {/* Listado de Distritos Filtrados */}
+              <div className="space-y-1.5 max-h-[260px] overflow-y-auto pr-1">
+                {filteredDistricts.map((d) => {
+                  const isSelected = selectedPoint?.distrito_id === d.id || selectedPoint?.id === d.id;
+                  return (
+                    <button
+                      key={d.id}
+                      onClick={() => handleSelectDistrict(d.id)}
+                      className={`w-full flex items-center justify-between p-2 rounded-xl text-left transition border ${
+                        isSelected
+                          ? 'bg-cyan-950/80 border-cyan-400 text-white shadow-lg ring-1 ring-cyan-400/50'
+                          : 'bg-neutral-900/60 border-neutral-800 text-slate-300 hover:bg-neutral-800 hover:text-white'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 truncate">
+                        <span
+                          className="flex h-5 w-7 items-center justify-center rounded text-[10px] font-black text-white shrink-0"
+                          style={{ background: d.color }}
+                        >
+                          {d.id}
+                        </span>
+                        <div className="truncate">
+                          <div className="text-xs font-bold truncate text-white leading-tight">{d.name}</div>
+                          <div className="text-[10px] text-slate-400 truncate leading-tight">{d.zone} • {d.hito}</div>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-mono font-bold text-amber-300 shrink-0 ml-1">
+                        {d.lst}°C
+                      </span>
+                    </button>
+                  );
+                })}
+
+                {filteredDistricts.length === 0 && (
+                  <div className="text-center py-4 text-xs text-slate-400">
+                    No se encontraron distritos para "{districtSearch}". Prueba con "D1", "Alalay" o "Tunari".
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* 2. Leyenda Flotante Dinámica (Colapsable en Móvil) */}
       <div className="absolute bottom-16 sm:bottom-4 left-2 sm:left-4 z-[400] transition-all duration-200">
