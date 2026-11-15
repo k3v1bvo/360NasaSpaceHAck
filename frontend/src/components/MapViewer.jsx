@@ -1788,39 +1788,57 @@ export default function MapViewer({
         {/* Selector de Capas WMS Oficiales GAMC */}
         {activeTab === 'microclimas' && (
           <div className="relative shrink-0">
-            <div className="flex items-center rounded-lg overflow-hidden shadow-sm">
-              <button
-                onClick={() => setShowGamcWms(!showGamcWms)}
-                className={`flex items-center gap-1 px-2 py-1 text-xs font-semibold transition ${
-                  showGamcWms
-                    ? 'bg-purple-600 text-white shadow-purple-900/40 ring-1 ring-purple-400/50'
-                    : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
-                }`}
-                title="Superponer capas oficiales WMS del GAMC (Proxy GeoServer Municipal)"
-              >
-                <span className="hidden sm:inline">🏛️ {showGamcWms ? 'WMS GAMC ON' : 'WMS GAMC'}</span>
-                <span className="sm:hidden">🏛️ WMS</span>
-              </button>
-              <button
-                onClick={() => setIsGamcMenuOpen(!isGamcMenuOpen)}
-                className={`px-1 py-1 text-xs transition border-l ${
-                  showGamcWms
-                    ? 'bg-purple-700 text-purple-200 border-purple-500 hover:bg-purple-800'
-                    : 'bg-neutral-800 text-slate-400 border-neutral-700 hover:text-white'
-                }`}
-                title="Configurar Capas WMS del GAMC"
-              >
-                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isGamcMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
-            </div>
+            <button
+              onClick={() => {
+                const nextOpen = !isGamcMenuOpen;
+                setIsGamcMenuOpen(nextOpen);
+                if (nextOpen && !showGamcWms) {
+                  setShowGamcWms(true);
+                }
+              }}
+              className={`flex items-center gap-1.5 rounded-lg px-2 sm:px-2.5 py-1 text-xs font-semibold transition shadow-sm ${
+                showGamcWms
+                  ? 'bg-purple-600 text-white shadow-purple-900/40 ring-1 ring-purple-400/50 hover:bg-purple-500'
+                  : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60 hover:bg-neutral-700'
+              }`}
+              title="Haz clic para ver y configurar las 4 capas oficiales WMS del GAMC"
+            >
+              <span className="hidden sm:inline">🏛️ {showGamcWms ? 'WMS GAMC ON' : 'WMS GAMC'}</span>
+              <span className="sm:hidden">🏛️ {showGamcWms ? 'WMS ON' : 'WMS'}</span>
+              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isGamcMenuOpen ? 'rotate-180 text-purple-200' : 'text-slate-400'}`} />
+            </button>
+
+            {/* Backdrop para cerrar al hacer clic afuera */}
+            {isGamcMenuOpen && (
+              <div 
+                className="fixed inset-0 z-[550]" 
+                onClick={() => setIsGamcMenuOpen(false)} 
+              />
+            )}
 
             {/* Menú Desplegable de Capas WMS del GAMC */}
             {isGamcMenuOpen && (
               <div className="absolute top-full left-0 mt-1.5 w-72 rounded-xl border border-purple-500/30 bg-[#0d1017]/95 p-3 text-xs text-white shadow-2xl backdrop-blur-xl z-[600]">
                 <div className="flex items-center justify-between pb-2 border-b border-neutral-800 mb-2">
-                  <span className="font-bold text-purple-300 flex items-center gap-1.5">
-                    🏛️ Capas Oficiales GAMC
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-purple-300 flex items-center gap-1.5">
+                      🏛️ Capas Oficiales GAMC
+                    </span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowGamcWms(!showGamcWms);
+                      }}
+                      className={`px-1.5 py-0.5 rounded text-[10px] font-bold transition ${
+                        showGamcWms 
+                          ? 'bg-purple-600 text-white hover:bg-purple-500' 
+                          : 'bg-neutral-800 text-slate-400 hover:text-white border border-neutral-700'
+                      }`}
+                      title={showGamcWms ? 'Desactivar todas las capas WMS' : 'Activar capas WMS'}
+                    >
+                      {showGamcWms ? 'ON' : 'OFF'}
+                    </button>
+                  </div>
                   <span className="text-[10px] text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-1.5 py-0.5 rounded font-mono">
                     Proxy 200 OK
                   </span>
