@@ -14,8 +14,7 @@ export default function Navbar({
 }) {
   const tabs = [
     { id: 'microclimas', label: '📍 1. Piloto Cochabamba (15 Distritos)', short: '📍 1. Cocha (15 Dist.)' },
-    { id: 'incendios', label: '🔥 2. Incendios Tunari (Impacto AOD)', short: '🔥 2. Incendios' },
-    { id: 'global_nasa', label: '🌍 3. Reto Global NASA (Trend Detective)', short: '🌍 3. Global NASA' },
+    { id: 'global_nasa', label: '🌍 2. Reto Global NASA (Trend Detective)', short: '🌍 2. Global NASA' },
   ];
 
   return (

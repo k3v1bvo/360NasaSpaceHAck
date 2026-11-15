@@ -66,8 +66,8 @@ export default function RubricEvaluationModal({ isOpen, onClose, onNavigateToTab
         'Ground-Truth físico real con 125.865 mediciones de la Red MÓNICA (Kanata vs SEMAPA).',
         'Estudio de Ablación: Modelo Base Climático (R²=0.914) vs Modelo Aumentado con Incendios (R²=0.946).'
       ],
-      tabAction: 'incendios',
-      tabLabel: 'Ver Análisis de Incendios & AOD'
+      tabAction: 'microclimas',
+      tabLabel: 'Ver Análisis en el Piloto'
     },
     {
       id: 'impact',

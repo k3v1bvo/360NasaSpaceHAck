@@ -25,7 +25,7 @@ const STAGES = [
   },
   {
     id: 'incendios',
-    tab: 'incendios',
+    tab: 'microclimas',
     stepNumber: 2,
     icon: Flame,
     badgeColor: 'from-red-600 to-amber-600',
