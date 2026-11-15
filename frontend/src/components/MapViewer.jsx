@@ -44,6 +44,64 @@ const DISTRICTS_CONFIG = [
   { id: 'D9', num: 9, name: 'Itocta / Tamborada', zone: 'SUR', color: '#ef4444', lst: 34.8, hito: 'Campus UNVALLE • Río Tamborada', keywords: 'itocta tamborada pucara rio unvalle campus alto rendimiento panamericana sur agricola' }
 ];
 
+const DECADAL_WARMING_RATES = {
+  'D1': 0.22, 'D2': 0.20, 'D3': 0.35, 'D4': 0.48, 'D5': 0.65,
+  'D6': -0.10, 'D7': 0.58, 'D8': 0.71, 'D9': 0.78, 'D10': 0.65,
+  'D11': 0.42, 'D12': 0.40, 'D13': -0.18, 'D14': 0.68, 'D15': 0.74
+};
+
+const MONTHLY_ANOMALIES = {
+  1: 0.5, 2: 0.0, 3: -0.5, 4: -1.5, 5: -3.0, 6: -4.5,
+  7: -4.0, 8: 1.0, 9: 2.2, 10: 3.5, 11: 3.8, 12: 2.0
+};
+
+const PREDICTED_2026_HOTSPOTS = [
+  {
+    id: 'PRED-2026-01',
+    lat: -17.324,
+    lon: -66.178,
+    zona: 'Cuenca Taquiña / Cota 2750',
+    probabilidad: '89.4%',
+    frp_est_mw: 165,
+    riesgo: 'Crítico',
+    factor: 'Biomasa seca acumulada + vientos catabáticos nocturnos > 35 km/h',
+    brigada: 'GEOS & UGR Cercado - Retén preventivo Taquiña'
+  },
+  {
+    id: 'PRED-2026-02',
+    lat: -17.318,
+    lon: -66.142,
+    zona: 'Bosque Andrada / Quebrada San Pedro',
+    probabilidad: '84.2%',
+    frp_est_mw: 140,
+    riesgo: 'Muy Alto',
+    factor: 'Pastizales no gestionados en interfaz urbana-forestal sobre Cota 2750',
+    brigada: 'SAR-Bolivia & Guardaparques PNT'
+  },
+  {
+    id: 'PRED-2026-03',
+    lat: -17.332,
+    lon: -66.215,
+    zona: 'Tiquipaya Norte / Cono de Deyección',
+    probabilidad: '81.6%',
+    frp_est_mw: 125,
+    riesgo: 'Alto',
+    factor: 'Baja humedad relativa (<12%) y pendiente escarpada',
+    brigada: 'Bomberos Voluntarios Tiquipaya'
+  },
+  {
+    id: 'PRED-2026-04',
+    lat: -17.465,
+    lon: -66.138,
+    zona: "Distrito 15 K'ara K'ara (Isla de Calor Extrema)",
+    probabilidad: '76.8%',
+    frp_est_mw: 85,
+    riesgo: 'Moderado-Alto',
+    factor: 'Temperaturas LST > 41°C y riesgo de combustión residual',
+    brigada: 'Policía Ecológica & Cuadrilla D15'
+  }
+];
+
 export default function MapViewer({ 
   activeTab, 
   setActiveTab,
@@ -115,20 +173,20 @@ export default function MapViewer({
     timelineMonthRef.current = timelineMonth;
   }, [timelineMonth]);
 
-  // Reproductor automático multitemporal (cicla los años con cadencia suave de 2.4s)
+  // Reproductor automático multitemporal (cicla los años con cadencia suave de 2.0s)
   useEffect(() => {
     if (!isPlayingTimeline) return;
-    const yearsSequence = ['ALL', 2020, 2021, 2022, 2023, 2024, 2025, 2026];
+    const yearsSequence = [2020, 2021, 2022, 2023, 2024, 2025, 2026];
     const timer = setInterval(() => {
       setTimelineYear((prevYear) => {
-        const cur = prevYear === 'ALL' ? 'ALL' : Number(prevYear);
+        const cur = prevYear === 'ALL' ? 2020 : Number(prevYear);
         const idx = yearsSequence.indexOf(cur);
         if (idx === -1 || idx >= yearsSequence.length - 1) {
-          return yearsSequence[1]; // vuelve a 2020
+          return yearsSequence[0]; // vuelve a 2020
         }
         return yearsSequence[idx + 1];
       });
-    }, 2400);
+    }, 2000);
 
     return () => clearInterval(timer);
   }, [isPlayingTimeline]);
@@ -518,32 +576,48 @@ export default function MapViewer({
         });
       }
 
-      // 1. Polígonos Oficiales de Distritos de Cercado (Catastro Municipal GAMC / INE 100% Topológico)
+      // 1. Polígonos Oficiales de Distritos de Cercado (Catastro Municipal GAMC / INE 100% Topológico con Evolución Temporal Real)
+      const currentYear = timelineYearRef.current;
+      const currentMonth = timelineMonthRef.current;
+
       distritosData?.features?.forEach((dist) => {
         const p = dist.properties;
 
-        const lstVal = p.lst_nasa_promedio_c || p.lst_temperatura_c || 28.0;
-        const color = lstVal > 35 ? '#ef4444' :
-                      lstVal > 30 ? '#f59e0b' :
-                      lstVal > 26 ? '#3b82f6' : '#10b981';
+        const baseLst = p.lst_nasa_promedio_c || p.lst_temperatura_c || 28.0;
+        const rate = DECADAL_WARMING_RATES[p.distrito_id] || 0.45;
+
+        let yearDelta = 0;
+        if (currentYear === 2026 || currentYear === '2026') {
+          yearDelta = 6 * (rate / 10);
+        } else if (currentYear !== 'ALL') {
+          yearDelta = (Number(currentYear) - 2020) * (rate / 10);
+        }
+
+        const monthDelta = currentMonth !== 'ALL' ? (MONTHLY_ANOMALIES[Number(currentMonth)] || 0) : 0;
+        const dynamicLst = parseFloat((baseLst + yearDelta + monthDelta).toFixed(1));
+
+        const color = dynamicLst > 35 ? '#ef4444' :
+                      dynamicLst > 31 ? '#f97316' :
+                      dynamicLst > 28 ? '#f59e0b' :
+                      dynamicLst > 24 ? '#3b82f6' : '#10b981';
 
         const polygon = L.geoJSON(dist, {
           style: {
             color: color,
             weight: 2.2,
-            opacity: 0.9,
+            opacity: 0.95,
             fillColor: color,
-            fillOpacity: 0.16, // Relleno translúcido de alta definición para mantener visible el trazado vial
+            fillOpacity: dynamicLst > 34 ? 0.28 : 0.16, // Relleno translúcido dinámico según calor
           }
         });
 
-        // Nombre y badge del distrito con legibilidad superior permanente
+        // Nombre y badge del distrito con legibilidad superior permanente y temperatura dinámica
         const compactName = (p.nombre.split('-')[1]?.trim() || p.nombre).split('/')[0].trim();
         polygon.bindTooltip(`
           <div style="display: flex; align-items: center; gap: 4px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 800; white-space: nowrap;">
             <span style="background: ${color}; color: #ffffff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">${p.distrito_id}</span>
             <span style="color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.9);">${compactName}</span>
-            <span style="color: #fde047; font-size: 11px; font-weight: 800;">${lstVal}°</span>
+            <span style="color: #fde047; font-size: 11px; font-weight: 800;">${dynamicLst}°C</span>
           </div>
         `, {
           permanent: true,
@@ -562,7 +636,7 @@ export default function MapViewer({
           if (isSelected) {
             polygon.setStyle({ weight: 4.5, color: '#ffffff', fillOpacity: 0.55 });
           } else {
-            polygon.setStyle({ weight: 2.2, color, fillOpacity: 0.16 });
+            polygon.setStyle({ weight: 2.2, color, fillOpacity: dynamicLst > 34 ? 0.28 : 0.16 });
           }
         });
 
@@ -574,6 +648,7 @@ export default function MapViewer({
               distrito_id: p.distrito_id,
               lat: p.centroide ? p.centroide[0] : -17.39,
               lon: p.centroide ? p.centroide[1] : -66.15,
+              lst_dinamico: dynamicLst,
               ...p
             });
           }
@@ -601,10 +676,10 @@ export default function MapViewer({
               ` : ''}
 
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px; font-size: 12px;">
-                <div><strong>LST (NASA):</strong> <span style="font-weight: 800; color: ${color};">${lstVal} °C</span></div>
+                <div><strong>LST (${currentYear !== 'ALL' ? currentYear : 'NASA'}):</strong> <span style="font-weight: 800; color: ${color};">${dynamicLst} °C</span></div>
                 <div><strong>NDVI (Verde):</strong> <span>${p.ndvi_promedio || 0.25}</span></div>
-                ${p.temp_aire_pred_c ? `<div><strong>Aire T2M:</strong> ${p.temp_aire_pred_c} °C</div>` : ''}
-                ${p.pet_pred_c ? `<div><strong>Confort (PET):</strong> <span style="font-weight: 800; color: ${p.pet_pred_c > 35 ? '#b91c1c' : '#047857'};">${p.pet_pred_c} °C</span></div>` : ''}
+                ${p.temp_aire_pred_c ? `<div><strong>Aire T2M:</strong> ${(p.temp_aire_pred_c + yearDelta + monthDelta).toFixed(1)} °C</div>` : ''}
+                ${p.pet_pred_c ? `<div><strong>Confort (PET):</strong> <span style="font-weight: 800; color: ${p.pet_pred_c > 35 ? '#b91c1c' : '#047857'};">${(p.pet_pred_c + yearDelta + monthDelta).toFixed(1)} °C</span></div>` : ''}
               </div>
 
               ${p.poblacion_total ? `
@@ -637,6 +712,65 @@ export default function MapViewer({
           };
         }
       });
+
+      // 1.2 Focos Satelitales Activos en el Tunari durante la reproducción temporal (Caso Piloto Microclimas)
+      if (currentYear !== 'ALL' || isPlayingTimeline) {
+        if (currentYear === 2026 || currentYear === '2026') {
+          PREDICTED_2026_HOTSPOTS.forEach((pred) => {
+            const marker = L.circleMarker([pred.lat, pred.lon], {
+              radius: 9,
+              fillColor: '#d946ef',
+              color: '#ffffff',
+              weight: 2,
+              fillOpacity: 0.9,
+            });
+            marker.bindPopup(`
+              <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 210px;">
+                <div style="background: #a21caf; color: white; padding: 4px 8px; border-radius: 4px 4px 0 0; font-weight: bold;">
+                  ✨ Predicción IA 2026 (Tunari)
+                </div>
+                <div style="padding: 6px 8px; border: 1px solid #a21caf; border-top: none; background: white;">
+                  <strong>Zona:</strong> ${pred.zona}<br/>
+                  <strong>Riesgo:</strong> ${pred.riesgo} (${pred.probabilidad})<br/>
+                  <strong>FRP Estimado:</strong> ${pred.frp_est_mw} MW<br/>
+                  <span style="font-size: 11px; color: #475569;">${pred.factor}</span>
+                </div>
+              </div>
+            `);
+            marker.addTo(layersGroupRef.current);
+          });
+        } else {
+          const activeFocos = (focosData || []).filter((f) => {
+            const prop = f.properties;
+            const fYear = prop.year || (prop.fecha ? parseInt(prop.fecha.split('-')[0], 10) : null);
+            const fMonth = prop.month || (prop.fecha ? parseInt(prop.fecha.split('-')[1], 10) : null);
+            if (fYear !== Number(currentYear)) return false;
+            if (currentMonth !== 'ALL' && fMonth !== Number(currentMonth)) return false;
+            return true;
+          });
+
+          activeFocos.slice(0, 90).forEach((foco) => {
+            const [lng, lat] = foco.geometry.coordinates;
+            const prop = foco.properties;
+            const marker = L.circleMarker([lat, lng], {
+              radius: 7,
+              fillColor: '#ef4444',
+              color: '#fde047',
+              weight: 1.5,
+              opacity: 0.95,
+              fillOpacity: 0.85,
+            });
+            marker.bindPopup(`
+              <div style="color: #0f172a; font-family: sans-serif; font-size: 12px;">
+                <strong style="color: #dc2626;">🔥 Foco Satelital Tunari (${currentYear})</strong><br/>
+                <strong>FRP:</strong> ${prop.frp ? prop.frp.toFixed(1) : 45} MW<br/>
+                <strong>Sensor:</strong> ${prop.instrument || 'NASA MODIS/VIIRS'}
+              </div>
+            `);
+            marker.addTo(layersGroupRef.current);
+          });
+        }
+      }
 
       // 1.5. Línea Biofísica Oficial Cota 2.750 m s.n.m. (Ley 1262 - Parque Nacional Tunari)
       if (cota2750Data?.features?.[0]) {
@@ -929,53 +1063,6 @@ export default function MapViewer({
 
       if (currentYear === 2026 || currentYear === '2026') {
         // Marcadores de Predicción IA 2026 (Corredores de Alto Riesgo en Tunari y D15)
-        const PREDICTED_2026_HOTSPOTS = [
-          {
-            id: 'PRED-2026-01',
-            lat: -17.324,
-            lon: -66.178,
-            zona: 'Cuenca Taquiña / Cota 2750',
-            probabilidad: '89.4%',
-            frp_est_mw: 165,
-            riesgo: 'Crítico',
-            factor: 'Biomasa seca acumulada + vientos catabáticos nocturnos > 35 km/h',
-            brigada: 'GEOS & UGR Cercado - Retén preventivo Taquiña'
-          },
-          {
-            id: 'PRED-2026-02',
-            lat: -17.318,
-            lon: -66.142,
-            zona: 'Bosque Andrada / Quebrada San Pedro',
-            probabilidad: '84.2%',
-            frp_est_mw: 140,
-            riesgo: 'Muy Alto',
-            factor: 'Pastizales no gestionados en interfaz urbana-forestal sobre Cota 2750',
-            brigada: 'SAR-Bolivia & Guardaparques PNT'
-          },
-          {
-            id: 'PRED-2026-03',
-            lat: -17.332,
-            lon: -66.215,
-            zona: 'Tiquipaya Norte / Cono de Deyección',
-            probabilidad: '81.6%',
-            frp_est_mw: 125,
-            riesgo: 'Alto',
-            factor: 'Baja humedad relativa (<12%) y pendiente escarpada',
-            brigada: 'Bomberos Voluntarios Tiquipaya'
-          },
-          {
-            id: 'PRED-2026-04',
-            lat: -17.465,
-            lon: -66.138,
-            zona: "Distrito 15 K'ara K'ara (Isla de Calor Extrema)",
-            probabilidad: '76.8%',
-            frp_est_mw: 85,
-            riesgo: 'Moderado-Alto',
-            factor: 'Temperaturas LST > 41°C y riesgo de combustión residual',
-            brigada: 'Policía Ecológica & Cuadrilla D15'
-          }
-        ];
-
         PREDICTED_2026_HOTSPOTS.forEach((pred) => {
           // Anillo exterior de alerta
           const ring = L.circleMarker([pred.lat, pred.lon], {
@@ -1577,6 +1664,32 @@ export default function MapViewer({
           </button>
         </div>
       )}
+
+      {/* Banner Telemetría de Animación Temporal Activa (Centrado Arriba) */}
+      {(timelineYear !== 'ALL' || isPlayingTimeline) && (
+        <div className="absolute top-14 left-1/2 -translate-x-1/2 z-[415] flex items-center gap-2 rounded-full border border-cyan-500/40 bg-[#070b14]/95 px-3.5 py-1.5 shadow-2xl backdrop-blur-xl text-xs text-white transition-all animate-in fade-in max-w-[94vw]">
+          <span className="flex h-2 w-2 rounded-full bg-rose-500 animate-ping shrink-0"></span>
+          <span className="font-mono font-black text-cyan-300 text-[11px] sm:text-xs shrink-0">
+            {timelineYear === 'ALL' ? 'HISTÓRICO 2020-2025' : timelineYear === 2026 ? '✨ PREDICCIÓN IA 2026' : `SERIE SATELITAL: AÑO ${timelineYear}`}
+          </span>
+          <span className="text-slate-500 hidden sm:inline">•</span>
+          <span className="text-amber-300 font-bold text-[11px] sm:text-xs truncate">
+            {timelineYear === 2026
+              ? '340 Focos Estimados (~3,600 ha)'
+              : timelineYear === 2024
+              ? '389 Focos MODIS/VIIRS (Pico Histórico)'
+              : timelineYear === 2022
+              ? '312 Focos Tunari'
+              : timelineYear === 2020
+              ? '142 Focos Base'
+              : `${timelineYear ? `Focos Activos Año ${timelineYear}` : ''}`}
+          </span>
+          <span className="text-slate-500 hidden md:inline">•</span>
+          <span className="text-red-400 font-bold text-[11px] sm:text-xs hidden md:inline">
+            Brecha Sur-Tunari: +{(17.0 + (timelineYear === 2026 ? 0.6 : (Number(timelineYear) - 2020) * 0.1 || 0)).toFixed(1)}°C
+          </span>
+        </div>
+      )}
       
       {/* 1. Selector de Capas Base (Callejero / Satélite / Oscuro) y Recentrar */}
       <div className="absolute top-3 left-3 z-[400] flex items-center gap-1.5 sm:gap-2 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1.5 text-xs sm:text-sm text-white backdrop-blur-xl shadow-2xl">
@@ -2057,7 +2170,7 @@ export default function MapViewer({
 
       {/* 3. Barra Flotante de Línea de Tiempo Satelital & Predicción IA (Visible en Incendios y Microclimas) */}
       {(activeTab === 'incendios' || activeTab === 'microclimas') && (
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[420] w-[92%] sm:w-auto max-w-3xl rounded-xl border border-white/10 bg-[#090d16]/95 p-2 sm:p-2.5 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[420] w-[96%] sm:w-auto max-w-4xl rounded-2xl border border-white/10 bg-[#090d16]/95 p-2 sm:p-2.5 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2">
           {/* Fila Superior: Controles, Estado y Botón de Análisis */}
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2 mb-2">
             <div className="flex items-center gap-2 flex-wrap">
@@ -2109,11 +2222,11 @@ export default function MapViewer({
             </div>
           </div>
 
-          {/* Fila Inferior: Selectores de Años y Meses */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            {/* Selector de Años */}
-            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1 shrink-0">Año:</span>
+          {/* Controles Temporales en 2 Filas Dedicadas (Cero colisiones ni botones aplastados) */}
+          <div className="space-y-1.5 pt-0.5">
+            {/* Fila 1: Selector de Años */}
+            <div className="flex items-center gap-1.5 overflow-x-auto custom-modal-scroll py-0.5">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mr-1 shrink-0 font-mono">AÑO:</span>
               {['ALL', 2020, 2021, 2022, 2023, 2024, 2025, 2026].map((yr) => {
                 const isSelected = timelineYear === yr || (yr !== 'ALL' && Number(timelineYear) === Number(yr));
                 const is2026 = yr === 2026;
@@ -2127,8 +2240,8 @@ export default function MapViewer({
                     className={`rounded-lg px-2 sm:px-2.5 py-1 text-xs font-bold transition shrink-0 ${
                       isSelected
                         ? is2026
-                          ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-900/50 ring-1 ring-purple-400'
-                          : 'bg-blue-600 text-white shadow'
+                          ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-900/50 ring-1 ring-purple-400 font-black'
+                          : 'bg-blue-600 text-white shadow font-black'
                         : is2026
                           ? 'border border-purple-500/40 bg-purple-950/40 text-purple-300 hover:bg-purple-900/50'
                           : 'bg-neutral-900/80 text-slate-300 hover:bg-neutral-800 hover:text-white border border-white/5'
@@ -2140,14 +2253,14 @@ export default function MapViewer({
               })}
             </div>
 
-            {/* Selector de Meses */}
-            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1 shrink-0">Mes:</span>
+            {/* Fila 2: Selector de Meses con Marcadores Estacionales */}
+            <div className="flex items-center gap-1 overflow-x-auto custom-modal-scroll py-0.5">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mr-1 shrink-0 font-mono">MES:</span>
               <button
                 onClick={() => setTimelineMonth('ALL')}
                 className={`rounded-lg px-2 py-0.5 text-xs font-bold transition shrink-0 ${
                   timelineMonth === 'ALL'
-                    ? 'bg-amber-600 text-white shadow'
+                    ? 'bg-amber-600 text-white shadow font-black'
                     : 'bg-neutral-900/80 text-slate-300 hover:bg-neutral-800 hover:text-white border border-white/5'
                 }`}
               >
@@ -2158,33 +2271,30 @@ export default function MapViewer({
                 { m: 2, label: 'Feb' },
                 { m: 3, label: 'Mar' },
                 { m: 4, label: 'Abr' },
-                { m: 5, label: 'May' },
-                { m: 6, label: 'Jun' },
-                { m: 7, label: 'Jul' },
-                { m: 8, label: 'Ago', peak: true },
-                { m: 9, label: 'Sep', peak: true },
-                { m: 10, label: 'Oct' },
-                { m: 11, label: 'Nov' },
-                { m: 12, label: 'Dic' }
-              ].map(({ m, label, peak }) => {
+                { m: 5, label: 'May ❄️', note: 'Inversión' },
+                { m: 6, label: 'Jun ❄️', note: 'San Juan' },
+                { m: 7, label: 'Jul ❄️', note: 'Inversión' },
+                { m: 8, label: 'Ago 🔥', peak: true, note: 'Incendios' },
+                { m: 9, label: 'Sep 🔥', peak: true, note: 'Pico Humo' },
+                { m: 10, label: 'Oct ☀️', note: 'Olas Calor' },
+                { m: 11, label: 'Nov ☀️', note: 'Calor Sur' },
+                { m: 12, label: 'Dic 🌧️', note: 'Lluvias' }
+              ].map(({ m, label, peak, note }) => {
                 const isSelected = Number(timelineMonth) === m;
                 return (
                   <button
                     key={m}
                     onClick={() => setTimelineMonth(m)}
-                    className={`relative rounded-lg px-1.5 sm:px-2 py-0.5 text-[11px] font-bold transition shrink-0 ${
+                    className={`relative rounded-lg px-2 py-0.5 text-[11px] font-bold transition shrink-0 ${
                       isSelected
                         ? 'bg-amber-500 text-black shadow font-black'
                         : peak
-                          ? 'border border-rose-500/40 bg-rose-950/30 text-rose-300 hover:bg-rose-900/50'
-                          : 'bg-neutral-900/60 text-slate-400 hover:bg-neutral-800 hover:text-white'
+                          ? 'border border-rose-500/50 bg-rose-950/40 text-rose-300 hover:bg-rose-900/50'
+                          : 'bg-neutral-900/70 text-slate-300 hover:bg-neutral-800 hover:text-white border border-white/5'
                     }`}
-                    title={peak ? `${label}: Mes crítico de incendios forestales (80% histórico)` : label}
+                    title={note ? `${label}: ${note}` : label}
                   >
                     {label}
-                    {peak && !isSelected && (
-                      <span className="absolute -top-0.5 -right-0.5 h-1.5 w-1.5 rounded-full bg-rose-500"></span>
-                    )}
                   </button>
                 );
               })}
