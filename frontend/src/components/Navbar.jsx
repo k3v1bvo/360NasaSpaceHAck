@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio, Satellite, Compass, TrendingUp } from 'lucide-react';
+import { Radio, Satellite, Compass, TrendingUp, Award } from 'lucide-react';
 
 export default function Navbar({ 
   activeTab, 
@@ -9,7 +9,8 @@ export default function Navbar({
   isTourOpen,
   setIsTourOpen,
   onOpenTemporalAnalytics,
-  onOpenGamcExact
+  onOpenGamcExact,
+  onOpenRubric
 }) {
   const tabs = [
     { id: 'microclimas', label: '📍 1. Piloto Cochabamba (15 Distritos)', short: '📍 1. Cocha (15 Dist.)' },
@@ -71,6 +72,17 @@ export default function Navbar({
             title="Abrir Visor Cartográfico GAMC WMS + Tendencia Superficial NASA en tiempo real"
           >
             <span>🏛️ WMS GAMC</span>
+          </button>
+
+          {/* Botón Rúbrica Oficial NASA */}
+          <button
+            onClick={onOpenRubric}
+            className="flex items-center gap-1.5 sm:gap-2 rounded-lg border border-amber-500/60 bg-amber-950/70 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-bold text-amber-200 hover:text-white hover:border-amber-400 hover:bg-amber-900/80 transition shadow-sm"
+            title="Ver Matriz de Cumplimiento de los 5 Criterios Oficiales de Evaluación NASA"
+          >
+            <Award className="h-4 w-4 text-amber-400" />
+            <span className="hidden sm:inline">Rúbrica NASA</span>
+            <span className="sm:hidden">Rúbrica</span>
           </button>
 
           {/* Botón Tendencias & Predicción IA */}

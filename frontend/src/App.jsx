@@ -15,6 +15,7 @@ import FireMonitorTab from './modules/FireMonitorTab';
 
 import SystemWorkflowTour from './components/SystemWorkflowTour';
 import GamcOfficialMap from './components/GamcOfficialMap';
+import RubricEvaluationModal from './components/RubricEvaluationModal';
 
 // Datos satelitales armonizados y crudos
 import focosHarmonized from '../../data/nasa/firms_tunari_harmonized.geojson';
@@ -28,6 +29,7 @@ export default function App() {
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isTemporalModalOpen, setIsTemporalModalOpen] = useState(false);
   const [isGamcExactOpen, setIsGamcExactOpen] = useState(false);
+  const [isRubricOpen, setIsRubricOpen] = useState(false);
   const [mobileView, setMobileView] = useState('map'); // 'map' | 'panel' para vista móvil responsive
   const [offlineMode, setOfflineMode] = useState(false); // Online por defecto para consumir NASA POWER & WMS
   const [selectedPoint, setSelectedPoint] = useState(null);
@@ -71,6 +73,7 @@ export default function App() {
         setIsTourOpen={setIsTourOpen}
         onOpenTemporalAnalytics={() => setIsTemporalModalOpen(true)}
         onOpenGamcExact={() => setIsGamcExactOpen(true)}
+        onOpenRubric={() => setIsRubricOpen(true)}
       />
 
       {/* 2. Barra Científica de Métricas IA Obligatorias (R²=0.9457, RMSE=0.55°C, p < 0.05) */}
@@ -199,6 +202,16 @@ export default function App() {
           <GamcOfficialMap onClose={() => setIsGamcExactOpen(false)} />
         </div>
       )}
+
+      {/* Modal Interactivo de Rúbrica Oficial NASA Space Apps (5 Criterios) */}
+      <RubricEvaluationModal
+        isOpen={isRubricOpen}
+        onClose={() => setIsRubricOpen(false)}
+        onNavigateToTab={(tab) => {
+          handleTabChange(tab);
+          setIsRubricOpen(false);
+        }}
+      />
     </div>
   );
 }
