@@ -17,6 +17,9 @@ const GLOBAL_ZOOM = 3;
 const COCHABAMBA_CENTER = [-17.3895, -66.1568];
 const COCHABAMBA_ZOOM = 12;
 const GAMC_WMS_ENDPOINT = 'https://serviciosgamc.cochabamba.bo/api/gs/wms';
+const GAMC_PROJECT_01_KEY = '1a3d2d9c6e1d6a94062d11a9021a48b24ae0e05e8183e9d8'; // Proyecto 01: Be An Earth System Trend Detective
+const GAMC_SERVICE_DISTRITOS = '7eb13092-bf0e-493b-aae6-03c43eedda2c'; // Límite Distritos Oficial
+const GAMC_SERVICE_COTA2750 = '297cefa4-0832-42bb-a98e-2cbea989fd9d'; // Cota 2750 Oficial
 const GAMC_PROJECT_03_KEY = '8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32';
 const CARTO_API_KEY = 'cb1_4mth_1_6594809bcefc062849f9ce07'; // Cuenta k3v1bvoLabs (5M req/mes)
 
@@ -75,6 +78,7 @@ export default function MapViewer({
   const [baseMapType, setBaseMapType] = useState('streets'); // 'streets' (OpenStreetMap) | 'satellite' (Esri Imagery + Labels) | 'dark' (Esri Dark Canvas)
   const [showDistrictLabels, setShowDistrictLabels] = useState(true); // Control para ocultar/mostrar nombres de distritos
   const [showSensors, setShowSensors] = useState(true); // Control para ocultar/mostrar sensores
+  const [showGamcWms, setShowGamcWms] = useState(false); // Capa WMS Oficial GAMC (Proyecto 01)
   const [isLegendOpen, setIsLegendOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
   const [districtSearch, setDistrictSearch] = useState('');
   const [districtZoneFilter, setDistrictZoneFilter] = useState('TODOS');
@@ -453,6 +457,21 @@ export default function MapViewer({
     // CAPA 2: MICROCLIMAS & RED MÓNICA IA (Caso Piloto Cochabamba)
     // =========================================================================
     if (currentTab === 'microclimas') {
+      // 0. Capa WMS Oficial de la Alcaldía de Cochabamba (Proyecto 01 GAMC - Límite Distritos)
+      if (showGamcWms) {
+        const gamcWms = L.tileLayer.wms(GAMC_WMS_ENDPOINT, {
+          key: GAMC_PROJECT_01_KEY,
+          service_id: GAMC_SERVICE_DISTRITOS,
+          layers: '',
+          format: 'image/png',
+          transparent: true,
+          version: '1.1.1',
+          maxZoom: 19,
+          zIndex: 350
+        });
+        gamcWms.addTo(layersGroupRef.current);
+      }
+
       // 1. Polígonos de Distritos con Gradiente Térmico LST y Métricas GAMC
       distritosData?.features?.forEach((dist) => {
         const p = dist.properties;
@@ -1222,6 +1241,7 @@ export default function MapViewer({
     nasaGibs, 
     gibsDate, 
     showSensors,
+    showGamcWms,
     timelineYear,
     timelineMonth
   ]);
@@ -1579,6 +1599,21 @@ export default function MapViewer({
           >
             <span className="hidden sm:inline">{showSensors ? '📍 Sensores ON' : '📍 Sensores OFF'}</span>
             <span className="sm:hidden">{showSensors ? 'Sensores' : 'Sin sensores'}</span>
+          </button>
+        )}
+
+        {/* Botón para alternar Capa WMS Oficial GAMC (Proyecto 01: Be An Earth System Trend Detective) */}
+        {activeTab === 'microclimas' && (
+          <button
+            onClick={() => setShowGamcWms(!showGamcWms)}
+            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs sm:text-[13px] font-bold transition shadow-sm ${
+              showGamcWms
+                ? 'bg-purple-600 text-white shadow-purple-900/40 ring-1 ring-purple-400/50'
+                : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
+            }`}
+            title="Superponer la capa oficial WMS de la Alcaldía de Cochabamba (Proyecto 01 GAMC: Límite Distritos)"
+          >
+            <span>🏛️ {showGamcWms ? 'WMS GAMC ON' : 'WMS GAMC'}</span>
           </button>
         )}
 
