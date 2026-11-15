@@ -136,7 +136,12 @@ export default function MapViewer({
   const activeTabRef = useRef(activeTab);
   const renderLayersRef = useRef(null);
   const [baseMapType, setBaseMapType] = useState('streets'); // 'streets' (OpenStreetMap) | 'satellite' (Esri Imagery + Labels) | 'dark' (Esri Dark Canvas)
-  const [showDistrictLabels, setShowDistrictLabels] = useState(true); // Control para ocultar/mostrar nombres de distritos
+  const [showDistrictLabels, setShowDistrictLabels] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 1024;
+    }
+    return false;
+  }); // En pantallas pequeñas arranca limpio para evitar que 15 etiquetas se amontonen
   const [showSensors, setShowSensors] = useState(true); // Control para ocultar/mostrar sensores
   const [showGamcWms, setShowGamcWms] = useState(false); // Capa WMS Oficial GAMC (Proyecto 01 & 05)
   const [gamcActiveLayers, setGamcActiveLayers] = useState({
@@ -148,10 +153,12 @@ export default function MapViewer({
   const [isGamcMenuOpen, setIsGamcMenuOpen] = useState(false);
   const [gamcFeatureInfo, setGamcFeatureInfo] = useState(null);
   const [isGamcLoading, setIsGamcLoading] = useState(false);
-  const [isLegendOpen, setIsLegendOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
+  const [isLegendOpen, setIsLegendOpen] = useState(false); // Inicia cerrada para máxima visibilidad del mapa
   const [districtSearch, setDistrictSearch] = useState('');
   const [districtZoneFilter, setDistrictZoneFilter] = useState('TODOS');
   const [isDistrictNavOpen, setIsDistrictNavOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isTimelineCollapsed, setIsTimelineCollapsed] = useState(false);
 
   // Estados de la Línea de Tiempo Multitemporal & Predicción IA
   const [timelineYear, setTimelineYear] = useState('ALL'); // 'ALL' | 2020..2026
@@ -1703,50 +1710,53 @@ export default function MapViewer({
       )}
       
       {/* 1. Selector de Capas Base (Callejero / Satélite / Oscuro) y Controles */}
-      <div className="absolute top-3 left-3 z-[400] flex items-center gap-1 sm:gap-1.5 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1 text-xs text-white backdrop-blur-xl shadow-2xl">
+      <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-[400] flex items-center gap-1 sm:gap-1.5 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1 text-xs text-white backdrop-blur-xl shadow-2xl max-w-[calc(100vw-1rem)] overflow-x-auto no-scrollbar">
         <button
           onClick={() => setBaseMapType('streets')}
-          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
+          className={`flex items-center gap-1 rounded-lg px-2 sm:px-2.5 py-1 text-xs font-semibold transition shrink-0 ${
             baseMapType === 'streets'
               ? 'bg-blue-600 text-white shadow'
               : 'text-slate-300 hover:text-white hover:bg-white/5'
           }`}
           title="Mapa Callejero Oficial de Cochabamba (OpenStreetMap sin marcas de agua)"
         >
-          <span>🗺️ Callejero</span>
+          <span className="hidden sm:inline">🗺️ Callejero</span>
+          <span className="sm:hidden">🗺️</span>
         </button>
 
         <button
           onClick={() => setBaseMapType('satellite')}
-          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
+          className={`flex items-center gap-1 rounded-lg px-2 sm:px-2.5 py-1 text-xs font-semibold transition shrink-0 ${
             baseMapType === 'satellite'
               ? 'bg-blue-600 text-white shadow'
               : 'text-slate-300 hover:text-white hover:bg-white/5'
           }`}
           title="Vista Satelital NASA/Esri con Viario Oficial y Etiquetas Viales"
         >
-          <span>🛰️ Satélite</span>
+          <span className="hidden sm:inline">🛰️ Satélite</span>
+          <span className="sm:hidden">🛰️</span>
         </button>
 
         <button
           onClick={() => setBaseMapType('dark')}
-          className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
+          className={`flex items-center gap-1 rounded-lg px-2 sm:px-2.5 py-1 text-xs font-semibold transition shrink-0 ${
             baseMapType === 'dark'
               ? 'bg-blue-600 text-white shadow'
               : 'text-slate-300 hover:text-white hover:bg-white/5'
           }`}
           title="Modo Oscuro Profesional (Esri Canvas Dark sin marcas de agua)"
         >
-          <span>🌙 Oscuro</span>
+          <span className="hidden sm:inline">🌙 Oscuro</span>
+          <span className="sm:hidden">🌙</span>
         </button>
 
-        <div className="h-4 w-px bg-white/10 mx-0.5" />
+        <div className="h-4 w-px bg-white/10 mx-0.5 shrink-0" />
 
         {/* Botón para alternar etiquetas de distritos */}
         {activeTab === 'microclimas' && (
           <button
             onClick={() => setShowDistrictLabels(!showDistrictLabels)}
-            className={`flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold transition shadow-sm ${
+            className={`flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold transition shadow-sm shrink-0 ${
               showDistrictLabels
                 ? 'bg-amber-600 text-white shadow-amber-900/40 ring-1 ring-amber-400/50'
                 : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
@@ -1763,7 +1773,7 @@ export default function MapViewer({
         {activeTab === 'microclimas' && (
           <button
             onClick={() => setShowSensors(!showSensors)}
-            className={`flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold transition shadow-sm ${
+            className={`flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold transition shadow-sm shrink-0 ${
               showSensors
                 ? 'bg-cyan-600 text-white shadow-cyan-900/40 ring-1 ring-cyan-400/50'
                 : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
@@ -1771,13 +1781,13 @@ export default function MapViewer({
             title={showSensors ? "Ocultar puntos de sensores MÓNICA e IA" : "Mostrar sensores en el mapa"}
           >
             <span className="hidden sm:inline">{showSensors ? '📍 Sensores ON' : '📍 Sensores OFF'}</span>
-            <span className="sm:hidden">{showSensors ? 'Sensores' : 'Sin sensores'}</span>
+            <span className="sm:hidden">{showSensors ? 'Sensores' : 'Sin sens.'}</span>
           </button>
         )}
 
         {/* Selector de Capas WMS Oficiales GAMC */}
         {activeTab === 'microclimas' && (
-          <div className="relative">
+          <div className="relative shrink-0">
             <div className="flex items-center rounded-lg overflow-hidden shadow-sm">
               <button
                 onClick={() => setShowGamcWms(!showGamcWms)}
@@ -1788,7 +1798,8 @@ export default function MapViewer({
                 }`}
                 title="Superponer capas oficiales WMS del GAMC (Proxy GeoServer Municipal)"
               >
-                <span>🏛️ {showGamcWms ? 'WMS GAMC ON' : 'WMS GAMC'}</span>
+                <span className="hidden sm:inline">🏛️ {showGamcWms ? 'WMS GAMC ON' : 'WMS GAMC'}</span>
+                <span className="sm:hidden">🏛️ WMS</span>
               </button>
               <button
                 onClick={() => setIsGamcMenuOpen(!isGamcMenuOpen)}
@@ -1863,27 +1874,40 @@ export default function MapViewer({
           </div>
         )}
 
-        <div className="h-4 w-px bg-white/10 mx-0.5" />
+        <div className="h-4 w-px bg-white/10 mx-0.5 shrink-0" />
 
         <button
           onClick={handleRecenter}
-          className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-cyan-300 hover:text-white hover:bg-neutral-800 transition"
+          className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-cyan-300 hover:text-white hover:bg-neutral-800 transition shrink-0"
           title="Recentrar Vista del Territorio"
         >
           <Crosshair className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">Recentrar</span>
         </button>
+
+        {/* Botón de Búsqueda para Móvil */}
+        {activeTab === 'microclimas' && (
+          <button
+            onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
+            className={`sm:hidden flex items-center justify-center rounded-lg p-1 text-xs font-semibold transition shrink-0 ${
+              isMobileSearchOpen ? 'bg-cyan-600 text-white' : 'bg-neutral-800 text-cyan-300'
+            }`}
+            title="Buscar distrito"
+          >
+            <Search className="h-3.5 w-3.5" />
+          </button>
+        )}
       </div>
 
       {/* 1.3. Banner de Consulta en Vivo GetFeatureInfo GAMC (Alcaldía de Cochabamba) */}
       {gamcFeatureInfo && (
-        <div className="absolute top-14 left-3 z-[420] flex items-center gap-2 rounded-xl border border-purple-500/40 bg-[#0d1017]/95 px-3 py-2 text-xs text-white shadow-2xl backdrop-blur-xl">
+        <div className="absolute top-12 sm:top-14 left-2 sm:left-3 z-[420] flex items-center gap-2 rounded-xl border border-purple-500/40 bg-[#0d1017]/95 px-3 py-1.5 text-xs text-white shadow-2xl backdrop-blur-xl max-w-[94vw]">
           <span className="text-purple-400 font-bold">🏛️ Consulta GAMC:</span>
           <span className="font-semibold text-slate-200">
             Distrito: <span className="text-amber-300 font-bold">{gamcFeatureInfo.Distrito || 'N/A'}</span>
           </span>
           {gamcFeatureInfo.Comuna && (
-            <span className="text-slate-400">
+            <span className="text-slate-400 hidden sm:inline">
               • Comuna: <span className="text-cyan-300 font-medium">{gamcFeatureInfo.Comuna}</span>
             </span>
           )}
@@ -1899,7 +1923,9 @@ export default function MapViewer({
 
       {/* 1.5. Navegador Inteligente & Buscador de Distritos GAMC (15 Distritos) */}
       {activeTab === 'microclimas' && (
-        <div className="absolute top-16 sm:top-3 right-2 sm:right-3 z-[410] flex flex-col items-end gap-1.5 max-w-[94vw] sm:max-w-xs md:max-w-sm">
+        <div className={`absolute ${
+          isMobileSearchOpen ? 'top-12 left-2 right-2 flex' : 'hidden sm:flex'
+        } sm:top-3 sm:right-3 sm:left-auto z-[410] flex-col items-end gap-1.5 max-w-[94vw] sm:max-w-xs md:max-w-sm`}>
           {/* Barra de Entrada / Toggle */}
           <div className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1.5 text-xs text-white backdrop-blur-xl shadow-2xl w-full">
             <div className="relative flex-1 flex items-center">
@@ -2015,8 +2041,8 @@ export default function MapViewer({
         </div>
       )}
 
-      {/* 2. Leyenda Flotante Dinámica (Posicionada arriba de la barra de tiempo para evitar colisiones) */}
-      <div className="absolute bottom-20 left-3 z-[410] transition-all duration-200">
+      {/* 2. Leyenda Flotante Dinámica (Oculta en móviles para dar 100% visibilidad al mapa y evitar colisiones) */}
+      <div className="hidden sm:block absolute bottom-24 left-3 z-[410] transition-all duration-200">
         {!isLegendOpen ? (
           <button
             onClick={() => setIsLegendOpen(true)}
@@ -2179,37 +2205,33 @@ export default function MapViewer({
         )}
       </div>
 
-      {/* 3. Barra Flotante de Línea de Tiempo Satelital & Predicción IA (Visible en Incendios y Microclimas) */}
+      {/* 3. Barra Flotante de Línea de Tiempo Satelital & Predicción IA (Elevada en móviles a bottom-16 para no colisionar con Ver Mapa) */}
       {(activeTab === 'incendios' || activeTab === 'microclimas') && (
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[420] w-[96%] sm:w-auto max-w-4xl rounded-2xl border border-white/10 bg-[#090d16]/95 p-2 sm:p-2.5 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2">
+        <div className="absolute bottom-16 sm:bottom-3 left-1/2 -translate-x-1/2 z-[420] w-[96%] sm:w-auto max-w-4xl rounded-2xl border border-white/10 bg-[#090d16]/95 p-2 sm:p-2.5 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2">
           {/* Fila Superior: Controles, Estado y Botón de Análisis */}
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2 mb-2">
-            <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 border-b border-white/10 pb-1.5 sm:pb-2 mb-1.5">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
               <span className="flex h-2.5 w-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
               <span className="text-xs sm:text-sm font-black tracking-tight text-white flex items-center gap-1.5">
-                <Calendar className="h-4 w-4 text-cyan-400" />
-                Línea de Tiempo Satelital
+                <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-cyan-400" />
+                <span className="hidden xs:inline">Línea de Tiempo</span>
+                <span className="xs:hidden">Tiempo</span>
               </span>
-              <span className="rounded-full bg-blue-950/80 px-2 py-0.5 text-[11px] font-mono font-bold text-blue-300 border border-blue-800/80">
-                {timelineYear === 'ALL' ? '2020-2025 Acumulado' : timelineYear === 2026 ? '✨ 2026 (Predicción IA)' : `Año ${timelineYear}`}
+              <span className="rounded-full bg-blue-950/80 px-2 py-0.5 text-[10.5px] sm:text-[11px] font-mono font-bold text-blue-300 border border-blue-800/80">
+                {timelineYear === 'ALL' ? '2020-2025' : timelineYear === 2026 ? '✨ 2026 IA' : `Año ${timelineYear}`}
               </span>
               {timelineMonth !== 'ALL' && (
-                <span className="rounded-full bg-amber-950/80 px-2 py-0.5 text-[11px] font-bold text-amber-300 border border-amber-800/80">
-                  {['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][Number(timelineMonth) - 1]}
-                </span>
-              )}
-              {timelineMonth === 'ALL' && timelineYear !== 2026 && (
-                <span className="hidden md:inline text-[11px] text-slate-400">
-                  • 79.8% de incendios se concentran en Ago-Sep
+                <span className="rounded-full bg-amber-950/80 px-2 py-0.5 text-[10.5px] sm:text-[11px] font-bold text-amber-300 border border-amber-800/80">
+                  {['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'][Number(timelineMonth) - 1]}
                 </span>
               )}
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {/* Botón Play / Pause auto-player */}
               <button
                 onClick={() => setIsPlayingTimeline(!isPlayingTimeline)}
-                className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition shadow-sm ${
+                className={`flex items-center gap-1.5 rounded-lg px-2 sm:px-2.5 py-1 text-xs font-bold transition shadow-sm ${
                   isPlayingTimeline
                     ? 'bg-rose-600 text-white animate-pulse'
                     : 'bg-neutral-800 text-slate-200 hover:text-white hover:bg-neutral-700'
@@ -2223,18 +2245,28 @@ export default function MapViewer({
               {/* Botón para abrir el Modal de Tendencias y Predicción IA */}
               <button
                 onClick={() => setModalOpen(true)}
-                className="flex items-center gap-1.5 rounded-lg border border-purple-500/50 bg-gradient-to-r from-purple-900/80 to-indigo-900/80 px-2.5 sm:px-3 py-1 text-xs font-bold text-purple-200 hover:text-white hover:border-purple-400 transition shadow-sm"
+                className="flex items-center gap-1 sm:gap-1.5 rounded-lg border border-purple-500/50 bg-gradient-to-r from-purple-900/80 to-indigo-900/80 px-2 sm:px-3 py-1 text-xs font-bold text-purple-200 hover:text-white hover:border-purple-400 transition shadow-sm"
                 title="Abrir Dashboard Estadístico de Tendencias y Predicción"
               >
                 <TrendingUp className="h-3.5 w-3.5 text-purple-300" />
                 <span className="hidden sm:inline">Análisis & Gráficas IA</span>
-                <span className="sm:hidden">Análisis</span>
+                <span className="sm:hidden">IA</span>
+              </button>
+
+              {/* Botón Minimizar / Expandir en Móvil para dar 100% visibilidad al mapa */}
+              <button
+                onClick={() => setIsTimelineCollapsed(!isTimelineCollapsed)}
+                className="sm:hidden p-1 rounded-lg bg-neutral-800 text-slate-300 hover:text-white transition border border-white/10"
+                title={isTimelineCollapsed ? "Mostrar selectores de años y meses" : "Ocultar selectores para ver más mapa"}
+              >
+                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isTimelineCollapsed ? 'rotate-180' : ''}`} />
               </button>
             </div>
           </div>
 
-          {/* Controles Temporales en 2 Filas Dedicadas (Cero colisiones ni botones aplastados) */}
-          <div className="space-y-1.5 pt-0.5">
+          {/* Controles Temporales en 2 Filas Dedicadas (Ocultables en móvil para no tapar el mapa) */}
+          {!isTimelineCollapsed && (
+            <div className="space-y-1.5 pt-0.5 animate-in fade-in">
             {/* Fila 1: Selector de Años */}
             <div className="flex items-center gap-1.5 overflow-x-auto custom-modal-scroll py-0.5">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mr-1 shrink-0 font-mono">AÑO:</span>
@@ -2311,8 +2343,9 @@ export default function MapViewer({
               })}
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+    )}
 
       {/* Renderizado del Modal de Análisis Temporal y Predicción */}
       <TemporalTrendModal
