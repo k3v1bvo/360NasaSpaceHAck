@@ -358,13 +358,13 @@ export default function MapViewer({
           fillOpacity: 0.30,
         });
 
-        // Etiqueta permanente y legible en el centroide de cada distrito
-        const shortName = p.nombre.split('-')[1]?.trim() || p.nombre;
+        // Nombre ultracorto de 1 o 2 palabras para evitar colisiones en distritos pequeños del centro
+        const compactName = (p.nombre.split('-')[1]?.trim() || p.nombre).split('/')[0].trim();
         polygon.bindTooltip(`
-          <div style="display: flex; align-items: center; gap: 4px; font-family: sans-serif; font-size: 10px; font-weight: 800;">
-            <span style="background: ${color}; color: #fff; padding: 1px 5px; border-radius: 4px; font-size: 9px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);">${p.distrito_id}</span>
-            <span>${shortName}</span>
-            <span style="color: ${color}; font-size: 9px; font-weight: bold;">(${lstVal}°C)</span>
+          <div style="display: flex; align-items: center; gap: 3px; font-family: sans-serif; font-size: 10px; font-weight: 800; white-space: nowrap;">
+            <span style="background: ${color}; color: #fff; padding: 1px 5px; border-radius: 4px; font-size: 9px; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">${p.distrito_id}</span>
+            <span>${compactName}</span>
+            <span style="color: ${color}; font-size: 9px; font-weight: bold;">${lstVal}°</span>
           </div>
         `, {
           permanent: true,
@@ -892,7 +892,7 @@ export default function MapViewer({
               ? 'bg-blue-600 text-white shadow'
               : 'text-neutral-400 hover:text-white'
           }`}
-          title="Mapa Callejero y Topográfico (CartoDB Voyager)"
+          title="Mapa Callejero y Topográfico (OpenStreetMap Oficial)"
         >
           <span>🗺️ Callejero</span>
         </button>
@@ -904,7 +904,7 @@ export default function MapViewer({
               ? 'bg-blue-600 text-white shadow'
               : 'text-neutral-400 hover:text-white'
           }`}
-          title="Modo Oscuro Espacial (CartoDB Dark Matter)"
+          title="Modo Oscuro Espacial (Esri Dark Canvas)"
         >
           <span>🌙 Oscuro</span>
         </button>
