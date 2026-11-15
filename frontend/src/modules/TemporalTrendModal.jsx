@@ -16,7 +16,10 @@ import {
   ArrowUpRight,
   ChevronRight,
   Layers,
-  Info
+  Info,
+  BookOpen,
+  ExternalLink,
+  Database
 } from 'lucide-react';
 import temporalData from '../data/temporal_trends_data.json';
 
@@ -81,6 +84,7 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
             { id: 'air_quality', label: 'Inversión Térmica & PM2.5', icon: Wind },
             { id: 'decadal', label: 'Calentamiento Decadal LST', icon: Thermometer },
             { id: 'protection', label: 'Matriz de Alerta & Protección', icon: ShieldAlert },
+            { id: 'sources', label: '14 Recursos Oficiales NASA & Socios', icon: BookOpen },
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -582,6 +586,409 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================================= */}
+          {/* PESTAÑA 6: 14 RECURSOS OFICIALES NASA & AGENCIAS SOCIAS                   */}
+          {/* ========================================================================= */}
+          {activeTab === 'sources' && (
+            <div className="space-y-6 animate-in fade-in duration-200">
+              <div className="rounded-2xl border border-cyan-500/30 bg-cyan-950/20 p-4 text-xs text-cyan-200 flex items-start gap-3">
+                <Database className="h-5 w-5 text-cyan-400 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-white font-bold">Alineación Rigurosa con el Reto Oficial NASA Space Apps:</strong>
+                  <p className="mt-1 text-slate-300 leading-relaxed">
+                    A continuación se listan las <strong>14 fuentes oficiales y guías metodológicas</strong> provistas por la NASA, la Agencia Espacial Canadiense (CSA), NOAA y KNMI para el reto <em>"Be An Earth System Trend Detective!"</em>, con sus respectivos enlaces directos verificados y su aplicación técnica en la plataforma STEVENS.
+                  </p>
+                </div>
+              </div>
+
+              {/* Categoría 1: NASA Satélites & Telemetría */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 border-b border-cyan-500/30 pb-2">
+                  <span className="h-2 w-2 rounded-full bg-cyan-400"></span>
+                  <h3 className="text-sm font-black text-cyan-300 uppercase tracking-wider">
+                    1. Telemetría y Portales de Observación de la Tierra (NASA)
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <a
+                    href="https://giovanni.gsfc.nasa.gov/giovanni/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-cyan-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-cyan-300 transition">
+                          NASA Giovanni
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">
+                          NASA GSFC
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Portal versátil de visualización y series de tiempo para variables biofísicas, AOD y LST.
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-cyan-400 font-semibold">Uso: Calibración regional MODIS/VIIRS</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://giovanni.gsfc.nasa.gov/giovanni/doc/glossary/Giovanni_Variable_Definitions_Glossary.html#h.e33vsd8q94ll"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-cyan-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-cyan-300 transition">
+                          Giovanni Variable Definitions Glossary
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">
+                          NASA Glossary
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Definiciones de variables estándar (Aerosol Optical Depth, Land Surface Temperature, Precipitación).
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-cyan-400 font-semibold">Uso: Taxonomía y unidades de medida</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://appeears.earthdatacloud.nasa.gov/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-cyan-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-cyan-300 transition">
+                          NASA AppEEARS
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">
+                          Earthdata Cloud
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Extracción precisa de series temporales por polígono para MODIS (MOD11A1, MOD13Q1) y ECOSTRESS.
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-cyan-400 font-semibold">Uso: Extracción de series por los 15 distritos</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://disc.gsfc.nasa.gov/information/tools?title=Hydrology%20Time%20Series"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-cyan-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-cyan-300 transition">
+                          NASA GES DISC Hydrology Time Series
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">
+                          GES DISC
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Datos hidrológicos globales, balance de cuencas, humedad del suelo y escorrentía superficial.
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-cyan-400 font-semibold">Uso: Módulo AgroAdvisor & Humedad Edáfica</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://www.ncei.noaa.gov/cdo-web/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-cyan-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-cyan-300 transition">
+                          NOAA Climate Data Online (CDO)
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">
+                          NOAA NCEI
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Registros climáticos de estaciones meteorológicas terrestres globales (GHCND / GSOD).
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-cyan-400 font-semibold">Uso: Validación cruzada de temperaturas con SENAMHI</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://ntrs.nasa.gov/api/citations/20090042747/downloads/20090042747.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-cyan-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-cyan-300 transition">
+                          NASA NTRS Paper (SeaWiFS Time-Series)
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">
+                          NASA Technical Report
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Metodología formal de descomposición de series temporales satelitales Y(t) = T(t) + S(t) + R(t).
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-cyan-400 font-semibold">Uso: Base matemática de nuestro motor predictivo</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition" />
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              {/* Categoría 2: Agencia Espacial Canadiense (CSA) */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 border-b border-emerald-500/30 pb-2">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
+                  <h3 className="text-sm font-black text-emerald-300 uppercase tracking-wider">
+                    2. Radar SAR, Hidrología y Recursos Espaciales (CSA Canadá)
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <a
+                    href="https://www.asc-csa.gc.ca/eng/satellites/swot/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-emerald-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-emerald-300 transition">
+                          Misión SWOT (NASA / CSA / CNES / UKSA)
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                          SWOT Satellite
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Topografía interferométrica de aguas superficiales y monitoreo de niveles en lagos y embalses.
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-emerald-400 font-semibold">Uso: Monitoreo hídrico de Laguna Alalay y Angostura</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://donnees-data.asc-csa.gc.ca/en/dataset/rcm"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-emerald-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-emerald-300 transition">
+                          Radarsat Constellation Mission (RCM)
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                          CSA Data Portal
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Imágenes de Radar de Apertura Sintética (SAR C-Band) diurnas y nocturnas capaces de penetrar nubes y humo.
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-emerald-400 font-semibold">Uso: Detección de suelo inundado y cicatrices de fuego</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://github.com/asc-csa/Synthetic_Aperture_Radar_Tutorial"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-emerald-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-emerald-300 transition">
+                          Tutorial Python de SAR (CSA GitHub)
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                          Open Source
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Notebooks de procesamiento de retrodispersión radar, polarimetría y mapeo de humedad en suelo.
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-emerald-400 font-semibold">Uso: Metodología del Módulo Torrenteras</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://www.asc-csa.gc.ca/eng/satellites/everyday-lives/monitoring-and-protecting-our-ecosystems-from-space.asp"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-emerald-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-emerald-300 transition">
+                          Protección de Ecosistemas desde el Espacio
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                          CSA Article
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Estrategias de gobernanza territorial y mitigación de desastres ecológicos desde satélites.
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-emerald-400 font-semibold">Uso: Enfoque de conservación del Parque Tunari</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://geo.ca/home/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-emerald-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group md:col-span-2"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-emerald-300 transition">
+                          Portal Geoespacial Geo.ca
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                          OGC Geospatial Data
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Plataforma nacional canadiense para federar catálogos geoespaciales con metadatos estandarizados ISO/OGC.
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-emerald-400 font-semibold">Uso: Estándares de interoperabilidad GeoJSON/WFS</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition" />
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              {/* Categoría 3: Metodología Estadística & KNMI */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 border-b border-indigo-500/30 pb-2">
+                  <span className="h-2 w-2 rounded-full bg-indigo-400"></span>
+                  <h3 className="text-sm font-black text-indigo-300 uppercase tracking-wider">
+                    3. Metodología Estadística y Detección de Tendencias (KNMI & Papers)
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <a
+                    href="https://climexp.knmi.nl/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-indigo-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-indigo-300 transition">
+                          KNMI Climate Explorer
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-400 border border-indigo-800">
+                          Royal KNMI
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Herramienta de investigación climática para correlación de patrones meteorológicos con El Niño / La Niña (ENSO).
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-indigo-400 font-semibold">Uso: Análisis de teleconexión climática</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-indigo-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://medium.com/@snp.kriss/statistical-test-methods-to-detect-trends-in-time-series-data-b361a0ec530b"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-indigo-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-indigo-300 transition">
+                          Detección de Tendencias (Kriss)
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-400 border border-indigo-800">
+                          Guía Técnica
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Formulación matemática del test de Mann-Kendall, Sen's Slope y pruebas no paramétricas robustas.
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-indigo-400 font-semibold">Uso: Implementado en backend/src/models/</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-indigo-300 transition" />
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://www.statsig.com/perspectives/a-comprehensive-guide-to-statistical-significance"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-3.5 rounded-xl border border-white/10 bg-[#0d1322] hover:border-indigo-400/60 hover:bg-neutral-900 transition flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white group-hover:text-indigo-300 transition">
+                          Significancia Estadística (Statsig)
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-400 border border-indigo-800">
+                          Guía Formal
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Cálculo estricto de intervalos de confianza del 95%, p-value y umbrales de decisión para evitar falsos positivos.
+                      </p>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-indigo-400 font-semibold">Uso: Validación p &lt; 0.0001 de tendencias</span>
+                      <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-indigo-300 transition" />
+                    </div>
+                  </a>
+                </div>
               </div>
             </div>
           )}

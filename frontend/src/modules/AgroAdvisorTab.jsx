@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sprout, Droplets, Compass, CheckCircle2, ShieldCheck, MapPin, Sparkles, Layers } from 'lucide-react';
+import { Sprout, Droplets, Compass, CheckCircle2, ShieldCheck, MapPin, Sparkles, Layers, ExternalLink } from 'lucide-react';
 
 const PARCELAS_VALLE = [
   { id: 'valle_bajo', name: 'Valle Bajo (Quillacollo / Vinto)', lat: -17.40, lon: -66.28, tipo: 'franco', smap: 19, cultivo_actual: 'Maíz / Alfa' },
@@ -183,8 +183,19 @@ export default function AgroAdvisorTab({ onOpenReportModal, onSelectParcela }) {
         </button>
       </div>
 
-      <div className="rounded-lg bg-neutral-900/60 border border-neutral-800/60 p-2.5 text-center text-[10px] text-neutral-400">
-        Integración agro-climática basada en misiones NASA SMAP (L-band SAR/Radiometer) y balances hídricos FAO-56.
+      <div className="rounded-lg bg-neutral-900/60 border border-neutral-800/60 p-2.5 text-[10px] text-neutral-400 space-y-1.5">
+        <div className="flex items-center justify-between">
+          <span>Balance agro-climático basado en NASA SMAP y FAO-56.</span>
+          <a
+            href="https://disc.gsfc.nasa.gov/information/tools?title=Hydrology%20Time%20Series"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-bold transition"
+          >
+            <span>NASA GES DISC Hydrology</span>
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
       </div>
     </div>
   );

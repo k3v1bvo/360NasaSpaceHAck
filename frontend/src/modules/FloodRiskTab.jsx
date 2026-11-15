@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Waves, AlertOctagon, ShieldAlert, Filter, MapPin, BellRing, ArrowRight } from 'lucide-react';
+import { Waves, AlertOctagon, ShieldAlert, Filter, MapPin, BellRing, ArrowRight, ExternalLink, Radar } from 'lucide-react';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
 
 export default function FloodRiskTab({ onSelectPunto, selectedPoint, onOpenReportModal }) {
@@ -139,6 +139,51 @@ export default function FloodRiskTab({ onSelectPunto, selectedPoint, onOpenRepor
           <span>¡Reportar Colapso de Torrentera o Inundación!</span>
         </button>
       )}
+
+      {/* Recursos Oficiales del Reto: CSA SAR & SWOT */}
+      <div className="rounded-xl border border-blue-500/20 bg-blue-950/20 p-3 space-y-2">
+        <div className="flex items-center justify-between text-xs font-bold text-cyan-300">
+          <div className="flex items-center gap-1.5">
+            <Radar className="h-4 w-4 text-cyan-400" />
+            <span>Misiones Radar SAR & Altimetría (CSA / NASA)</span>
+          </div>
+          <span className="text-[10px] font-mono bg-cyan-900/50 text-cyan-200 px-1.5 py-0.5 rounded border border-cyan-700/50">
+            Reto Oficial
+          </span>
+        </div>
+        <p className="text-[11px] text-neutral-300 leading-snug">
+          Para evaluar zonas anegadas bajo nubosidad densa durante temporales de lluvia, se integran las metodologías radar de la Agencia Espacial Canadiense (CSA) y NASA:
+        </p>
+        <div className="grid grid-cols-1 gap-1.5 pt-1">
+          <a
+            href="https://www.asc-csa.gc.ca/eng/satellites/swot/"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 px-2.5 py-1.5 text-[11px] hover:border-cyan-400/60 hover:bg-neutral-800 transition group"
+          >
+            <span className="text-neutral-200 group-hover:text-cyan-300 transition">🌊 Misión SWOT Altimetría (NASA / CSA / CNES)</span>
+            <ExternalLink className="h-3 w-3 text-neutral-400 group-hover:text-cyan-300" />
+          </a>
+          <a
+            href="https://donnees-data.asc-csa.gc.ca/en/dataset/rcm"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 px-2.5 py-1.5 text-[11px] hover:border-cyan-400/60 hover:bg-neutral-800 transition group"
+          >
+            <span className="text-neutral-200 group-hover:text-cyan-300 transition">📡 Datos Radarsat Constellation (RCM SAR C-Band)</span>
+            <ExternalLink className="h-3 w-3 text-neutral-400 group-hover:text-cyan-300" />
+          </a>
+          <a
+            href="https://github.com/asc-csa/Synthetic_Aperture_Radar_Tutorial"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 px-2.5 py-1.5 text-[11px] hover:border-cyan-400/60 hover:bg-neutral-800 transition group"
+          >
+            <span className="text-neutral-200 group-hover:text-cyan-300 transition">💻 Tutorial SAR en Python (CSA Open Source)</span>
+            <ExternalLink className="h-3 w-3 text-neutral-400 group-hover:text-cyan-300" />
+          </a>
+        </div>
+      </div>
 
       <div className="rounded-lg bg-neutral-900/60 border border-neutral-800/60 p-2.5 text-center text-[10px] text-neutral-400">
         Plataforma calibrada con NASA SRTM DEM 30m y 60 Puntos Oficiales de la Unidad de Gestión de Riesgos (UGR) del GAMC.

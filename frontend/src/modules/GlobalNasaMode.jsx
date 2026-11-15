@@ -568,7 +568,7 @@ export default function GlobalNasaMode({
                 </h4>
               </div>
               <span className="rounded bg-cyan-950 px-2 py-0.5 text-[10px] font-mono font-bold text-cyan-300 border border-cyan-800/60">
-                13 Fuentes Espaciales
+                14 Fuentes Espaciales Oficiales
               </span>
             </div>
 
@@ -584,7 +584,7 @@ export default function GlobalNasaMode({
                 </span>
                 
                 <a 
-                  href="https://giovanni.gsfc.nasa.gov/" 
+                  href="https://giovanni.gsfc.nasa.gov/giovanni/" 
                   target="_blank" 
                   rel="noreferrer"
                   className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-cyan-500/50 hover:bg-neutral-800/80 transition group"
@@ -592,6 +592,19 @@ export default function GlobalNasaMode({
                   <div>
                     <span className="font-bold text-white group-hover:text-cyan-300 transition">NASA Giovanni (GSFC)</span>
                     <span className="text-[10px] text-slate-400 block">Series temporales y perfiles de AOD y radiación</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://giovanni.gsfc.nasa.gov/giovanni/doc/glossary/Giovanni_Variable_Definitions_Glossary.html#h.e33vsd8q94ll" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-cyan-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-cyan-300 transition">Glosario de Variables NASA Giovanni</span>
+                    <span className="text-[10px] text-slate-400 block">Definiciones formales de variables atmosféricas y biofísicas</span>
                   </div>
                   <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition shrink-0 ml-2" />
                 </a>
@@ -616,7 +629,7 @@ export default function GlobalNasaMode({
                   className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-cyan-500/50 hover:bg-neutral-800/80 transition group"
                 >
                   <div>
-                    <span className="font-bold text-white group-hover:text-cyan-300 transition">NASA GES DISC Hydrology</span>
+                    <span className="font-bold text-white group-hover:text-cyan-300 transition">NASA GES DISC Hydrology Time Series</span>
                     <span className="text-[10px] text-slate-400 block">Series hidrológicas, humedad edáfica y balances hídricos</span>
                   </div>
                   <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition shrink-0 ml-2" />
@@ -649,10 +662,10 @@ export default function GlobalNasaMode({
                 </a>
               </div>
 
-              {/* Bloque 2: Agencias Espaciales Socias (CSA & KNMI) */}
+              {/* Bloque 2: Agencias Espaciales Socias (CSA) */}
               <div className="space-y-1.5 pt-2 border-t border-neutral-800">
                 <span className="text-[11px] font-bold text-emerald-300 uppercase tracking-wider block">
-                  🍁 Agencia Espacial Canadiense (CSA) & KNMI:
+                  🍁 Agencia Espacial Canadiense (CSA):
                 </span>
 
                 <a 
@@ -662,7 +675,7 @@ export default function GlobalNasaMode({
                   className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-emerald-500/50 hover:bg-neutral-800/80 transition group"
                 >
                   <div>
-                    <span className="font-bold text-white group-hover:text-emerald-300 transition">Misión SWOT (NASA / CSA / CNES)</span>
+                    <span className="font-bold text-white group-hover:text-emerald-300 transition">Misión SWOT (NASA / CSA / CNES / UKSA)</span>
                     <span className="text-[10px] text-slate-400 block">Topografía y balance hídrico de la Laguna Alalay y embalses</span>
                   </div>
                   <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition shrink-0 ml-2" />
@@ -695,16 +708,75 @@ export default function GlobalNasaMode({
                 </a>
 
                 <a 
+                  href="https://www.asc-csa.gc.ca/eng/satellites/everyday-lives/monitoring-and-protecting-our-ecosystems-from-space.asp" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-emerald-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-emerald-300 transition">Protección de Ecosistemas desde el Espacio (CSA)</span>
+                    <span className="text-[10px] text-slate-400 block">Monitoreo y gobernanza territorial responsable de bosques y cuencas</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://geo.ca/home/" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-emerald-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-emerald-300 transition">Portal Geoespacial Geo.ca</span>
+                    <span className="text-[10px] text-slate-400 block">Estándares abiertos OGC para datos georreferenciados federados</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-300 transition shrink-0 ml-2" />
+                </a>
+              </div>
+
+              {/* Bloque 3: Metodología Científica y Pruebas Estadísticas */}
+              <div className="space-y-1.5 pt-2 border-t border-neutral-800">
+                <span className="text-[11px] font-bold text-indigo-300 uppercase tracking-wider block">
+                  📊 Metodología Científica & Series Temporales:
+                </span>
+
+                <a 
                   href="https://climexp.knmi.nl/" 
                   target="_blank" 
                   rel="noreferrer"
-                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-cyan-500/50 hover:bg-neutral-800/80 transition group"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-indigo-500/50 hover:bg-neutral-800/80 transition group"
                 >
                   <div>
-                    <span className="font-bold text-white group-hover:text-cyan-300 transition">KNMI Climate Explorer</span>
+                    <span className="font-bold text-white group-hover:text-indigo-300 transition">KNMI Climate Explorer</span>
                     <span className="text-[10px] text-slate-400 block">Correlaciones con oscilaciones oceánicas (El Niño 3.4 / ENSO)</span>
                   </div>
-                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-cyan-300 transition shrink-0 ml-2" />
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-indigo-300 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://medium.com/@snp.kriss/statistical-test-methods-to-detect-trends-in-time-series-data-b361a0ec530b" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-indigo-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-indigo-300 transition">Detección de Tendencias en Series de Tiempo (Kriss)</span>
+                    <span className="text-[10px] text-slate-400 block">Metodología de Mann-Kendall, Sen's Slope y pruebas de hipótesis</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-indigo-300 transition shrink-0 ml-2" />
+                </a>
+
+                <a 
+                  href="https://www.statsig.com/perspectives/a-comprehensive-guide-to-statistical-significance" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900/80 p-2 text-xs hover:border-indigo-500/50 hover:bg-neutral-800/80 transition group"
+                >
+                  <div>
+                    <span className="font-bold text-white group-hover:text-indigo-300 transition">Guía Integral de Significancia Estadística (Statsig)</span>
+                    <span className="text-[10px] text-slate-400 block">Fundamentos matemáticos de p-value e intervalos de confianza del 95%</span>
+                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 group-hover:text-indigo-300 transition shrink-0 ml-2" />
                 </a>
               </div>
             </div>
