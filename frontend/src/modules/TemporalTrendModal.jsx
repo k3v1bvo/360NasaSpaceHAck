@@ -189,22 +189,32 @@ export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seas
                   </div>
                 </div>
 
-                {/* Detalle Dinámico al pasar el cursor o selección */}
-                {hoveredMonth && (() => {
-                  const m = ciclo_estacional_mensual.find(x => x.mes_num === hoveredMonth);
-                  return (
-                    <div className="mt-2 p-2 rounded-xl border border-cyan-500/30 bg-cyan-950/50 text-xs flex items-center justify-between animate-in fade-in">
-                      <div>
-                        <strong className="text-cyan-300 font-bold">{m.mes_nombre}: {m.temporada}</strong>
-                        <p className="text-slate-300 text-[11px] mt-0.5">{m.descripcion}</p>
+                {/* Detalle Dinámico con Altura Fija Reservada (Cero Layout-Shift ni Glitch de Parpadeo) */}
+                <div className="min-h-[44px] mt-2 flex items-center">
+                  {hoveredMonth ? (() => {
+                    const m = ciclo_estacional_mensual.find(x => x.mes_num === hoveredMonth);
+                    return (
+                      <div className="w-full p-2 rounded-xl border border-cyan-500/30 bg-cyan-950/60 text-xs flex items-center justify-between animate-in fade-in">
+                        <div>
+                          <strong className="text-cyan-300 font-bold">{m.mes_nombre}: {m.temporada}</strong>
+                          <p className="text-slate-300 text-[11px] mt-0.5">{m.descripcion}</p>
+                        </div>
+                        <div className="text-right shrink-0 ml-3">
+                          <span className="font-mono font-bold text-orange-400 text-xs">{m.incendios_pct}% del año</span>
+                          <div className="text-[10px] text-slate-400">PM2.5: {m.pm25_promedio_ugm3} µg/m³ ({m.calidad_aire})</div>
+                        </div>
                       </div>
-                      <div className="text-right shrink-0 ml-3">
-                        <span className="font-mono font-bold text-orange-400 text-xs">{m.incendios_pct}% del año</span>
-                        <div className="text-[10px] text-slate-400">PM2.5: {m.pm25_promedio_ugm3} µg/m³ ({m.calidad_aire})</div>
-                      </div>
+                    );
+                  })() : (
+                    <div className="w-full p-2 rounded-xl border border-white/5 bg-white/[0.02] text-[11px] text-slate-400 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <Info className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
+                        Pasa el cursor sobre una barra mensual para ver focos, temporada y calidad del aire PM2.5
+                      </span>
+                      <span className="font-mono text-[10px] text-slate-500 hidden sm:inline">NASA MODIS + VIIRS (2020-2025)</span>
                     </div>
-                  );
-                })()}
+                  )}
+                </div>
               </div>
 
               {/* Grid de las 4 Temporadas Clave del Valle (Tarjetas perfectamente dimensionadas) */}

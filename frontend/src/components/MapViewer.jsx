@@ -236,10 +236,13 @@ export default function MapViewer({
       const map = L.map(mapContainerRef.current, {
         center: initialCenter,
         zoom: initialZoom,
-        zoomControl: true,
+        zoomControl: false, // Desactivar en topleft para evitar que la barra superior lo tape
         minZoom: 2,
         worldCopyJump: true
       });
+
+      // Reposicionar controles de zoom en la esquina inferior derecha (visible y accesible sin tapar nada)
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
 
       // 1. Base Callejero / Topográfico de Alta Definición (CartoDB Voyager Autenticado)
       const streetsLayer = L.tileLayer(
