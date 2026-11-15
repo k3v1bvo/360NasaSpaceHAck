@@ -255,7 +255,7 @@ export default function MapViewer({
               ${(isPilot || spot.country === 'Bolivia') ? `
                 <div style="margin-top: 8px; padding-top: 6px; border-top: 1px dashed #cbd5e1; text-align: center;">
                   <button id="btn-zoom-pilot" style="background: #7c3aed; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; width: 100%;">
-                    🔍 Ver Caso Piloto Regional (14 Distritos + Red MÓNICA) ↗
+                    🔍 Ver Caso Piloto Regional (15 Distritos + Red MÓNICA) ↗
                   </button>
                 </div>
               ` : ''}
