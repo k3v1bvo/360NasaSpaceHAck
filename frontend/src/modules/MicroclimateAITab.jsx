@@ -137,6 +137,36 @@ export default function MicroclimateAITab({ selectedPoint, onSelectPoint, onNavi
         </div>
       </div>
 
+      {/* 1.6. Certificación Científica de Calibración Terrestre (Red MÓNICA GAMC - 125.865 Mediciones Reales) */}
+      <div className="rounded-xl border border-blue-500/30 bg-blue-950/30 p-3 text-xs">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-1.5">
+            <Activity className="h-4 w-4 text-cyan-400" />
+            <span className="font-bold text-white text-xs sm:text-[13px]">
+              Ground-Truth Oficial: Red MÓNICA GAMC
+            </span>
+          </div>
+          <span className="text-[10px] bg-cyan-950 text-cyan-300 border border-cyan-800 px-2 py-0.5 rounded font-mono font-bold">
+            125.865 Registros Físicos
+          </span>
+        </div>
+        <div className="grid grid-cols-2 gap-2 text-[11px] bg-neutral-900/70 p-2.5 rounded-lg border border-neutral-800/80 mb-2">
+          <div>
+            <span className="text-cyan-400 font-bold block">📍 Estación Kanata (Zona Sur):</span>
+            <span className="text-slate-200">54.711 mediciones continuas</span>
+            <span className="block text-amber-300 font-mono">PM10 medio: 67.1 µg/m³</span>
+          </div>
+          <div>
+            <span className="text-cyan-400 font-bold block">📍 Estación SEMAPA (Zona Norte):</span>
+            <span className="text-slate-200">71.154 mediciones continuas</span>
+            <span className="block text-emerald-300 font-mono">PM10 medio: 49.3 µg/m³</span>
+          </div>
+        </div>
+        <p className="text-[10px] text-slate-300 leading-tight">
+          🔬 <strong className="text-white">Hallazgo Físico Validado:</strong> La estación Kanata registra un <strong className="text-red-400">+36% mayor polución</strong> que SEMAPA debido a la trampa de inversión térmica del valle. Los 13 sensores virtuales de IA fueron entrenados y calibrados contra esta serie temporal real (2022–2026).
+        </p>
+      </div>
+
       {/* 2. Sub-Navegación del Módulo */}
       <div className="flex items-center gap-1 border-b border-neutral-800 pb-2 text-xs sm:text-[13px]">
         <button

@@ -12,15 +12,18 @@ import globalHotspots from '../data/global_trend_hotspots.json';
 import temporalTrendsData from '../data/temporal_trends_data.json';
 import TemporalTrendModal from '../modules/TemporalTrendModal';
 
+import { 
+  GAMC_CONFIG, 
+  GAMC_LAYERS, 
+  getGamcWmsOptions, 
+  getGamcLegendUrl, 
+  buildGamcFeatureInfoUrl 
+} from '../config/gamcServices';
+
 const GLOBAL_CENTER = [15.0, -10.0];
 const GLOBAL_ZOOM = 3;
 const COCHABAMBA_CENTER = [-17.3895, -66.1568];
 const COCHABAMBA_ZOOM = 12;
-const GAMC_WMS_ENDPOINT = 'https://serviciosgamc.cochabamba.bo/api/gs/wms';
-const GAMC_PROJECT_01_KEY = '1a3d2d9c6e1d6a94062d11a9021a48b24ae0e05e8183e9d8'; // Proyecto 01: Be An Earth System Trend Detective
-const GAMC_SERVICE_DISTRITOS = '7eb13092-bf0e-493b-aae6-03c43eedda2c'; // Límite Distritos Oficial
-const GAMC_SERVICE_COTA2750 = '297cefa4-0832-42bb-a98e-2cbea989fd9d'; // Cota 2750 Oficial
-const GAMC_PROJECT_03_KEY = '8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32';
 const CARTO_API_KEY = 'cb1_4mth_1_6594809bcefc062849f9ce07'; // Cuenta k3v1bvoLabs (5M req/mes)
 
 const DISTRICTS_CONFIG = [
@@ -78,7 +81,16 @@ export default function MapViewer({
   const [baseMapType, setBaseMapType] = useState('streets'); // 'streets' (OpenStreetMap) | 'satellite' (Esri Imagery + Labels) | 'dark' (Esri Dark Canvas)
   const [showDistrictLabels, setShowDistrictLabels] = useState(true); // Control para ocultar/mostrar nombres de distritos
   const [showSensors, setShowSensors] = useState(true); // Control para ocultar/mostrar sensores
-  const [showGamcWms, setShowGamcWms] = useState(false); // Capa WMS Oficial GAMC (Proyecto 01)
+  const [showGamcWms, setShowGamcWms] = useState(false); // Capa WMS Oficial GAMC (Proyecto 01 & 05)
+  const [gamcActiveLayers, setGamcActiveLayers] = useState({
+    distritos: true,
+    cota2750: true,
+    periurbanos: false,
+    areasVerdes: false
+  });
+  const [isGamcMenuOpen, setIsGamcMenuOpen] = useState(false);
+  const [gamcFeatureInfo, setGamcFeatureInfo] = useState(null);
+  const [isGamcLoading, setIsGamcLoading] = useState(false);
   const [isLegendOpen, setIsLegendOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
   const [districtSearch, setDistrictSearch] = useState('');
   const [districtZoneFilter, setDistrictZoneFilter] = useState('TODOS');
@@ -120,6 +132,11 @@ export default function MapViewer({
 
     return () => clearInterval(timer);
   }, [isPlayingTimeline]);
+
+  const showGamcWmsRef = useRef(showGamcWms);
+  const gamcActiveLayersRef = useRef(gamcActiveLayers);
+  useEffect(() => { showGamcWmsRef.current = showGamcWms; }, [showGamcWms]);
+  useEffect(() => { gamcActiveLayersRef.current = gamcActiveLayers; }, [gamcActiveLayers]);
 
   // Mantener selectedPointRef y activeTab sincronizados
   useEffect(() => {
@@ -214,10 +231,42 @@ export default function MapViewer({
       // Iniciar con la capa callejera/topográfica activa para máxima claridad territorial
       streetsLayer.addTo(map);
 
-      // Listener para clic en cualquier punto del mapa en modo global
-      map.on('click', (e) => {
+      // Listener para clic en cualquier punto del mapa
+      map.on('click', async (e) => {
         if (onMapClick) {
           onMapClick({ lat: e.latlng.lat, lon: e.latlng.lng });
+        }
+
+        // Consulta en vivo GetFeatureInfo al proxy municipal del GAMC si WMS está activo
+        if (showGamcWmsRef.current && activeTabRef.current === 'microclimas') {
+          try {
+            const bounds = map.getBounds();
+            const size = map.getSize();
+            const point = map.latLngToContainerPoint(e.latlng);
+            const bbox = `${bounds.getWest()},${bounds.getSouth()},${bounds.getEast()},${bounds.getNorth()}`;
+            const featureUrl = buildGamcFeatureInfoUrl({
+              x: point.x,
+              y: point.y,
+              width: size.x,
+              height: size.y,
+              bbox,
+              layerKey: 'distritos'
+            });
+            if (featureUrl) {
+              setIsGamcLoading(true);
+              const res = await fetch(featureUrl);
+              if (res.ok) {
+                const data = await res.json();
+                if (data?.features?.[0]?.properties) {
+                  setGamcFeatureInfo(data.features[0].properties);
+                }
+              }
+              setIsGamcLoading(false);
+            }
+          } catch (err) {
+            console.warn('GAMC GetFeatureInfo aviso:', err);
+            setIsGamcLoading(false);
+          }
         }
       });
 
@@ -457,19 +506,16 @@ export default function MapViewer({
     // CAPA 2: MICROCLIMAS & RED MÓNICA IA (Caso Piloto Cochabamba)
     // =========================================================================
     if (currentTab === 'microclimas') {
-      // 0. Capa WMS Oficial de la Alcaldía de Cochabamba (Proyecto 01 GAMC - Límite Distritos)
+      // 0. Capas WMS Oficiales del GAMC (Proyecto 01 & 05: Microclimas y Gestión Distrital)
       if (showGamcWms) {
-        const gamcWms = L.tileLayer.wms(GAMC_WMS_ENDPOINT, {
-          key: GAMC_PROJECT_01_KEY,
-          service_id: GAMC_SERVICE_DISTRITOS,
-          layers: '',
-          format: 'image/png',
-          transparent: true,
-          version: '1.1.1',
-          maxZoom: 19,
-          zIndex: 350
+        Object.entries(gamcActiveLayers).forEach(([layerKey, isActive]) => {
+          if (!isActive) return;
+          const wmsOpt = getGamcWmsOptions(layerKey);
+          if (wmsOpt) {
+            const gamcWms = L.tileLayer.wms(wmsOpt.url, wmsOpt.options);
+            gamcWms.addTo(layersGroupRef.current);
+          }
         });
-        gamcWms.addTo(layersGroupRef.current);
       }
 
       // 1. Polígonos de Distritos con Gradiente Térmico LST y Métricas GAMC
@@ -1242,6 +1288,7 @@ export default function MapViewer({
     gibsDate, 
     showSensors,
     showGamcWms,
+    gamcActiveLayers,
     timelineYear,
     timelineMonth
   ]);
@@ -1602,19 +1649,92 @@ export default function MapViewer({
           </button>
         )}
 
-        {/* Botón para alternar Capa WMS Oficial GAMC (Proyecto 01: Be An Earth System Trend Detective) */}
+        {/* Selector de Capas WMS Oficiales GAMC (Proyectos 01 & 05: Microclimas y Gestión Distrital) */}
         {activeTab === 'microclimas' && (
-          <button
-            onClick={() => setShowGamcWms(!showGamcWms)}
-            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs sm:text-[13px] font-bold transition shadow-sm ${
-              showGamcWms
-                ? 'bg-purple-600 text-white shadow-purple-900/40 ring-1 ring-purple-400/50'
-                : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
-            }`}
-            title="Superponer la capa oficial WMS de la Alcaldía de Cochabamba (Proyecto 01 GAMC: Límite Distritos)"
-          >
-            <span>🏛️ {showGamcWms ? 'WMS GAMC ON' : 'WMS GAMC'}</span>
-          </button>
+          <div className="relative">
+            <div className="flex items-center rounded-lg overflow-hidden shadow-sm">
+              <button
+                onClick={() => setShowGamcWms(!showGamcWms)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs sm:text-[13px] font-bold transition ${
+                  showGamcWms
+                    ? 'bg-purple-600 text-white shadow-purple-900/40 ring-1 ring-purple-400/50'
+                    : 'bg-neutral-800 text-slate-300 hover:text-white border border-neutral-700/60'
+                }`}
+                title="Superponer capas oficiales WMS del GAMC (Proxy GeoServer Municipal)"
+              >
+                <span>🏛️ {showGamcWms ? 'WMS GAMC ON' : 'WMS GAMC'}</span>
+              </button>
+              <button
+                onClick={() => setIsGamcMenuOpen(!isGamcMenuOpen)}
+                className={`px-1.5 py-1.5 text-xs transition border-l ${
+                  showGamcWms
+                    ? 'bg-purple-700 text-purple-200 border-purple-500 hover:bg-purple-800'
+                    : 'bg-neutral-800 text-slate-400 border-neutral-700 hover:text-white'
+                }`}
+                title="Configurar Capas WMS del GAMC"
+              >
+                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isGamcMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
+
+            {/* Menú Desplegable de Capas WMS del GAMC */}
+            {isGamcMenuOpen && (
+              <div className="absolute top-full left-0 mt-1.5 w-72 rounded-xl border border-purple-500/30 bg-[#0d1017]/95 p-3 text-xs text-white shadow-2xl backdrop-blur-xl z-[600]">
+                <div className="flex items-center justify-between pb-2 border-b border-neutral-800 mb-2">
+                  <span className="font-bold text-purple-300 flex items-center gap-1.5">
+                    🏛️ Capas Oficiales GAMC
+                  </span>
+                  <span className="text-[10px] text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-1.5 py-0.5 rounded font-mono">
+                    Proxy 200 OK
+                  </span>
+                </div>
+                <div className="space-y-1.5">
+                  {Object.entries(GAMC_LAYERS).map(([key, layer]) => {
+                    const active = gamcActiveLayers[key] !== false;
+                    return (
+                      <label 
+                        key={key} 
+                        className="flex items-center justify-between gap-2 p-1.5 rounded-lg hover:bg-neutral-800/60 cursor-pointer transition"
+                      >
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={active}
+                            onChange={(e) => {
+                              setGamcActiveLayers(prev => ({
+                                ...prev,
+                                [key]: e.target.checked
+                              }));
+                              if (!showGamcWms) setShowGamcWms(true);
+                            }}
+                            className="rounded border-neutral-700 text-purple-600 focus:ring-purple-500"
+                          />
+                          <div>
+                            <div className="font-medium text-slate-200">{layer.name}</div>
+                            <div className="text-[10px] text-slate-400">{layer.description}</div>
+                          </div>
+                        </div>
+                        <span className="text-[9px] text-purple-400 bg-purple-950/50 px-1 py-0.5 rounded font-mono">
+                          P{layer.project}
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+                <div className="mt-2 pt-2 border-t border-neutral-800 text-[10px] text-slate-400 flex justify-between">
+                  <span>Proxy: serviciosgamc.cochabamba.bo</span>
+                  <a 
+                    href="https://recursosgamc.cochabamba.bo/api-doc" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-cyan-400 hover:underline"
+                  >
+                    API Doc ↗
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
         )}
 
         <div className="h-5 w-px bg-white/10 mx-0.5" />
@@ -1628,6 +1748,28 @@ export default function MapViewer({
           <span className="hidden sm:inline">Recentrar</span>
         </button>
       </div>
+
+      {/* 1.3. Banner de Consulta en Vivo GetFeatureInfo GAMC (Alcaldía de Cochabamba) */}
+      {gamcFeatureInfo && (
+        <div className="absolute top-14 left-3 z-[420] flex items-center gap-2 rounded-xl border border-purple-500/40 bg-[#0d1017]/95 px-3 py-2 text-xs text-white shadow-2xl backdrop-blur-xl">
+          <span className="text-purple-400 font-bold">🏛️ Consulta GAMC:</span>
+          <span className="font-semibold text-slate-200">
+            Distrito: <span className="text-amber-300 font-bold">{gamcFeatureInfo.Distrito || 'N/A'}</span>
+          </span>
+          {gamcFeatureInfo.Comuna && (
+            <span className="text-slate-400">
+              • Comuna: <span className="text-cyan-300 font-medium">{gamcFeatureInfo.Comuna}</span>
+            </span>
+          )}
+          <button
+            onClick={() => setGamcFeatureInfo(null)}
+            className="ml-1 text-slate-400 hover:text-white p-0.5 rounded"
+            title="Cerrar notificación"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
 
       {/* 1.5. Navegador Inteligente & Buscador de Distritos GAMC (15 Distritos) */}
       {activeTab === 'microclimas' && (
