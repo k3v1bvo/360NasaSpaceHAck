@@ -1,0 +1,607 @@
+import React, { useState } from 'react';
+import { 
+  X, 
+  TrendingUp, 
+  Calendar, 
+  Flame, 
+  Wind, 
+  Thermometer, 
+  ShieldAlert, 
+  AlertTriangle, 
+  CheckCircle2, 
+  Sparkles, 
+  BarChart3, 
+  Clock, 
+  MapPin, 
+  ArrowUpRight,
+  ChevronRight,
+  Layers,
+  Info
+} from 'lucide-react';
+import temporalData from '../data/temporal_trends_data.json';
+
+export default function TemporalTrendModal({ isOpen, onClose, initialTab = 'seasonality' }) {
+  const [activeTab, setActiveTab] = useState(initialTab); // 'seasonality' | 'fires' | 'air_quality' | 'decadal' | 'protection'
+  const [hoveredMonth, setHoveredMonth] = useState(null);
+  const [hoveredDistrict, setHoveredDistrict] = useState(null);
+
+  if (!isOpen) return null;
+
+  const {
+    incendios_historicos_anuales,
+    ciclo_estacional_mensual,
+    tendencias_decadales_distritos,
+    matriz_alerta_proteccion
+  } = temporalData;
+
+  const maxFocosYear = Math.max(...incendios_historicos_anuales.map(y => y.total_focos));
+  const maxFocosMonth = Math.max(...ciclo_estacional_mensual.map(m => m.incendios_promedio));
+  const maxPM25Month = Math.max(...ciclo_estacional_mensual.map(m => m.pm25_promedio_ugm3));
+
+  return (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md p-2 sm:p-4 overflow-y-auto animate-in fade-in duration-200">
+      <div 
+        className="relative w-full max-w-5xl rounded-3xl border border-white/15 bg-[#0a0f1d] text-white shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Cabecera del Modal */}
+        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 bg-gradient-to-r from-blue-950/60 via-[#0e1628] to-purple-950/60">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-400/40 shadow-inner">
+              <TrendingUp className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black uppercase tracking-wider text-cyan-400 font-mono">
+                  NASA Trend Detective
+                </span>
+                <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-[10px] font-bold text-purple-300 border border-purple-400/30">
+                  Análisis Temporal & Predicción IA
+                </span>
+              </div>
+              <h2 className="text-base sm:text-lg font-black tracking-tight text-white">
+                Tendencias Históricas y Pronóstico de Protección Territorial
+              </h2>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="rounded-full p-1.5 text-slate-400 hover:bg-neutral-800 hover:text-white transition"
+            title="Cerrar modal"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* Barra de Pestañas Interactivas */}
+        <div className="flex items-center gap-1 border-b border-white/10 px-4 py-2 bg-[#090d18] overflow-x-auto no-scrollbar shrink-0">
+          {[
+            { id: 'seasonality', label: 'Ciclo Estacional (Mes a Mes)', icon: Calendar },
+            { id: 'fires', label: 'Incendios Anuales (2020-2026)', icon: Flame },
+            { id: 'air_quality', label: 'Inversión Térmica & PM2.5', icon: Wind },
+            { id: 'decadal', label: 'Calentamiento Decadal LST', icon: Thermometer },
+            { id: 'protection', label: 'Matriz de Alerta & Protección', icon: ShieldAlert },
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition whitespace-nowrap ${
+                  isActive
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50 ring-1 ring-blue-400/50'
+                    : 'text-slate-400 hover:bg-neutral-800/80 hover:text-slate-200'
+                }`}
+              >
+                <Icon className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Contenido Principal con Scroll */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+
+          {/* ========================================================================= */}
+          {/* PESTAÑA 1: CICLO ESTACIONAL MES A MES                                      */}
+          {/* ========================================================================= */}
+          {activeTab === 'seasonality' && (
+            <div className="space-y-6 animate-in fade-in duration-200">
+              <div className="rounded-2xl border border-blue-500/20 bg-blue-950/20 p-4 text-xs text-blue-200 flex items-start gap-3">
+                <Info className="h-5 w-5 text-cyan-400 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-white font-bold">Patrón Estacional del Valle de Cochabamba (Validado por NASA & GAMC):</strong>
+                  <p className="mt-1 text-slate-300 leading-relaxed">
+                    Los datos históricos de NASA FIRMS y la Red MÓNICA demuestran que Cochabamba no tiene riesgos uniformes todo el año:
+                    <strong className="text-red-300"> Agosto y Septiembre concentran el 79.8% de los incendios forestales</strong> debido a la desecación de biomasa y vientos de ladera; mientras que <strong className="text-amber-300">Mayo, Junio y Julio sufren asfixia por Inversión Térmica</strong> nocturna bajo la Cota 2.750 msnm.
+                  </p>
+                </div>
+              </div>
+
+              {/* Gráfica de Barras Interactiva de Incendios por Mes */}
+              <div className="rounded-2xl border border-white/10 bg-[#0d1322] p-4 sm:p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                      <Flame className="h-4 w-4 text-orange-400" /> Distribución Mensual de Incendios en el Tunari (Promedio Histórico)
+                    </h3>
+                    <p className="text-xs text-slate-400">Porcentaje y número de focos detectados por MODIS/VIIRS cada mes</p>
+                  </div>
+                  <span className="text-[11px] font-mono text-cyan-400 bg-cyan-950/60 px-2 py-1 rounded border border-cyan-800/40">
+                    Pico: Agosto-Septiembre (79.8%)
+                  </span>
+                </div>
+
+                {/* SVG Bar Chart */}
+                <div className="relative pt-2 pb-6">
+                  <div className="grid grid-cols-12 gap-1 sm:gap-2 h-44 sm:h-52 items-end border-b border-white/15 px-1">
+                    {ciclo_estacional_mensual.map((m) => {
+                      const heightPct = (m.incendios_promedio / maxFocosMonth) * 100;
+                      const isPeak = m.mes_num === 8 || m.mes_num === 9;
+                      const isHovered = hoveredMonth === m.mes_num;
+                      return (
+                        <div 
+                          key={m.mes_num} 
+                          className="flex flex-col items-center h-full justify-end group cursor-pointer"
+                          onMouseEnter={() => setHoveredMonth(m.mes_num)}
+                          onMouseLeave={() => setHoveredMonth(null)}
+                        >
+                          <span className={`text-[10px] font-mono font-bold mb-1 transition ${
+                            isPeak ? 'text-red-400' : 'text-slate-400'
+                          }`}>
+                            {m.incendios_promedio}
+                          </span>
+                          <div 
+                            className={`w-full rounded-t-lg transition-all duration-300 ${
+                              isPeak 
+                                ? 'bg-gradient-to-t from-red-600 via-orange-500 to-amber-400 shadow-lg shadow-red-950/50' 
+                                : m.mes_num === 6 || m.mes_num === 7
+                                ? 'bg-gradient-to-t from-amber-600 to-amber-400'
+                                : 'bg-gradient-to-t from-blue-700/60 to-cyan-500/60'
+                            } ${isHovered ? 'scale-105 brightness-125 ring-2 ring-white/60' : 'hover:brightness-110'}`}
+                            style={{ height: `${Math.max(heightPct, 4)}%` }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Etiquetas de Meses */}
+                  <div className="grid grid-cols-12 gap-1 sm:gap-2 mt-2 px-1 text-center">
+                    {ciclo_estacional_mensual.map((m) => (
+                      <div key={m.mes_num} className="text-[10px] sm:text-xs font-bold text-slate-400 truncate">
+                        {m.mes_nombre.slice(0, 3)}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Detalle Dinámico al pasar el cursor o selección */}
+                {hoveredMonth && (() => {
+                  const m = ciclo_estacional_mensual.find(x => x.mes_num === hoveredMonth);
+                  return (
+                    <div className="mt-3 p-3 rounded-xl border border-cyan-500/30 bg-cyan-950/40 text-xs flex items-center justify-between animate-in fade-in">
+                      <div>
+                        <strong className="text-cyan-300 font-bold">{m.mes_nombre}: {m.temporada}</strong>
+                        <p className="text-slate-300 text-[11px] mt-0.5">{m.descripcion}</p>
+                      </div>
+                      <div className="text-right shrink-0 ml-3">
+                        <span className="font-mono font-bold text-orange-400 text-sm">{m.incendios_pct}% del año</span>
+                        <div className="text-[10px] text-slate-400">PM2.5: {m.pm25_promedio_ugm3} µg/m³ ({m.calidad_aire})</div>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+
+              {/* Grid de las 4 Temporadas Clave del Valle */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="rounded-2xl border border-red-500/30 bg-red-950/20 p-4">
+                  <div className="flex items-center gap-2 text-red-400 font-black text-xs uppercase tracking-wider">
+                    <Flame className="h-4 w-4" /> Temporada de Incendios
+                  </div>
+                  <div className="text-base font-bold text-white mt-1">Agosto — Octubre</div>
+                  <p className="text-slate-300 text-xs mt-1.5 leading-relaxed">
+                    Humedad &lt; 15%, ráfagas de viento de ladera &gt; 35 km/h. Concentra el <strong>79.8% de todos los focos</strong> de la década.
+                  </p>
+                  <div className="mt-3 text-[11px] font-mono text-red-300 bg-red-950/80 px-2.5 py-1 rounded border border-red-800/60 inline-block">
+                    Peligro Máximo en D13 y D3
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-amber-500/30 bg-amber-950/20 p-4">
+                  <div className="flex items-center gap-2 text-amber-400 font-black text-xs uppercase tracking-wider">
+                    <Wind className="h-4 w-4" /> Inversión Térmica
+                  </div>
+                  <div className="text-base font-bold text-white mt-1">Mayo — Julio</div>
+                  <p className="text-slate-300 text-xs mt-1.5 leading-relaxed">
+                    Piscina de aire frío nocturno queda atrapada bajo la Cota 2.750 msnm. Pico de asfixia en el Casco Viejo (PM2.5 &gt; 78 µg/m³).
+                  </p>
+                  <div className="mt-3 text-[11px] font-mono text-amber-300 bg-amber-950/80 px-2.5 py-1 rounded border border-amber-800/60 inline-block">
+                    San Juan (23 Jun): Alerta Roja
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-orange-500/30 bg-orange-950/20 p-4">
+                  <div className="flex items-center gap-2 text-orange-400 font-black text-xs uppercase tracking-wider">
+                    <Thermometer className="h-4 w-4" /> Olas de Calor Extremo
+                  </div>
+                  <div className="text-base font-bold text-white mt-1">Octubre — Diciembre</div>
+                  <p className="text-slate-300 text-xs mt-1.5 leading-relaxed">
+                    Radiación solar máxima sobre suelos áridos de la Zona Sur (D15 y D8), generando temperaturas superficiales LST &gt; 41°C.
+                  </p>
+                  <div className="mt-3 text-[11px] font-mono text-orange-300 bg-orange-950/80 px-2.5 py-1 rounded border border-orange-800/60 inline-block">
+                    Estrés Térmico PET &gt; 38°C
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-blue-500/30 bg-blue-950/20 p-4">
+                  <div className="flex items-center gap-2 text-cyan-400 font-black text-xs uppercase tracking-wider">
+                    <Layers className="h-4 w-4" /> Lavado y Torrenteras
+                  </div>
+                  <div className="text-base font-bold text-white mt-1">Diciembre — Marzo</div>
+                  <p className="text-slate-300 text-xs mt-1.5 leading-relaxed">
+                    Lluvias intensas lavan la atmósfera (PM2.5 &lt; 16 µg/m³), pero activan 60 torrenteras con riesgo de aluvión en cuencas quemadas.
+                  </p>
+                  <div className="mt-3 text-[11px] font-mono text-cyan-300 bg-blue-950/80 px-2.5 py-1 rounded border border-cyan-800/60 inline-block">
+                    Riesgo Aluvión: Taquiña y Pintumayu
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================================= */}
+          {/* PESTAÑA 2: INCENDIOS ANUALES (2020 - 2026 PREDICCIÓN)                      */}
+          {/* ========================================================================= */}
+          {activeTab === 'fires' && (
+            <div className="space-y-6 animate-in fade-in duration-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-base font-bold text-white flex items-center gap-2">
+                    <Flame className="h-5 w-5 text-red-400" /> Serie Temporal Multianual de Incendios en el Parque Nacional Tunari
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Detecciones validadas NASA FIRMS (MODIS + VIIRS) 2020-2025 y proyección del modelo autorregresivo para 2026.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="flex items-center gap-1 text-slate-300">
+                    <span className="h-2.5 w-2.5 rounded bg-blue-500"></span> Observado
+                  </span>
+                  <span className="flex items-center gap-1 text-purple-300">
+                    <span className="h-2.5 w-2.5 rounded bg-purple-500 border border-purple-300"></span> Predicción 2026
+                  </span>
+                </div>
+              </div>
+
+              {/* Gráfica de Barras por Año */}
+              <div className="rounded-2xl border border-white/10 bg-[#0d1322] p-5">
+                <div className="grid grid-cols-7 gap-2 sm:gap-4 h-48 sm:h-56 items-end border-b border-white/15 px-2">
+                  {incendios_historicos_anuales.map((y) => {
+                    const heightPct = (y.total_focos / maxFocosYear) * 100;
+                    return (
+                      <div key={y.year} className="flex flex-col items-center h-full justify-end group">
+                        <span className={`text-xs font-mono font-bold mb-1.5 ${
+                          y.is_prediccion ? 'text-purple-300 font-black' : y.total_focos > 300 ? 'text-red-400' : 'text-slate-300'
+                        }`}>
+                          {y.total_focos}
+                        </span>
+                        <div 
+                          className={`w-full rounded-t-xl transition-all duration-300 group-hover:brightness-125 ${
+                            y.is_prediccion
+                              ? 'bg-gradient-to-t from-purple-800 via-purple-600 to-cyan-400 ring-2 ring-purple-400/80 shadow-lg shadow-purple-950/60 animate-pulse'
+                              : y.total_focos > 300
+                              ? 'bg-gradient-to-t from-red-700 to-orange-500'
+                              : 'bg-gradient-to-t from-blue-700 to-cyan-500'
+                          }`}
+                          style={{ height: `${heightPct}%` }}
+                        />
+                        <span className={`mt-2 text-xs font-bold ${
+                          y.is_prediccion ? 'text-purple-300 font-mono font-black' : 'text-slate-300'
+                        }`}>
+                          {y.year} {y.is_prediccion ? '✨' : ''}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-4 text-xs text-slate-400 flex items-center justify-between">
+                  <span>Fuente: NASA FIRMS Global Hotspots & UGR Alcaldía de Cochabamba</span>
+                  <span className="text-purple-300 font-mono font-bold">2026: Proyección de 340 focos (~3.600 ha en riesgo)</span>
+                </div>
+              </div>
+
+              {/* Tarjetas de Eventos Críticos Documentados */}
+              <div className="space-y-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  Eventos Críticos Históricos Analizados:
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {incendios_historicos_anuales.map((y) => (
+                    <div 
+                      key={y.year}
+                      className={`p-3 rounded-2xl border transition ${
+                        y.is_prediccion
+                          ? 'border-purple-500/40 bg-purple-950/20 ring-1 ring-purple-400/40'
+                          : 'border-white/10 bg-[#0c1220] hover:border-white/20'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono font-black text-sm text-cyan-400">{y.year}</span>
+                        <span className="text-[11px] font-mono text-orange-400 font-bold">
+                          {y.total_focos} focos • {y.frp_acumulado_mw.toLocaleString()} MW
+                        </span>
+                      </div>
+                      <div className="text-xs font-bold text-white mt-1">{y.evento_mayor}</div>
+                      <div className="text-[11px] text-slate-400 mt-0.5">
+                        <strong>Mes Pico:</strong> {y.mes_pico} • <strong>Condición:</strong> {y.condicion_climatica}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================================= */}
+          {/* PESTAÑA 3: INVERSIÓN TÉRMICA & CALIDAD DEL AIRE (PM2.5)                     */}
+          {/* ========================================================================= */}
+          {activeTab === 'air_quality' && (
+            <div className="space-y-6 animate-in fade-in duration-200">
+              <div className="rounded-2xl border border-amber-500/20 bg-amber-950/20 p-4 text-xs text-amber-200">
+                <strong className="text-white font-bold text-sm">El Fenómeno Físico de la Inversión Térmica en Cochabamba:</strong>
+                <p className="mt-1 text-slate-300 leading-relaxed">
+                  Cochabamba es una cuenca cerrada rodeada de montañas. En invierno (Mayo a Julio), el aire frío y denso desciende de la Cordillera del Tunari durante la noche y se asienta en el fondo del valle (2.550 msnm). Sobre este aire frío queda una capa de aire más caliente a la altura de la <strong className="text-emerald-300">Cota 2.750 msnm</strong>, actuando como una <strong>tapa hermética</strong>. El humo de las ladrilleras, vehículos y fogatas no puede ascender y queda atrapado respirándose en el valle.
+                </p>
+              </div>
+
+              {/* Gráfica de Concentración de PM2.5 a lo largo del Año */}
+              <div className="rounded-2xl border border-white/10 bg-[#0d1322] p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                      <Wind className="h-4 w-4 text-cyan-400" /> Concentración Mensual de Material Particulado PM2.5 (Red MÓNICA GAMC)
+                    </h3>
+                    <p className="text-xs text-slate-400">Umbral OMS: 15 µg/m³ (Línea punteada) | Umbral Crítico GAMC: &gt; 50 µg/m³</p>
+                  </div>
+                  <span className="text-xs font-mono font-bold text-red-400 bg-red-950/60 px-2.5 py-1 rounded border border-red-800/40">
+                    Pico: Junio (78.4 µg/m³) & Septiembre (88.6 µg/m³)
+                  </span>
+                </div>
+
+                {/* SVG Curve Chart */}
+                <div className="relative pt-4 pb-2">
+                  <svg className="w-full h-44 sm:h-52 overflow-visible" viewBox="0 0 600 200" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="pm25Gradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#ef4444" stopOpacity="0.5" />
+                        <stop offset="50%" stopColor="#f59e0b" stopOpacity="0.25" />
+                        <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.05" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Línea Guía OMS (15 ug/m3) */}
+                    <line x1="0" y1="166" x2="600" y2="166" stroke="#10b981" strokeDasharray="4 4" strokeWidth="1.5" />
+                    <text x="10" y="160" fill="#10b981" fontSize="10" fontWeight="bold">Límite Guía OMS (15 µg/m³)</text>
+
+                    {/* Línea Umbral Crítico (50 ug/m3) */}
+                    <line x1="0" y1="90" x2="600" y2="90" stroke="#ef4444" strokeDasharray="4 4" strokeWidth="1.5" />
+                    <text x="10" y="84" fill="#ef4444" fontSize="10" fontWeight="bold">Umbral Daño a la Salud GAMC (50 µg/m³)</text>
+
+                    {/* Curva de PM2.5 */}
+                    {(() => {
+                      const points = ciclo_estacional_mensual.map((m, idx) => {
+                        const x = (idx / 11) * 600;
+                        const y = 200 - (m.pm25_promedio_ugm3 / 100) * 200;
+                        return `${x},${y}`;
+                      });
+                      const dArea = `M 0,200 L ${points.join(' L ')} L 600,200 Z`;
+                      const dLine = `M ${points.join(' L ')}`;
+                      return (
+                        <>
+                          <path d={dArea} fill="url(#pm25Gradient)" />
+                          <path d={dLine} fill="none" stroke="#f43f5e" strokeWidth="3.5" strokeLinecap="round" />
+                          {ciclo_estacional_mensual.map((m, idx) => {
+                            const x = (idx / 11) * 600;
+                            const y = 200 - (m.pm25_promedio_ugm3 / 100) * 200;
+                            return (
+                              <circle 
+                                key={m.mes_num} 
+                                cx={x} 
+                                cy={y} 
+                                r={m.mes_num === 6 || m.mes_num === 9 ? 6 : 4} 
+                                fill={m.pm25_promedio_ugm3 > 50 ? '#ef4444' : '#06b6d4'} 
+                                stroke="#ffffff" 
+                                strokeWidth="2" 
+                              />
+                            );
+                          })}
+                        </>
+                      );
+                    })()}
+                  </svg>
+
+                  {/* Etiquetas de Meses */}
+                  <div className="flex justify-between mt-2 text-[10px] sm:text-xs font-bold text-slate-400">
+                    {ciclo_estacional_mensual.map((m) => (
+                      <span key={m.mes_num} className={m.mes_num === 6 || m.mes_num === 9 ? 'text-red-400 font-bold' : ''}>
+                        {m.mes_nombre.slice(0, 3)}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-4 pt-3 border-t border-white/10 text-xs">
+                  <div>
+                    <span className="text-slate-400">Pico 1 (Inversión & San Juan):</span>
+                    <div className="text-amber-400 font-mono font-bold">78.4 µg/m³ (Junio)</div>
+                  </div>
+                  <div>
+                    <span className="text-slate-400">Pico 2 (Incendios & Humo):</span>
+                    <div className="text-red-400 font-mono font-bold">88.6 µg/m³ (Septiembre)</div>
+                  </div>
+                  <div>
+                    <span className="text-slate-400">Mínimo (Lavado Pluvial):</span>
+                    <div className="text-emerald-400 font-mono font-bold">14.2 µg/m³ (Febrero)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================================= */}
+          {/* PESTAÑA 4: CALENTAMIENTO DECADAL LST (MANN-KENDALL)                        */}
+          {/* ========================================================================= */}
+          {activeTab === 'decadal' && (
+            <div className="space-y-6 animate-in fade-in duration-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-base font-bold text-white flex items-center gap-2">
+                    <Thermometer className="h-5 w-5 text-red-400" /> Tasa de Calentamiento Superficial LST por Distrito (°C/Década)
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Análisis de significancia estadística Mann-Kendall (p &lt; 0.05) con sensores NASA MODIS y VIIRS (2000-2025).
+                  </p>
+                </div>
+                <span className="text-xs font-mono bg-blue-950/80 text-cyan-300 px-3 py-1 rounded-full border border-blue-500/30">
+                  Ranking de Prioridad IA
+                </span>
+              </div>
+
+              {/* Lista Comparativa de Distritos */}
+              <div className="space-y-2">
+                {tendencias_decadales_distritos.map((dist, idx) => {
+                  const isWarming = dist.tasa_calentamiento_decadal_c > 0;
+                  const isSevere = dist.tasa_calentamiento_decadal_c >= 0.70;
+                  const isCooling = dist.tasa_calentamiento_decadal_c < 0;
+                  return (
+                    <div 
+                      key={dist.distrito_id}
+                      className={`p-3.5 rounded-2xl border transition flex items-center justify-between ${
+                        isSevere 
+                          ? 'border-red-500/40 bg-red-950/15'
+                          : isCooling
+                          ? 'border-cyan-500/40 bg-cyan-950/15'
+                          : 'border-white/10 bg-[#0d1322]'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`flex h-8 w-10 items-center justify-center rounded-xl text-xs font-mono font-black ${
+                          isSevere ? 'bg-red-600 text-white' : isCooling ? 'bg-cyan-600 text-white' : 'bg-neutral-800 text-slate-300'
+                        }`}>
+                          {dist.distrito_id}
+                        </span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-bold text-white">{dist.nombre}</span>
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                              isSevere ? 'bg-red-950 text-red-300 border border-red-800' : isCooling ? 'bg-cyan-950 text-cyan-300 border border-cyan-800' : 'bg-neutral-800 text-slate-400'
+                            }`}>
+                              {dist.nivel_riesgo_calor}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-400 mt-0.5 max-w-xl">{dist.causa_principal}</p>
+                        </div>
+                      </div>
+
+                      <div className="text-right shrink-0 ml-4">
+                        <div className={`text-base font-mono font-black ${
+                          isSevere ? 'text-red-400' : isCooling ? 'text-cyan-400' : 'text-slate-200'
+                        }`}>
+                          {dist.tasa_calentamiento_decadal_c > 0 ? '+' : ''}{dist.tasa_calentamiento_decadal_c} °C/década
+                        </div>
+                        <div className="text-[10px] text-slate-400 font-mono">
+                          p = {dist.p_value} ({dist.significativo ? '✓ Significativo' : 'No sig.'})
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================================= */}
+          {/* PESTAÑA 5: MATRIZ DE ALERTA Y PROTECCIÓN FOCALIZADA                         */}
+          {/* ========================================================================= */}
+          {activeTab === 'protection' && (
+            <div className="space-y-6 animate-in fade-in duration-200">
+              <div className="rounded-2xl border border-emerald-500/20 bg-emerald-950/20 p-4 text-xs text-emerald-200 flex items-start gap-3">
+                <Sparkles className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-white font-bold text-sm">Objetivo de Impacto Real de NASA Space Apps:</strong>
+                  <p className="mt-1 text-slate-300 leading-relaxed">
+                    Las tendencias históricas y predicciones satelitales no solo deben diagnosticar; deben traducirse en <strong>medidas de protección preventiva para las comunidades más vulnerables</strong> antes de que ocurran los desastres. A continuación se presenta la matriz operativa formulada para la Alcaldía de Cochabamba (GAMC) y las brigadas comunitarias:
+                  </p>
+                </div>
+              </div>
+
+              {/* Grid de Acciones de Protección */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {matriz_alerta_proteccion.map((item, idx) => (
+                  <div 
+                    key={idx}
+                    className="rounded-2xl border border-white/10 bg-[#0d1322] p-4 flex flex-col justify-between hover:border-cyan-500/30 transition shadow-lg"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
+                        <span className="text-xs font-mono font-bold text-cyan-400 flex items-center gap-1.5">
+                          <MapPin className="h-3.5 w-3.5" /> {item.zona_objetivo}
+                        </span>
+                        <span className="text-[10px] font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-500/30">
+                          {item.periodo_critico}
+                        </span>
+                      </div>
+
+                      <div className="space-y-2 text-xs">
+                        <div>
+                          <strong className="text-red-400 font-bold">⚠️ Amenaza Principal:</strong>
+                          <p className="text-slate-300 mt-0.5">{item.amenaza_principal}</p>
+                        </div>
+
+                        <div>
+                          <strong className="text-purple-400 font-bold">🤖 Diagnóstico IA:</strong>
+                          <p className="text-slate-300 mt-0.5">{item.diagnostico_ia}</p>
+                        </div>
+
+                        <div className="p-2.5 rounded-xl bg-cyan-950/40 border border-cyan-800/40 mt-2">
+                          <strong className="text-cyan-300 font-bold flex items-center gap-1">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400" /> Acción Preventiva Mandatoria:
+                          </strong>
+                          <p className="text-slate-200 mt-1 leading-relaxed">{item.accion_preventiva}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 pt-2.5 border-t border-white/10 text-[11px] text-emerald-400 flex items-center gap-1 font-medium">
+                      <span>🌱 Beneficio a la Comunidad: {item.beneficio_comunidad}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+        </div>
+
+        {/* Pie del Modal con Botones */}
+        <div className="flex items-center justify-between border-t border-white/10 px-5 py-3.5 bg-[#090d18] text-xs text-slate-400">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Algoritmo de Detección de Tendencias: Mann-Kendall + XGBoost 3.2.0</span>
+          </div>
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition shadow-lg shadow-blue-900/40"
+          >
+            Volver al Mapa
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

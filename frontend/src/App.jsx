@@ -32,6 +32,7 @@ export default function App() {
   // Pestaña activa por defecto: Caso Piloto Regional Cochabamba (14 Distritos)
   const [activeTab, setActiveTab] = useState('microclimas');
   const [isTourOpen, setIsTourOpen] = useState(false);
+  const [isTemporalModalOpen, setIsTemporalModalOpen] = useState(false);
   const [mobileView, setMobileView] = useState('map'); // 'map' | 'panel' para vista móvil responsive
   const [offlineMode, setOfflineMode] = useState(false); // Online por defecto para consumir NASA POWER & WMS
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -83,6 +84,7 @@ export default function App() {
         onOpenReport={() => setIsReportModalOpen(true)}
         isTourOpen={isTourOpen}
         setIsTourOpen={setIsTourOpen}
+        onOpenTemporalAnalytics={() => setIsTemporalModalOpen(true)}
       />
 
       {/* 2. Barra Científica de Métricas IA Obligatorias (R²=0.9457, RMSE=0.55°C, p < 0.05) */}
@@ -113,6 +115,8 @@ export default function App() {
             wmsDistritos={wmsDistritos}
             nasaGibs={nasaGibs}
             gibsDate={gibsDate}
+            isTemporalModalOpen={isTemporalModalOpen}
+            setIsTemporalModalOpen={setIsTemporalModalOpen}
           />
         </main>
 

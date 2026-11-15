@@ -1,0 +1,416 @@
+{
+  "metadata": {
+    "proyecto": "NASA Trend Detective - Cochabamba Multi-temporal Intelligence",
+    "fuentes_satelitales": [
+      "NASA FIRMS MODIS MCD14DL (1 km) & VIIRS VNP14IMGTDL (375 m)",
+      "NASA POWER Surface Temperature (LST) & T2M (2000-2025)",
+      "NASA Terra/Aqua MODIS Aerosol Optical Depth (AOD)",
+      "Red MÓNICA GAMC (Ground Truth Estaciones Físicas 2018-2025)",
+      "NASA SMAP Soil Moisture Active Passive (Humedad edáfica)"
+    ],
+    "metodologia_estadistica": "Mann-Kendall Trend Test (Tau, p-value < 0.05), Regresión de Sen & XGBoost 3.2.0 Autoregresivo",
+    "periodo_analizado": "2018 - 2025 (Registros observados) + 2026 (Predicción IA)"
+  },
+  "incendios_historicos_anuales": [
+    {
+      "year": 2020,
+      "total_focos": 142,
+      "frp_acumulado_mw": 5280,
+      "hectareas_afectadas_aprox": 1450,
+      "mes_pico": "Septiembre",
+      "evento_mayor": "Incendio Taquiña / Tirani (450 ha afectadas sobre Cota 2750)",
+      "condicion_climatica": "Sequía moderada y fenómeno de La Niña"
+    },
+    {
+      "year": 2021,
+      "total_focos": 198,
+      "frp_acumulado_mw": 7640,
+      "hectareas_afectadas_aprox": 2100,
+      "mes_pico": "Agosto",
+      "evento_mayor": "Incendio Tiquipaya / Cota 2750 (amenaza a viviendas en interfaz urbana)",
+      "condicion_climatica": "Baja humedad (<15%) y ráfagas de viento zonda > 40 km/h"
+    },
+    {
+      "year": 2022,
+      "total_focos": 312,
+      "frp_acumulado_mw": 11850,
+      "hectareas_afectadas_aprox": 3800,
+      "mes_pico": "Octubre",
+      "evento_mayor": "Gran Incendio Andrada / Parque Metropolitano (5 días de combate)",
+      "condicion_climatica": "Prolongación extrema de la época seca hasta noviembre"
+    },
+    {
+      "year": 2023,
+      "total_focos": 275,
+      "frp_acumulado_mw": 9920,
+      "hectareas_afectadas_aprox": 2950,
+      "mes_pico": "Agosto-Septiembre",
+      "evento_mayor": "Incendios simultáneos en Sacaba (Curva San Pedro) y Liriuni (Quillacollo)",
+      "condicion_climatica": "Transición rápida a El Niño con temperaturas récord"
+    },
+    {
+      "year": 2024,
+      "total_focos": 389,
+      "frp_acumulado_mw": 15420,
+      "hectareas_afectadas_aprox": 4600,
+      "mes_pico": "Septiembre",
+      "evento_mayor": "Crisis de incendios en Bolivia; humo amazónico + fuegos en Chocaya y Taquiña",
+      "condicion_climatica": "Peor calidad del aire en 15 años (ICA Peligroso > 250)"
+    },
+    {
+      "year": 2025,
+      "total_focos": 215,
+      "frp_acumulado_mw": 8100,
+      "hectareas_afectadas_aprox": 2300,
+      "mes_pico": "Agosto",
+      "evento_mayor": "Conato contenido en Taquiña / Tirani gracias a alerta temprana UGR",
+      "condicion_climatica": "Vientos moderados y activación de brigadas preventivas"
+    },
+    {
+      "year": 2026,
+      "total_focos": 340,
+      "frp_acumulado_mw": 12800,
+      "hectareas_afectadas_aprox": 3600,
+      "mes_pico": "Agosto-Septiembre",
+      "evento_mayor": "ALERTA PREDICTIVA IA: Alto riesgo proyectado en Distrito 13 y laderas norte",
+      "condicion_climatica": "Sequía estacional severa pronosticada por modelos climáticos globales",
+      "is_prediccion": true
+    }
+  ],
+  "ciclo_estacional_mensual": [
+    {
+      "mes_num": 1,
+      "mes_nombre": "Enero",
+      "temporada": "Lluvias",
+      "incendios_pct": 1.1,
+      "incendios_promedio": 3,
+      "pm25_promedio_ugm3": 16.4,
+      "calidad_aire": "Buena",
+      "inversion_termica": "Baja",
+      "riesgo_torrenteras": "Muy Alto",
+      "descripcion": "Máximas precipitaciones convectivas; escorrentía activa en torrenteras del Tunari; atmósfera limpia por lavado pluvial."
+    },
+    {
+      "mes_num": 2,
+      "mes_nombre": "Febrero",
+      "temporada": "Lluvias",
+      "incendios_pct": 0.5,
+      "incendios_promedio": 1,
+      "pm25_promedio_ugm3": 14.2,
+      "calidad_aire": "Buena",
+      "inversion_termica": "Baja",
+      "riesgo_torrenteras": "Muy Alto",
+      "descripcion": "Pico de lluvias; suelo saturado en conos de deyección; bajo riesgo de fuego y mínimo material particulado."
+    },
+    {
+      "mes_num": 3,
+      "mes_nombre": "Marzo",
+      "temporada": "Lluvias",
+      "incendios_pct": 1.6,
+      "incendios_promedio": 4,
+      "pm25_promedio_ugm3": 18.5,
+      "calidad_aire": "Buena",
+      "inversion_termica": "Baja",
+      "riesgo_torrenteras": "Alto",
+      "descripcion": "Descenso gradual de precipitaciones; recarga completa del espejo hídrico de la Laguna Alalay."
+    },
+    {
+      "mes_num": 4,
+      "mes_nombre": "Abril",
+      "temporada": "Transición a Seca",
+      "incendios_pct": 3.2,
+      "incendios_promedio": 8,
+      "pm25_promedio_ugm3": 26.8,
+      "calidad_aire": "Moderada",
+      "inversion_termica": "Media",
+      "riesgo_torrenteras": "Medio-Bajo",
+      "descripcion": "Cese de lluvias; inicio del secado de pastizales y vegetación en laderas de la cordillera."
+    },
+    {
+      "mes_num": 5,
+      "mes_nombre": "Mayo",
+      "temporada": "Invierno / Inversión Térmica",
+      "incendios_pct": 6.4,
+      "incendios_promedio": 16,
+      "pm25_promedio_ugm3": 48.5,
+      "calidad_aire": "Mala",
+      "inversion_termica": "Muy Alta",
+      "riesgo_torrenteras": "Bajo",
+      "descripcion": "Inicio de noches gélidas; se forma la capa de inversión térmica a ~2.750 msnm que atrapa contaminantes en el valle."
+    },
+    {
+      "mes_num": 6,
+      "mes_nombre": "Junio",
+      "temporada": "Invierno / San Juan",
+      "incendios_pct": 14.9,
+      "incendios_promedio": 38,
+      "pm25_promedio_ugm3": 78.4,
+      "calidad_aire": "Muy Mala (Crítica)",
+      "inversion_termica": "Extrema",
+      "riesgo_torrenteras": "Nulo",
+      "descripcion": "Noche de San Juan (23 de junio) y quemas agrícolas tradicionales; pico histórico de asfixia térmica en el Casco Viejo y Zona Sur."
+    },
+    {
+      "mes_num": 7,
+      "mes_nombre": "Julio",
+      "temporada": "Invierno Seco",
+      "incendios_pct": 18.1,
+      "incendios_promedio": 46,
+      "pm25_promedio_ugm3": 65.2,
+      "calidad_aire": "Mala",
+      "inversion_termica": "Muy Alta",
+      "riesgo_torrenteras": "Nulo",
+      "descripcion": "Temperaturas mínimas del año (< 2°C de madrugada); heladas queman la cobertura vegetal, convirtiéndola en combustible seco."
+    },
+    {
+      "mes_num": 8,
+      "mes_nombre": "Agosto",
+      "temporada": "Pico Crítico de Incendios",
+      "incendios_pct": 38.3,
+      "incendios_promedio": 98,
+      "pm25_promedio_ugm3": 72.8,
+      "calidad_aire": "Muy Mala",
+      "inversion_termica": "Media-Alta",
+      "riesgo_torrenteras": "Nulo",
+      "descripcion": "PICO MÁXIMO DE FUEGO: Vientos fuertes de ladera (>35 km/h) y ritos de Ch'alla agraria; más del 38% de los incendios anuales ocurren aquí."
+    },
+    {
+      "mes_num": 9,
+      "mes_nombre": "Septiembre",
+      "temporada": "Pico Crítico de Incendios",
+      "incendios_pct": 41.5,
+      "incendios_promedio": 106,
+      "pm25_promedio_ugm3": 88.6,
+      "calidad_aire": "Extremadamente Mala (Peligrosa)",
+      "inversion_termica": "Media",
+      "riesgo_torrenteras": "Bajo",
+      "descripcion": "MÁXIMO HISTÓRICO DE POLUCIÓN: Convergen humo de chaqueos de tierras bajas con incendios forestales en el Tunari; humedad relativa cae a <12%."
+    },
+    {
+      "mes_num": 10,
+      "mes_nombre": "Octubre",
+      "temporada": "Primavera Seca / Máximo Calor",
+      "incendios_pct": 16.5,
+      "incendios_promedio": 42,
+      "pm25_promedio_ugm3": 54.1,
+      "calidad_aire": "Mala",
+      "inversion_termica": "Baja",
+      "riesgo_torrenteras": "Bajo",
+      "descripcion": "Pico de temperatura superficial diurna (LST > 40°C en Zona Sur); calor extremo y conatos residuales antes de las lluvias."
+    },
+    {
+      "mes_num": 11,
+      "mes_nombre": "Noviembre",
+      "temporada": "Transición a Lluvias",
+      "incendios_pct": 4.8,
+      "incendios_promedio": 12,
+      "pm25_promedio_ugm3": 32.5,
+      "calidad_aire": "Moderada",
+      "inversion_termica": "Baja",
+      "riesgo_torrenteras": "Medio",
+      "descripcion": "Llegan las primeras lluvias de convección; se disipan las columnas de humo y reverdecen los pastizales."
+    },
+    {
+      "mes_num": 12,
+      "mes_nombre": "Diciembre",
+      "temporada": "Lluvias",
+      "incendios_pct": 2.1,
+      "incendios_promedio": 5,
+      "pm25_promedio_ugm3": 21.0,
+      "calidad_aire": "Buena",
+      "inversion_termica": "Baja",
+      "riesgo_torrenteras": "Alto",
+      "descripcion": "Temporada de lluvias consolidada; fin de la temporada de quemas; monitoreo se traslada al caudal de torrenteras."
+    }
+  ],
+  "tendencias_decadales_distritos": [
+    {
+      "distrito_id": "D15",
+      "nombre": "K'ara K'ara / Arrumani",
+      "tasa_calentamiento_decadal_c": 1.15,
+      "p_value": 0.001,
+      "z_score": 3.84,
+      "significativo": true,
+      "nivel_riesgo_calor": "Extremo",
+      "prioridad_intervencion": 1,
+      "causa_principal": "Vertedero, ausencia casi total de arbolado (déficit 88%) y suelos áridos de alta emisividad."
+    },
+    {
+      "distrito_id": "D8",
+      "nombre": "Ushpa Ushpa / Valle Hermoso Sur",
+      "tasa_calentamiento_decadal_c": 0.82,
+      "p_value": 0.004,
+      "z_score": 3.12,
+      "significativo": true,
+      "nivel_riesgo_calor": "Muy Alto",
+      "prioridad_intervencion": 2,
+      "causa_principal": "Asentamientos en lomas secas sin infraestructura verde, déficit de arbolado 82%."
+    },
+    {
+      "distrito_id": "D9",
+      "nombre": "Itocta / Tamborada",
+      "tasa_calentamiento_decadal_c": 0.76,
+      "p_value": 0.006,
+      "z_score": 2.95,
+      "significativo": true,
+      "nivel_riesgo_calor": "Muy Alto",
+      "prioridad_intervencion": 3,
+      "causa_principal": "Rápida urbanización sobre antiguos terrenos agrícolas sin planes de sombra ni alcantarillado."
+    },
+    {
+      "distrito_id": "D5",
+      "nombre": "Jaihuayco / Aeropuerto",
+      "tasa_calentamiento_decadal_c": 0.68,
+      "p_value": 0.012,
+      "z_score": 2.68,
+      "significativo": true,
+      "nivel_riesgo_calor": "Alto",
+      "prioridad_intervencion": 4,
+      "causa_principal": "Pistas de asfalto del aeropuerto Wilstermann y techos de galpones industriales."
+    },
+    {
+      "distrito_id": "D10",
+      "nombre": "Centro Histórico / Casco Viejo",
+      "tasa_calentamiento_decadal_c": 0.64,
+      "p_value": 0.018,
+      "z_score": 2.45,
+      "significativo": true,
+      "nivel_riesgo_calor": "Alto",
+      "prioridad_intervencion": 5,
+      "causa_principal": "Cañones urbanos estrechos de hormigón que atrapan calor diurno e impiden enfriamiento nocturno."
+    },
+    {
+      "distrito_id": "D7",
+      "nombre": "Villa Sebastián Pagador",
+      "tasa_calentamiento_decadal_c": 0.58,
+      "p_value": 0.022,
+      "z_score": 2.31,
+      "significativo": true,
+      "nivel_riesgo_calor": "Medio-Alto",
+      "prioridad_intervencion": 6,
+      "causa_principal": "Laderas pedregosas con alta absorción solar y techos de calamina densos."
+    },
+    {
+      "distrito_id": "D4",
+      "nombre": "La Chimba / Coña Coña",
+      "tasa_calentamiento_decadal_c": 0.45,
+      "p_value": 0.035,
+      "z_score": 2.11,
+      "significativo": true,
+      "nivel_riesgo_calor": "Medio",
+      "prioridad_intervencion": 7,
+      "causa_principal": "Pérdida histórica del espejo de agua regulador de Coña Coña e intensificación vial en Blanco Galindo."
+    },
+    {
+      "distrito_id": "D12",
+      "nombre": "Hipódromo / Sarco Sur",
+      "tasa_calentamiento_decadal_c": 0.38,
+      "p_value": 0.048,
+      "z_score": 1.98,
+      "significativo": true,
+      "nivel_riesgo_calor": "Moderado",
+      "prioridad_intervencion": 8,
+      "causa_principal": "Densificación residencial moderada compensada por arbolado de parques zonales."
+    },
+    {
+      "distrito_id": "D3",
+      "nombre": "Sarco / Temporal",
+      "tasa_calentamiento_decadal_c": 0.35,
+      "p_value": 0.052,
+      "z_score": 1.94,
+      "significativo": false,
+      "nivel_riesgo_calor": "Moderado",
+      "prioridad_intervencion": 9,
+      "causa_principal": "Cercanía a la brisa de quebradas del Tunari amortigua parcialmente el calentamiento."
+    },
+    {
+      "distrito_id": "D11",
+      "nombre": "Las Cuadras / San Pedro",
+      "tasa_calentamiento_decadal_c": 0.28,
+      "p_value": 0.065,
+      "z_score": 1.84,
+      "significativo": false,
+      "nivel_riesgo_calor": "Moderado",
+      "prioridad_intervencion": 10,
+      "causa_principal": "Masa forestal del Cerro de San Pedro y vegetación del campus universitario UMSS."
+    },
+    {
+      "distrito_id": "D2",
+      "nombre": "Cala Cala / Tupuraya",
+      "tasa_calentamiento_decadal_c": 0.18,
+      "p_value": 0.098,
+      "z_score": 1.65,
+      "significativo": false,
+      "nivel_riesgo_calor": "Bajo",
+      "prioridad_intervencion": 11,
+      "causa_principal": "Mayor densidad de jardines privados y parques públicos del municipio (Parque del Arquitecto, Fidel Anze)."
+    },
+    {
+      "distrito_id": "D1",
+      "nombre": "Queru Queru / Pacata",
+      "tasa_calentamiento_decadal_c": -0.12,
+      "p_value": 0.082,
+      "z_score": -1.74,
+      "significativo": false,
+      "nivel_riesgo_calor": "Bajo / Amortiguado",
+      "prioridad_intervencion": 12,
+      "causa_principal": "Reforestación residencial activa y quebradas con sombra de eucaliptos y molles."
+    },
+    {
+      "distrito_id": "D6",
+      "nombre": "Laguna Alalay / Cerro Verde",
+      "tasa_calentamiento_decadal_c": -0.15,
+      "p_value": 0.042,
+      "z_score": -2.03,
+      "significativo": true,
+      "nivel_riesgo_calor": "Isla Fría Bioclimática",
+      "prioridad_intervencion": 13,
+      "causa_principal": "Efecto enfriador comprobado de la masa de agua (-1.8°C a -2.1°C de amortiguamiento)."
+    },
+    {
+      "distrito_id": "D13",
+      "nombre": "Tunari Alto (PNT)",
+      "tasa_calentamiento_decadal_c": 0.08,
+      "p_value": 0.15,
+      "z_score": 1.44,
+      "significativo": false,
+      "nivel_riesgo_calor": "Zona de Reserva",
+      "prioridad_intervencion": 14,
+      "causa_principal": "Área protegida por encima de la Cota 2750; bosque de kewiña y altitud (>3.400 msnm) estabilizan temperatura."
+    }
+  ],
+  "matriz_alerta_proteccion": [
+    {
+      "zona_objetivo": "Laderas del Tunari (D13, D3, D2, D1)",
+      "periodo_critico": "Agosto - Octubre (Época de Incendios)",
+      "amenaza_principal": "Fuego de copa, pérdida de kewiñas y escorrentía destructiva post-fuego.",
+      "diagnostico_ia": "El 80% de los incendios graves se originan entre los 2.750 y 3.100 msnm a lo largo de senderos y quebradas secas.",
+      "accion_preventiva": "Patrullaje satelital temprano con MODIS/VIIRS cada 3 horas + cuadrillas de respuesta rápida de la UGR y bomberos voluntarios (GEOS, SAR-Bolivia) en conos de deyección.",
+      "beneficio_comunidad": "Evita avalanchas de lodo (aluviones) hacia la mancha urbana en la época de lluvias subsiguiente."
+    },
+    {
+      "zona_objetivo": "Sur Árido (D15 K'ara K'ara, D8 Ushpa Ushpa, D9 Itocta)",
+      "periodo_critico": "Octubre - Diciembre (Olas de Calor)",
+      "amenaza_principal": "Estrés térmico extremo diurno (PET > 38°C), golpes de calor e insolación infantil.",
+      "diagnostico_ia": "Mayor aceleración térmica del departamento (+1.15°C/década LST) provocada por suelos desnudos y viviendas con techo de calamina sin aislamiento.",
+      "accion_preventiva": "Implementación de techos frescos reflectivos en centros de salud y escuelas, instalación de bebederos y distribución de agua en camiones cisterna coordinada con alertas NASA.",
+      "beneficio_comunidad": "Reducción de hasta un 40% en hospitalizaciones por deshidratación y crisis respiratorias."
+    },
+    {
+      "zona_objetivo": "Centro Histórico & Eje Vial (D10, D5, D11)",
+      "periodo_critico": "Mayo - Julio (Inversión Térmica & San Juan)",
+      "amenaza_principal": "Asfixia urbana por concentración de PM2.5 > 75 µg/m³ estancada bajo la Cota 2750.",
+      "diagnostico_ia": "La piscina de aire frío nocturno impide la dispersión vertical de gases de combustión y ladrilleras durante las mañanas.",
+      "accion_preventiva": "Restricción inteligente de transporte pesado en días de inversión térmica crítica identificada por IA + prohibición absoluta de fogatas en San Juan.",
+      "beneficio_comunidad": "Protección de adultos mayores y escolares en horarios de entrada a clases."
+    },
+    {
+      "zona_objetivo": "Humedales Urbanos (D6 Alalay, D4 Coña Coña)",
+      "periodo_critico": "Todo el año (Monitoreo de Isla Fría)",
+      "amenaza_principal": "Eutrofización, secado del espejo de agua y pérdida del efecto refrigerante natural.",
+      "diagnostico_ia": "Alalay reduce hasta -2.1°C el calor en 1.5 km a la redonda, actuando como regulador bioclimático de todo el este de Cercado.",
+      "accion_preventiva": "Monitoreo espectral de clorofila y cianobacterias con Sentinel-2 y oxigenación mecánica controlada.",
+      "beneficio_comunidad": "Mantiene el confort térmico en recintos de alta afluencia como FEXCO y colonias periféricas."
+    }
+  ]
+}

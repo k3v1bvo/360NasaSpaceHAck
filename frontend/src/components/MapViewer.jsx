@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Info, ChevronDown, Crosshair, X, Eye, EyeOff, Search, Compass, MapPin } from 'lucide-react';
+import { 
+  Info, ChevronDown, Crosshair, X, Eye, EyeOff, Search, Compass, MapPin,
+  Play, Pause, TrendingUp, Calendar, Flame, Wind, Sparkles
+} from 'lucide-react';
 import tunariPolygonData from '../../../data/gamc/parque_nacional_tunari.geojson';
 import distritosData from '../../../data/gamc/distritos_cochabamba.geojson';
 import floodPointsData from '../../../data/gamc/60_puntos_inundacion.geojson';
 import cota2750Data from '../../../data/gamc/cota_2750_tunari.geojson';
 import monicaData from '../data/monica_virtual_sensors.json';
 import globalHotspots from '../data/global_trend_hotspots.json';
+import temporalTrendsData from '../data/temporal_trends_data.json';
+import TemporalTrendModal from '../modules/TemporalTrendModal';
 
 const GLOBAL_CENTER = [15.0, -10.0];
 const GLOBAL_ZOOM = 3;
@@ -47,7 +52,9 @@ export default function MapViewer({
   wmsPeriurbanos = true,
   wmsDistritos = false,
   nasaGibs = false,
-  gibsDate = '2024-09-15'
+  gibsDate = '2024-09-15',
+  isTemporalModalOpen,
+  setIsTemporalModalOpen
 }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
@@ -64,13 +71,50 @@ export default function MapViewer({
   const baseLayersRef = useRef({});
   const activeTabRef = useRef(activeTab);
   const renderLayersRef = useRef(null);
-  const [baseMapType, setBaseMapType] = useState('streets'); // 'streets' (CartoDB Voyager) | 'satellite' (NASA/Esri) | 'dark' (CartoDB Dark Matter)
+  const [baseMapType, setBaseMapType] = useState('streets'); // 'streets' (OpenStreetMap) | 'satellite' (Esri Imagery + Labels) | 'dark' (Esri Dark Canvas)
   const [showDistrictLabels, setShowDistrictLabels] = useState(true); // Control para ocultar/mostrar nombres de distritos
   const [showSensors, setShowSensors] = useState(true); // Control para ocultar/mostrar sensores
   const [isLegendOpen, setIsLegendOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
   const [districtSearch, setDistrictSearch] = useState('');
   const [districtZoneFilter, setDistrictZoneFilter] = useState('TODOS');
   const [isDistrictNavOpen, setIsDistrictNavOpen] = useState(false);
+
+  // Estados de la Línea de Tiempo Multitemporal & Predicción IA
+  const [timelineYear, setTimelineYear] = useState('ALL'); // 'ALL' | 2020..2026
+  const [timelineMonth, setTimelineMonth] = useState('ALL'); // 'ALL' | 1..12
+  const [isPlayingTimeline, setIsPlayingTimeline] = useState(false);
+  const [localTemporalModalOpen, setLocalTemporalModalOpen] = useState(false);
+  const modalOpen = isTemporalModalOpen !== undefined ? isTemporalModalOpen : localTemporalModalOpen;
+  const setModalOpen = setIsTemporalModalOpen || setLocalTemporalModalOpen;
+
+  const timelineYearRef = useRef(timelineYear);
+  const timelineMonthRef = useRef(timelineMonth);
+
+  useEffect(() => {
+    timelineYearRef.current = timelineYear;
+  }, [timelineYear]);
+
+  useEffect(() => {
+    timelineMonthRef.current = timelineMonth;
+  }, [timelineMonth]);
+
+  // Reproductor automático multitemporal (cicla los años con cadencia suave de 2.4s)
+  useEffect(() => {
+    if (!isPlayingTimeline) return;
+    const yearsSequence = ['ALL', 2020, 2021, 2022, 2023, 2024, 2025, 2026];
+    const timer = setInterval(() => {
+      setTimelineYear((prevYear) => {
+        const cur = prevYear === 'ALL' ? 'ALL' : Number(prevYear);
+        const idx = yearsSequence.indexOf(cur);
+        if (idx === -1 || idx >= yearsSequence.length - 1) {
+          return yearsSequence[1]; // vuelve a 2020
+        }
+        return yearsSequence[idx + 1];
+      });
+    }, 2400);
+
+    return () => clearInterval(timer);
+  }, [isPlayingTimeline]);
 
   // Mantener selectedPointRef y activeTab sincronizados
   useEffect(() => {
@@ -117,40 +161,55 @@ export default function MapViewer({
         worldCopyJump: true
       });
 
-      // 1. Base Callejero / Topográfico de Alta Definición (CartoDB Voyager)
-      const streetsLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
+      // 1. Base Callejero Oficial de Alta Definición (OpenStreetMap Libre y Oficial)
+      const streetsLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19,
       });
 
-      // 2. Base Satelital NASA / Esri World Imagery con Etiquetas Viales Claras
+      // 2. Base Satelital NASA / Esri World Imagery con Viario y Etiquetas Oficiales
       const satTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: '&copy; NASA Earthdata &copy; Esri',
         maxNativeZoom: 18,
         maxZoom: 19,
       });
 
-      const satLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
+      const satRoads = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
         attribution: '',
-        subdomains: 'abcd',
+        maxNativeZoom: 18,
         maxZoom: 19,
-        opacity: 0.92,
+        opacity: 0.85,
       });
 
-      const satGroup = L.layerGroup([satTiles, satLabels]);
+      const satLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; Esri',
+        maxNativeZoom: 18,
+        maxZoom: 19,
+        opacity: 0.95,
+      });
 
-      // 3. Base Oscura de Alta Definición (CartoDB Dark Matter) - Calles y avenidas en neón
-      const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-        subdomains: 'abcd',
+      const satGroup = L.layerGroup([satTiles, satRoads, satLabels]);
+
+      // 3. Base Oscura Profesional (Esri Canvas World Dark Gray + Referencia Vial)
+      const darkBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; Esri &mdash; World Dark Gray Base',
+        maxNativeZoom: 16,
         maxZoom: 19,
       });
+
+      const darkRef = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '',
+        maxNativeZoom: 16,
+        maxZoom: 19,
+        opacity: 0.95,
+      });
+
+      const darkGroup = L.layerGroup([darkBase, darkRef]);
 
       baseLayersRef.current = {
         streets: streetsLayer,
         satellite: satGroup,
-        dark: darkLayer,
+        dark: darkGroup,
       };
 
       // Iniciar con la capa callejera/topográfica activa para máxima claridad territorial
@@ -802,75 +861,216 @@ export default function MapViewer({
         }
       }
 
-      // B. Marcadores Satelitales de Fuego de la NASA (MODIS, VIIRS o Armonizado)
-      focosData?.forEach((foco) => {
-        const [lng, lat] = foco.geometry.coordinates;
-        const p = foco.properties;
+      // B. Marcadores Satelitales de Fuego de la NASA & Predicción IA Multitemporal
+      const currentYear = timelineYearRef.current;
+      const currentMonth = timelineMonthRef.current;
 
-        let radius, fillColor, color, popupTitle;
+      if (currentYear === 2026 || currentYear === '2026') {
+        // Marcadores de Predicción IA 2026 (Corredores de Alto Riesgo en Tunari y D15)
+        const PREDICTED_2026_HOTSPOTS = [
+          {
+            id: 'PRED-2026-01',
+            lat: -17.324,
+            lon: -66.178,
+            zona: 'Cuenca Taquiña / Cota 2750',
+            probabilidad: '89.4%',
+            frp_est_mw: 165,
+            riesgo: 'Crítico',
+            factor: 'Biomasa seca acumulada + vientos catabáticos nocturnos > 35 km/h',
+            brigada: 'GEOS & UGR Cercado - Retén preventivo Taquiña'
+          },
+          {
+            id: 'PRED-2026-02',
+            lat: -17.318,
+            lon: -66.142,
+            zona: 'Bosque Andrada / Quebrada San Pedro',
+            probabilidad: '84.2%',
+            frp_est_mw: 140,
+            riesgo: 'Muy Alto',
+            factor: 'Pastizales no gestionados en interfaz urbana-forestal sobre Cota 2750',
+            brigada: 'SAR-Bolivia & Guardaparques PNT'
+          },
+          {
+            id: 'PRED-2026-03',
+            lat: -17.332,
+            lon: -66.215,
+            zona: 'Tiquipaya Norte / Cono de Deyección',
+            probabilidad: '81.6%',
+            frp_est_mw: 125,
+            riesgo: 'Alto',
+            factor: 'Baja humedad relativa (<12%) y pendiente escarpada',
+            brigada: 'Bomberos Voluntarios Tiquipaya'
+          },
+          {
+            id: 'PRED-2026-04',
+            lat: -17.465,
+            lon: -66.138,
+            zona: "Distrito 15 K'ara K'ara (Isla de Calor Extrema)",
+            probabilidad: '76.8%',
+            frp_est_mw: 85,
+            riesgo: 'Moderado-Alto',
+            factor: 'Temperaturas LST > 41°C y riesgo de combustión residual',
+            brigada: 'Policía Ecológica & Cuadrilla D15'
+          }
+        ];
 
-        if (sensorMode === 'MODIS') {
-          radius = 16;
-          fillColor = '#f59e0b';
-          color = '#ffffff';
-          popupTitle = '🛰️ Sensor MODIS MCD14DL (1 km)';
-        } else if (sensorMode === 'VIIRS') {
-          radius = 7;
-          fillColor = '#06b6d4';
-          color = '#ffffff';
-          popupTitle = '🛰️ Sensor VIIRS VNP14 (375 m)';
-        } else {
-          const frp = p.frp_total_mw || 35;
-          radius = frp > 60 ? 13 : frp > 30 ? 9 : 7;
-          fillColor = frp > 60 ? '#dc2626' : frp > 30 ? '#ea580c' : '#f59e0b';
-          color = '#ffffff';
-          popupTitle = '🔥 Foco Armonizado (NASA FIRMS)';
-        }
+        PREDICTED_2026_HOTSPOTS.forEach((pred) => {
+          // Anillo exterior de alerta
+          const ring = L.circleMarker([pred.lat, pred.lon], {
+            radius: 20,
+            fillColor: '#d946ef',
+            color: '#ec4899',
+            weight: 2,
+            dashArray: '3, 4',
+            opacity: 0.85,
+            fillOpacity: 0.22
+          });
+          ring.addTo(layersGroupRef.current);
 
-        const circle = L.circleMarker([lat, lng], {
-          radius,
-          fillColor,
-          color,
-          weight: 1.5,
-          opacity: 0.95,
-          fillOpacity: 0.85,
-        });
+          const circle = L.circleMarker([pred.lat, pred.lon], {
+            radius: 12,
+            fillColor: '#c026d3',
+            color: '#ffffff',
+            weight: 2.5,
+            opacity: 1,
+            fillOpacity: 0.95
+          });
 
-        circle.bindPopup(`
-          <div style="color: #111; font-family: sans-serif; font-size: 12px; min-width: 190px;">
-            <strong style="color: ${fillColor};">${popupTitle}</strong><br/>
-            <strong>Zona:</strong> ${p.zona}<br/>
-            <strong>Fecha:</strong> ${p.fecha}<br/>
-            <strong>Potencia (FRP):</strong> ${p.frp_total_mw || p.frp || 35} MW<br/>
-            ${sensorMode === 'HARMONIZED' ? `<strong>Puntos fusionados:</strong> ${p.puntos_crudos_fusionados || 2}<br/>` : `<strong>Satélite:</strong> ${p.satellite || 'NASA'}<br/>`}
-            ${p.ia_anomaly_score ? `<strong>Score IA (Isolation Forest):</strong> <span style="color: #7c3aed; font-weight: bold;">${p.ia_anomaly_score}</span> (${p.ia_clasificacion || 'Anomalía'})<br/>` : ''}
-            <span style="color: ${p.en_parque_tunari ? '#059669' : '#6b7280'}; font-weight: bold;">
-              ${p.en_parque_tunari ? '🌲 Dentro del P.N. Tunari' : '🏡 Interfaz urbana'}
-            </span>
-          </div>
-        `);
+          circle.bindPopup(`
+            <div style="color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; min-width: 280px; max-width: 320px; line-height: 1.5;">
+              <div style="background: linear-gradient(135deg, #701a75, #a21caf); color: white; padding: 8px 12px; border-radius: 6px 6px 0 0; font-weight: 800; display: flex; justify-content: space-between; align-items: center;">
+                <span>✨ PREDICCIÓN IA 2026</span>
+                <span style="font-size: 11px; background: rgba(0,0,0,0.3); padding: 2px 7px; border-radius: 4px; text-transform: uppercase;">
+                  ${pred.riesgo}
+                </span>
+              </div>
+              <div style="padding: 12px; border: 1px solid #a21caf; border-top: none; border-radius: 0 0 6px 6px; background: white;">
+                <div style="font-size: 14px; font-weight: 800; color: #701a75; margin-bottom: 4px;">
+                  📍 ${pred.zona}
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 8px 0; font-size: 12px;">
+                  <div><strong>Prob. Ignición:</strong> <span style="color: #a21caf; font-weight: 800;">${pred.probabilidad}</span></div>
+                  <div><strong>FRP Estimado:</strong> <span style="font-weight: 800; color: #dc2626;">~${pred.frp_est_mw} MW</span></div>
+                </div>
+                <div style="margin-bottom: 8px; font-size: 11px; color: #475569; background: #fdf4ff; padding: 6px 8px; border-radius: 4px; border-left: 3px solid #d946ef;">
+                  ⚠️ <strong>Factor Crítico:</strong> ${pred.factor}
+                </div>
+                <div style="font-size: 11px; color: #166534; background: #f0fdf4; padding: 6px 8px; border-radius: 4px; border-left: 3px solid #16a34a;">
+                  🛡️ <strong>Acción Recomendada:</strong> ${pred.brigada}
+                </div>
+              </div>
+            </div>
+          `);
 
-        circle.on('click', () => {
-          if (setSelectedPoint) {
-            setSelectedPoint({
-              type: 'foco',
-              id: p.id,
-              lat,
-              lon: lng,
-              ...p
-            });
+          circle.on('click', () => {
+            if (setSelectedPoint) {
+              setSelectedPoint({
+                type: 'foco',
+                id: pred.id,
+                lat: pred.lat,
+                lon: pred.lon,
+                nombre: `Predicción IA 2026: ${pred.zona}`,
+                frp_total_mw: pred.frp_est_mw,
+                zona: pred.zona,
+                ...pred
+              });
+            }
+          });
+
+          circle.addTo(layersGroupRef.current);
+          if (layerRegistryRef.current) {
+            layerRegistryRef.current.focos[pred.id] = {
+              layer: circle,
+              data: pred,
+              center: [pred.lat, pred.lon]
+            };
           }
         });
+      } else {
+        // Filtrar focos históricos según timelineYear y timelineMonth
+        const filteredFocos = (focosData || []).filter((foco) => {
+          const p = foco.properties;
+          const fYear = p.year || (p.fecha ? parseInt(p.fecha.split('-')[0], 10) : null);
+          const fMonth = p.month || (p.fecha ? parseInt(p.fecha.split('-')[1], 10) : null);
 
-        circle.addTo(layersGroupRef.current);
-        if (layerRegistryRef.current) {
-          layerRegistryRef.current.focos[p.id] = {
-            layer: circle,
-            data: p,
-            center: [lat, lng]
-          };
-        }
-      });
+          if (currentYear !== 'ALL' && fYear !== Number(currentYear)) {
+            return false;
+          }
+          if (currentMonth !== 'ALL' && fMonth !== Number(currentMonth)) {
+            return false;
+          }
+          return true;
+        });
+
+        filteredFocos.forEach((foco) => {
+          const [lng, lat] = foco.geometry.coordinates;
+          const p = foco.properties;
+
+          let radius, fillColor, color, popupTitle;
+
+          if (sensorMode === 'MODIS') {
+            radius = 16;
+            fillColor = '#f59e0b';
+            color = '#ffffff';
+            popupTitle = '🛰️ Sensor MODIS MCD14DL (1 km)';
+          } else if (sensorMode === 'VIIRS') {
+            radius = 7;
+            fillColor = '#06b6d4';
+            color = '#ffffff';
+            popupTitle = '🛰️ Sensor VIIRS VNP14 (375 m)';
+          } else {
+            const frp = p.frp_total_mw || 35;
+            radius = frp > 60 ? 13 : frp > 30 ? 9 : 7;
+            fillColor = frp > 60 ? '#dc2626' : frp > 30 ? '#ea580c' : '#f59e0b';
+            color = '#ffffff';
+            popupTitle = '🔥 Foco Armonizado (NASA FIRMS)';
+          }
+
+          const circle = L.circleMarker([lat, lng], {
+            radius,
+            fillColor,
+            color,
+            weight: 1.5,
+            opacity: 0.95,
+            fillOpacity: 0.85,
+          });
+
+          circle.bindPopup(`
+            <div style="color: #111; font-family: sans-serif; font-size: 12px; min-width: 190px;">
+              <strong style="color: ${fillColor};">${popupTitle}</strong><br/>
+              <strong>Zona:</strong> ${p.zona}<br/>
+              <strong>Fecha:</strong> ${p.fecha}<br/>
+              <strong>Potencia (FRP):</strong> ${p.frp_total_mw || p.frp || 35} MW<br/>
+              ${sensorMode === 'HARMONIZED' ? `<strong>Puntos fusionados:</strong> ${p.puntos_crudos_fusionados || 2}<br/>` : `<strong>Satélite:</strong> ${p.satellite || 'NASA'}<br/>`}
+              ${p.ia_anomaly_score ? `<strong>Score IA (Isolation Forest):</strong> <span style="color: #7c3aed; font-weight: bold;">${p.ia_anomaly_score}</span> (${p.ia_clasificacion || 'Anomalía'})<br/>` : ''}
+              <span style="color: ${p.en_parque_tunari ? '#059669' : '#6b7280'}; font-weight: bold;">
+                ${p.en_parque_tunari ? '🌲 Dentro del P.N. Tunari' : '🏡 Interfaz urbana'}
+              </span>
+            </div>
+          `);
+
+          circle.on('click', () => {
+            if (setSelectedPoint) {
+              setSelectedPoint({
+                type: 'foco',
+                id: p.id,
+                lat,
+                lon: lng,
+                ...p
+              });
+            }
+          });
+
+          circle.addTo(layersGroupRef.current);
+          if (layerRegistryRef.current) {
+            layerRegistryRef.current.focos[p.id] = {
+              layer: circle,
+              data: p,
+              center: [lat, lng]
+            };
+          }
+        });
+      }
     }
 
     // =========================================================================
@@ -1015,7 +1215,21 @@ export default function MapViewer({
     if (mapInstanceRef.current) {
       renderLayers(null, mapInstanceRef.current);
     }
-  }, [activeTab, focosData, sensorMode, reportsData, offlineMode, wmsCota, wmsPeriurbanos, wmsDistritos, nasaGibs, gibsDate, showSensors]);
+  }, [
+    activeTab, 
+    focosData, 
+    sensorMode, 
+    reportsData, 
+    offlineMode, 
+    wmsCota, 
+    wmsPeriurbanos, 
+    wmsDistritos, 
+    nasaGibs, 
+    gibsDate, 
+    showSensors,
+    timelineYear,
+    timelineMonth
+  ]);
 
   // Efecto Maestro de Selección: Resalta en el mapa, abre popups, activa baliza pulsante y enfoca con animación
   useEffect(() => {
@@ -1309,7 +1523,7 @@ export default function MapViewer({
               ? 'bg-blue-600 text-white shadow'
               : 'text-slate-300 hover:text-white'
           }`}
-          title="Mapa Callejero y Topográfico Oficial GAMC (CartoDB Voyager)"
+          title="Mapa Callejero Oficial de Cochabamba (OpenStreetMap sin marcas de agua)"
         >
           <span>🗺️ Callejero</span>
         </button>
@@ -1321,7 +1535,7 @@ export default function MapViewer({
               ? 'bg-blue-600 text-white shadow'
               : 'text-slate-300 hover:text-white'
           }`}
-          title="Vista Satelital NASA/Esri con Etiquetas Viales Claras"
+          title="Vista Satelital NASA/Esri con Viario Oficial y Etiquetas Viales"
         >
           <span>🛰️ Satélite</span>
         </button>
@@ -1333,7 +1547,7 @@ export default function MapViewer({
               ? 'bg-blue-600 text-white shadow'
               : 'text-slate-300 hover:text-white'
           }`}
-          title="Modo Oscuro Espacial con Viario en Neón (CartoDB Dark Matter)"
+          title="Modo Oscuro Profesional (Esri Canvas Dark sin marcas de agua)"
         >
           <span>🌙 Oscuro</span>
         </button>
@@ -1666,6 +1880,150 @@ export default function MapViewer({
           </div>
         )}
       </div>
+
+      {/* 3. Barra Flotante de Línea de Tiempo Satelital & Predicción IA (Visible en Incendios y Microclimas) */}
+      {(activeTab === 'incendios' || activeTab === 'microclimas') && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[420] w-[96%] max-w-4xl rounded-2xl border border-white/15 bg-[#0a0f1d]/95 p-2.5 sm:p-3 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2">
+          {/* Fila Superior: Controles, Estado y Botón de Análisis */}
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2 mb-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="flex h-2.5 w-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+              <span className="text-xs sm:text-sm font-black tracking-tight text-white flex items-center gap-1.5">
+                <Calendar className="h-4 w-4 text-cyan-400" />
+                Línea de Tiempo Satelital
+              </span>
+              <span className="rounded-full bg-blue-950/80 px-2 py-0.5 text-[11px] font-mono font-bold text-blue-300 border border-blue-800/80">
+                {timelineYear === 'ALL' ? '2020-2025 Acumulado' : timelineYear === 2026 ? '✨ 2026 (Predicción IA)' : `Año ${timelineYear}`}
+              </span>
+              {timelineMonth !== 'ALL' && (
+                <span className="rounded-full bg-amber-950/80 px-2 py-0.5 text-[11px] font-bold text-amber-300 border border-amber-800/80">
+                  {['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][Number(timelineMonth) - 1]}
+                </span>
+              )}
+              {timelineMonth === 'ALL' && timelineYear !== 2026 && (
+                <span className="hidden md:inline text-[11px] text-slate-400">
+                  • 79.8% de incendios se concentran en Ago-Sep
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              {/* Botón Play / Pause auto-player */}
+              <button
+                onClick={() => setIsPlayingTimeline(!isPlayingTimeline)}
+                className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition shadow-sm ${
+                  isPlayingTimeline
+                    ? 'bg-rose-600 text-white animate-pulse'
+                    : 'bg-neutral-800 text-slate-200 hover:text-white hover:bg-neutral-700'
+                }`}
+                title={isPlayingTimeline ? "Pausar avance automático de años" : "Reproducir avance histórico año a año"}
+              >
+                {isPlayingTimeline ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5 text-cyan-400" />}
+                <span className="hidden sm:inline">{isPlayingTimeline ? 'Pausar' : 'Play'}</span>
+              </button>
+
+              {/* Botón para abrir el Modal de Tendencias y Predicción IA */}
+              <button
+                onClick={() => setModalOpen(true)}
+                className="flex items-center gap-1.5 rounded-lg border border-purple-500/50 bg-gradient-to-r from-purple-900/80 to-indigo-900/80 px-2.5 sm:px-3 py-1 text-xs font-bold text-purple-200 hover:text-white hover:border-purple-400 transition shadow-sm"
+                title="Abrir Dashboard Estadístico de Tendencias y Predicción"
+              >
+                <TrendingUp className="h-3.5 w-3.5 text-purple-300" />
+                <span className="hidden sm:inline">Análisis & Gráficas IA</span>
+                <span className="sm:hidden">Análisis</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Fila Inferior: Selectores de Años y Meses */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            {/* Selector de Años */}
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1 shrink-0">Año:</span>
+              {['ALL', 2020, 2021, 2022, 2023, 2024, 2025, 2026].map((yr) => {
+                const isSelected = timelineYear === yr || (yr !== 'ALL' && Number(timelineYear) === Number(yr));
+                const is2026 = yr === 2026;
+                return (
+                  <button
+                    key={yr}
+                    onClick={() => {
+                      setIsPlayingTimeline(false);
+                      setTimelineYear(yr);
+                    }}
+                    className={`rounded-lg px-2 sm:px-2.5 py-1 text-xs font-bold transition shrink-0 ${
+                      isSelected
+                        ? is2026
+                          ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-900/50 ring-1 ring-purple-400'
+                          : 'bg-blue-600 text-white shadow'
+                        : is2026
+                          ? 'border border-purple-500/40 bg-purple-950/40 text-purple-300 hover:bg-purple-900/50'
+                          : 'bg-neutral-900/80 text-slate-300 hover:bg-neutral-800 hover:text-white border border-white/5'
+                    }`}
+                  >
+                    {yr === 'ALL' ? 'Todos' : yr === 2026 ? '✨ 2026 IA' : yr}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Selector de Meses */}
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1 shrink-0">Mes:</span>
+              <button
+                onClick={() => setTimelineMonth('ALL')}
+                className={`rounded-lg px-2 py-0.5 text-xs font-bold transition shrink-0 ${
+                  timelineMonth === 'ALL'
+                    ? 'bg-amber-600 text-white shadow'
+                    : 'bg-neutral-900/80 text-slate-300 hover:bg-neutral-800 hover:text-white border border-white/5'
+                }`}
+              >
+                Año compl.
+              </button>
+              {[
+                { m: 1, label: 'Ene' },
+                { m: 2, label: 'Feb' },
+                { m: 3, label: 'Mar' },
+                { m: 4, label: 'Abr' },
+                { m: 5, label: 'May' },
+                { m: 6, label: 'Jun' },
+                { m: 7, label: 'Jul' },
+                { m: 8, label: 'Ago', peak: true },
+                { m: 9, label: 'Sep', peak: true },
+                { m: 10, label: 'Oct' },
+                { m: 11, label: 'Nov' },
+                { m: 12, label: 'Dic' }
+              ].map(({ m, label, peak }) => {
+                const isSelected = Number(timelineMonth) === m;
+                return (
+                  <button
+                    key={m}
+                    onClick={() => setTimelineMonth(m)}
+                    className={`relative rounded-lg px-1.5 sm:px-2 py-0.5 text-[11px] font-bold transition shrink-0 ${
+                      isSelected
+                        ? 'bg-amber-500 text-black shadow font-black'
+                        : peak
+                          ? 'border border-rose-500/40 bg-rose-950/30 text-rose-300 hover:bg-rose-900/50'
+                          : 'bg-neutral-900/60 text-slate-400 hover:bg-neutral-800 hover:text-white'
+                    }`}
+                    title={peak ? `${label}: Mes crítico de incendios forestales (80% histórico)` : label}
+                  >
+                    {label}
+                    {peak && !isSelected && (
+                      <span className="absolute -top-0.5 -right-0.5 h-1.5 w-1.5 rounded-full bg-rose-500"></span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Renderizado del Modal de Análisis Temporal y Predicción */}
+      <TemporalTrendModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 }

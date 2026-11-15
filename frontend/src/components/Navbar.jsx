@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio, BellRing, Satellite, Compass } from 'lucide-react';
+import { Radio, BellRing, Satellite, Compass, TrendingUp } from 'lucide-react';
 
 export default function Navbar({ 
   activeTab, 
@@ -8,7 +8,8 @@ export default function Navbar({
   setOfflineMode, 
   onOpenReport,
   isTourOpen,
-  setIsTourOpen
+  setIsTourOpen,
+  onOpenTemporalAnalytics
 }) {
   const tabs = [
     { id: 'microclimas', label: '📍 1. Piloto Cochabamba (15 Distritos)', short: '📍 1. Cocha (15 Dist.)' },
@@ -63,6 +64,17 @@ export default function Navbar({
 
         {/* Acciones Rápidas & Guía del Sistema */}
         <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Botón Tendencias & Predicción IA */}
+          <button
+            onClick={onOpenTemporalAnalytics}
+            className="flex items-center gap-1.5 sm:gap-2 rounded-lg border border-purple-500/60 bg-purple-950/70 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-bold text-purple-200 hover:text-white hover:border-purple-400 hover:bg-purple-900/80 transition shadow-sm"
+            title="Ver Análisis Multitemporal, Ciclo Estacional y Predicción IA 2026"
+          >
+            <TrendingUp className="h-4 w-4 text-purple-400" />
+            <span className="hidden sm:inline">Tendencias & IA</span>
+            <span className="sm:hidden">Tendencias</span>
+          </button>
+
           {/* Botón Guía del Sistema / Presentación */}
           <button
             onClick={() => setIsTourOpen(!isTourOpen)}
