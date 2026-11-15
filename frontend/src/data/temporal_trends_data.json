@@ -291,6 +291,17 @@
       "causa_principal": "Laderas pedregosas con alta absorción solar y techos de calamina densos."
     },
     {
+      "distrito_id": "D14",
+      "nombre": "Sebastián Pagador Sur / Alto Cochabamba",
+      "tasa_calentamiento_decadal_c": 0.61,
+      "p_value": 0.020,
+      "z_score": 2.38,
+      "significativo": true,
+      "nivel_riesgo_calor": "Alto",
+      "prioridad_intervencion": 6,
+      "causa_principal": "Lomas altas del sudeste con radiación solar intensa, déficit hídrico y urbanización en pendientes."
+    },
+    {
       "distrito_id": "D4",
       "nombre": "La Chimba / Coña Coña",
       "tasa_calentamiento_decadal_c": 0.45,
