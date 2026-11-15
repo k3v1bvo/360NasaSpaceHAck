@@ -18,6 +18,7 @@ const COCHABAMBA_CENTER = [-17.3895, -66.1568];
 const COCHABAMBA_ZOOM = 12;
 const GAMC_WMS_ENDPOINT = 'https://serviciosgamc.cochabamba.bo/api/gs/wms';
 const GAMC_PROJECT_03_KEY = '8da30122933ced2174ebe3e8b03198731d9cae6dc3230d32';
+const CARTO_API_KEY = 'cb1_4mth_1_6594809bcefc062849f9ce07'; // Cuenta k3v1bvoLabs (5M req/mes)
 
 const DISTRICTS_CONFIG = [
   { id: 'D1', num: 1, name: 'Queru Queru / Pacata', zone: 'NORTE', color: '#10b981', lst: 26.2, hito: 'Palacio Portales • UPB', keywords: 'queru queru pacata mayorazgo aranjuez upb palacio portales ciclovia américa este' },
@@ -161,55 +162,49 @@ export default function MapViewer({
         worldCopyJump: true
       });
 
-      // 1. Base Callejero Oficial de Alta Definición (OpenStreetMap Libre y Oficial)
-      const streetsLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 19,
-      });
+      // 1. Base Callejero / Topográfico de Alta Definición (CartoDB Voyager Autenticado)
+      const streetsLayer = L.tileLayer(
+        `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`,
+        {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          subdomains: 'abcd',
+          maxZoom: 19,
+        }
+      );
 
-      // 2. Base Satelital NASA / Esri World Imagery con Viario y Etiquetas Oficiales
+      // 2. Base Satelital NASA / Esri World Imagery con Etiquetas Viales Oficiales de CARTO
       const satTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: '&copy; NASA Earthdata &copy; Esri',
         maxNativeZoom: 18,
         maxZoom: 19,
       });
 
-      const satRoads = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '',
-        maxNativeZoom: 18,
-        maxZoom: 19,
-        opacity: 0.85,
-      });
+      const satLabels = L.tileLayer(
+        `https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`,
+        {
+          attribution: '&copy; CARTO',
+          subdomains: 'abcd',
+          maxZoom: 19,
+          opacity: 0.95,
+        }
+      );
 
-      const satLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '&copy; Esri',
-        maxNativeZoom: 18,
-        maxZoom: 19,
-        opacity: 0.95,
-      });
+      const satGroup = L.layerGroup([satTiles, satLabels]);
 
-      const satGroup = L.layerGroup([satTiles, satRoads, satLabels]);
-
-      // 3. Base Oscura Profesional (Esri Canvas World Dark Gray + Referencia Vial)
-      const darkBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '&copy; Esri &mdash; World Dark Gray Base',
-        maxNativeZoom: 16,
-        maxZoom: 19,
-      });
-
-      const darkRef = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '',
-        maxNativeZoom: 16,
-        maxZoom: 19,
-        opacity: 0.95,
-      });
-
-      const darkGroup = L.layerGroup([darkBase, darkRef]);
+      // 3. Base Oscura de Alta Definición (CartoDB Dark Matter Autenticado)
+      const darkLayer = L.tileLayer(
+        `https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`,
+        {
+          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+          subdomains: 'abcd',
+          maxZoom: 19,
+        }
+      );
 
       baseLayersRef.current = {
         streets: streetsLayer,
         satellite: satGroup,
-        dark: darkGroup,
+        dark: darkLayer,
       };
 
       // Iniciar con la capa callejera/topográfica activa para máxima claridad territorial
