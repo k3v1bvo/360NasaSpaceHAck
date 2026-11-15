@@ -35,8 +35,15 @@ export default function MapViewer({
   const mapInstanceRef = useRef(null);
   const layersGroupRef = useRef(null);
   const baseLayersRef = useRef({});
+  const activeTabRef = useRef(activeTab);
+  const renderLayersRef = useRef(null);
   const [baseMapType, setBaseMapType] = useState('satellite'); // 'satellite' | 'streets' | 'dark'
   const [isLegendOpen, setIsLegendOpen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
+
+  // Mantener activeTab siempre actualizado en activeTabRef para evitar stale closures en eventos de Leaflet
+  useEffect(() => {
+    activeTabRef.current = activeTab;
+  }, [activeTab]);
 
   // ResizeObserver para recalcular tamaño de Leaflet instantáneamente en responsive
   useEffect(() => {
@@ -128,9 +135,11 @@ export default function MapViewer({
         }
       });
 
-      // Listener para downscaling dinámico al cambiar nivel de zoom
+      // Listener para downscaling dinámico al cambiar nivel de zoom (solo en modo global_nasa)
       map.on('zoomend', () => {
-        renderLayers(L, map);
+        if (activeTabRef.current === 'global_nasa' && renderLayersRef.current) {
+          renderLayersRef.current();
+        }
       });
 
       mapInstanceRef.current = map;
@@ -199,12 +208,15 @@ export default function MapViewer({
     }
     if (!map || !layersGroupRef.current) return;
 
+    // Asegurar que siempre se usa la pestaña activa real (sin stale closures de Leaflet)
+    const currentTab = activeTabRef.current || activeTab;
+
     layersGroupRef.current.clearLayers();
 
     // =========================================================================
     // CAPA 1: GLOBAL NASA DETECTIVE (Red Planetaria + Centinelas de Bolivia)
     // =========================================================================
-    if (activeTab === 'global_nasa') {
+    if (currentTab === 'global_nasa') {
       globalHotspots.forEach((spot) => {
         const isPilot = spot.is_pilot;
         const color = isPilot ? (
@@ -328,7 +340,7 @@ export default function MapViewer({
     // =========================================================================
     // CAPA 2: MICROCLIMAS & RED MÓNICA IA (Caso Piloto Cochabamba)
     // =========================================================================
-    if (activeTab === 'microclimas') {
+    if (currentTab === 'microclimas') {
       // 1. Polígonos de Distritos con Gradiente Térmico LST y Métricas GAMC
       distritosData?.features?.forEach((dist) => {
         const p = dist.properties;
@@ -499,76 +511,32 @@ export default function MapViewer({
     // =========================================================================
     // CAPA 3: INCENDIOS TUNARI (Causa Térmica y Plumas de Aerosoles)
     // =========================================================================
-    if (activeTab === 'incendios') {
-      // A0. Capa Satelital NASA GIBS Worldview (Reflectancia de Superficie y Humo)
-      if (nasaGibs) {
-        try {
-          L.tileLayer(
-            `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/${gibsDate}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg`,
-            {
-              attribution: '&copy; NASA EOSDIS GIBS / Worldview',
-              maxZoom: 9,
-              opacity: 0.85,
-            }
-          ).addTo(layersGroupRef.current);
-        } catch (e) {
-          console.warn('NASA GIBS Error:', e);
-        }
+    if (currentTab === 'incendios') {
+      // 1. Línea Cota 2750 Oficial Parque Nacional Tunari (Vector Permanente de Alta Precisión)
+      if (cota2750Data?.features?.[0]) {
+        const cotaCoords = cota2750Data.features[0].geometry.coordinates.map(([lng, lat]) => [lat, lng]);
+        const cotaLine = L.polyline(cotaCoords, {
+          color: '#10b981',
+          weight: 3.5,
+          dashArray: '8, 8',
+          opacity: 0.95,
+        });
+        cotaLine.bindPopup(`
+          <div style="color: #0f172a; font-family: sans-serif; font-size: 12px; min-width: 220px; line-height: 1.4;">
+            <div style="background: #059669; color: white; padding: 4px 8px; border-radius: 4px 4px 0 0; font-weight: bold;">
+              🌲 Cota 2750 m s.n.m.
+            </div>
+            <div style="padding: 6px 8px; border: 1px solid #059669; border-top: none; border-radius: 0 0 4px 4px; background: white;">
+              <strong>Parque Nacional Tunari (PNT)</strong><br/>
+              <span style="color: #475569; font-size: 11px;">Frontera biofísica oficial del GAMC y amortiguamiento contra incendios forestales.</span>
+            </div>
+          </div>
+        `);
+        cotaLine.addTo(layersGroupRef.current);
       }
 
-      // A. Servicios WMS Oficiales de la Alcaldía de Cochabamba (Proyecto 03)
-      if (!offlineMode) {
-        if (wmsCota) {
-          try {
-            L.tileLayer.wms(GAMC_WMS_ENDPOINT, {
-              key: GAMC_PROJECT_03_KEY,
-              service_id: '297cefa4-0832-42bb-a98e-2cbea989fd9d',
-              layers: '',
-              format: 'image/png',
-              transparent: true,
-              version: '1.1.1',
-              maxZoom: 19
-            }).addTo(layersGroupRef.current);
-          } catch (e) {
-            console.warn('WMS Cota 2750 error:', e);
-          }
-        }
-
-        if (wmsPeriurbanos) {
-          try {
-            L.tileLayer.wms(GAMC_WMS_ENDPOINT, {
-              key: GAMC_PROJECT_03_KEY,
-              service_id: 'c52066a1-32fd-4925-81e0-c2dcb8f4238f',
-              layers: '',
-              format: 'image/png',
-              transparent: true,
-              version: '1.1.1',
-              maxZoom: 19
-            }).addTo(layersGroupRef.current);
-          } catch (e) {
-            console.warn('WMS Periurbanos error:', e);
-          }
-        }
-
-        if (wmsDistritos) {
-          try {
-            L.tileLayer.wms(GAMC_WMS_ENDPOINT, {
-              key: GAMC_PROJECT_03_KEY,
-              service_id: '7eb13092-bf0e-493b-aae6-03c43eedda2c',
-              layers: '',
-              format: 'image/png',
-              transparent: true,
-              version: '1.1.1',
-              maxZoom: 19
-            }).addTo(layersGroupRef.current);
-          } catch (e) {
-            console.warn('WMS Distritos error:', e);
-          }
-        }
-      }
-
-      // Respaldo Local: Polígono Parque Nacional Tunari
-      if (offlineMode && tunariPolygonData?.features?.[0]) {
+      // 2. Polígono Parque Nacional Tunari (Vector Permanente)
+      if (tunariPolygonData?.features?.[0]) {
         const polyCoords = tunariPolygonData.features[0].geometry.coordinates[0].map(
           ([lng, lat]) => [lat, lng]
         );
@@ -587,6 +555,22 @@ export default function MapViewer({
           </div>
         `);
         polygon.addTo(layersGroupRef.current);
+      }
+
+      // A0. Capa Satelital NASA GIBS Worldview (Reflectancia de Superficie y Humo)
+      if (nasaGibs) {
+        try {
+          L.tileLayer(
+            `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/${gibsDate}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg`,
+            {
+              attribution: '&copy; NASA EOSDIS GIBS / Worldview',
+              maxZoom: 9,
+              opacity: 0.85,
+            }
+          ).addTo(layersGroupRef.current);
+        } catch (e) {
+          console.warn('NASA GIBS Error:', e);
+        }
       }
 
       // B. Marcadores Satelitales de Fuego de la NASA (MODIS, VIIRS o Armonizado)
@@ -643,7 +627,7 @@ export default function MapViewer({
     // =========================================================================
     // CAPA 4: TORRENTERAS & INUNDACIONES (60 Puntos GAMC + Cordillera Tunari)
     // =========================================================================
-    if (activeTab === 'torrenteras') {
+    if (currentTab === 'torrenteras') {
       // 1. Polígono Tunari / Cota 2750 como contexto orográfico de escorrentía
       if (tunariPolygonData?.features?.[0]) {
         const polyCoords = tunariPolygonData.features[0].geometry.coordinates[0].map(
@@ -708,7 +692,7 @@ export default function MapViewer({
     // =========================================================================
     // CAPA 5: AGROTECH & SUELOS VALLE (NASA SMAP + Parcelas Demostrativas)
     // =========================================================================
-    if (activeTab === 'agrotech') {
+    if (currentTab === 'agrotech') {
       const AGRO_PINS = [
         { id: 'valle_bajo', name: 'Valle Bajo (Quillacollo / Vinto)', lat: -17.40, lon: -66.28, tipo: 'franco', smap: 19, cultivo: 'Maíz / Alfa', rotacion: 'Tarwi / Haba' },
         { id: 'valle_alto', name: 'Valle Alto (Cliza / Punata)', lat: -17.58, lon: -65.93, tipo: 'arenoso', smap: 14, cultivo: 'Trigo / Maíz Chuspillo', rotacion: 'Leguminosas de secano' },
@@ -768,6 +752,15 @@ export default function MapViewer({
       pin.addTo(layersGroupRef.current);
     });
   };
+
+  // Mantener renderLayersRef siempre apuntando a la función más reciente
+  useEffect(() => {
+    renderLayersRef.current = () => {
+      if (mapInstanceRef.current) {
+        renderLayers(null, mapInstanceRef.current);
+      }
+    };
+  });
 
   useEffect(() => {
     if (mapInstanceRef.current) {
