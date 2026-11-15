@@ -199,8 +199,26 @@ export default function MapViewer({
 
   const showGamcWmsRef = useRef(showGamcWms);
   const gamcActiveLayersRef = useRef(gamcActiveLayers);
+  const gamcMenuRef = useRef(null);
+
   useEffect(() => { showGamcWmsRef.current = showGamcWms; }, [showGamcWms]);
   useEffect(() => { gamcActiveLayersRef.current = gamcActiveLayers; }, [gamcActiveLayers]);
+
+  // Click outside listener para cerrar el menú WMS sin backdrops invasivos
+  useEffect(() => {
+    if (!isGamcMenuOpen) return;
+    const handleClickOutside = (e) => {
+      if (gamcMenuRef.current && !gamcMenuRef.current.contains(e.target)) {
+        setIsGamcMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isGamcMenuOpen]);
 
   // Mantener selectedPointRef y activeTab sincronizados
   useEffect(() => {
@@ -1710,7 +1728,7 @@ export default function MapViewer({
       )}
       
       {/* 1. Selector de Capas Base (Callejero / Satélite / Oscuro) y Controles */}
-      <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-[400] flex items-center gap-1 sm:gap-1.5 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1 text-xs text-white backdrop-blur-xl shadow-2xl max-w-[calc(100vw-1rem)] overflow-x-auto no-scrollbar">
+      <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-[500] flex items-center gap-1 sm:gap-1.5 rounded-xl border border-white/10 bg-[#0f172a]/95 p-1 text-xs text-white backdrop-blur-xl shadow-2xl max-w-[calc(100vw-1rem)] overflow-visible">
         <button
           onClick={() => setBaseMapType('streets')}
           className={`flex items-center gap-1 rounded-lg px-2 sm:px-2.5 py-1 text-xs font-semibold transition shrink-0 ${
@@ -1787,9 +1805,10 @@ export default function MapViewer({
 
         {/* Selector de Capas WMS Oficiales GAMC */}
         {activeTab === 'microclimas' && (
-          <div className="relative shrink-0">
+          <div className="relative shrink-0" ref={gamcMenuRef}>
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 const nextOpen = !isGamcMenuOpen;
                 setIsGamcMenuOpen(nextOpen);
                 if (nextOpen && !showGamcWms) {
@@ -1808,17 +1827,12 @@ export default function MapViewer({
               <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isGamcMenuOpen ? 'rotate-180 text-purple-200' : 'text-slate-400'}`} />
             </button>
 
-            {/* Backdrop para cerrar al hacer clic afuera */}
-            {isGamcMenuOpen && (
-              <div 
-                className="fixed inset-0 z-[550]" 
-                onClick={() => setIsGamcMenuOpen(false)} 
-              />
-            )}
-
             {/* Menú Desplegable de Capas WMS del GAMC */}
             {isGamcMenuOpen && (
-              <div className="absolute top-full left-0 mt-1.5 w-72 rounded-xl border border-purple-500/30 bg-[#0d1017]/95 p-3 text-xs text-white shadow-2xl backdrop-blur-xl z-[600]">
+              <div 
+                onClick={(e) => e.stopPropagation()}
+                className="absolute top-full left-0 sm:left-auto sm:right-0 mt-2 w-72 sm:w-80 rounded-xl border border-purple-500/40 bg-[#0d1017]/98 p-3 text-xs text-white shadow-2xl backdrop-blur-2xl z-[1000] ring-1 ring-purple-500/40"
+              >
                 <div className="flex items-center justify-between pb-2 border-b border-neutral-800 mb-2">
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-purple-300 flex items-center gap-1.5">
