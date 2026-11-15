@@ -546,7 +546,7 @@ export default function MapViewer({
             <span style="color: #fde047; font-size: 11px; font-weight: 800;">${lstVal}°</span>
           </div>
         `, {
-          permanent: showDistrictLabels,
+          permanent: true,
           direction: 'center',
           className: 'custom-district-tooltip',
           opacity: 0.95
@@ -1536,12 +1536,12 @@ export default function MapViewer({
 
   return (
     <div 
-      className="relative h-full w-full bg-[#080b18] overflow-hidden min-h-0"
+      className={`relative h-full w-full bg-[#080b18] overflow-hidden min-h-0 ${showDistrictLabels ? '' : 'hide-district-labels'}`}
       style={{ position: 'relative', height: '100%', width: '100%', minHeight: 0 }}
     >
       <div 
         ref={mapContainerRef} 
-        className={`absolute inset-0 h-full w-full z-0 ${showDistrictLabels ? '' : 'hide-district-labels'}`}
+        className="absolute inset-0 h-full w-full z-0"
         style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, height: '100%', width: '100%' }}
       />
       

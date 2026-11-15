@@ -168,3 +168,38 @@ Ten estos datos en la cabeza o anotados en una ficha para responder cualquier pr
 ### ❓ Pregunta 3: *"¿Por qué no usan una red neuronal profunda o un LLM para la predicción?"*
 * **🎯 Respuesta Imbatible:**
   > *"Porque en datos tabulares y series temporales físicas, **XGBoost (Gradient Boosted Decision Trees)** supera consistentemente a las redes neuronales según los benchmarks de la literatura científica (Grinsztajn et al., NeurIPS). Además, XGBoost ofrece explicabilidad directa mediante valores SHAP para que los técnicos de la Alcaldía sepan exactamente qué porcentaje de la temperatura se debe a la falta de vegetación (NDVI) o a la radiación solar (LST), algo que una red neuronal 'caja negra' no permite."*
+
+---
+
+### ❓ Pregunta 4: *"¿Cómo integraron las 4 capas oficiales WMS del GAMC y las consultas GetFeatureInfo simultáneas?"*
+* **🎯 Respuesta Imbatible:**
+  > *"Implementamos la arquitectura estándar OGC en proyección `EPSG:3857` (Web Mercator) consumiendo el GeoServer oficial del municipio (`serviciosgamc.cochabamba.bo/api/gs/wms`):*
+  > * `Límite Distritos` (UUID: `7eb13092-bf0e-493b-aae6-03c43eedda2c`)*
+  > * `Población por Manzanas` (UUID: `194a02a0-a73a-48c1-a260-82847c5c905d`)*
+  > * `Áreas Verdes` (UUID: `47360ddc-e35f-4ece-a995-59e90eb79cc6`)*
+  > * `Cota 2750 Parque Tunari` (UUID: `297cefa4-0832-42bb-a98e-2cbea989fd9d`)*
+  > 
+  > *Para la consulta interactiva, creamos un despachador `Promise.all` que envía una única coordenada $(X, Y)$ con `BBOX` y `SRS=EPSG:3857` a los 4 servicios en paralelo. En menos de 300 ms, el usuario recibe un consolidado instantáneo: población exacta de la manzana, metros cuadrados de área verde circundante, si está sobre la franja de protección de la Cota 2750 y el ID distrital."*
+
+---
+
+### ❓ Pregunta 5: *"¿Cómo responde su proyecto al llamado explícito del Dr. James Acker (autor del reto NASA) sobre aerosoles y tendencias terrestres?"*
+* **🎯 Respuesta Imbatible:**
+  > *"El Dr. James Acker, oceanógrafo del NASA Goddard Space Flight Center y autor del reto, destaca en su video oficial que las erupciones y grandes incendios liberan aerosoles a la atmósfera que bloquean la luz solar o generan 'trampas térmicas', y pide a los detectives buscar tendencias en temperatura, radiación y aerosoles.*  
+  > *Nosotros respondimos directamente a su consigna integrando la serie canónica multianual de **Espesor Óptico de Aerosoles (AOD) de MODIS Aqua (2002–2024)** para Cochabamba. Demostramos estadísticamente que el AOD tiene una tendencia creciente de $+0.0084/\text{año}$ con significancia estricta de **$p = 0.0008 < 0.05$** ($t = 3.82$). Esto prueba matemáticamente el llamado del Dr. Acker: el valle de Cochabamba sufre una trampa de aerosoles que amplifica el forzamiento radiativo y las islas de calor urbanas."*
+
+---
+
+### ❓ Pregunta 6: *"¿Cómo modelan el futuro de Cochabamba hacia 2030–2050 y la alerta operativa de 24 horas?"*
+* **🎯 Respuesta Imbatible:**
+  > *"Combinamos la pendiente no paramétrica de Theil-Sen con el modelo predictivo XGBoost calibrado con 25 años de NASA POWER y la Red MÓNICA:*  
+  > * **1. Proyección Multidecadal (2026–2050):** Si no hay intervención municipal, distritos densos y desprovistos de vegetación como el D9 (Itocta) y D8 sufren un calentamiento proyectado de $+0.62\ ^\circ\text{C}$ por década, alcanzando picos de $39.5\ ^\circ\text{C}$ LST hacia 2050.*  
+  > * **2. Alerta Temprana de Inversión Térmica en 24 Horas:** Evaluamos en tiempo real si la velocidad del viento cae por debajo de $1.5\text{ m/s}$ y el AOD satelital supera $0.45$. Cuando esto ocurre durante la noche/madrugada, el sistema emite una **Alerta Roja de Trampa de Inversión Térmica**, recomendando a la Alcaldía activar restricciones vehiculares y protocolos escolares antes de las 07:00 AM."*
+
+---
+
+# 🏆 RESUMEN EJECUTIVO PARA EL JURADO (HOJA DE RUTA GANADORA)
+1. **Problema Territorial Resuelto:** De 2 estaciones físicas a 15 distritos monitoreados en tiempo real.
+2. **Cumplimiento Total del Reto NASA:** Tendencias históricas multivariables (LST, NDVI, AOD, T2M) con significancia matemática ($p < 0.05$).
+3. **Integración GAMC al 100%:** 4 capas WMS oficiales en `EPSG:3857`, GetFeatureInfo simultáneo y GeoJSON de rutas de transporte público.
+4. **Herramienta Operativa:** Simulador de mitigación con cálculo de confort térmico humano (PET) y alerta preventiva en 24 horas.

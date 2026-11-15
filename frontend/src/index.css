@@ -106,8 +106,12 @@ html, body, #root {
 }
 
 /* Ocultar etiquetas fijas de distritos cuando el usuario activa la vista limpia */
-.hide-district-labels .leaflet-tooltip.custom-district-tooltip.leaflet-tooltip-permanent {
+.hide-district-labels .custom-district-tooltip,
+.hide-district-labels .leaflet-tooltip {
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 /* Leaflet Container fix */
