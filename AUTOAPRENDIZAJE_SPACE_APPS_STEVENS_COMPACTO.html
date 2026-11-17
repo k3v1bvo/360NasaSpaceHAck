@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Autoaprendizaje Space Apps 2026 - Equipo Stevens</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #0f172a;
+      background-color: #ffffff;
+      line-height: 1.55;
+      font-size: 10.5pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Encabezado Principal */
+    .header-banner {
+      background: linear-gradient(135deg, #0b1528 0%, #172554 60%, #1e3a8a 100%);
+      color: #ffffff;
+      padding: 22px 24px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.08);
+      border: 1px solid #1e3a8a;
+    }
+
+    .badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(0, 240, 255, 0.15);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      color: #38bdf8;
+      font-size: 8pt;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .header-title {
+      font-size: 19pt;
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .header-subtitle {
+      font-size: 11pt;
+      color: #93c5fd;
+      font-weight: 600;
+    }
+
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 8.5pt;
+      color: #e2e8f0;
+    }
+
+    .header-meta span strong {
+      color: #38bdf8;
+    }
+
+    /* Secciones */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 20px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .section-title .icon-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 10pt;
+    }
+
+    .pillar-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #2563eb;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+
+    .pillar-card.emerald { border-left-color: #059669; }
+    .pillar-card.amber { border-left-color: #d97706; }
+    .pillar-card.purple { border-left-color: #7c3aed; }
+
+    .pillar-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10.5pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 5px;
+    }
+
+    .pillar-text {
+      font-size: 9.5pt;
+      color: #334155;
+      text-align: justify;
+      line-height: 1.5;
+    }
+
+    /* Tablas */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      font-weight: 800;
+      color: #1e293b;
+      font-size: 8.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+
+    .link-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .badge-live { background: #dcfce7; color: #15803d; }
+    .badge-doc { background: #e0f2fe; color: #0369a1; }
+    .badge-repo { background: #f3e8ff; color: #6b21a8; }
+
+    /* Galería de Evidencias / 4 Fotos */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .photo-card {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      overflow: hidden;
+      page-break-inside: avoid;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 155px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid #e2e8f0;
+      background: #0b1528;
+    }
+
+    .photo-info {
+      padding: 10px 12px;
+    }
+
+    .photo-day {
+      display: inline-block;
+      font-size: 7.5pt;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 3px;
+      background: #e2e8f0;
+      color: #334155;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .photo-title {
+      font-size: 9.5pt;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .photo-desc {
+      font-size: 8pt;
+      color: #475569;
+      line-height: 1.4;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    /* Footer */
+    .doc-footer {
+      margin-top: 24px;
+      padding-top: 12px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8pt;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <div class="header-banner">
+    <div class="badge-top">🚀 NASA SPACE APPS CHALLENGE 2026 • SEDE FEXCO COCHABAMBA</div>
+    <h1 class="header-title">Autoaprendizaje y Memoria Técnica del Proyecto</h1>
+    <div class="header-subtitle">Sensado Virtual Ambiental y Detección de Tendencias Climáticas en Cochabamba</div>
+    <div class="header-meta">
+      <span><strong>Reto Oficial:</strong> Be An Earth System Trend Detective!</span>
+      <span><strong>Equipo:</strong> Stevens</span>
+      <span><strong>Expositor / Líder:</strong> Kevin Davor Vergara Orellana</span>
+      <span><strong>Fecha:</strong> Noviembre 2026</span>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 1 -->
+  <div class="section-title">
+    <span class="icon-circle">1</span>
+    ¿Qué aprendí en este evento? (Autoaprendizaje y Reflexión)
+  </div>
+
+  <div class="pillar-card">
+    <div class="pillar-header">
+      <span>🛰️ A. Ciencia de Datos Satelitales y Teleobservación Orbital</span>
+    </div>
+    <p class="pillar-text">
+      Durante estas 48 horas intensivas aprendí a procesar e integrar terabytes de información satelital abierta de la NASA que antes consideraba lejana. Comprendí cómo extraer y limpiar series temporales multianuales de <strong>NASA POWER</strong> (temperatura del aire a 2 metros, radiación solar, humedad y velocidad del viento), cómo interpretar la temperatura superficial del suelo (<strong>MODIS LST</strong>) y el índice de vegetación (<strong>NDVI</strong>), así como la relevancia del Espesor Óptico de Aerosoles (<strong>MODIS AOD</strong>) y los focos de calor activos de <strong>NASA FIRMS</strong> para modelar incendios forestales. Comprobé que los satélites orbitales no son simples cámaras fotográficas, sino sensores radiométricos de alta precisión capaces de diagnosticar la salud y vulnerabilidad de un ecosistema urbano completo.
+    </p>
+  </div>
+
+  <div class="pillar-card emerald">
+    <div class="pillar-header">
+      <span>🤖 B. Machine Learning Riguroso y Física Atmosférica</span>
+    </div>
+    <p class="pillar-text">
+      Comprendí que la Inteligencia Artificial debe sustentarse en la física del territorio y no en conjeturas. Desarrollé e implementé un modelo con <strong>XGBoost 3.2.0 Regressor</strong> aplicando validación estricta por bloques temporales (<strong>TimeSeriesSplit</strong> en 5 pliegues) para evitar la fuga de datos del futuro hacia el pasado (<em>data leakage</em>). Mediante un <strong>Estudio de Ablación</strong>, demostramos con métricas irrefutables (<strong>R² = 0.9457</strong>, <strong>RMSE = 0.55 °C</strong>) cómo la <strong>inversión térmica del valle de Cochabamba</strong> (con techo orográfico a la Cota 2.750 msnm) atrapa los aerosoles y el humo, amplificando la brecha térmica en la Zona Sur hasta en +17.4 °C respecto al Tunari. Asimismo, aprendí a aislar tendencias multidecadales eliminando el ciclo estacional con el método <strong>STL (NASA SeaWiFS)</strong> y la prueba de <strong>Mann-Kendall (p = 0.0000)</strong>.
+    </p>
+  </div>
+
+  <div class="pillar-card amber">
+    <div class="pillar-header">
+      <span>🏛️ C. Integración Geoespacial (WebGIS) y Gestión Pública Municipal</span>
+    </div>
+    <p class="pillar-text">
+      Aprendí a tender un puente directo entre la ciencia de la NASA y la realidad de la Alcaldía de Cochabamba (<strong>GAMC</strong>). Conectamos un visualizador cartográfico en <strong>Leaflet y React</strong> con el GeoServer municipal bajo el estándar <strong>WMS en proyección EPSG:3857</strong>. Implementamos consultas concurrentes <strong>GetFeatureInfo</strong> para que al hacer clic en cualquier lote se obtenga en menos de 300 ms la población censada y el estatus ecológico de la Cota 2.750. Además, profundicé en biometeorología urbana calculando la Temperatura Fisiológica Equivalente (<strong>PET</strong>) y la <strong>Paradoja del Albedo</strong>, comprendiendo que pintar techos reflectantes sin sombra arbórea nativa (Molle y Jacarandá) puede aumentar el estrés térmico en los transeúntes.
+    </p>
+  </div>
+
+  <div class="pillar-card purple">
+    <div class="pillar-header">
+      <span>🤝 D. Trabajo en Equipo, Resiliencia y Comunicación Científica</span>
+    </div>
+    <p class="pillar-text">
+      El aprendizaje humano más valioso fue gestionar el tiempo bajo presión extrema de entrega. Aprendí a priorizar el valor práctico para la comunidad por encima de la perfección innecesaria, a debatir soluciones técnicas con rapidez, a resolver bugs de despliegue en Vercel y a sintetizar un proyecto científico de gran escala en una presentación de 7 diapositivas y un pitch claro. Me llevo la convicción de que los datos abiertos de la NASA y la tecnología moderna tienen el potencial real de democratizar la información climática y salvar vidas en nuestra llajta.
+    </p>
+  </div>
+
+  <!-- SALTO DE PÁGINA PARA PRESENTACIÓN Y EVIDENCIAS -->
+  <div class="page-break"></div>
+
+  <!-- SECCIÓN 2: INTEGRANTES -->
+  <div class="section-title">
+    <span class="icon-circle">2</span>
+    Lista de Integrantes del Equipo de Trabajo
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre Completo</th>
+        <th>Rol en el Proyecto</th>
+        <th>Responsabilidades Principales</th>
+        <th>Identificador / GitHub</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Kevin Davor Vergara Orellana</strong></td>
+        <td>Líder Técnico & Full-Stack</td>
+        <td>Arquitectura WebGIS, Pipeline de Machine Learning (XGBoost), Ingesta WMS GAMC y Despliegue</td>
+        <td><span class="link-tag">@k3v1bvo</span></td>
+      </tr>
+      <tr>
+        <td><strong>Equipo Stevens</strong></td>
+        <td>Investigación & Validación</td>
+        <td>Revisión de literatura científica NASA, calibración con Red MÓNICA y diseño de presentación</td>
+        <td><span class="link-tag">Team Stevens</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECCIÓN 3: LINKS DEL PROYECTO -->
+  <div class="section-title">
+    <span class="icon-circle">3</span>
+    Enlaces de Trabajo Terminado del Proyecto
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Entregable</th>
+        <th>Descripción y Alcance</th>
+        <th>Estado</th>
+        <th>Enlace Público de Acceso</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Plataforma Web en Producción</strong></td>
+        <td>Sistema WebGIS interactivo con 13 sensores virtuales IA, WMS GAMC y simulador PET</td>
+        <td><span class="badge-status badge-live">Live 200 OK</span></td>
+        <td><a class="link-tag" href="https://nasa-trend-detective.vercel.app">nasa-trend-detective.vercel.app</a></td>
+      </tr>
+      <tr>
+        <td><strong>Repositorio de Código Fuente</strong></td>
+        <td>Código completo en React, Vite, Tailwind CSS, modelos XGBoost y scripts de datos</td>
+        <td><span class="badge-status badge-repo">Open Source</span></td>
+        <td><a class="link-tag" href="https://github.com/k3v1bvo/360NasaSpaceHAck">github.com/k3v1bvo/360NasaSpaceHAck</a></td>
+      </tr>
+      <tr>
+        <td><strong>Presentación Oficial (7 Slides)</strong></td>
+        <td>Documento oficial de defensa en inglés para jurados internacionales NASA</td>
+        <td><span class="badge-status badge-doc">PDF A4</span></td>
+        <td><a class="link-tag" href="https://nasa-trend-detective.vercel.app/presentation.pdf">/presentation.pdf</a></td>
+      </tr>
+      <tr>
+        <td><strong>Manual Científico de Estudio</strong></td>
+        <td>Guía técnica exhaustiva con arquitectura, estudio de ablación y matriz de preguntas</td>
+        <td><span class="badge-status badge-doc">PDF A4</span></td>
+        <td><a class="link-tag" href="https://nasa-trend-detective.vercel.app/manual_estudio.pdf">/manual_estudio.pdf</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECCIÓN 4: LAS 4 FOTOS DE LOS 2 DÍAS -->
+  <div class="section-title">
+    <span class="icon-circle">4</span>
+    Evidencias Gráficas de Trabajo (Registro de los Dos Días)
+  </div>
+
+  <div class="photo-grid">
+    <!-- Foto 1 -->
+    <div class="photo-card">
+      <img src="file:///d:/ProyectosCode/Nasa/thumb_assets/03_red_monica_sensores_ia.jpg" alt="Día 1: Red MÓNICA">
+      <div class="photo-info">
+        <span class="photo-day">Día 1 • Diagnóstico Inicial</span>
+        <div class="photo-title">Calibración Red MÓNICA vs. Ceguera Territorial</div>
+        <p class="photo-desc">
+          Identificación de las 2 únicas estaciones físicas en Cochabamba (SEMAPA y Kanata) frente a 13 distritos sin monitoreo. Base para la calibración satélite-suelo.
+        </p>
+      </div>
+    </div>
+
+    <!-- Foto 2 -->
+    <div class="photo-card">
+      <img src="file:///d:/ProyectosCode/Nasa/thumb_assets/02_wms_gamc_capas.jpg" alt="Día 1: WMS GAMC">
+      <div class="photo-info">
+        <span class="photo-day">Día 1 • Integración Geoespacial</span>
+        <div class="photo-title">Conexión WMS Oficial con GeoServer GAMC</div>
+        <p class="photo-desc">
+          Consumo de las capas oficiales de 15 Distritos, Cota 2.750 del Parque Tunari, Manzanas censales y Áreas Verdes bajo proyección EPSG:3857 sin marcas de agua.
+        </p>
+      </div>
+    </div>
+
+    <!-- Foto 3 -->
+    <div class="photo-card">
+      <img src="file:///d:/ProyectosCode/Nasa/thumb_assets/04_metricas_xgboost.jpg" alt="Día 2: Modelo XGBoost">
+      <div class="photo-info">
+        <span class="photo-day">Día 2 • Inteligencia Artificial</span>
+        <div class="photo-title">Entrenamiento y Validación XGBoost 3.2.0</div>
+        <p class="photo-desc">
+          Evaluación con TimeSeriesSplit: R² de 0.9457 y error medio de ±0.44 °C. El estudio de ablación demostró un 39% menos de error al incluir aerosoles del Tunari.
+        </p>
+      </div>
+    </div>
+
+    <!-- Foto 4 -->
+    <div class="photo-card">
+      <img src="file:///d:/ProyectosCode/Nasa/thumb_assets/04_simulador_mitigacion.jpg" alt="Día 2: Simulador">
+      <div class="photo-info">
+        <span class="photo-day">Día 2 • Solución Territorial</span>
+        <div class="photo-title">Simulador Urbano y Confort Térmico PET</div>
+        <p class="photo-desc">
+          Modelado en tiempo real del impacto de reforestación nativa con Molle y Jacarandá (-3.2 °C de alivio) y detector algorítmico de la Paradoja de Albedo.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <span>NASA Space Apps Challenge 2026 • Documento Oficial de Evaluación y Autoaprendizaje</span>
+    <span>Sede FEXCO Cochabamba, Bolivia • Equipo Stevens</span>
+  </div>
+
+</body>
+</html>
